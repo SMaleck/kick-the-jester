@@ -4,9 +4,17 @@ namespace Assets.Source.Entities.Jester
 {
     public class Jester : BaseEntity
     {
-        public Transform GetTransform()
+        private Rigidbody body;
+
+        public void Start()
         {
-            return gameObject.transform;
+            body = gameObject.GetComponent<Rigidbody>();
+        }
+
+
+        public void ApplyKick(Vector3 Force)
+        {
+            body.AddForce(Force);
         }
     }
 }

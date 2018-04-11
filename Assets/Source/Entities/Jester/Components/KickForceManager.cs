@@ -1,7 +1,7 @@
 ﻿using Assets.Source.App;
 using UnityEngine;
 
-// Should this be on te Jester prefab or separate?
+// ToDo: Should this be on te Jester prefab or separate?
 namespace Assets.Source.Entities.Jester.Components
 {
     public class KickForceManager : MonoBehaviour

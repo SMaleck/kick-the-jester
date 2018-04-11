@@ -14,7 +14,7 @@ namespace Assets.Source.Entities.Jester.Components
 
         public void Start()
         {
-            Target = Singletons.jester.GetTransform();
+            Target = Singletons.jester.goTransform;
             Origin = Target.position;
         }
 
