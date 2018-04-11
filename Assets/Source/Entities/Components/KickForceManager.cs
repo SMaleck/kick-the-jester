@@ -2,9 +2,9 @@
 using UnityEngine;
 
 // ToDo: Should this be on te Jester prefab or separate?
-namespace Assets.Source.Entities.Jester.Components
+namespace Assets.Source.Entities.Components
 {
-    public class KickForceManager : MonoBehaviour
+    public class KickForceManager : BaseComponent
     {
         private bool IsInitialKick = true;
         private float BaseForceMagnitude = 600f;

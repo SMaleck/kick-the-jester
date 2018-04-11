@@ -8,7 +8,7 @@ namespace Assets.Source.App
     {
         public const string JESTER = "Jester";
         public const string UI_CANVAS = "UICanvas";
-        public const string GAME_LOGIC = "GameLogic";
+        public const string USER_CONTROL = "UserControl";
 
         // ToDo: Figure out actual factor
         public const float UnitToMeterFactor = 5f;

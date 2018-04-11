@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Entities.Jester
+namespace Assets.Source.Entities
 {
     public class Jester : BaseEntity
     {
-        private Rigidbody body;
+        private Rigidbody2D body;
+
 
         public void Start()
         {
-            body = gameObject.GetComponent<Rigidbody>();
+            body = gameObject.GetComponent<Rigidbody2D>();
         }
 
 

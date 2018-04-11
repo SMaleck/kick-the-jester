@@ -2,9 +2,9 @@
 using System;
 using UnityEngine;
 
-namespace Assets.Source.Entities.Jester.Components
+namespace Assets.Source.Entities.Components
 {
-    class FlightDistance : MonoBehaviour
+    class FlightDistance : BaseComponent
     {
         private Transform Target;
         private Vector3 Origin;
@@ -13,8 +13,8 @@ namespace Assets.Source.Entities.Jester.Components
         private float DistanceMeters;
 
         public void Start()
-        {
-            Target = Singletons.jester.goTransform;
+        {            
+            Target = Entity.goTransform;
             Origin = Target.position;
         }
 

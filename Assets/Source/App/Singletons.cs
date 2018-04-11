@@ -1,5 +1,4 @@
-﻿using Assets.Source.Entities.Jester;
-using Assets.Source.GameLogic;
+﻿using Assets.Source.GameLogic;
 using Assets.Source.UI;
 using System;
 using UnityEngine;
@@ -8,16 +7,6 @@ namespace Assets.Source.App
 {
     public static class Singletons
     {
-
-        private static Jester _jester;
-        public static Jester jester
-        {
-            get
-            {
-                return SafeGet(_jester, Constants.JESTER);
-            }
-        }
-
         private static UIManager _uiManager;
         public static UIManager uiManager
         {
@@ -28,12 +17,12 @@ namespace Assets.Source.App
         }
 
 
-        private static GameLogicLayer _gameLogic;
-        public static GameLogicLayer gameLogic
+        private static UserControl _userControl;
+        public static UserControl userControl
         {
             get
             {
-                return SafeGet(_gameLogic, Constants.GAME_LOGIC);
+                return SafeGet(_userControl, Constants.USER_CONTROL);
             }
         }
 

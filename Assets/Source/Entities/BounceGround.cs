@@ -1,33 +1,24 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Source.GameLogic.Components
+namespace Assets.Source.Entities
 {
-    public class BounceGround : BaseGameLogicComponent
+    public class BounceGround : BaseEntity
     {
-        private Transform OwnerLocation;
-
         // Exposed in Editor
         public GameObject Target;
 
-        // Set in Startup
-        private Rigidbody TargetBody;
+        // Set in Startup        
         private Transform TargetLocation;
 
 
         // Set up the body which we will bounce later
         void Start()
         {
-            // Get owner's transform
-            OwnerLocation = gameObject.transform;
-
             if (Target == null)
             {
-                throw new ArgumentNullException("Target cannot is NULL, cannot finish self-setup!");
+                throw new ArgumentNullException("Target cannot be NULL, cannot finish self-setup!");
             }
-
-            // Get Target's Body        
-            TargetBody = Target.GetComponent<Rigidbody>();
 
             // Get Target's transform
             TargetLocation = Target.GetComponent<Transform>();
@@ -48,7 +39,7 @@ namespace Assets.Source.GameLogic.Components
         {
             if (Target != null)
             {
-                OwnerLocation.position = new Vector3(TargetLocation.position.x, OwnerLocation.position.y, TargetLocation.position.z);
+                goTransform.position = new Vector3(TargetLocation.position.x, goTransform.position.y, TargetLocation.position.z);
             }
         }
     }
