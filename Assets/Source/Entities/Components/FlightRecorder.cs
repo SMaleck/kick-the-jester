@@ -12,7 +12,7 @@ namespace Assets.Source.Entities.Components
         private Vector3 Origin;        
 
         private float DistanceUnits;
-        private int DistanceMeters;
+        public int DistanceMeters { get; private set; }
 
         private float VelocityX;         
 
@@ -30,9 +30,7 @@ namespace Assets.Source.Entities.Components
             DistanceUnits = MathUtil.Difference(Origin.x, targetTransform.position.x);
             DistanceMeters = (int)(DistanceUnits * Constants.UNIT_TO_METERS_FACTOR);
 
-            VelocityX = MathUtil.CappedFloat(targetBody.velocity.x);
-
-            Singletons.uiManager.UpdateDistance(DistanceMeters);
+            VelocityX = MathUtil.CappedFloat(targetBody.velocity.x);            
         }
     }
 }

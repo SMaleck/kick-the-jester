@@ -18,8 +18,7 @@ namespace Assets.Source.Entities.Components
         // Update is called once per frame
         void Update()
         {
-            UpdateInitialKickForceFactor();
-            Singletons.uiManager.kickForceUI.UpdateUI(MathUtil.AsPercent(InitialKickForceFactor, maxForceFactor));
+            UpdateInitialKickForceFactor();            
         }
 
         private void UpdateInitialKickForceFactor()
@@ -59,6 +58,12 @@ namespace Assets.Source.Entities.Components
             float currentForceMagnitude = BaseForceMagnitude * InitialKickForceFactor;
 
             return ForceDirection * currentForceMagnitude;
+        }
+
+
+        public int GetRelativeKickForce()
+        {
+            return MathUtil.AsPercent(InitialKickForceFactor, maxForceFactor);
         }
     }
 }

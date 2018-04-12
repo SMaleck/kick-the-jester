@@ -16,7 +16,7 @@ namespace Assets.Source.Entities.Components
             entityBody = gameObject.GetComponent<Rigidbody2D>();
 
             // Register with controls
-            Singletons.userControl.AttachForAction(KickForward);
+            Singletons.userControl.AttachForKick(KickForward);
         }
 
 
