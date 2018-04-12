@@ -32,12 +32,12 @@ namespace Assets.Source.GameLogic
         void Update()
         {
             
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButton("Kick") || Input.touchCount > 0)
             {                
                 inputKickHandler();
             }
 
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetButton("Pause"))
             {
                 IsPaused = !IsPaused;
                 inputPauseHandler(IsPaused);
