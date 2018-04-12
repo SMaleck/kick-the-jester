@@ -1,8 +1,10 @@
-﻿using UnityEngine.UI;
+﻿using Assets.Source.App;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Source.UI.Components
 {
-    public class KickForceUI : BaseComponent
+    public class KickForceUI : MonoBehaviour
     {
         Slider slider;
 
@@ -11,7 +13,8 @@ namespace Assets.Source.UI.Components
             slider = gameObject.GetComponentInChildren<Slider>();
             slider.maxValue = 100;
 
-            RegisterWithManager();
+            // Register for Updates
+            Singletons.gameStateManager.AttachForRelativeKickForce(UpdateUI);
         }
 
         public void UpdateUI(int value)

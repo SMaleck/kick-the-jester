@@ -10,12 +10,12 @@ namespace Assets.Source.GameLogic
         public delegate void InputEventHandler();
         public delegate void ToggleEventHandler(bool State);
 
-        public event InputEventHandler inputActionHandler = delegate { };
+        public event InputEventHandler inputKickHandler = delegate { };
         public event ToggleEventHandler inputPauseHandler = delegate { };
 
-        public void AttachForAction(InputEventHandler handler)
+        public void AttachForKick(InputEventHandler handler)
         {            
-            inputActionHandler += handler;
+            inputKickHandler += handler;
         }
 
         public void AttachForPause(ToggleEventHandler handler)
@@ -25,24 +25,48 @@ namespace Assets.Source.GameLogic
 
         #endregion
 
-        /* ------------------------------------------------------------------------ */
+        /* ----------------------------- ----------------------------- */
+
 
         private bool IsPaused = false;
 
         void Update()
         {
             
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("Kick") || Input.touchCount > 0)
             {                
-                inputActionHandler();
+                inputKickHandler();
             }
 
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetButtonDown("Pause"))
             {
-                IsPaused = !IsPaused;
-                inputPauseHandler(IsPaused);
+                TooglePauseGame();
             }
         }
+
+
+        /* ----------------------------- PAUSE GAME ----------------------------- */
+        #region PAUSE GAME
+
+        public void PauseGame()
+        {
+            IsPaused = true;
+            inputPauseHandler(IsPaused);
+        }
+
+        public void UnPauseGame()
+        {
+            IsPaused = false;
+            inputPauseHandler(IsPaused);
+        }
+
+        public void TooglePauseGame()
+        {
+            IsPaused = !IsPaused;
+            inputPauseHandler(IsPaused);
+        }
+
+        #endregion
     }
 }
 

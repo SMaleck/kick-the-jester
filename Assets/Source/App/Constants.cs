@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Assets.Source.App
+﻿namespace Assets.Source.App
 {
     public static class Constants
     {
         public const string JESTER = "Jester";
         public const string UI_CANVAS = "UICanvas";
         public const string USER_CONTROL = "UserControl";
+        public const string GAMESTATE_MANAGER = "GameStateManager";
 
         // ToDo: Figure out actual factor
         public const int FLOAT_PRECISION_DIGITS = 4;
