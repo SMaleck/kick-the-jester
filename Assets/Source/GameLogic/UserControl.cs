@@ -25,24 +25,48 @@ namespace Assets.Source.GameLogic
 
         #endregion
 
-        /* ------------------------------------------------------------------------ */
+        /* ----------------------------- ----------------------------- */
+
 
         private bool IsPaused = false;
 
         void Update()
         {
             
-            if (Input.GetButton("Kick") || Input.touchCount > 0)
+            if (Input.GetButtonDown("Kick") || Input.touchCount > 0)
             {                
                 inputKickHandler();
             }
 
-            if (Input.GetButton("Pause"))
+            if (Input.GetButtonDown("Pause"))
             {
-                IsPaused = !IsPaused;
-                inputPauseHandler(IsPaused);
+                TooglePauseGame();
             }
         }
+
+
+        /* ----------------------------- PAUSE GAME ----------------------------- */
+        #region PAUSE GAME
+
+        public void PauseGame()
+        {
+            IsPaused = true;
+            inputPauseHandler(IsPaused);
+        }
+
+        public void UnPauseGame()
+        {
+            IsPaused = false;
+            inputPauseHandler(IsPaused);
+        }
+
+        public void TooglePauseGame()
+        {
+            IsPaused = !IsPaused;
+            inputPauseHandler(IsPaused);
+        }
+
+        #endregion
     }
 }
 

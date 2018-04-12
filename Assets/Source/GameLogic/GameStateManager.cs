@@ -33,6 +33,9 @@ namespace Assets.Source.GameLogic
         {
             flightRecorder = Singletons.jester.GetComponent<FlightRecorder>();
             kickForceManager = Singletons.jester.GetComponent<KickForceManager>();
+
+            // Register for Pausing the Game
+            Singletons.userControl.AttachForPause(OnPauseGame);
         }
 
 
@@ -40,6 +43,13 @@ namespace Assets.Source.GameLogic
         {
             OnDistanceChanged(flightRecorder.DistanceMeters);
             OnRelativeKickForceChanged(kickForceManager.GetRelativeKickForce());
+        }
+
+
+        // Pauses the Game on a global level
+        public void OnPauseGame(bool isPaused)
+        {
+            Time.timeScale = isPaused ? 0 : 1;
         }
     }
 }
