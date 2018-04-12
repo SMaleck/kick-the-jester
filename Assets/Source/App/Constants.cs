@@ -11,6 +11,8 @@ namespace Assets.Source.App
         public const string USER_CONTROL = "UserControl";
 
         // ToDo: Figure out actual factor
-        public const float UnitToMeterFactor = 5f;
+        public const int FLOAT_PRECISION_DIGITS = 4;
+        public const int FLOAT_PRECISION_FACTOR = 1000;
+        public const float UNIT_TO_METERS_FACTOR = 5f;
     }
 }

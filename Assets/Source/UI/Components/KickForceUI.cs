@@ -9,12 +9,13 @@ namespace Assets.Source.UI.Components
         void Start()
         {            
             slider = gameObject.GetComponentInChildren<Slider>();
+            slider.maxValue = 100;
+
             RegisterWithManager();
         }
 
-        public void UpdateUI(float value, float max)
-        {
-            slider.maxValue = max;            
+        public void UpdateUI(int value)
+        {                        
             slider.value = value;
         }
     }

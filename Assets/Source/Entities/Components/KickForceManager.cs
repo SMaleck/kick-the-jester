@@ -19,7 +19,7 @@ namespace Assets.Source.Entities.Components
         void Update()
         {
             UpdateInitialKickForceFactor();
-            Singletons.uiManager.kickForceUI.UpdateUI(InitialKickForceFactor, maxForceFactor);
+            Singletons.uiManager.kickForceUI.UpdateUI(MathUtil.AsPercent(InitialKickForceFactor, maxForceFactor));
         }
 
         private void UpdateInitialKickForceFactor()

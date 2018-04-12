@@ -4,18 +4,18 @@ namespace Assets.Source.Entities
 {
     public class Jester : BaseEntity
     {
-        private Rigidbody2D body;
-
-
-        public void Start()
+        private Rigidbody2D _Body;
+        public Rigidbody2D Body
         {
-            body = gameObject.GetComponent<Rigidbody2D>();
-        }
+            get
+            {
+                if(_Body == null)
+                {
+                    _Body = gameObject.GetComponent<Rigidbody2D>();
+                }
 
-
-        public void ApplyKick(Vector3 Force)
-        {
-            body.AddForce(Force);
+                return _Body;
+            }
         }
     }
 }
