@@ -18,6 +18,7 @@ namespace Assets.Source.GameLogic
             inputKickHandler += handler;
         }
 
+        // ONly GameStateManager should attach here, everything else should listen there
         public void AttachForPause(ToggleEventHandler handler)
         {
             inputPauseHandler += handler;

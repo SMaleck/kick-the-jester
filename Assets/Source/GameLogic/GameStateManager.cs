@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Entities.Components;
+using Assets.Source.Structs;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -8,14 +9,22 @@ namespace Assets.Source.GameLogic
     {
         #region EVENT HANDLING
 
-        public delegate void ValueEventHandler(int value);        
+        public delegate void GameStateEventHandler(GameStateMachine.GameStates state);
+        public delegate void FlightStatEventHandler(FlightStats stats);
+        public delegate void ValueEventHandler(int value);
 
-        public event ValueEventHandler OnDistanceChanged = delegate { };
-        public event ValueEventHandler OnRelativeKickForceChanged = delegate { };
+        private event GameStateEventHandler OnGameStateChanged = delegate { };
+        private event FlightStatEventHandler OnFlightStatsChanged = delegate { };
+        private event ValueEventHandler OnRelativeKickForceChanged = delegate { };
 
-        public void AttachForDistance(ValueEventHandler handler)
+        public void AttachForGameState(GameStateEventHandler handler)
         {
-            OnDistanceChanged += handler;
+            OnGameStateChanged += handler;
+        }
+
+        public void AttachForFlightStats(FlightStatEventHandler handler)
+        {
+            OnFlightStatsChanged += handler;
         }
 
         public void AttachForRelativeKickForce(ValueEventHandler handler)
@@ -25,30 +34,60 @@ namespace Assets.Source.GameLogic
 
         #endregion
 
+        // GAME STATE
+        public GameStateMachine GameState = new GameStateMachine();
+
+        // Components, which we poll for data
         private FlightRecorder flightRecorder;
         private KickForceManager kickForceManager;
 
 
         void Start()
         {
+            
             flightRecorder = Singletons.jester.GetComponent<FlightRecorder>();
             kickForceManager = Singletons.jester.GetComponent<KickForceManager>();
 
             // Register for Pausing the Game
+            Singletons.userControl.AttachForKick(OnKick);
             Singletons.userControl.AttachForPause(OnPauseGame);
         }
 
 
-        void Update()
+        void LateUpdate()
         {
-            OnDistanceChanged(flightRecorder.DistanceMeters);
+            FlightStats stats = flightRecorder.GetFlightStats();
+            CheckIsMoving(stats);
+
+            OnFlightStatsChanged(flightRecorder.GetFlightStats());
             OnRelativeKickForceChanged(kickForceManager.GetRelativeKickForce());
         }
 
 
-        // Pauses the Game on a global level
-        public void OnPauseGame(bool isPaused)
+        private void CheckIsMoving(FlightStats stats)
         {
+            if(stats.IsLanded && GameState.State == GameStateMachine.GameStates.Flight)
+            {
+                GameState.ToEnd();
+                OnGameStateChanged(GameState.State);
+            }
+        }
+
+
+        // Switches GameState to Flight Mode
+        private void OnKick()
+        {
+            GameState.ToFlight();
+            OnGameStateChanged(GameState.State);
+        }
+
+
+        // Pauses the Game on a global level
+        private void OnPauseGame(bool isPaused)
+        {
+            GameState.TogglePause(isPaused);
+            OnGameStateChanged(GameState.State);
+
             Time.timeScale = isPaused ? 0 : 1;
         }
     }
