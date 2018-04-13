@@ -6,6 +6,7 @@
         public const string UI_CANVAS = "UICanvas";
         public const string USER_CONTROL = "UserControl";
         public const string GAMESTATE_MANAGER = "GameStateManager";
+        public const string SCREEN_MANAGER = "ScreenManager";
 
         // ToDo: Figure out actual factor
         public const int FLOAT_PRECISION_DIGITS = 4;

@@ -36,6 +36,15 @@ namespace Assets.Source.App
             }
         }
 
+        private static ScreenManager _screenManager;
+        public static ScreenManager screenManager
+        {
+            get
+            {
+                return SafeGet(_screenManager, Constants.SCREEN_MANAGER);
+            }
+        }
+
 
         /* ------------------------------------------------------------------------------------ */
         #region Utilities

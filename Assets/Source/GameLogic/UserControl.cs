@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Assets.Source.App;
 
 namespace Assets.Source.GameLogic
 {
@@ -42,6 +43,11 @@ namespace Assets.Source.GameLogic
             if (Input.GetButtonDown("Pause"))
             {
                 TooglePauseGame();
+            }
+
+            if (Input.GetButtonDown("Buy"))
+            {
+                Singletons.screenManager.ShowShop();
             }
         }
 
