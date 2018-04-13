@@ -11,33 +11,38 @@ namespace Assets.Source.GameLogic
         public delegate void InputEventHandler();
         public delegate void ToggleEventHandler(bool State);
 
-        public event InputEventHandler inputKickHandler = delegate { };
-        public event ToggleEventHandler inputPauseHandler = delegate { };
+        public event InputEventHandler InputKickHandler = delegate { };
+        public event ToggleEventHandler InputPauseHandler = delegate { };
 
         public void AttachForKick(InputEventHandler handler)
         {            
-            inputKickHandler += handler;
+            InputKickHandler += handler;
         }
 
         // ONly GameStateManager should attach here, everything else should listen there
         public void AttachForPause(ToggleEventHandler handler)
         {
-            inputPauseHandler += handler;
+            InputPauseHandler += handler;
         }
 
         #endregion
 
         /* ----------------------------- ----------------------------- */
 
-
         private bool IsPaused = false;
+        private bool CanGoToShop = false;
+
+        void Start()
+        {
+            Singletons.gameStateManager.AttachForGameState(OnGameStateChange);
+        }
 
         void Update()
         {
             
             if (Input.GetButtonDown("Kick") || Input.touchCount > 0)
             {                
-                inputKickHandler();
+                InputKickHandler();
             }
 
             if (Input.GetButtonDown("Pause"))
@@ -47,10 +52,31 @@ namespace Assets.Source.GameLogic
 
             if (Input.GetButtonDown("Buy"))
             {
+                ShowShop();
+            }
+        }
+
+        /* ----------------------------- SHOP ----------------------------- */
+        #region SHOP
+
+        public void ShowShop()
+        {
+            if (CanGoToShop)
+            {
                 Singletons.screenManager.ShowShop();
             }
         }
 
+        public void OnGameStateChange(GameStateMachine.GameState gameState)
+        {
+            if (gameState == GameStateMachine.GameState.End)
+            {
+                // Allow going to the shop only after the game is over
+                CanGoToShop = true;
+            }
+        }
+
+        #endregion
 
         /* ----------------------------- PAUSE GAME ----------------------------- */
         #region PAUSE GAME
@@ -58,19 +84,19 @@ namespace Assets.Source.GameLogic
         public void PauseGame()
         {
             IsPaused = true;
-            inputPauseHandler(IsPaused);
+            InputPauseHandler(IsPaused);
         }
 
         public void UnPauseGame()
         {
             IsPaused = false;
-            inputPauseHandler(IsPaused);
+            InputPauseHandler(IsPaused);
         }
 
         public void TooglePauseGame()
         {
             IsPaused = !IsPaused;
-            inputPauseHandler(IsPaused);
+            InputPauseHandler(IsPaused);
         }
 
         #endregion

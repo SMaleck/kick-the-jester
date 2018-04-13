@@ -8,6 +8,7 @@ namespace Assets.Source.UI
     public class FlightEndUI : MonoBehaviour
     {
         public Text txtGameOver;
+        public Button shopButton;
 
         void Start()
         {
@@ -22,6 +23,7 @@ namespace Assets.Source.UI
             if(state == GameStateMachine.GameState.End)
             {
                 txtGameOver.text = "GAME OVER";
+                shopButton.interactable = true;
             }
         }
     }

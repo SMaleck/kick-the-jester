@@ -1313,6 +1313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtGameOver: {fileID: 1353591429}
+  shopButton: {fileID: 1177861308}
 --- !u!1 &1309148469
 GameObject:
   m_ObjectHideFlags: 0
