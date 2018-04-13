@@ -17,9 +17,9 @@ namespace Assets.Source.UI
             Singletons.gameStateManager.AttachForGameState(UpdateUI);
         }
 
-        private void UpdateUI(GameStateMachine.GameStates state)
+        private void UpdateUI(GameStateMachine.GameState state)
         {            
-            if(state == GameStateMachine.GameStates.End)
+            if(state == GameStateMachine.GameState.End)
             {
                 txtGameOver.text = "GAME OVER";
             }

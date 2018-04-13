@@ -7,15 +7,15 @@ namespace Assets.Source.GameLogic
 {
     public class GameStateMachine
     {
-        public enum GameStates { Launch, Flight, End, Paused }
+        public enum GameState { Launch, Flight, End, Paused }
 
-        private GameStates StateBeforePause;
-        public GameStates State { get; private set; }
+        private GameState StateBeforePause;
+        public GameState State { get; private set; }
         
 
         public GameStateMachine()
         {
-            State = GameStates.Launch;
+            State = GameState.Launch;
             StateBeforePause = State;
         }
 
@@ -25,7 +25,7 @@ namespace Assets.Source.GameLogic
             if (isPaused)
             {
                 StateBeforePause = State;
-                State = GameStates.Paused;
+                State = GameState.Paused;
             }
             else
             {
@@ -36,18 +36,18 @@ namespace Assets.Source.GameLogic
 
         public void ToFlight()
         {
-            if(State != GameStates.End && State != GameStates.Paused)
+            if(State != GameState.End && State != GameState.Paused)
             {
-                State = GameStates.Flight;
+                State = GameState.Flight;
             }
         }
 
 
         public void ToEnd()
         {
-            if (State != GameStates.Paused)
+            if (State != GameState.Paused)
             {
-                State = GameStates.End;
+                State = GameState.End;
             }
         }
 

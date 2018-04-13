@@ -9,7 +9,7 @@ namespace Assets.Source.GameLogic
     {
         #region EVENT HANDLING
 
-        public delegate void GameStateEventHandler(GameStateMachine.GameStates state);
+        public delegate void GameStateEventHandler(GameStateMachine.GameState state);
         public delegate void FlightStatEventHandler(FlightStats stats);
         public delegate void ValueEventHandler(int value);
 
@@ -66,7 +66,7 @@ namespace Assets.Source.GameLogic
 
         private void CheckIsMoving(FlightStats stats)
         {
-            if(stats.IsLanded && GameState.State == GameStateMachine.GameStates.Flight)
+            if(stats.IsLanded && GameState.State == GameStateMachine.GameState.Flight)
             {
                 GameState.ToEnd();
                 OnGameStateChanged(GameState.State);
