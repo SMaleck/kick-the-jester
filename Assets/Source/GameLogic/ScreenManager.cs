@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartScreenManager : MonoBehaviour {
+public class ScreenManager : MonoBehaviour {
     
 	public void StartGame()
     {
