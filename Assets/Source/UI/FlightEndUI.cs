@@ -7,12 +7,10 @@ namespace Assets.Source.UI
 {
     public class FlightEndUI : MonoBehaviour
     {
-        public Text txtGameOver;
-        public Button shopButton;
-
+        public GameObject Panel;
         void Start()
         {
-            txtGameOver.text = "";
+            Panel.SetActive(false);
 
             // Register for Updates
             Singletons.gameStateManager.AttachForGameState(UpdateUI);
@@ -22,8 +20,7 @@ namespace Assets.Source.UI
         {            
             if(state == GameStateMachine.GameState.End)
             {
-                txtGameOver.text = "GAME OVER";
-                shopButton.interactable = true;
+                Panel.SetActive(true);
             }
         }
     }

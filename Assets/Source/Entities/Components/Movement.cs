@@ -1,4 +1,6 @@
 ﻿using Assets.Source.App;
+using Assets.Source.GameLogic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Components
@@ -17,11 +19,15 @@ namespace Assets.Source.Entities.Components
 
             // Register with controls
             Singletons.userControl.AttachForKick(KickForward);
+
+            DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
         }
 
 
-        public void KickForward()
-        {            
+        private void KickForward()
+        {
+            if (!IsActive) { return; }
+
             Vector3 AppliedForce = kickForceManager.GetAppliedKickForce();
             entityBody.AddForce(AppliedForce);
         }
