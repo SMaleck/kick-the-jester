@@ -45,6 +45,12 @@ namespace Assets.Source.App
             }
         }
 
+        private static PlayerProfile _playerProfile;
+        public static PlayerProfile playerProfile
+        {
+            get { return SafeGet(_playerProfile, Constants.PLAYER_PROFILE); }
+        }
+
 
         /* ------------------------------------------------------------------------------------ */
         #region Utilities

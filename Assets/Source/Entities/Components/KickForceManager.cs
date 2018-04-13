@@ -1,13 +1,11 @@
 ﻿using Assets.Source.App;
 using UnityEngine;
 
-// ToDo: Should this be on te Jester prefab or separate?
 namespace Assets.Source.Entities.Components
 {
     public class KickForceManager : BaseComponent
     {
         private bool IsInitialKick = true;
-        private float BaseForceMagnitude = 600f;
         private Vector3 ForceDirection = new Vector3(1, 1, 0);
 
         private float maxForceFactor = 2;
@@ -46,7 +44,7 @@ namespace Assets.Source.Entities.Components
 
             // Reduce amount of kicks left
             Kicks--;
-            float currentForceMagnitude = BaseForceMagnitude;
+            float currentForceMagnitude = Singletons.playerProfile.KickForce;
 
             return ForceDirection * currentForceMagnitude;
         }
@@ -55,7 +53,7 @@ namespace Assets.Source.Entities.Components
         private Vector3 GetInitialKickForce()
         {
             IsInitialKick = false;
-            float currentForceMagnitude = BaseForceMagnitude * InitialKickForceFactor;
+            float currentForceMagnitude = Singletons.playerProfile.KickForce * InitialKickForceFactor;
 
             return ForceDirection * currentForceMagnitude;
         }
