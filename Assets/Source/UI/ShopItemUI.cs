@@ -9,9 +9,20 @@ namespace Assets.Source.UI
     public class ShopItemUI : MonoBehaviour
     {
 
-        public void onKickForcePurchase()
+        public void PurchaseKickForceUpgrade()
         {
-            Singletons.playerProfile.KickForce = 1000f;
+            Singletons.playerProfile.KickForce += 200f;
+        }
+
+        public void PurchaseKickCountUpgrade()
+        {
+            int kickCount = Singletons.playerProfile.KickCount;
+            Singletons.playerProfile.KickCount = kickCount + 2;
+        }
+
+        public void PurchaseStatsReset()
+        {
+            Singletons.playerProfile.ResetStats();
         }
     }
 }

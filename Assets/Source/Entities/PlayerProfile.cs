@@ -9,11 +9,18 @@ namespace Assets.Source.Entities
 {
     public class PlayerProfile : BaseEntity
     {
-        #region PROPERTIES
+        #region CONSTANTS
+        private const float BASE_KICK_FORCE = 600f;
+        private const int BASE_KICK_COUNT = 2;
+        #endregion
 
-        private float kickForce = 600f;
+        #region PROPERTIES
+        //[SerializeField]
+        private float kickForce = BASE_KICK_FORCE;
         private int kickForceInFlight = 1; // TODO: Is this one needed at all?
-        private int kickCount = 3;
+        //[SerializeField]
+        private int kickCount = BASE_KICK_COUNT;
+        //[SerializeField]
         private int bestDistance = 0;
         
         public float KickForce
@@ -57,6 +64,7 @@ namespace Assets.Source.Entities
         {
             OnProfileLoaded += handler;
 
+            // In case it is attached too late, call it now
             if (isLoaded)
             {
                 handler(this);
@@ -125,5 +133,12 @@ namespace Assets.Source.Entities
         }
 
         #endregion
+
+        public void ResetStats()
+        {
+            KickCount = BASE_KICK_COUNT;
+            KickForce = BASE_KICK_FORCE;
+            BestDistance = 0;
+        }
     }
 }

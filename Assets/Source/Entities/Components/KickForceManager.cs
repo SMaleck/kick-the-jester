@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.GameLogic;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Assets.Source.Entities.Components
 
         private float maxForceFactor = 2;
         private float InitialKickForceFactor = 1f;
-        private int Kicks = 3;
+        private int Kicks = 1;
 
         private Rigidbody2D entityBody;
 
@@ -21,11 +22,17 @@ namespace Assets.Source.Entities.Components
         {
             entityBody = gameObject.GetComponent<Rigidbody2D>();
             
-            // Listen for kick events
+            // Listen for events
             Singletons.userControl.AttachForKick(KickForward);
+            Singletons.playerProfile.AddEventHandler(OnPlayerProfileLoaded);
 
             // Prevent kicking during pause or after game is over
             DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
+        }
+
+        private void OnPlayerProfileLoaded(PlayerProfile profile)
+        {
+            Kicks = profile.KickCount;
         }
 
         // Update is called once per frame
