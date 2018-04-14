@@ -1,4 +1,6 @@
 ﻿using Assets.Source.App;
+using Assets.Source.GameLogic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Components
@@ -12,6 +14,19 @@ namespace Assets.Source.Entities.Components
         private float InitialKickForceFactor = 1f;
         private int Kicks = 3;
 
+        private Rigidbody2D entityBody;
+
+        // ------------------------ START
+        private void Start()
+        {
+            entityBody = gameObject.GetComponent<Rigidbody2D>();
+            
+            // Listen for kick events
+            Singletons.userControl.AttachForKick(KickForward);
+
+            // Prevent kicking during pause or after game is over
+            DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
+        }
 
         // Update is called once per frame
         void Update()
@@ -26,12 +41,24 @@ namespace Assets.Source.Entities.Components
             InitialKickForceFactor = (InitialKickForceFactor + x) % maxForceFactor;
         }
 
+        private void KickForward()
+        {
+            if (!IsActive) { return; }
+
+            Vector3 AppliedForce = GetAppliedKickForce();
+            entityBody.AddForce(AppliedForce);
+        }
 
         // Calculates the Force that will be applied to the Kick
         public Vector3 GetAppliedKickForce()
         {
+            return GetAppliedKickForce(IsInitialKick);
+        }
+
+        public Vector3 GetAppliedKickForce(bool isInitialKick)
+        {
             // Apply initial Kickforce modulation
-            if (IsInitialKick)
+            if (isInitialKick)
             {
                 return GetInitialKickForce();
             }
