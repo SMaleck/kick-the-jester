@@ -9,9 +9,11 @@ namespace Assets.Source.Entities
 {
     public class PlayerProfile : BaseEntity
     {
+        #region PROPERTIES
+
         private float kickForce = 600f;
-        private int kickForceInFlight = 1;
-        private int kickCount = 1;
+        private int kickForceInFlight = 1; // TODO: Is this one needed at all?
+        private int kickCount = 3;
         private int bestDistance = 0;
         
         public float KickForce
@@ -23,10 +25,55 @@ namespace Assets.Source.Entities
                 PlayerPrefs.SetFloat(Constants.PREF_KICK_FORCE, value);
             }
         }
+        public int KickCount
+        {
+            get { return kickCount; }
+            set
+            {
+                kickCount = value;
+                PlayerPrefs.SetInt(Constants.PREF_KICK_COUNT, value);
+            }
+        }
+        public int BestDistance
+        {
+            get { return bestDistance; }
+            set
+            {
+                bestDistance = value;
+                PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
+            }
+        }
+
+        #endregion
+
+        #region EVENTS
+
+        private bool isLoaded = false;
+
+        public delegate void ProfileLoadedEventHandler(PlayerProfile profile);
+        private event ProfileLoadedEventHandler OnProfileLoaded = delegate { };
+
+        public void AddEventHandler(ProfileLoadedEventHandler handler)
+        {
+            OnProfileLoaded += handler;
+
+            if (isLoaded)
+            {
+                handler(this);
+            }
+        }
+
+        #endregion
+
+        #region UNITY LIFECYCLE HOOKS
 
         void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
+            // Keep max one instance of this class/gameobject
+            if (FindObjectsOfType(GetType()).Length <= 1)
+            {
+                DontDestroyOnLoad(this.gameObject);
+            }
         }
 
         void Start()
@@ -36,7 +83,14 @@ namespace Assets.Source.Entities
             LoadKickForceInFlight();
             LoadKickCount();
             LoadBestDistance();
+
+            OnProfileLoaded(this);
+            isLoaded = true;
         }
+
+        #endregion
+
+        #region LOADERS
 
         private void LoadBestDistance()
         {
@@ -69,5 +123,7 @@ namespace Assets.Source.Entities
                 kickForce = PlayerPrefs.GetFloat(Constants.PREF_KICK_FORCE);
             }
         }
+
+        #endregion
     }
 }
