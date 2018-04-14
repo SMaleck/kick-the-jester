@@ -8,14 +8,20 @@ namespace Assets.Source.Entities.Components
 {
     public class KickForceManager : BaseComponent
     {
-        private bool IsInitialKick = true;
-        private Vector3 ForceDirection = new Vector3(1, 1, 0);
+        #region PROPERTIES
+
+        private bool isInitialKick = true;
+        private Vector3 forceDirection = new Vector3(1, 1, 0);
 
         private float maxForceFactor = 2;
-        private float InitialKickForceFactor = 1f;
-        private int Kicks = 1;
+        private float initialKickForceFactor = 1f;
+        private int kicksAvailable = 1;
 
         private Rigidbody2D entityBody;
+
+        #endregion
+
+        #region UNITY LIFECYCLE
 
         // ------------------------ START
         private void Start()
@@ -30,11 +36,6 @@ namespace Assets.Source.Entities.Components
             DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
         }
 
-        private void OnPlayerProfileLoaded(PlayerProfile profile)
-        {
-            Kicks = profile.KickCount;
-        }
-
         // Update is called once per frame
         void Update()
         {
@@ -45,57 +46,55 @@ namespace Assets.Source.Entities.Components
         {
             float x = Time.deltaTime;
 
-            InitialKickForceFactor = (InitialKickForceFactor + x) % maxForceFactor;
+            initialKickForceFactor = (initialKickForceFactor + x) % maxForceFactor;
         }
 
+        #endregion
+
+        #region EVENT HANDLERS
+
+        private void OnPlayerProfileLoaded(PlayerProfile profile)
+        {
+            kicksAvailable = profile.KickCount;
+        }
+        
         private void KickForward()
         {
-            if (!IsActive) { return; }
+            if (!IsActive || !CanKick()) { return; }
 
-            Vector3 AppliedForce = GetAppliedKickForce();
-            entityBody.AddForce(AppliedForce);
+            if (isInitialKick) { isInitialKick = false; }
+            TrackKickUsage();
+            entityBody.AddForce(GetAppliedKickForce());
         }
 
-        // Calculates the Force that will be applied to the Kick
-        public Vector3 GetAppliedKickForce()
-        {
-            return GetAppliedKickForce(IsInitialKick);
-        }
+        #endregion
 
-        public Vector3 GetAppliedKickForce(bool isInitialKick)
-        {
-            // Apply initial Kickforce modulation
-            if (isInitialKick)
-            {
-                return GetInitialKickForce();
-            }
-
-            // Return Zero, if there are no Kicks left
-            if (Kicks <= 0)
-            {
-                return Vector3.zero;
-            }
-
-            // Reduce amount of kicks left
-            Kicks--;
-            float currentForceMagnitude = Singletons.playerProfile.KickForce;
-
-            return ForceDirection * currentForceMagnitude;
-        }
-
-
-        private Vector3 GetInitialKickForce()
-        {
-            IsInitialKick = false;
-            float currentForceMagnitude = Singletons.playerProfile.KickForce * InitialKickForceFactor;
-
-            return ForceDirection * currentForceMagnitude;
-        }
-
+        #region METHODS
 
         public int GetRelativeKickForce()
         {
-            return MathUtil.AsPercent(InitialKickForceFactor, maxForceFactor);
+            return MathUtil.AsPercent(initialKickForceFactor, maxForceFactor);
         }
+
+        private bool CanKick()
+        {
+            return kicksAvailable > 0;
+        }
+
+        private void TrackKickUsage()
+        {
+            kicksAvailable--;
+        }
+        
+        // Calculates the Force that will be applied to the Kick
+        private Vector3 GetAppliedKickForce()
+        {
+            float currentForceMagnitude = isInitialKick ? Singletons.playerProfile.KickForce * initialKickForceFactor 
+                : Singletons.playerProfile.KickForce;
+            
+            return forceDirection * currentForceMagnitude;
+        }
+        
+        #endregion
     }
 }
