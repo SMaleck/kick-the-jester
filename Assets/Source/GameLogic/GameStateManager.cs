@@ -44,13 +44,13 @@ namespace Assets.Source.GameLogic
 
         void Start()
         {
-            
-            flightRecorder = Singletons.jester.GetComponent<FlightRecorder>();
-            kickForceManager = Singletons.jester.GetComponent<KickForceManager>();
+
+            flightRecorder = App.Cache.jester.GetComponent<FlightRecorder>();
+            kickForceManager = App.Cache.jester.GetComponent<KickForceManager>();
 
             // Register for Pausing the Game
-            Singletons.userControl.AttachForKick(OnKick);
-            Singletons.userControl.AttachForPause(OnPauseGame);
+            App.Cache.userControl.AttachForKick(this.OnKick);
+            App.Cache.userControl.AttachForPause(this.OnPauseGame);
         }
 
 
