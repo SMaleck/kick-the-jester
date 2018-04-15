@@ -34,7 +34,7 @@ namespace Assets.Source.GameLogic
 
         void Start()
         {
-            Singletons.gameStateManager.AttachForGameState(OnGameStateChange);
+            App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChange);
         }
 
         void Update()
@@ -63,7 +63,7 @@ namespace Assets.Source.GameLogic
         {
             if (CanGoToShop)
             {
-                Singletons.screenManager.ShowShop();
+                App.Cache.screenManager.ShowShop();
             }
         }
 

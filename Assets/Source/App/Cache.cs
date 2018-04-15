@@ -1,0 +1,102 @@
+﻿using Assets.Source.Entities;
+using Assets.Source.GameLogic;
+using System;
+using UnityEngine;
+using System.Collections;
+
+namespace Assets.Source.App
+{
+    public static class Cache
+    {
+        private static Jester _jester;
+        public static Jester jester
+        {
+            get
+            {
+                if (_jester == null)
+                {
+                    _jester = GetComponent<Jester>(Constants.JESTER);
+                }
+
+                return _jester;
+            }
+        }
+
+        private static GameStateManager _gameStateManager;
+        public static GameStateManager gameStateManager
+        {
+            get
+            {
+                if (_gameStateManager == null)
+                {
+                    _gameStateManager = GetComponent<GameStateManager>(Constants.GAMESTATE_MANAGER);
+                }
+                
+                return _gameStateManager;
+            }
+        }
+
+
+        private static UserControl _userControl;
+        public static UserControl userControl
+        {
+            get
+            {
+                if (_userControl == null)
+                {
+                    _userControl = GetComponent<UserControl>(Constants.USER_CONTROL);
+                }
+                return _userControl;
+            }
+        }
+
+        private static ScreenManager _screenManager;
+        public static ScreenManager screenManager
+        {
+            get
+            {
+                if (_screenManager == null)
+                {
+                    _screenManager = GetComponent<ScreenManager>(Constants.SCREEN_MANAGER);
+                }
+                return _screenManager;
+            }
+        }
+
+        private static PlayerProfile _playerProfile;
+        public static PlayerProfile playerProfile
+        {
+            get
+            {
+                if (_playerProfile == null)
+                {
+                    _playerProfile = GetComponent<PlayerProfile>(Constants.PLAYER_PROFILE);
+                }
+                return _playerProfile;
+            }
+        }
+
+
+        /* ------------------------------------------------------------------------------------ */
+        #region Utilities
+
+        private static T GetComponent<T>(string gameObjectId)
+        {
+            T component = GameObject.Find(gameObjectId).GetComponent<T>();
+            AssertNotNull(component);
+
+            return component;
+        }
+
+
+        private static void AssertNotNull(object Obj)
+        {
+            if (Obj == null)
+            {
+                throw new NullReferenceException();
+            }
+        }
+
+        #endregion
+    }
+}

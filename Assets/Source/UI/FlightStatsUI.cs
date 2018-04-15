@@ -16,8 +16,8 @@ namespace Assets.Source.UI
         void Start()
         {
             // Register for Updates
-            Singletons.gameStateManager.AttachForFlightStats(UpdateUI);
-            Singletons.playerProfile.AddEventHandler(UpdateBestDistance);
+            App.Cache.gameStateManager.AttachForFlightStats(this.UpdateUI);
+            App.Cache.playerProfile.AddEventHandler(this.UpdateBestDistance);
         }
 
         public void UpdateUI(FlightStats stats)
