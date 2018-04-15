@@ -2,7 +2,6 @@
 using Assets.Source.GameLogic;
 using System;
 using UnityEngine;
-using System.Collections;
 
 namespace Assets.Source.App
 {
@@ -35,7 +34,20 @@ namespace Assets.Source.App
                 return _gameStateManager;
             }
         }
+        
+        private static RxState _rxState;
+        public static RxState rxState
+        {
+            get
+            {
+                if (_rxState == null)
+                {
+                    _rxState = GetComponent<RxState>(Constants.GAMESTATE_MANAGER);
+                }
 
+                return _rxState;
+            }
+        }
 
         private static UserControl _userControl;
         public static UserControl userControl

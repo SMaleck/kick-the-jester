@@ -16,7 +16,7 @@ namespace Assets.Source.UI
         void Start()
         {
             // Register for Updates
-            App.Cache.gameStateManager.AttachForFlightStats(this.UpdateUI);
+            App.Cache.rxState.AttachForFlightStats(this.UpdateUI);
             App.Cache.playerProfile.AddEventHandler(this.UpdateBestDistance);
         }
 

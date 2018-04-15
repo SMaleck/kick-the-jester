@@ -5,9 +5,7 @@ using UnityEngine;
 namespace Assets.Source.Entities.Components
 {
     public class FlightRecorder : BaseComponent
-    {
-        private Jester jester; 
-
+    {       
         private Transform targetTransform;
         private Rigidbody2D targetBody;
         private Vector3 Origin;        

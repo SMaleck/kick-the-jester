@@ -1,40 +1,39 @@
-﻿using Assets.Source.App;
-using Assets.Source.Entities;
-using Assets.Source.GameLogic;
+﻿using Assets.Source.Entities;
 using Assets.Source.Structs;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStatsRecorder : MonoBehaviour {
-
-    private PlayerProfile playerProfile;
-    private int currentDistance = 0;
-
-	// Use this for initialization
-	void Start () {
-
-        Assets.Source.App.Cache.gameStateManager.AttachForFlightStats(this.OnFlightStatsChange);
-        Assets.Source.App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChange);
-        Assets.Source.App.Cache.playerProfile.AddEventHandler(this.OnProfileLoaded);
-	}
-
-    private void OnFlightStatsChange(FlightStats stats)
+namespace Assets.Source.GameLogic
+{
+    public class GameStatsRecorder : MonoBehaviour
     {
-        currentDistance = stats.Distance;
-    }
+        private PlayerProfile playerProfile;
+        private int currentDistance = 0;
 
-    private void OnProfileLoaded(PlayerProfile profile)
-    {
-        playerProfile = profile;
-    }
-
-    private void OnGameStateChange(GameStateMachine.GameState state)
-    {
-        if (state == GameStateMachine.GameState.End && currentDistance > playerProfile.BestDistance)
+        // Use this for initialization
+        void Start()
         {
-            playerProfile.BestDistance = currentDistance;
+
+            App.Cache.rxState.AttachForFlightStats(this.OnFlightStatsChange);
+            App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChange);
+            App.Cache.playerProfile.AddEventHandler(this.OnProfileLoaded);
+        }
+
+        private void OnFlightStatsChange(FlightStats stats)
+        {
+            currentDistance = stats.Distance;
+        }
+
+        private void OnProfileLoaded(PlayerProfile profile)
+        {
+            playerProfile = profile;
+        }
+
+        private void OnGameStateChange(GameStateMachine.GameState state)
+        {
+            if (state == GameStateMachine.GameState.End && currentDistance > playerProfile.BestDistance)
+            {
+                playerProfile.BestDistance = currentDistance;
+            }
         }
     }
 }
