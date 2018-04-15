@@ -10,7 +10,19 @@ namespace Assets.Source.Entities
             {
                 return gameObject.transform;
             }
-        }           
+        }
+            
+        // Use this for initialization
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }
 

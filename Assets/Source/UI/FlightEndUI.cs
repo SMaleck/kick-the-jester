@@ -13,7 +13,7 @@ namespace Assets.Source.UI
             Panel.SetActive(false);
 
             // Register for Updates
-            GameObjectPool.gameStateManager.AttachForGameState(UpdateUI);
+            Singletons.gameStateManager.AttachForGameState(UpdateUI);
         }
 
         private void UpdateUI(GameStateMachine.GameState state)

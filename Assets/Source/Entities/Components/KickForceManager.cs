@@ -29,8 +29,8 @@ namespace Assets.Source.Entities.Components
             entityBody = gameObject.GetComponent<Rigidbody2D>();
             
             // Listen for events
-            GameObjectPool.userControl.AttachForKick(KickForward);
-            GameObjectPool.playerProfile.AddEventHandler(OnPlayerProfileLoaded);
+            Singletons.userControl.AttachForKick(KickForward);
+            Singletons.playerProfile.AddEventHandler(OnPlayerProfileLoaded);
 
             // Prevent kicking during pause or after game is over
             DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
@@ -89,8 +89,8 @@ namespace Assets.Source.Entities.Components
         // Calculates the Force that will be applied to the Kick
         private Vector3 GetAppliedKickForce()
         {
-            float currentForceMagnitude = isInitialKick ? GameObjectPool.playerProfile.KickForce * initialKickForceFactor 
-                : GameObjectPool.playerProfile.KickForce;
+            float currentForceMagnitude = isInitialKick ? Singletons.playerProfile.KickForce * initialKickForceFactor 
+                : Singletons.playerProfile.KickForce;
             
             return forceDirection * currentForceMagnitude;
         }

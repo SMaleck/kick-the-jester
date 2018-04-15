@@ -11,18 +11,18 @@ namespace Assets.Source.UI
 
         public void PurchaseKickForceUpgrade()
         {
-            GameObjectPool.playerProfile.KickForce += 200f;
+            Singletons.playerProfile.KickForce += 200f;
         }
 
         public void PurchaseKickCountUpgrade()
         {
-            int kickCount = GameObjectPool.playerProfile.KickCount;
-            GameObjectPool.playerProfile.KickCount = kickCount + 2;
+            int kickCount = Singletons.playerProfile.KickCount;
+            Singletons.playerProfile.KickCount = kickCount + 2;
         }
 
         public void PurchaseStatsReset()
         {
-            GameObjectPool.playerProfile.ResetStats();
+            Singletons.playerProfile.ResetStats();
         }
     }
 }

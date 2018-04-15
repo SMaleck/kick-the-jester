@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Source.App
 {
-    public static class GameObjectPool
+    public static class Singletons
     {
         private static Jester _jester;
         public static Jester jester
@@ -58,14 +58,14 @@ namespace Assets.Source.App
         {
             if(privateReference == null)
             {
-                privateReference = GetComponentOnGameObject<T>(gameObjectid);
+                privateReference = GetSingletonGameObject<T>(gameObjectid);
             }
 
             return privateReference;
         }
 
 
-        private static T GetComponentOnGameObject<T>(string gameObjectId)
+        private static T GetSingletonGameObject<T>(string gameObjectId)
         {
             T singleton = GameObject.Find(gameObjectId).GetComponent<T>();
             AssertNotNull(singleton);

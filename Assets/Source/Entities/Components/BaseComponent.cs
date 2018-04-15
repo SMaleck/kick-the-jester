@@ -27,7 +27,7 @@ namespace Assets.Source.Entities.Components
         protected void DeactivateOnStates(List<GameStateMachine.GameState> InactiveStates)
         {
             this.InactiveStates = InactiveStates;
-            GameObjectPool.gameStateManager.AttachForGameState(OnGameStateChanged);
+            Singletons.gameStateManager.AttachForGameState(OnGameStateChanged);
         }
 
         private void OnGameStateChanged(GameStateMachine.GameState state)
