@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Entities
 {
-    public class BaseEntity : MonoBehaviour
+    public abstract class BaseEntity : MonoBehaviour
     {
         public Transform goTransform
         {
@@ -10,19 +10,7 @@ namespace Assets.Source.Entities
             {
                 return gameObject.transform;
             }
-        }
-            
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        }           
     }
 }
 

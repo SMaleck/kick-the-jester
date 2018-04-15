@@ -62,7 +62,7 @@ namespace Assets.Source.Entities.Components
             {
                 Distance = DistanceMeters,
                 Height = HeightMeters,
-                Velocity = Velocity,                
+                Velocity = targetBody.velocity,                
                 IsLanded = IsLanded,
             };
         }

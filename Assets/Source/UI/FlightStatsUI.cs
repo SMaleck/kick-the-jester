@@ -24,7 +24,7 @@ namespace Assets.Source.UI
         {
             txtDistance.text = stats.Distance.ToString();
             txtHeight.text = stats.Height.ToString();
-            txtVelocity.text = stats.Velocity.ToString();
+            txtVelocity.text = MathUtil.CappedFloat(stats.Velocity.magnitude).ToString();
         }
 
         public void UpdateBestDistance(PlayerProfile profile)
