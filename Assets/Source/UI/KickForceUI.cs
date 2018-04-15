@@ -14,7 +14,7 @@ namespace Assets.Source.UI.Components
             slider.maxValue = 100;
 
             // Register for Updates
-            Singletons.gameStateManager.AttachForRelativeKickForce(UpdateUI);
+            GameObjectPool.gameStateManager.AttachForRelativeKickForce(UpdateUI);
         }
 
         public void UpdateUI(int value)

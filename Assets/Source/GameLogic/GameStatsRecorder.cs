@@ -15,9 +15,9 @@ public class GameStatsRecorder : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        Singletons.gameStateManager.AttachForFlightStats(OnFlightStatsChange);
-        Singletons.gameStateManager.AttachForGameState(OnGameStateChange);
-        Singletons.playerProfile.AddEventHandler(OnProfileLoaded);
+        GameObjectPool.gameStateManager.AttachForFlightStats(OnFlightStatsChange);
+        GameObjectPool.gameStateManager.AttachForGameState(OnGameStateChange);
+        GameObjectPool.playerProfile.AddEventHandler(OnProfileLoaded);
 	}
 
     private void OnFlightStatsChange(FlightStats stats)
