@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour {
+
+    private const string SCENE_GAME = "Default";
+    private const string SCENE_SHOP = "Shop";
     
 	public void StartGame()
     {
-        SceneManager.LoadSceneAsync("Default");
+        SceneManager.LoadSceneAsync(SCENE_GAME);
     }
 
     public void ShowShop()
     {
-        SceneManager.LoadSceneAsync("Shop");
+        SceneManager.LoadSceneAsync(SCENE_SHOP);
     }
 }
