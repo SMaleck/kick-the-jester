@@ -39,9 +39,7 @@ namespace Assets.Source.Entities.Components
         // Update is called once per frame
         void Update()
         {
-            UpdateInitialKickForceFactor();
-
-            entityBody.velocity = Vector3.right * 3f;
+            UpdateInitialKickForceFactor();            
         }
 
         private void UpdateInitialKickForceFactor()
