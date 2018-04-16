@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Entities;
 using Assets.Source.Structs;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,14 +23,14 @@ namespace Assets.Source.UI
 
         public void UpdateUI(FlightStats stats)
         {
-            txtDistance.text = stats.Distance.ToString();
-            txtHeight.text = stats.Height.ToString();
-            txtVelocity.text = MathUtil.CappedFloat(stats.Velocity.magnitude).ToString();
+            txtDistance.text = stats.Distance.ToString() + "m";
+            txtHeight.text = stats.Height.ToString() + "m";
+            txtVelocity.text = Math.Round(stats.Velocity.magnitude, 2).ToString() + "km/h";
         }
 
         public void UpdateBestDistance(PlayerProfile profile)
         {            
-            txtBestDistance.text += profile.BestDistance.ToString();
+            txtBestDistance.text = profile.BestDistance.ToString() + "m";
         }
     }
 }
