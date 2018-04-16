@@ -28,7 +28,7 @@ namespace Assets.Source.UI
         }
 
         public void UpdateBestDistance(PlayerProfile profile)
-        {
+        {            
             txtBestDistance.text += profile.BestDistance.ToString();
         }
     }
