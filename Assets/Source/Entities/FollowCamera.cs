@@ -4,32 +4,21 @@ namespace Assets.Source.Entities
 {
     public class FollowCamera : BaseEntity
     {
-        // Exposed in Editor
-        public GameObject Target;
+        private Vector2 origin;
+        private Transform target;
 
-        private Transform targetLocation;
-
-        // Use this for initialization
+        
         void Start()
-        {            
-            targetLocation = Target.GetComponent<Transform>();
+        {
+            origin = goTransform.position;
+            target = App.Cache.jester.goTransform;
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
-            FollowTarget();
-        }
+            Vector3 TPos = target.position;
 
-
-        private void FollowTarget()
-        {
-            if (Target != null)
-            {
-                Vector3 TPos = targetLocation.position;
-
-                goTransform.position = new Vector3(TPos.x, TPos.y, goTransform.position.z);
-            }
+            goTransform.position = new Vector3(TPos.x, Mathf.Clamp(TPos.y, origin.y, float.MaxValue), goTransform.position.z);
         }
     }
 }

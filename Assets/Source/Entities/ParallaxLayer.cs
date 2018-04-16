@@ -1,49 +1,93 @@
-﻿using UnityEngine;
+﻿using Assets.Source.App;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Assets.Source.Entities
 {
     public class ParallaxLayer : BaseEntity
     {
-        private ParallaxLayer prlxCopy;
+        public float ParallaxSpeed = 1f;
+        
+        private Transform[] spriteTransforms;
+        private float spriteWidth;
+        
+        private int leftSpriteIndex;
+        private int rightSpriteIndex;
 
-        private Rigidbody2D body;
-        public float VelocityFactor = 1f;
-        public bool Loop = true;
+        private Transform cameraTransform;
+        private Vector2 lastCameraPos;
+
 
         public void Awake()
         {
-            body = gameObject.GetComponent<Rigidbody2D>();            
-        }
+            cameraTransform = Camera.main.transform;
+            spriteWidth = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
+
+            // Create Left and Right Clones
+            GameObject goSprite = gameObject.GetComponentInChildren<SpriteRenderer>().gameObject;
+
+            CreateAdjecentClone(goSprite, spriteWidth);
+            CreateAdjecentClone(goSprite , -spriteWidth);
+
+            // Get Transforms of all sprites            
+            spriteTransforms = GetSpriteTransforms().ToArray();
+
+            leftSpriteIndex = 0;
+            rightSpriteIndex = spriteTransforms.Count() - 1;
+        }              
 
 
-        // Creates a copy of its self needed for looping
-        public void CreateOffsettedCopy()
+        public void Update()
         {
-            prlxCopy = GameObject.Instantiate(gameObject).GetComponent<ParallaxLayer>();
-            prlxCopy.OffsetSelf();
-        }
+            float deltaX = lastCameraPos.x - cameraTransform.position.x;
+            transform.position += Vector3.right * (deltaX * ParallaxSpeed);
 
+            lastCameraPos = cameraTransform.position;
 
-        // Offsets its own position to the right by its own width
-        // Needed for looping
-        public void OffsetSelf()
-        {
-            float width = gameObject.GetComponent<SpriteRenderer>().bounds.size.x;
-            Vector3 offsetPos = new Vector3(goTransform.position.x + width, goTransform.position.y, goTransform.position.z);
-
-            goTransform.position = offsetPos;
-        }
-
-
-        // Sets the velocity for parallax movement
-        public void SetVelocity(Vector2 Velocity)
-        {
-            body.velocity.Set(Velocity.x * VelocityFactor, Velocity.y * VelocityFactor);
-
-            if(prlxCopy != null)
+            if (cameraTransform.position.x >= spriteTransforms[leftSpriteIndex].position.x + spriteWidth)
             {
-                prlxCopy.SetVelocity(Velocity);
+                ScrollRight();
+            }            
+        }
+
+
+        // Creates a clone of the sprite-carrying gameobject with the specified offset
+        private void CreateAdjecentClone(GameObject toClone, float OffsetX)
+        {            
+            GameObject goCopy = GameObject.Instantiate(toClone);
+            goCopy.transform.parent = goTransform;
+
+            goCopy.transform.position = new Vector3(goCopy.transform.position.x + OffsetX, goCopy.transform.position.y, goCopy.transform.position.z);
+        }
+
+
+        // Gets all transforms in Children, ordered by the X-position
+        private IEnumerable<Transform> GetSpriteTransforms()
+        {            
+            List<Transform> transforms = new List<Transform>();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transforms.Add(transform.GetChild(i));
             }
+
+            return transforms.OrderBy(e => e.transform.position.x);
+        }
+
+
+        // Moves the left-most sprite to the right end
+        private void ScrollRight()
+        {            
+            spriteTransforms[leftSpriteIndex].position = Vector3.right * (spriteTransforms[rightSpriteIndex].position.x + spriteWidth);
+
+            rightSpriteIndex = leftSpriteIndex;
+            leftSpriteIndex++;
+
+            if(leftSpriteIndex >= spriteTransforms.Length)
+            {
+                leftSpriteIndex = 0;
+            }            
         }
     }
 }
