@@ -1,5 +1,4 @@
-﻿using Assets.Source.App;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,7 +6,15 @@ namespace Assets.Source.Entities
 {
     public class ParallaxLayer : BaseEntity
     {
-        public float ParallaxSpeed = 1f;
+        public bool UseSpeed = true;
+        public bool Repeat = true;
+
+        // RANGE [0, 1]
+        // <0: Super Speed!
+        // 0 : Same speed as the Camera, i.e. normal speed
+        // 1 : Synched with Camera, i.e. will never move out
+        // >1: Move forward :D
+        public float ParallaxSpeed = 0;
         
         private Transform[] spriteTransforms;
         private float spriteWidth;
@@ -22,13 +29,18 @@ namespace Assets.Source.Entities
         public void Awake()
         {
             cameraTransform = Camera.main.transform;
+            lastCameraPos = cameraTransform.position;
+
             spriteWidth = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
 
             // Create Left and Right Clones
-            GameObject goSprite = gameObject.GetComponentInChildren<SpriteRenderer>().gameObject;
+            if (Repeat)
+            {
+                GameObject goSprite = gameObject.GetComponentInChildren<SpriteRenderer>().gameObject;
 
-            CreateAdjecentClone(goSprite, spriteWidth);
-            CreateAdjecentClone(goSprite , -spriteWidth);
+                CreateAdjecentClone(goSprite, spriteWidth);
+                CreateAdjecentClone(goSprite, -spriteWidth);                
+            }
 
             // Get Transforms of all sprites            
             spriteTransforms = GetSpriteTransforms().ToArray();
@@ -38,17 +50,25 @@ namespace Assets.Source.Entities
         }              
 
 
-        public void Update()
+        public void LateUpdate()
         {
-            float deltaX = lastCameraPos.x - cameraTransform.position.x;
-            transform.position += Vector3.right * (deltaX * ParallaxSpeed);
+            // Prallaxing
+            if (UseSpeed)
+            {
+                float deltaX = cameraTransform.position.x - lastCameraPos.x;
+                transform.position += Vector3.right * (deltaX * ParallaxSpeed);
+            }
 
             lastCameraPos = cameraTransform.position;
 
-            if (cameraTransform.position.x >= spriteTransforms[leftSpriteIndex].position.x + spriteWidth)
+            // Scroll to the right, if Camera moved past the left-most tile
+            if (Repeat)
             {
-                ScrollRight();
-            }            
+                if (cameraTransform.position.x >= spriteTransforms[leftSpriteIndex].position.x + spriteWidth)
+                {
+                    ScrollRight();
+                }
+            }           
         }
 
 
