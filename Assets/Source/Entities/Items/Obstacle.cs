@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Entities
+namespace Assets.Source.Entities.Items
 {
-    public class Obstacle : BaseEntity
+    public class Obstacle : AbstractItem
     {
-        // Range [0, 1]
+        [Range (0.0f, 1.0f)]
         public float StoppingPowerPercent = 1f;
         
         public void OnTriggerEnter2D(Collider2D collision)
@@ -19,7 +19,7 @@ namespace Assets.Source.Entities
             float VelocityReductionAmount = otherBody.velocity.magnitude - (otherBody.velocity.magnitude * StoppingPowerPercent);            
             otherBody.velocity = otherBody.velocity.normalized * VelocityReductionAmount;
 
-            // Disaable this trigger, so that we don't slow down multiple times unintentionally
+            // Disable this trigger, so that we don't slow down multiple times unintentionally
             this.enabled = false;
         }
     }

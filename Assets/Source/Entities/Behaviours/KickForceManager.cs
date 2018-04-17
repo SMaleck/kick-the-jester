@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Source.Entities.Components
+namespace Assets.Source.Entities.Behaviours
 {
-    public class KickForceManager : BaseComponent
+    public class KickForceManager : BaseBehaviour
     {
         #region PROPERTIES
 

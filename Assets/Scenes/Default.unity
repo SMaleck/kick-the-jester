@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 736072193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0127ccebd6a56494a8f52616e76852c6, type: 3}
+  m_Script: {fileID: 11500000, guid: a5f1aa8a21069f24faef6f2594c7419a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &845783605
@@ -1520,7 +1520,7 @@ GameObject:
   - component: {fileID: 864308850}
   - component: {fileID: 864308849}
   m_Layer: 0
-  m_Name: ObstacleGenerator
+  m_Name: Spawner_Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1534,11 +1534,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 864308848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5248f9e27e4d9d0428d6fa07a8e22e10, type: 3}
+  m_Script: {fileID: 11500000, guid: c03a3a4729e312b4cae5e56622aa1bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObstaclePool:
+  ItemPool:
   - {fileID: 1176274882300718, guid: 12044bc0e533d7942948a614f072ccce, type: 2}
+  SpawnChance: 0.7
+  SpawnOnTrajectory: 0
+  ProjectionMaxDeviation: 5
+  MinDistanceBetweenSpawns: 100
 --- !u!4 &864308850
 Transform:
   m_ObjectHideFlags: 0
@@ -1546,7 +1550,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 864308848}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: -3.8, z: 0}
+  m_LocalPosition: {x: 15, y: -3.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1739,6 +1743,52 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1081704598}
+--- !u!1 &1119972041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1119972043}
+  - component: {fileID: 1119972042}
+  m_Layer: 0
+  m_Name: Spawner_Boost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1119972042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1119972041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03a3a4729e312b4cae5e56622aa1bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemPool:
+  - {fileID: 1176274882300718, guid: 12044bc0e533d7942948a614f072ccce, type: 2}
+  SpawnChance: 0.5
+  SpawnOnTrajectory: 1
+  ProjectionMaxDeviation: 10
+  MinDistanceBetweenSpawns: 100
+--- !u!4 &1119972043
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1119972041}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15, y: -3.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1159191816
 GameObject:
   m_ObjectHideFlags: 0

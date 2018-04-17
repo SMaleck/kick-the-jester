@@ -1,11 +1,10 @@
-﻿using Assets.Source.App;
-using Assets.Source.GameLogic;
+﻿using Assets.Source.GameLogic;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Source.Entities.Components
+namespace Assets.Source.Entities.Behaviours
 {
-    public class BaseComponent : MonoBehaviour
+    public class BaseBehaviour : MonoBehaviour
     {
         private BaseEntity _Entity;
         public BaseEntity Entity

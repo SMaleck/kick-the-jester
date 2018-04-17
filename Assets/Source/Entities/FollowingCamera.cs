@@ -2,12 +2,12 @@
 
 namespace Assets.Source.Entities
 {
-    public class FollowCamera : BaseEntity
+    public class FollowingCamera : BaseEntity
     {
         private Vector2 origin;
         private Transform target;
 
-        
+
         void Start()
         {
             origin = goTransform.position;

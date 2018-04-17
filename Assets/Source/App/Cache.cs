@@ -7,6 +7,34 @@ namespace Assets.Source.App
 {
     public static class Cache
     {
+        private static float _cameraWidth;
+        public static float cameraWidth
+        {
+            get
+            {
+                if(_cameraWidth <= 0)
+                {                                        
+                    _cameraWidth = cameraHeight * Camera.main.aspect;
+                }
+
+                return _cameraWidth;
+            }
+        }
+
+        private static float _cameraHeight;
+        public static float cameraHeight
+        {
+            get
+            {
+                if (_cameraHeight <= 0)
+                {
+                    _cameraHeight = 2f * Camera.main.orthographicSize;                    
+                }
+
+                return _cameraHeight;
+            }
+        }
+
         private static Jester _jester;
         public static Jester jester
         {

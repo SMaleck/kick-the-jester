@@ -1,5 +1,5 @@
 ﻿using Assets.Source.App;
-using Assets.Source.Entities.Components;
+using Assets.Source.Entities.Behaviours;
 using Assets.Source.Structs;
 using UnityEngine;
 

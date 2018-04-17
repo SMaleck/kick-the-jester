@@ -2,9 +2,9 @@
 using Assets.Source.Structs;
 using UnityEngine;
 
-namespace Assets.Source.Entities.Components
+namespace Assets.Source.Entities.Behaviours
 {
-    public class FlightRecorder : BaseComponent
+    public class FlightRecorder : BaseBehaviour
     {       
         private Transform targetTransform;
         private Rigidbody2D targetBody;
