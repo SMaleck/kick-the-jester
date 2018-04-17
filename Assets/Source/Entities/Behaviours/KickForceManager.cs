@@ -62,9 +62,10 @@ namespace Assets.Source.Entities.Behaviours
         {
             if (!IsActive || !CanKick()) { return; }
 
-            if (isInitialKick) { isInitialKick = false; }
             TrackKickUsage();
             entityBody.AddForce(GetAppliedKickForce());
+
+            if (isInitialKick) { isInitialKick = false; }
         }
 
         #endregion
