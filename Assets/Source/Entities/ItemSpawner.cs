@@ -40,13 +40,6 @@ namespace Assets.Source.Entities
         }
 
 
-        public virtual void LateUpdate()
-        {
-            // Keep distance from Jester
-            goTransform.position = new Vector3(App.Cache.jester.goTransform.position.x + offsetX, goTransform.position.y);
-        }
-
-
         // Checks if Spawn should occur and Spawns object
         protected virtual void OnFlightStatsChanged(FlightStats stats)
         {           
@@ -72,7 +65,7 @@ namespace Assets.Source.Entities
             if (distanceSinceLastSpawn >= MinDistanceBetweenSpawns)
             {
                 // Randomly decide whether to spawn
-                bool result = SpawnChance <= UnityEngine.Random.value;
+                bool result = SpawnChance >= UnityEngine.Random.Range(0.01f, 1.0f);
 
                 if (result)
                 {
@@ -106,7 +99,7 @@ namespace Assets.Source.Entities
                 return GetProjectedSpawnPosition();
             }
 
-            return groundPosition;
+            return new Vector2(goTransform.position.x, groundPosition.y);
         }
 
 
