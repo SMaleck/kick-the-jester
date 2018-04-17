@@ -15,7 +15,7 @@ namespace Assets.Source.GameLogic
 
             App.Cache.rxState.AttachForFlightStats(this.OnFlightStatsChange);
             App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChange);
-            App.Cache.playerProfile.AddEventHandler(this.OnProfileLoaded);
+            App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 
         private void OnFlightStatsChange(FlightStats stats)
