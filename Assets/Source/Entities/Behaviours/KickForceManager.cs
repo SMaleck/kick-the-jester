@@ -30,7 +30,7 @@ namespace Assets.Source.Entities.Behaviours
 
             // Listen for events
             App.Cache.userControl.AttachForKick(this.KickForward);
-            App.Cache.playerProfile.AddEventHandler(this.OnPlayerProfileLoaded);
+            App.Cache.playerProfile.OnProfileLoaded(this.OnPlayerProfileLoaded);
 
             // Prevent kicking during pause or after game is over
             DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });

@@ -17,10 +17,14 @@ namespace Assets.Source.UI
         void Start()
         {
             // Register for Updates
-            App.Cache.rxState.AttachForFlightStats(this.UpdateUI);            
+            App.Cache.rxState.AttachForFlightStats(this.UpdateUI);
+            App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
+        }
 
-            App.Cache.playerProfile.OnBestDistanceChanged += (int bestDistance) => { txtBestDistance.text = bestDistance.ToString() + "m"; };
-            App.Cache.playerProfile.OnCurrencyChanged += (int currency) => { txtCurrency.text = currency.ToString() + "G"; };
+        private void OnProfileLoaded(PlayerProfile profile)
+        {
+            App.Cache.playerProfile.OnBestDistanceChanged(UpdateBestDistance);
+            App.Cache.playerProfile.OnCurrencyChanged(UpdateCurrency);            
         }
 
         public void UpdateUI(FlightStats stats)
@@ -28,6 +32,16 @@ namespace Assets.Source.UI
             txtDistance.text = stats.Distance.ToString() + "m";
             txtHeight.text = stats.Height.ToString() + "m";
             txtVelocity.text = Math.Round(stats.Velocity.magnitude, 2).ToString() + "km/h";
+        }
+
+        private void UpdateBestDistance(int bestDistance)
+        {
+            txtBestDistance.text = bestDistance.ToString() + "m";
+        }
+
+        private void UpdateCurrency(int currency)
+        {
+            txtCurrency.text = currency.ToString() + "G";
         }
     }
 }

@@ -44,35 +44,44 @@ namespace Assets.Source.Entities
             }
         }
 
-        public event IntValueEventHandler OnBestDistanceChanged = delegate { };
+
+        // BEST DISTANCE
+        private event IntValueEventHandler _OnBestDistanceChanged = delegate { };
+        public void OnBestDistanceChanged(IntValueEventHandler handler)
+        {
+            _OnBestDistanceChanged += handler;
+            handler(BestDistance);
+        }
+        
         private int bestDistance = 0;
         public int BestDistance
         {
             get { return bestDistance; }
             set
             {
-                if (value != bestDistance)
-                {
-                    bestDistance = value;
-                    PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
-                    OnBestDistanceChanged(currency);
-                }
+                bestDistance = value;
+                PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
+                _OnBestDistanceChanged(bestDistance);
             }
         }
 
-        public event IntValueEventHandler OnCurrencyChanged = delegate { };
+        // CURRENCY
+        private event IntValueEventHandler _OnCurrencyChanged = delegate { };
+        public void OnCurrencyChanged(IntValueEventHandler handler)
+        {
+            _OnCurrencyChanged += handler;
+            handler(Currency);
+        }
+
         private int currency = 0;
         public int Currency
         {
             get { return currency; }
             set
             {
-                if(value != currency)
-                {
-                    currency = value;
-                    PlayerPrefs.SetInt(Constants.PREF_CURRENCY, value);
-                    OnCurrencyChanged(currency);
-                }                
+                currency = value;
+                PlayerPrefs.SetInt(Constants.PREF_CURRENCY, value);
+                _OnCurrencyChanged(currency);
             }
         }
 
@@ -88,11 +97,11 @@ namespace Assets.Source.Entities
         }
 
         public delegate void ProfileLoadedEventHandler(PlayerProfile profile);
-        private event ProfileLoadedEventHandler OnProfileLoaded = delegate { };
+        private event ProfileLoadedEventHandler _OnProfileLoaded = delegate { };
 
-        public void AddEventHandler(ProfileLoadedEventHandler handler)
+        public void OnProfileLoaded(ProfileLoadedEventHandler handler)
         {
-            OnProfileLoaded += handler;
+            _OnProfileLoaded += handler;
 
             // In case it is attached too late, call it now
             if (isLoaded)
@@ -122,7 +131,7 @@ namespace Assets.Source.Entities
             LoadKickCount();
             LoadBestDistance();
 
-            OnProfileLoaded(this);
+            _OnProfileLoaded(this);
             isLoaded = true;
         }
 
@@ -134,7 +143,7 @@ namespace Assets.Source.Entities
         {
             if (PlayerPrefs.HasKey(Constants.PREF_BEST_DISTANCE))
             {                
-                bestDistance = PlayerPrefs.GetInt(Constants.PREF_BEST_DISTANCE);
+                BestDistance = PlayerPrefs.GetInt(Constants.PREF_BEST_DISTANCE);
             }
         }
 
@@ -166,7 +175,7 @@ namespace Assets.Source.Entities
         {
             if (PlayerPrefs.HasKey(Constants.PREF_CURRENCY))
             {
-                currency = PlayerPrefs.GetInt(Constants.PREF_CURRENCY);
+                Currency = PlayerPrefs.GetInt(Constants.PREF_CURRENCY);
             }
         }
 
