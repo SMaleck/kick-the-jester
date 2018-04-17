@@ -15,6 +15,9 @@
         public const string PREF_BEST_DISTANCE = "best_distance";
         public const string PREF_CURRENCY = "currency";
 
+        public const string SCENE_GAME = "Default";
+        public const string SCENE_SHOP = "Shop";
+
         // ToDo: Figure out actual factor
         public const int FLOAT_PRECISION_DIGITS = 4;
         public const int FLOAT_PRECISION_FACTOR = 1000;
