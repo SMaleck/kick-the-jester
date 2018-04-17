@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.Source.App;
 using UnityEngine;
-using Assets.Source.App;
 
 namespace Assets.Source.Entities
 {
@@ -14,15 +10,19 @@ namespace Assets.Source.Entities
         private const int BASE_KICK_COUNT = 2;
         #endregion
 
+
+        #region DELEGATES
+
+        public delegate void IntValueEventHandler(int value);        
+
+        #endregion
+
+
         #region PROPERTIES
-        //[SerializeField]
-        private float kickForce = BASE_KICK_FORCE;
+
         private int kickForceInFlight = 1; // TODO: Is this one needed at all?
-        //[SerializeField]
-        private int kickCount = BASE_KICK_COUNT;
-        //[SerializeField]
-        private int bestDistance = 0;
-        
+
+        private float kickForce = BASE_KICK_FORCE;
         public float KickForce
         {
             get { return kickForce; }
@@ -32,6 +32,8 @@ namespace Assets.Source.Entities
                 PlayerPrefs.SetFloat(Constants.PREF_KICK_FORCE, value);
             }
         }
+
+        private int kickCount = BASE_KICK_COUNT;
         public int KickCount
         {
             get { return kickCount; }
@@ -41,13 +43,36 @@ namespace Assets.Source.Entities
                 PlayerPrefs.SetInt(Constants.PREF_KICK_COUNT, value);
             }
         }
+
+        public event IntValueEventHandler OnBestDistanceChanged = delegate { };
+        private int bestDistance = 0;
         public int BestDistance
         {
             get { return bestDistance; }
             set
             {
-                bestDistance = value;
-                PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
+                if (value != bestDistance)
+                {
+                    bestDistance = value;
+                    PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
+                    OnBestDistanceChanged(currency);
+                }
+            }
+        }
+
+        public event IntValueEventHandler OnCurrencyChanged = delegate { };
+        private int currency = 0;
+        public int Currency
+        {
+            get { return currency; }
+            set
+            {
+                if(value != currency)
+                {
+                    currency = value;
+                    PlayerPrefs.SetInt(Constants.PREF_CURRENCY, value);
+                    OnCurrencyChanged(currency);
+                }                
             }
         }
 
@@ -56,6 +81,11 @@ namespace Assets.Source.Entities
         #region EVENTS
 
         private bool isLoaded = false;
+        public bool IsLoaded
+        {
+            get { return isLoaded; }
+            private set { isLoaded = value; }
+        }
 
         public delegate void ProfileLoadedEventHandler(PlayerProfile profile);
         private event ProfileLoadedEventHandler OnProfileLoaded = delegate { };
@@ -103,7 +133,7 @@ namespace Assets.Source.Entities
         private void LoadBestDistance()
         {
             if (PlayerPrefs.HasKey(Constants.PREF_BEST_DISTANCE))
-            {
+            {                
                 bestDistance = PlayerPrefs.GetInt(Constants.PREF_BEST_DISTANCE);
             }
         }
@@ -129,6 +159,14 @@ namespace Assets.Source.Entities
             if (PlayerPrefs.HasKey(Constants.PREF_KICK_FORCE))
             {
                 kickForce = PlayerPrefs.GetFloat(Constants.PREF_KICK_FORCE);
+            }
+        }
+
+        private void LoadCurrency()
+        {
+            if (PlayerPrefs.HasKey(Constants.PREF_CURRENCY))
+            {
+                currency = PlayerPrefs.GetInt(Constants.PREF_CURRENCY);
             }
         }
 

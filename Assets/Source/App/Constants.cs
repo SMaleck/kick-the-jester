@@ -13,6 +13,7 @@
         public const string PREF_KICK_FORCE_INFLIGHT = "kick_force_inflight";
         public const string PREF_KICK_COUNT = "kick_count";
         public const string PREF_BEST_DISTANCE = "best_distance";
+        public const string PREF_CURRENCY = "currency";
 
         // ToDo: Figure out actual factor
         public const int FLOAT_PRECISION_DIGITS = 4;
