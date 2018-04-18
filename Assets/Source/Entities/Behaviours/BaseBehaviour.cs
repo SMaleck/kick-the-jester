@@ -26,7 +26,7 @@ namespace Assets.Source.Entities.Behaviours
         protected void DeactivateOnStates(List<GameStateMachine.GameState> InactiveStates)
         {
             this.InactiveStates = InactiveStates;
-            App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChanged);
+            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChanged);
         }
 
         private void OnGameStateChanged(GameStateMachine.GameState state)

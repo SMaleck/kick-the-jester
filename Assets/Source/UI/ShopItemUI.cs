@@ -1,28 +1,73 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Source.GameLogic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Source.App;
 
 namespace Assets.Source.UI
 {
     public class ShopItemUI : MonoBehaviour
     {
+        public Text txtMoney;
+
+        public void Awake()
+        {
+            App.Cache.playerProfile.OnProfileLoaded((PlayerProfile profile) => {
+                UpdateCurrency(profile.Currency);
+            });
+
+            App.Cache.playerProfile.OnCurrencyChanged(UpdateCurrency);
+        }
+
+        private void UpdateCurrency(int currency)
+        {
+            if(txtMoney != null)
+            {
+                txtMoney.text = currency + "G";
+            }
+        }
 
         public void PurchaseKickForceUpgrade()
         {
-            App.Cache.playerProfile.KickForce += 200f;
+            if (TryDeduct(200))
+            {
+                App.Cache.playerProfile.KickForce += 200f;
+            }            
         }
 
         public void PurchaseKickCountUpgrade()
         {
-            int kickCount = App.Cache.playerProfile.KickCount;
-            App.Cache.playerProfile.KickCount = kickCount + 2;
+            if (TryDeduct(500))
+            {
+                int kickCount = App.Cache.playerProfile.KickCount;
+                App.Cache.playerProfile.KickCount = kickCount + 2;
+            }            
         }
 
         public void PurchaseStatsReset()
         {
             App.Cache.playerProfile.ResetStats();
+        }
+
+
+        /// <summary>
+        /// Deducts Currency from the PlayerProfile, if there is enough
+        /// </summary>
+        /// <param name="amount">The amount to deduct, ABS amount will be processed</param>
+        /// <returns></returns>
+        public bool TryDeduct(int amount)
+        {
+            if (!App.Cache.playerProfile.IsLoaded)
+            {
+                return false;
+            }
+
+            // Check if player has enough money
+            if (App.Cache.playerProfile.Currency >= amount)
+            {
+                App.Cache.playerProfile.Currency -= Math.Abs(amount);
+            }
+
+            return true;
         }
     }
 }

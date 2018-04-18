@@ -1,5 +1,5 @@
 ﻿using Assets.Source.Entities;
-using Assets.Source.Structs;
+using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -14,7 +14,7 @@ namespace Assets.Source.GameLogic
         {
 
             App.Cache.rxState.AttachForFlightStats(this.OnFlightStatsChange);
-            App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChange);
+            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
             App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 

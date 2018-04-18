@@ -7,7 +7,7 @@ namespace Assets.Source.GameLogic
 {
     public class GameStateMachine
     {
-        public enum GameState { Launch, Flight, End, Paused }
+        public enum GameState { Launch, Flight, End, Switching, Paused }
 
         private GameState StateBeforePause;
         public GameState State { get; private set; }
@@ -51,5 +51,10 @@ namespace Assets.Source.GameLogic
             }
         }
 
+
+        public void ToSwitching()
+        {
+            State = GameState.Switching;
+        }
     }
 }

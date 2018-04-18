@@ -13,7 +13,7 @@ namespace Assets.Source.UI
             Panel.SetActive(false);
 
             // Register for Updates
-            App.Cache.gameStateManager.AttachForGameState(this.UpdateUI);
+            App.Cache.gameStateManager.OnGameStateChanged(this.UpdateUI);
         }
 
         private void UpdateUI(GameStateMachine.GameState state)

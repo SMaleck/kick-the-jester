@@ -34,7 +34,7 @@ namespace Assets.Source.GameLogic
 
         void Start()
         {
-            App.Cache.gameStateManager.AttachForGameState(this.OnGameStateChange);
+            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
         }
 
         void Update()

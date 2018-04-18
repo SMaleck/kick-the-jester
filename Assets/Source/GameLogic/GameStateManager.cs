@@ -1,41 +1,56 @@
-﻿using Assets.Source.App;
-using Assets.Source.Entities.Behaviours;
-using Assets.Source.Structs;
+﻿using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
 {
     public class GameStateManager : MonoBehaviour
-    {       
-        #region EVENT HANDLING
+    {
+        #region GAME STATE
 
+        public GameStateMachine GameState = new GameStateMachine();
+
+        // Delegate Definition for GameState Event
         public delegate void GameStateEventHandler(GameStateMachine.GameState state);
-        private event GameStateEventHandler OnGameStateChanged = delegate { };
 
-        public void AttachForGameState(GameStateEventHandler handler)
+        // GameState Event Handling
+        private event GameStateEventHandler _OnGameStateChanged = delegate { };
+        public void OnGameStateChanged(GameStateEventHandler handler)
         {
-            OnGameStateChanged += handler;
+            _OnGameStateChanged += handler;
+            handler(GameState.State);
         }
 
         #endregion
 
-        // GAME STATE
-        public GameStateMachine GameState = new GameStateMachine();
 
         public void Awake()
         {
-            App.Cache.rxState.AttachForFlightStats(CheckIsMoving);
+            App.Cache.rxState.AttachForFlightStats(OnFlightStatsChanged);
+
             App.Cache.userControl.AttachForKick(this.OnKick);
             App.Cache.userControl.AttachForPause(this.OnPauseGame);
+
+            App.Cache.screenManager.OnSwitching(OnScreenSwitching);
         }
 
 
-        private void CheckIsMoving(FlightStats stats)
+        #region EVENT HANDLERS
+
+        // Changes state when the screen manager starts loading
+        private void OnScreenSwitching()
+        {
+            GameState.ToSwitching();
+            _OnGameStateChanged(GameState.State);
+        }
+
+
+        // Checks if the Jester is still flying and switches to End state if not
+        private void OnFlightStatsChanged(FlightStats stats)
         {
             if(stats.IsLanded && GameState.State == GameStateMachine.GameState.Flight)
             {
                 GameState.ToEnd();
-                OnGameStateChanged(GameState.State);
+                _OnGameStateChanged(GameState.State);
             }
         }
 
@@ -44,7 +59,7 @@ namespace Assets.Source.GameLogic
         private void OnKick()
         {
             GameState.ToFlight();
-            OnGameStateChanged(GameState.State);
+            _OnGameStateChanged(GameState.State);
         }
 
 
@@ -52,9 +67,11 @@ namespace Assets.Source.GameLogic
         private void OnPauseGame(bool isPaused)
         {
             GameState.TogglePause(isPaused);
-            OnGameStateChanged(GameState.State);
+            _OnGameStateChanged(GameState.State);
 
             Time.timeScale = isPaused ? 0 : 1;
         }
+
+        #endregion
     }
 }

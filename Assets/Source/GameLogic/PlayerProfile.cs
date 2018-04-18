@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -9,14 +10,6 @@ namespace Assets.Source.GameLogic
         private const float BASE_KICK_FORCE = 600f;
         private const int BASE_KICK_COUNT = 2;
         #endregion
-
-
-        #region DELEGATES
-
-        public delegate void IntValueEventHandler(int value);        
-
-        #endregion
-
 
         #region PROPERTIES
 
@@ -130,6 +123,7 @@ namespace Assets.Source.GameLogic
             LoadKickForceInFlight();
             LoadKickCount();
             LoadBestDistance();
+            LoadCurrency();
 
             _OnProfileLoaded(this);
             isLoaded = true;
