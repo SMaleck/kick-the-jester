@@ -14,12 +14,12 @@ namespace Assets.Source.Entities
         // If this is set, item will be spanwed on the Jesters projected trajectory
         public bool SpawnOnTrajectory = true;
 
-        // Determines by how mmuch the Spawn location can deviate from the projected position
+        // Determines by how much the Spawn location can deviate from the projected position
         // This has no effect if SpawnOnTrajectory = false
         [Range(0.0f, 15)]
         public float ProjectionMaxDeviation = 1f;
 
-        [Range(0, int.MaxValue)]
+        [Range(0, 10000)]
         public int MinDistanceBetweenSpawns = 200;
 
         protected int lastSpawnPoint = 0;
@@ -55,6 +55,12 @@ namespace Assets.Source.Entities
         {
             // Do not spawn if Jester is not moving
             if (stats.IsLanded || stats.Velocity.x <= 0)
+            {
+                return false;
+            }
+
+            // Do not spawn if we should spawn on the ground and jester is moving upwards
+            if(!SpawnOnTrajectory && stats.Velocity.y < 0)
             {
                 return false;
             }

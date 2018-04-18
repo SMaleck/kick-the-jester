@@ -7,6 +7,93 @@ namespace Assets.Source.App
 {
     public static class Cache
     {
+        #region GAME LOGIC Components
+
+        // GameLogic is the GameObject which holds most global scripts
+        private static GameObject _GameLogic;
+        private static GameObject GameLogic
+        {
+            get
+            {
+                if (_GameLogic == null)
+                {
+                    _GameLogic = GameObject.Find(Constants.GO_GAME_LOGIC);
+                }
+
+                return _GameLogic;
+            }
+        }
+
+        private static GameStateManager _gameStateManager;
+        public static GameStateManager gameStateManager
+        {
+            get
+            {
+                if (_gameStateManager == null)
+                {
+                    _gameStateManager = GameLogic.GetComponent<GameStateManager>();
+                }
+
+                return _gameStateManager;
+            }
+        }
+
+        private static RxState _rxState;
+        public static RxState rxState
+        {
+            get
+            {
+                if (_rxState == null)
+                {
+                    _rxState = GameLogic.GetComponent<RxState>();
+                }
+
+                return _rxState;
+            }
+        }
+
+        private static UserControl _userControl;
+        public static UserControl userControl
+        {
+            get
+            {
+                if (_userControl == null)
+                {
+                    _userControl = GameLogic.GetComponent<UserControl>();
+                }
+                return _userControl;
+            }
+        }
+
+        private static ScreenManager _screenManager;
+        public static ScreenManager screenManager
+        {
+            get
+            {
+                if (_screenManager == null)
+                {
+                    _screenManager = GameLogic.GetComponent<ScreenManager>();
+                }
+                return _screenManager;
+            }
+        }
+
+        private static PlayerProfile _playerProfile;
+        public static PlayerProfile playerProfile
+        {
+            get
+            {
+                if (_playerProfile == null)
+                {
+                    _playerProfile = GameLogic.GetComponent<PlayerProfile>();
+                }
+                return _playerProfile;
+            }
+        }
+
+        #endregion
+
+
         private static float _cameraWidth;
         public static float cameraWidth
         {
@@ -46,73 +133,6 @@ namespace Assets.Source.App
                 }
 
                 return _jester;
-            }
-        }
-
-        private static GameStateManager _gameStateManager;
-        public static GameStateManager gameStateManager
-        {
-            get
-            {
-                if (_gameStateManager == null)
-                {
-                    _gameStateManager = GetComponent<GameStateManager>(Constants.GAMESTATE_MANAGER);
-                }
-                
-                return _gameStateManager;
-            }
-        }
-        
-        private static RxState _rxState;
-        public static RxState rxState
-        {
-            get
-            {
-                if (_rxState == null)
-                {
-                    _rxState = GetComponent<RxState>(Constants.GAMESTATE_MANAGER);
-                }
-
-                return _rxState;
-            }
-        }
-
-        private static UserControl _userControl;
-        public static UserControl userControl
-        {
-            get
-            {
-                if (_userControl == null)
-                {
-                    _userControl = GetComponent<UserControl>(Constants.USER_CONTROL);
-                }
-                return _userControl;
-            }
-        }
-
-        private static ScreenManager _screenManager;
-        public static ScreenManager screenManager
-        {
-            get
-            {
-                if (_screenManager == null)
-                {
-                    _screenManager = GetComponent<ScreenManager>(Constants.SCREEN_MANAGER);
-                }
-                return _screenManager;
-            }
-        }
-
-        private static PlayerProfile _playerProfile;
-        public static PlayerProfile playerProfile
-        {
-            get
-            {
-                if (_playerProfile == null)
-                {
-                    _playerProfile = GetComponent<PlayerProfile>(Constants.PLAYER_PROFILE);
-                }
-                return _playerProfile;
             }
         }
 

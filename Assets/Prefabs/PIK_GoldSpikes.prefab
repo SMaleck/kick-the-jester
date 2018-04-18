@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4697469015301456}
   - component: {fileID: 212794270740840680}
   - component: {fileID: 61526106488938970}
-  - component: {fileID: 114971431162011130}
+  - component: {fileID: 114629072755771498}
   m_Layer: 0
-  m_Name: BST_Spikes
+  m_Name: PIK_GoldSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.62}
   m_EdgeRadius: 0
---- !u!114 &114971431162011130
+--- !u!114 &114629072755771498
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,11 +75,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1176274882300718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c3ba0eb4b0ebef4d8a8dbafd3629126, type: 3}
+  m_Script: {fileID: 11500000, guid: ae0129eb90259e94aa46a284fa1acd5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 5
-  Direction: {x: 1, y: 1}
+  CurrencyAmount: 100
 --- !u!212 &212794270740840680
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -115,7 +114,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2064c59324869c3428efefb102f14539, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.95334685, g: 1, b: 0.1544118, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
