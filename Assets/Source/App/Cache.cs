@@ -22,6 +22,20 @@ namespace Assets.Source.App
 
                 return _GameLogic;
             }
+        }        
+
+        private static RxState _rxState;
+        public static RxState rxState
+        {
+            get
+            {
+                if (_rxState == null)
+                {
+                    _rxState = GameLogic.GetComponent<RxState>();
+                }
+
+                return _rxState;
+            }
         }
 
         private static GameStateManager _gameStateManager;
@@ -38,17 +52,17 @@ namespace Assets.Source.App
             }
         }
 
-        private static RxState _rxState;
-        public static RxState rxState
+        private static CurrencyManager _currencyManager;
+        public static CurrencyManager currencyManager
         {
             get
             {
-                if (_rxState == null)
+                if (_currencyManager == null)
                 {
-                    _rxState = GameLogic.GetComponent<RxState>();
+                    _currencyManager = GameLogic.GetComponent<CurrencyManager>();
                 }
 
-                return _rxState;
+                return _currencyManager;
             }
         }
 
@@ -85,7 +99,7 @@ namespace Assets.Source.App
             {
                 if (_playerProfile == null)
                 {
-                    _playerProfile = GameLogic.GetComponent<PlayerProfile>();
+                    _playerProfile = GetComponent<PlayerProfile>(Constants.GO_PLAYER_PROFILE);
                 }
                 return _playerProfile;
             }

@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Entities;
-using Assets.Source.Structs;
+using Assets.Source.GameLogic;
+using Assets.Source.Models;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,20 +13,24 @@ namespace Assets.Source.UI
         public Text txtBestDistance;
         public Text txtHeight;
         public Text txtVelocity;
-        public Text txtCurrency;
+        public Text txtCollectedCurrency;
+        public Text txtTotalCurrency;
 
         void Start()
         {
             // Register for Updates
             App.Cache.rxState.AttachForFlightStats(this.UpdateUI);
             App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
+
+            App.Cache.currencyManager.OnCollectedChanged(UpdateCollectedCurrency);
         }
 
         private void OnProfileLoaded(PlayerProfile profile)
         {
             App.Cache.playerProfile.OnBestDistanceChanged(UpdateBestDistance);
-            App.Cache.playerProfile.OnCurrencyChanged(UpdateCurrency);            
+            App.Cache.playerProfile.OnCurrencyChanged(UpdateCurrency);                        
         }
+
 
         public void UpdateUI(FlightStats stats)
         {
@@ -33,6 +38,7 @@ namespace Assets.Source.UI
             txtHeight.text = stats.Height.ToString() + "m";
             txtVelocity.text = Math.Round(stats.Velocity.magnitude, 2).ToString() + "km/h";
         }
+
 
         private void UpdateBestDistance(int bestDistance)
         {
@@ -42,11 +48,21 @@ namespace Assets.Source.UI
             }            
         }
 
+
+        private void UpdateCollectedCurrency(int currency)
+        {
+            if (txtCollectedCurrency != null)
+            {
+                txtCollectedCurrency.text = currency.ToString() + "G";
+            }
+        }
+
+
         private void UpdateCurrency(int currency)
         {
-            if (txtBestDistance != null)
+            if (txtTotalCurrency != null)
             {
-                txtCurrency.text = currency.ToString() + "G";
+                txtTotalCurrency.text = currency.ToString() + "G";
             }            
         }
     }

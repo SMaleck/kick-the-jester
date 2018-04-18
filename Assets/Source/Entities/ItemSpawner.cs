@@ -1,4 +1,4 @@
-﻿using Assets.Source.Structs;
+﻿using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.Entities

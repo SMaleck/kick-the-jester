@@ -1,5 +1,5 @@
 ﻿using Assets.Source.Entities.Behaviours;
-using Assets.Source.Structs;
+using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -12,8 +12,7 @@ namespace Assets.Source.GameLogic
         #region DELEGATE DEFINITIONS
 
         public delegate void GameStateEventHandler(GameStateMachine.GameState state);
-        public delegate void FlightStatEventHandler(FlightStats stats);
-        public delegate void ValueEventHandler(int value);
+        public delegate void FlightStatEventHandler(FlightStats stats);        
 
         #endregion
 
@@ -22,7 +21,7 @@ namespace Assets.Source.GameLogic
 
         private event GameStateEventHandler OnGameStateChanged = delegate { };
         private event FlightStatEventHandler OnFlightStatsChanged = delegate { };
-        private event ValueEventHandler OnRelativeKickForceChanged = delegate { };
+        private event IntValueEventHandler OnRelativeKickForceChanged = delegate { };
 
         #endregion
 
@@ -36,7 +35,7 @@ namespace Assets.Source.GameLogic
             OnFlightStatsChanged += handler;
         }
 
-        public void AttachForRelativeKickForce(ValueEventHandler handler)
+        public void AttachForRelativeKickForce(IntValueEventHandler handler)
         {
             OnRelativeKickForceChanged += handler;
         }

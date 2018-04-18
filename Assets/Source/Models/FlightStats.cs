@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Structs
+namespace Assets.Source.Models
 {
     public struct FlightStats
     {

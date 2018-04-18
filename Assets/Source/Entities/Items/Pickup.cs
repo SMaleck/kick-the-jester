@@ -15,7 +15,7 @@ namespace Assets.Source.Entities.Items
                 return;
             }
 
-            App.Cache.playerProfile.Currency += CurrencyAmount;
+            App.Cache.currencyManager.AddPickup(CurrencyAmount);
 
             // Disable this trigger
             gameObject.GetComponent<Collider2D>().enabled = false;
