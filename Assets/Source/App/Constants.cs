@@ -2,12 +2,9 @@
 {
     public static class Constants
     {
+        public const string GO_GAME_LOGIC = "GameLogic";
         public const string JESTER = "Jester";
         public const string UI_CANVAS = "UICanvas";
-        public const string USER_CONTROL = "UserControl";
-        public const string GAMESTATE_MANAGER = "GameStateManager";
-        public const string SCREEN_MANAGER = "ScreenManager";
-        public const string PLAYER_PROFILE = "PlayerProfile";
 
         public const string PREF_KICK_FORCE = "kick_force";
         public const string PREF_KICK_FORCE_INFLIGHT = "kick_force_inflight";

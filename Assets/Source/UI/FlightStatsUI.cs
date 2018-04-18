@@ -36,12 +36,18 @@ namespace Assets.Source.UI
 
         private void UpdateBestDistance(int bestDistance)
         {
-            txtBestDistance.text = bestDistance.ToString() + "m";
+            if(txtBestDistance != null)
+            {
+                txtBestDistance.text = bestDistance.ToString() + "m";
+            }            
         }
 
         private void UpdateCurrency(int currency)
         {
-            txtCurrency.text = currency.ToString() + "G";
+            if (txtBestDistance != null)
+            {
+                txtCurrency.text = currency.ToString() + "G";
+            }            
         }
     }
 }

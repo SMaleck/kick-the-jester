@@ -4,7 +4,7 @@ namespace Assets.Source.Entities.Items
 {
     public class Pickup : AbstractItem
     {
-        [Range(1, int.MaxValue)]
+        [Range(1, 5000)]
         public int CurrencyAmount = 5;
 
         public void OnTriggerEnter2D(Collider2D collision)

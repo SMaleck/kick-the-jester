@@ -1,9 +1,9 @@
 ﻿using Assets.Source.App;
 using UnityEngine;
 
-namespace Assets.Source.Entities
+namespace Assets.Source.GameLogic
 {
-    public class PlayerProfile : BaseEntity
+    public class PlayerProfile : MonoBehaviour
     {
         #region CONSTANTS
         private const float BASE_KICK_FORCE = 600f;
