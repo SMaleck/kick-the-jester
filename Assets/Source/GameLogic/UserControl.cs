@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Assets.Source.App;
+using System;
 
 namespace Assets.Source.GameLogic
 {
@@ -40,7 +41,7 @@ namespace Assets.Source.GameLogic
         void Update()
         {
             
-            if (Input.GetButtonDown("Kick") || Input.touchCount > 0)
+            if (IsKickInput())
             {                
                 InputKickHandler();
             }
@@ -54,6 +55,21 @@ namespace Assets.Source.GameLogic
             {
                 ShowShop();
             }
+        }
+
+        private bool IsKickInput()
+        {
+            bool touchDown = false;
+            if (Input.touchCount > 0)
+            {
+                // The first one is enough for our purposes
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    touchDown = true;
+                }
+            }
+            return Input.GetButtonDown("Kick") || touchDown;
         }
 
         /* ----------------------------- SHOP ----------------------------- */
