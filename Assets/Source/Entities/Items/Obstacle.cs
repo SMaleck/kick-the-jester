@@ -18,6 +18,9 @@ namespace Assets.Source.Entities.Items
             float VelocityReductionAmount = body.velocity.magnitude - (body.velocity.magnitude * StoppingPowerPercent);
             body.velocity = body.velocity.normalized * VelocityReductionAmount;
 
+            // Remove bouncy material, so Jester will not bounce on land
+            collision.GetComponent<Collider2D>().sharedMaterial = null;
+
             // Disable this trigger, so that we don't slow down multiple times unintentionally
             gameObject.GetComponent<Collider2D>().enabled = false;
         }
