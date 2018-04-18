@@ -1633,6 +1633,12 @@ Prefab:
     - {fileID: 114745095752315316, guid: 6ae35beba3dcab844989349e5e604f6f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6ae35beba3dcab844989349e5e604f6f, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &886429530 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114415210559704060, guid: 6ae35beba3dcab844989349e5e604f6f,
+    type: 2}
+  m_PrefabInternal: {fileID: 886429529}
+  m_Script: {fileID: 11500000, guid: d59cc9d998edbbc41969eb631bf73460, type: 3}
 --- !u!1 &893700312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2250,7 +2256,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 886429530}
         m_MethodName: TooglePauseGame
         m_Mode: 1
         m_Arguments:
