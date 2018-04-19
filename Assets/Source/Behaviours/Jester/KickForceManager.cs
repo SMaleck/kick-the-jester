@@ -14,6 +14,7 @@ namespace Assets.Source.Behaviours.Jester
 
         private float maxForceFactor = 2;
         private float initialKickForceFactor = 1f;
+        private bool initialFactorGrows = true;
         private int kicksAvailable = 1;
 
         private Rigidbody2D entityBody;
@@ -45,7 +46,12 @@ namespace Assets.Source.Behaviours.Jester
         {
             float x = Time.deltaTime;
 
-            initialKickForceFactor = (initialKickForceFactor + x) % maxForceFactor;
+            if (initialKickForceFactor + x > maxForceFactor) { initialFactorGrows = false; }
+            if (initialKickForceFactor - x < 0) { initialFactorGrows = true; }
+
+            initialKickForceFactor = initialFactorGrows ? 
+                initialKickForceFactor + x 
+                : initialKickForceFactor - x;
         }
 
         #endregion
