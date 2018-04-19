@@ -1,4 +1,5 @@
-﻿using Assets.Source.Behaviours.Jester;
+﻿using System;
+using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,7 @@ namespace Assets.Source.UI
                 (int value) => { UpdateText(value, txtHeight, "m"); });
 
             App.Cache.jester.GetComponent<FlightRecorder>().OnVelocityChanged(
-                (float value) => { UpdateText(value, txtVelocity, "km/h"); });
+                (float value) => { UpdateText(Mathf.Ceil(value), txtVelocity, "km/h"); });
 
             // Currency
             App.Cache.currencyManager.OnCollectedChanged(
@@ -36,7 +37,6 @@ namespace Assets.Source.UI
             App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
         }
 
-
         private void OnProfileLoaded(PlayerProfile profile)
         {
             App.Cache.playerProfile.OnBestDistanceChanged(
@@ -45,8 +45,7 @@ namespace Assets.Source.UI
             App.Cache.playerProfile.OnCurrencyChanged(
                 (int value) => { UpdateText(value, txtTotalCurrency, "G"); });
         }
-
-
+        
         private void UpdateText(object value, Text uiElement, string suffix = "")
         {
             if(uiElement != null)
@@ -54,5 +53,6 @@ namespace Assets.Source.UI
                 uiElement.text = value.ToString() + suffix;
             }
         }
+        
     }
 }
