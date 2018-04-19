@@ -579,7 +579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemPool:
   - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
-  SpawnChance: 0.2
+  SpawnChance: 0.5
   SpawnOnTrajectory: 1
   ProjectionMaxDeviation: 5
   MinDistanceBetweenSpawns: 200
@@ -1367,7 +1367,7 @@ MonoBehaviour:
   SpawnChance: 0.8
   SpawnOnTrajectory: 0
   ProjectionMaxDeviation: 1
-  MinDistanceBetweenSpawns: 500
+  MinDistanceBetweenSpawns: 400
 --- !u!4 &864308850
 Transform:
   m_ObjectHideFlags: 0
@@ -1867,7 +1867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemPool:
   - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
-  SpawnChance: 0.5
+  SpawnChance: 0.3
   SpawnOnTrajectory: 1
   ProjectionMaxDeviation: 5
   MinDistanceBetweenSpawns: 200
