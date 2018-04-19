@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4539286522067668}
-  - component: {fileID: 114909081013343168}
+  - component: {fileID: 114253247358643216}
   m_Layer: 8
   m_Name: Layer_0_Bushes
   m_TagString: Untagged
@@ -51,7 +51,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4174594969638344}
-  - component: {fileID: 114606958055577380}
+  - component: {fileID: 114256351089701684}
   m_Layer: 8
   m_Name: Layer_Ground
   m_TagString: Untagged
@@ -83,7 +83,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4306298772855186}
-  - component: {fileID: 114765925706024036}
+  - component: {fileID: 114202531698782910}
   m_Layer: 8
   m_Name: Layer_1_Trees
   m_TagString: Untagged
@@ -339,6 +339,48 @@ Transform:
   m_Father: {fileID: 4306298772855186}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114202531698782910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397457015368874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc06c9ed63a51694b897e56556b7a42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseSpeed: 1
+  Repeat: 1
+  ParallaxSpeed: 0.6
+--- !u!114 &114253247358643216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1010315474377466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc06c9ed63a51694b897e56556b7a42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseSpeed: 1
+  Repeat: 1
+  ParallaxSpeed: 0.15
+--- !u!114 &114256351089701684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1242886901676710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc06c9ed63a51694b897e56556b7a42c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseSpeed: 0
+  Repeat: 1
+  ParallaxSpeed: 0
 --- !u!114 &114514791264758922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,40 +389,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1770348005300414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cdd4b88b406e1844a45c8af0125d727, type: 3}
+  m_Script: {fileID: 11500000, guid: fc06c9ed63a51694b897e56556b7a42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseSpeed: 1
   Repeat: 1
   ParallaxSpeed: 0.8
---- !u!114 &114606958055577380
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1242886901676710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cdd4b88b406e1844a45c8af0125d727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseSpeed: 0
-  Repeat: 1
-  ParallaxSpeed: 0
---- !u!114 &114765925706024036
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1397457015368874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cdd4b88b406e1844a45c8af0125d727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseSpeed: 1
-  Repeat: 1
-  ParallaxSpeed: 0.6
 --- !u!114 &114800789771100986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,26 +403,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1639347808943118}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cdd4b88b406e1844a45c8af0125d727, type: 3}
+  m_Script: {fileID: 11500000, guid: fc06c9ed63a51694b897e56556b7a42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseSpeed: 1
   Repeat: 0
   ParallaxSpeed: 0.999
---- !u!114 &114909081013343168
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1010315474377466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cdd4b88b406e1844a45c8af0125d727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseSpeed: 1
-  Repeat: 1
-  ParallaxSpeed: 0.15
 --- !u!212 &212308774653784350
 SpriteRenderer:
   m_ObjectHideFlags: 1

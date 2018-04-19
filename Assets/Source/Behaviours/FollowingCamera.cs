@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Entities
+namespace Assets.Source.Behaviours
 {
-    public class FollowingCamera : BaseEntity
+    public class FollowingCamera : AbstractBehaviour
     {
         private Vector2 origin;
         private Transform target;

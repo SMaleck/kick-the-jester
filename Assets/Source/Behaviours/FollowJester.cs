@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Entities.Behaviours
+namespace Assets.Source.Behaviours
 {
-    public class FollowJester : BaseEntity
+    public class FollowJester : AbstractBehaviour
     {
         private Vector2 origin;
         private Transform target;

@@ -2,9 +2,9 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Source.Entities
+namespace Assets.Source.Behaviours
 {
-    public class ParallaxLayer : BaseEntity
+    public class ParallaxLayer : AbstractBehaviour
     {
         public bool UseSpeed = true;
         public bool Repeat = true;

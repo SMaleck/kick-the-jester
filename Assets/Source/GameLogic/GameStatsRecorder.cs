@@ -1,5 +1,4 @@
-﻿using Assets.Source.Entities;
-using Assets.Source.Models;
+﻿using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic

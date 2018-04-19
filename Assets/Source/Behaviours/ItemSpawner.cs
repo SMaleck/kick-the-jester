@@ -1,9 +1,9 @@
 ﻿using Assets.Source.Models;
 using UnityEngine;
 
-namespace Assets.Source.Entities
+namespace Assets.Source.Behaviours
 {
-    public class ItemSpawner : BaseEntity
+    public class ItemSpawner : AbstractBehaviour
     {
         public GameObject[] ItemPool;
 

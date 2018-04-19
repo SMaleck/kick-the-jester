@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 
-namespace Assets.Source.Entities.Items
+namespace Assets.Source.Items
 {
     public class Pickup : AbstractItem
     {
