@@ -1,4 +1,4 @@
-﻿using Assets.Source.Entities;
+﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
 using System;
 using UnityEngine;

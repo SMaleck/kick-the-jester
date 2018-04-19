@@ -134,7 +134,7 @@ namespace Assets.Source.Entities
 
         private Vector2 GetProjectedPosition()
         {
-            Vector2 jesterVelocity = App.Cache.jester.Body.velocity;
+            Vector2 jesterVelocity = App.Cache.jester.goBody.velocity;
             Vector2 jesterPos = App.Cache.jester.goTransform.position;
             Vector2 v2Gravity = Physics.gravity;
 

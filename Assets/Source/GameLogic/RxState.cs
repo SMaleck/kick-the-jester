@@ -1,4 +1,5 @@
-﻿using Assets.Source.Entities.Behaviours;
+﻿using Assets.Source.Behaviours.Jester;
+using Assets.Source.Entities.Behaviours;
 using Assets.Source.Models;
 using UnityEngine;
 

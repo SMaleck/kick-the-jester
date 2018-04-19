@@ -1,7 +1,5 @@
-﻿using Assets.Source.Entities;
+﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
-using Assets.Source.Models;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,61 +7,52 @@ namespace Assets.Source.UI
 {
     public class FlightStatsUI : MonoBehaviour
     {        
-        public Text txtDistance;
-        public Text txtBestDistance;
+        public Text txtDistance;        
         public Text txtHeight;
         public Text txtVelocity;
+
+        public Text txtBestDistance;
         public Text txtCollectedCurrency;
         public Text txtTotalCurrency;
 
+
         void Start()
         {
-            // Register for Updates
-            App.Cache.rxState.AttachForFlightStats(this.UpdateUI);
-            App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
+            // FLight Stats
+            App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(
+                (int value) => { UpdateText(value, txtDistance, "m"); });
 
-            App.Cache.currencyManager.OnCollectedChanged(UpdateCollectedCurrency);
+            App.Cache.jester.GetComponent<FlightRecorder>().OnHeightChanged(
+                (int value) => { UpdateText(value, txtHeight, "m"); });
+
+            App.Cache.jester.GetComponent<FlightRecorder>().OnVelocityChanged(
+                (float value) => { UpdateText(value, txtVelocity, "km/h"); });
+
+            // Currency
+            App.Cache.currencyManager.OnCollectedChanged(
+                (int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
+
+            // Setup listeners when Profile is loaded                        
+            App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
         }
+
 
         private void OnProfileLoaded(PlayerProfile profile)
         {
-            App.Cache.playerProfile.OnBestDistanceChanged(UpdateBestDistance);
-            App.Cache.playerProfile.OnCurrencyChanged(UpdateCurrency);                        
+            App.Cache.playerProfile.OnBestDistanceChanged(
+                (int value) => { UpdateText(value, txtBestDistance, "m"); });
+
+            App.Cache.playerProfile.OnCurrencyChanged(
+                (int value) => { UpdateText(value, txtTotalCurrency, "G"); });
         }
 
 
-        public void UpdateUI(FlightStats stats)
+        private void UpdateText(object value, Text uiElement, string suffix = "")
         {
-            txtDistance.text = stats.Distance.ToString() + "m";
-            txtHeight.text = stats.Height.ToString() + "m";
-            txtVelocity.text = Math.Round(stats.Velocity.magnitude, 2).ToString() + "km/h";
-        }
-
-
-        private void UpdateBestDistance(int bestDistance)
-        {
-            if(txtBestDistance != null)
+            if(uiElement != null)
             {
-                txtBestDistance.text = bestDistance.ToString() + "m";
-            }            
-        }
-
-
-        private void UpdateCollectedCurrency(int currency)
-        {
-            if (txtCollectedCurrency != null)
-            {
-                txtCollectedCurrency.text = currency.ToString() + "G";
+                uiElement.text = value.ToString() + suffix;
             }
-        }
-
-
-        private void UpdateCurrency(int currency)
-        {
-            if (txtTotalCurrency != null)
-            {
-                txtTotalCurrency.text = currency.ToString() + "G";
-            }            
         }
     }
 }

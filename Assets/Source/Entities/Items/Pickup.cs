@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Source.Behaviours.Jester;
+using UnityEngine;
 
 namespace Assets.Source.Entities.Items
 {
