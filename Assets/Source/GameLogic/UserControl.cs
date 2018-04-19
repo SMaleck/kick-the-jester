@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Assets.Source.App;
 using System;
+using UnityEngine.EventSystems;
 
 namespace Assets.Source.GameLogic
 {
-    public class UserControl : MonoBehaviour
+    public class UserControl : MonoBehaviour, IPointerDownHandler
     {
         /* ----------------------------- EVENT HANDLING ----------------------------- */
         #region EVENT HANDLING
@@ -41,7 +42,7 @@ namespace Assets.Source.GameLogic
         void Update()
         {
             
-            if (IsKickInput())
+            if (Input.GetButtonDown("Kick"))
             {                
                 InputKickHandler();
             }
@@ -56,20 +57,24 @@ namespace Assets.Source.GameLogic
                 ShowShop();
             }
         }
-
-        private bool IsKickInput()
+        
+        // Handles both touch and clicks
+        public void OnPointerDown(PointerEventData eventData)
         {
-            bool touchDown = false;
-            if (Input.touchCount > 0)
+            switch (eventData.pointerId)
             {
-                // The first one is enough for our purposes
-                Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Began)
-                {
-                    touchDown = true;
-                }
+                case 13:
+                    // well done. 14 fingers touch! ;D
+                    App.Cache.playerProfile.Currency += 1000;
+                    break;
+                case -1:
+                case 0:
+                    InputKickHandler();
+                    break;
+                default:
+                    // nothing yet.
+                    break;
             }
-            return Input.GetButtonDown("Kick") || touchDown;
         }
 
         /* ----------------------------- SHOP ----------------------------- */
