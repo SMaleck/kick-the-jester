@@ -1,4 +1,4 @@
-﻿using Assets.Source.Models;
+﻿using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -11,15 +11,15 @@ namespace Assets.Source.GameLogic
         // Use this for initialization
         void Start()
         {
-
-            App.Cache.rxState.AttachForFlightStats(this.OnFlightStatsChange);
+            App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(RecordDistance);
+            
             App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
             App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 
-        private void OnFlightStatsChange(FlightStats stats)
+        private void RecordDistance(int distance)
         {
-            currentDistance = stats.Distance;
+            currentDistance = distance;
         }
 
         private void OnProfileLoaded(PlayerProfile profile)

@@ -1,10 +1,13 @@
-﻿using Assets.Source.Models;
+﻿using Assets.Source.Behaviours.Jester;
+using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours
 {
     public class ItemSpawner : AbstractBehaviour
     {
+        private bool CanSpawn = true;
+
         public GameObject[] ItemPool;
 
         // Percent-based Spawn chance
@@ -13,6 +16,7 @@ namespace Assets.Source.Behaviours
 
         // If this is set, item will be spanwed on the Jesters projected trajectory
         public bool SpawnOnTrajectory = true;
+        private float minTrajectorySpawnHeight = 5f;
 
         // Determines by how much the Spawn location can deviate from the projected position
         // This has no effect if SpawnOnTrajectory = false
@@ -36,14 +40,17 @@ namespace Assets.Source.Behaviours
             offsetX = goTransform.position.x - App.Cache.jester.goTransform.position.x;
             groundPosition = goTransform.position;
 
-            App.Cache.rxState.AttachForFlightStats(OnFlightStatsChanged);
+            // Deactivate on Land                        
+            App.Cache.jester.GetComponent<FlightRecorder>().OnLanded(() => { CanSpawn = false; });
+
+            App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(AttemptSpawn);            
         }
 
 
         // Checks if Spawn should occur and Spawns object
-        protected virtual void OnFlightStatsChanged(FlightStats stats)
+        protected virtual void AttemptSpawn(int distance)
         {           
-            if (ShouldSpawn(stats))
+            if (CanSpawn && ShouldSpawn(distance))
             {
                 SpawnRandomItem();
             }
@@ -51,21 +58,15 @@ namespace Assets.Source.Behaviours
 
 
         // Checks whether we should spawn an obstacle, based on some rules
-        protected virtual bool ShouldSpawn(FlightStats stats)
+        protected virtual bool ShouldSpawn(int distance)
         {
-            // Do not spawn if Jester is not moving
-            if (stats.IsLanded || stats.Velocity.x <= 0)
-            {
-                return false;
-            }
-
             // Do not spawn if we should spawn on the ground and jester is moving upwards
-            if(!SpawnOnTrajectory && stats.Velocity.y < 0)
+            if(!SpawnOnTrajectory && App.Cache.jester.goBody.velocity.y > 0)
             {
                 return false;
             }
 
-            distanceSinceLastSpawn = stats.Distance - lastSpawnPoint;
+            distanceSinceLastSpawn = distance - lastSpawnPoint;
 
             // Check if the minimum Distance since last Spawn was travelled
             if (distanceSinceLastSpawn >= MinDistanceBetweenSpawns)
@@ -76,7 +77,7 @@ namespace Assets.Source.Behaviours
                 if (result)
                 {
                     // Reset distance tracking
-                    lastSpawnPoint = stats.Distance;
+                    lastSpawnPoint = distance;
                     distanceSinceLastSpawn = 0;
                 }
 
@@ -122,10 +123,10 @@ namespace Assets.Source.Behaviours
 
             projectedPosition.Set(projectedPosition.x + deviationX, projectedPosition.y + deviationY);
 
-            // Cap projected position at ground level
-            if (projectedPosition.y <= groundPosition.y)
+            // Cap projected position at min Height
+            if (projectedPosition.y <= minTrajectorySpawnHeight)
             {
-                projectedPosition.Set(projectedPosition.x, groundPosition.y);
+                projectedPosition.Set(projectedPosition.x, minTrajectorySpawnHeight);
             }
 
             return projectedPosition;

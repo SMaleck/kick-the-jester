@@ -1,4 +1,5 @@
-﻿using Assets.Source.Models;
+﻿using Assets.Source.Behaviours.Jester;
+using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -25,7 +26,7 @@ namespace Assets.Source.GameLogic
 
         public void Awake()
         {
-            App.Cache.rxState.AttachForFlightStats(OnFlightStatsChanged);
+            App.Cache.jester.GetComponent<FlightRecorder>().OnLanded(OnLanded);
 
             App.Cache.userControl.AttachForKick(this.OnKick);
             App.Cache.userControl.AttachForPause(this.OnPauseGame);
@@ -44,10 +45,10 @@ namespace Assets.Source.GameLogic
         }
 
 
-        // Checks if the Jester is still flying and switches to End state if not
-        private void OnFlightStatsChanged(FlightStats stats)
+        // Change GameState when the Jester is landed
+        private void OnLanded()
         {
-            if(stats.IsLanded && GameState.State == GameStateMachine.GameState.Flight)
+            if(GameState.State == GameStateMachine.GameState.Flight)
             {
                 GameState.ToEnd();
                 _OnGameStateChanged(GameState.State);

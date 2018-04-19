@@ -14,10 +14,10 @@ namespace Assets.Source.Behaviours.Jester
 
         public void Awake()
         {
-            App.Cache.jester.GetBehaviour<FlightRecorder>().OnStartedFlight(
+            App.Cache.jester.GetComponent<FlightRecorder>().OnStartedFlight(
                 () => { ListenForImpacts = true; });
 
-            App.Cache.jester.GetBehaviour<FlightRecorder>().OnLanded(
+            App.Cache.jester.GetComponent<FlightRecorder>().OnLanded(
                 () => { isRotating = false; });
         }
 
