@@ -11,8 +11,7 @@ namespace Assets.Source.GameLogic
     {
         #region DELEGATE DEFINITIONS
 
-        public delegate void GameStateEventHandler(GameStateMachine.GameState state);
-        public delegate void FlightStatEventHandler(FlightStats stats);        
+        public delegate void GameStateEventHandler(GameStateMachine.GameState state);        
 
         #endregion
 
@@ -20,7 +19,6 @@ namespace Assets.Source.GameLogic
         #region EVENT HANDLERS
 
         private event GameStateEventHandler OnGameStateChanged = delegate { };
-        private event FlightStatEventHandler OnFlightStatsChanged = delegate { };
         private event IntValueEventHandler OnRelativeKickForceChanged = delegate { };
 
         #endregion
@@ -28,11 +26,6 @@ namespace Assets.Source.GameLogic
         public void AttachForGameState(GameStateEventHandler handler)
         {
             OnGameStateChanged += handler;
-        }
-
-        public void AttachForFlightStats(FlightStatEventHandler handler)
-        {
-            OnFlightStatsChanged += handler;
         }
 
         public void AttachForRelativeKickForce(IntValueEventHandler handler)
@@ -43,14 +36,12 @@ namespace Assets.Source.GameLogic
 
         #region START
 
-        // Components, which we poll for data
-        private FlightRecorder flightRecorder;
+        // Components, which we poll for data        
         private KickForceManager kickForceManager;
 
 
         public void Start()
-        {
-            flightRecorder = App.Cache.jester.GetComponent<FlightRecorder>();
+        {            
             kickForceManager = App.Cache.jester.GetComponent<KickForceManager>();
         }
 
@@ -60,8 +51,7 @@ namespace Assets.Source.GameLogic
         #region UPDATE LOOPS
 
         public void LateUpdate()
-        {
-            OnFlightStatsChanged(flightRecorder.GetFlightStats());
+        {            
             OnRelativeKickForceChanged(kickForceManager.GetRelativeKickForce());
         }
 
