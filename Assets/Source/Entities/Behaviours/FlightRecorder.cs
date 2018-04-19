@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Entities.Behaviours
 {
-    public class FlightRecorder : BaseBehaviour
+    public class FlightRecorder : AbstractBehaviour
     {       
         private Transform targetTransform;
         private Rigidbody2D targetBody;
