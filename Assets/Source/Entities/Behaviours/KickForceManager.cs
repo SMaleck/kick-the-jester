@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Source.Entities.Behaviours
 {
-    public class KickForceManager : BaseBehaviour
+    public class KickForceManager : AbstractBehaviour
     {
         #region PROPERTIES
 

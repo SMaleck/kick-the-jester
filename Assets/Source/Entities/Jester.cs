@@ -17,5 +17,11 @@ namespace Assets.Source.Entities
                 return _Body;
             }
         }
+
+
+        public void OnGroundHit()
+        {
+
+        }
     }
 }

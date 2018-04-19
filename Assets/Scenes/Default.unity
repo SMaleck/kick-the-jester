@@ -1997,7 +1997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 277, y: -19.6}
+  m_AnchoredPosition: {x: 276.99997, y: -19.6}
   m_SizeDelta: {x: 120.4, y: 35.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1081704600
@@ -2684,7 +2684,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 508.99976, y: -19.574}
+  m_AnchoredPosition: {x: 508.99954, y: -19.574}
   m_SizeDelta: {x: 80, y: 35.147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1251294665
@@ -3143,6 +3143,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1501193538}
   - component: {fileID: 1501193539}
+  - component: {fileID: 1501193542}
+  - component: {fileID: 1501193540}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -3207,6 +3209,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!58 &1501193540
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1501193537}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.97
+--- !u!114 &1501193542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1501193537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a1e9897496e2143a4c929f0e2e29bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 5
 --- !u!1 &1503775318
 GameObject:
   m_ObjectHideFlags: 0

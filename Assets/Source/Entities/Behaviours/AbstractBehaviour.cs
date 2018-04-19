@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Entities.Behaviours
 {
-    public class BaseBehaviour : MonoBehaviour
+    public abstract class AbstractBehaviour : MonoBehaviour
     {
         private BaseEntity _Entity;
         public BaseEntity Entity
