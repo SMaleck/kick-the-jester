@@ -1867,9 +1867,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemPool:
   - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
-  SpawnChance: 0.3
+  SpawnChance: 1
   SpawnOnTrajectory: 1
-  ProjectionMaxDeviation: 5
+  ProjectionMaxDeviation: 0
   MinDistanceBetweenSpawns: 200
 --- !u!4 &1119972043
 Transform:
