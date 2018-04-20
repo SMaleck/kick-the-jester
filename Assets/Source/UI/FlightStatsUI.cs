@@ -1,6 +1,6 @@
-﻿using System;
-using Assets.Source.Behaviours.Jester;
+﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
+using Assets.Source.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,13 +21,13 @@ namespace Assets.Source.UI
         {
             // FLight Stats
             App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(
-                (int value) => { UpdateText(value, txtDistance, "m"); });
+                (UnitMeasurement value) => { UpdateText((int)value.Meters, txtDistance, "m"); });
 
             App.Cache.jester.GetComponent<FlightRecorder>().OnHeightChanged(
-                (int value) => { UpdateText(value, txtHeight, "m"); });
+                (UnitMeasurement value) => { UpdateText((int)value.Meters, txtHeight, "m"); });
 
             App.Cache.jester.GetComponent<FlightRecorder>().OnVelocityChanged(
-                (float value) => { UpdateText(Mathf.Ceil(value), txtVelocity, "km/h"); });
+                (SpeedMeasurement value) => { UpdateText(Mathf.Ceil(value.Kmh), txtVelocity, "km/h"); });
 
             // Currency
             App.Cache.currencyManager.OnCollectedChanged(
