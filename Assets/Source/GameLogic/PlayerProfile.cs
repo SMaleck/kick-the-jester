@@ -13,7 +13,7 @@ namespace Assets.Source.GameLogic
 
         #region PROPERTIES
 
-        private int kickForceInFlight = 1; // TODO: Is this one needed at all?
+        //private int kickForceInFlight = 1; // TODO: Is this one needed at all?
 
         private float kickForce = BASE_KICK_FORCE;
         public float KickForce
@@ -120,7 +120,7 @@ namespace Assets.Source.GameLogic
         {
             // Load any persisted data
             LoadKickForce();
-            LoadKickForceInFlight();
+            //LoadKickForceInFlight();
             LoadKickCount();
             LoadBestDistance();
             LoadCurrency();
@@ -149,13 +149,13 @@ namespace Assets.Source.GameLogic
             }
         }
 
-        private void LoadKickForceInFlight()
-        {
-            if (PlayerPrefs.HasKey(Constants.PREF_KICK_FORCE_INFLIGHT))
-            {
-                kickForceInFlight = PlayerPrefs.GetInt(Constants.PREF_KICK_FORCE_INFLIGHT);
-            }
-        }
+        //private void LoadKickForceInFlight()
+        //{
+        //    if (PlayerPrefs.HasKey(Constants.PREF_KICK_FORCE_INFLIGHT))
+        //    {
+        //        kickForceInFlight = PlayerPrefs.GetInt(Constants.PREF_KICK_FORCE_INFLIGHT);
+        //    }
+        //}
 
         private void LoadKickForce()
         {
