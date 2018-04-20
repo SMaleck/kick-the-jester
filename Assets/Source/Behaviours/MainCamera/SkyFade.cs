@@ -3,7 +3,7 @@ using Assets.Source.Behaviours.Jester;
 using Assets.Source.Models;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours
+namespace Assets.Source.Behaviours.MainCamera
 {
     public class SkyFade : AbstractBehaviour
     {
@@ -14,7 +14,7 @@ namespace Assets.Source.Behaviours
 
         public void Start()
         {            
-            App.Cache.jester.GetComponent<FlightRecorder>().OnHeightChanged(MoveSkyFade);
+            App.Cache.jester.GetComponent<FlightRecorder>().OnHeightChanged(MoveSkyFade);           
         }
 
 

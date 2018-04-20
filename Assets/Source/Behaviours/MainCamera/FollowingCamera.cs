@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Behaviours
+namespace Assets.Source.Behaviours.MainCamera
 {
     public class FollowingCamera : AbstractBehaviour
     {
@@ -11,7 +11,7 @@ namespace Assets.Source.Behaviours
         void Start()
         {
             origin = goTransform.position;
-            target = App.Cache.jester.goTransform;
+            target = App.Cache.jester.goTransform;            
         }
         
         void Update()
