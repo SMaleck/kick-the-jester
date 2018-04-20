@@ -53,66 +53,66 @@ namespace Assets.Source.Behaviours.Jester
 
 
         // DISTANCE
-        private event IntValueEventHandler _OnDistanceChanged = delegate { };
-        public void OnDistanceChanged(IntValueEventHandler handler)
+        private event UnitEventHandler _OnDistanceChanged = delegate { };
+        public void OnDistanceChanged(UnitEventHandler handler)
         {
             _OnDistanceChanged += handler;
         }
 
-        private int distanceMeters = 0;
-        public int DistanceMeters
+        private float distance = 0;
+        public float Distance
         {
-            get { return distanceMeters; }
+            get { return distance; }
             private set
             {
-                if (distanceMeters != value)
+                if (distance != value)
                 {
-                    distanceMeters = value;
-                    _OnDistanceChanged(distanceMeters);
+                    distance = value;
+                    _OnDistanceChanged(new UnitMeasurement(distance));
                 }
             }
         }
 
 
         // HEIGHT
-        private event IntValueEventHandler _OnHeightChanged = delegate { };
-        public void OnHeightChanged(IntValueEventHandler handler)
+        private event UnitEventHandler _OnHeightChanged = delegate { };
+        public void OnHeightChanged(UnitEventHandler handler)
         {
             _OnHeightChanged += handler;            
         }
 
-        private int heightMeters = 0;
-        public int HeightMeters
+        private float height = 0;
+        public float Height
         {
-            get { return heightMeters; }
+            get { return height; }
             private set
             {
-                if(heightMeters != value)
+                if(height != value)
                 {
-                    heightMeters = value;
-                    _OnHeightChanged(heightMeters);
+                    height = value;
+                    _OnHeightChanged(new UnitMeasurement(height));
                 }
             }
         }
 
 
         // VELOCITY
-        private event FloatValueEventHandler _OnVelocityChanged = delegate { };
-        public void OnVelocityChanged(FloatValueEventHandler handler)
+        private event SpeedEventHandler _OnVelocityChanged = delegate { };
+        public void OnVelocityChanged(SpeedEventHandler handler)
         {
             _OnVelocityChanged += handler;
         }
 
-        private float velocityKmh = 0f;
-        public float VelocityKmh
+        private Vector3 velocity = new Vector3();
+        public Vector3 Velocity
         {
-            get { return velocityKmh; }
+            get { return velocity; }
             private set
             {
-                if (velocityKmh != value)
+                if (velocity != value)
                 {
-                    velocityKmh = value;
-                    _OnVelocityChanged(velocityKmh);
+                    velocity = value;
+                    _OnVelocityChanged(new SpeedMeasurement(velocity));
                 }
             }
         }
@@ -131,32 +131,16 @@ namespace Assets.Source.Behaviours.Jester
 
         public void LateUpdate()
         {
-            float distanceUnits = MathUtil.Difference(Origin.x, goTransform.position.x);
-            DistanceMeters = (int)(distanceUnits * Constants.UNIT_TO_METERS_FACTOR);
+            Distance = MathUtil.Difference(Origin.x, goTransform.position.x);
+            Height = MathUtil.Difference(Origin.y, goTransform.position.y);            
 
-            float heightUnits = MathUtil.Difference(Origin.y, goTransform.position.y);
-            HeightMeters = (int)(heightUnits * Constants.UNIT_TO_METERS_FACTOR);
-
-            VelocityKmh = MathUtil.CappedFloat(goBody.velocity.magnitude);            
+            Velocity = goBody.velocity;            
 
             // Check if Flight has Started
-            IsStared = !MathUtil.NearlyEqual(distanceUnits, 0);
+            IsStared = !MathUtil.NearlyEqual(Distance, 0);
 
             // Check if Jester has landed
-            IsLanded = IsStared && MathUtil.NearlyEqual(VelocityKmh, 0);
-        }
-
-
-        // Gets the current flight stats
-        public FlightStats GetFlightStats()
-        {
-            return new FlightStats
-            {
-                Distance = DistanceMeters,
-                Height = HeightMeters,
-                Velocity = goBody.velocity,                
-                IsLanded = IsLanded,
-            };
+            IsLanded = IsStared && MathUtil.NearlyEqual(Velocity.magnitude, 0);
         }
     }
 }

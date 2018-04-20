@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Behaviours.Jester;
+using Assets.Source.Models;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -17,9 +18,9 @@ namespace Assets.Source.GameLogic
             App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 
-        private void RecordDistance(int distance)
+        private void RecordDistance(UnitMeasurement distance)
         {
-            currentDistance = distance;
+            currentDistance = (int)distance.Meters;
         }
 
         private void OnProfileLoaded(PlayerProfile profile)

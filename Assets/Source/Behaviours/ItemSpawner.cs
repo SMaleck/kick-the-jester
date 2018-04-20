@@ -48,9 +48,9 @@ namespace Assets.Source.Behaviours
 
 
         // Checks if Spawn should occur and Spawns object
-        protected virtual void AttemptSpawn(int distance)
+        protected virtual void AttemptSpawn(UnitMeasurement distance)
         {           
-            if (CanSpawn && ShouldSpawn(distance))
+            if (CanSpawn && ShouldSpawn((int)distance.Meters))
             {
                 SpawnRandomItem();
             }

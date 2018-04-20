@@ -41,5 +41,10 @@ namespace Assets.Source.App
         {
             return (int)((value / max) * 100);
         }
+
+        public static int UnitsToMeters(float value)
+        {
+            return (int)(value * Constants.UNIT_TO_METERS_FACTOR);
+        }
     }
 }

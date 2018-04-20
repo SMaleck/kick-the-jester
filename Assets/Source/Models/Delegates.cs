@@ -4,4 +4,7 @@
     public delegate void IntValueEventHandler(int value);
     public delegate void FloatValueEventHandler(float value);
     public delegate void BoolValueEventHandler(bool value);
+
+    public delegate void UnitEventHandler(UnitMeasurement value);
+    public delegate void SpeedEventHandler(SpeedMeasurement value);
 }
