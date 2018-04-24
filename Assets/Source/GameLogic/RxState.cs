@@ -9,13 +9,6 @@ namespace Assets.Source.GameLogic
     /// </summary>
     public class RxState : MonoBehaviour
     {
-        #region DELEGATE DEFINITIONS
-
-        public delegate void GameStateEventHandler(GameStateMachine.GameState state);        
-
-        #endregion
-
-
         #region EVENT HANDLERS
 
         private event GameStateEventHandler OnGameStateChanged = delegate { };
@@ -40,7 +33,7 @@ namespace Assets.Source.GameLogic
         private KickForceManager kickForceManager;
 
 
-        public void Start()
+        private void Start()
         {            
             kickForceManager = App.Cache.jester.GetComponent<KickForceManager>();
         }
@@ -50,7 +43,7 @@ namespace Assets.Source.GameLogic
 
         #region UPDATE LOOPS
 
-        public void LateUpdate()
+        private void LateUpdate()
         {            
             OnRelativeKickForceChanged(kickForceManager.GetRelativeKickForce());
         }

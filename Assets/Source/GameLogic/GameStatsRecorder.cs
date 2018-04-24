@@ -1,5 +1,5 @@
-﻿using Assets.Source.Behaviours.Jester;
-using Assets.Source.Models;
+﻿using Assets.Source.App;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -12,15 +12,17 @@ namespace Assets.Source.GameLogic
         // Use this for initialization
         void Start()
         {
-            App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(RecordDistance);
-            
+            App.Cache.JesterState.DistanceProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe(RecordDistance);
+
             App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
             App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 
-        private void RecordDistance(UnitMeasurement distance)
+        private void RecordDistance(float distance)
         {
-            currentDistance = (int)distance.Meters;
+            currentDistance = MathUtil.UnitsToMeters(distance);
         }
 
         private void OnProfileLoaded(PlayerProfile profile)

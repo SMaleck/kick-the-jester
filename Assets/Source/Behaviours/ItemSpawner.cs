@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.Models;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours
@@ -24,7 +25,7 @@ namespace Assets.Source.Behaviours
         public float ProjectionMaxDeviation = 1f;
 
         [Range(0, 10000)]
-        public int MinDistanceBetweenSpawns = 200;
+        public int MinDistanceBetweenSpawns = 100;
 
         protected int lastSpawnPoint = 0;
         protected int distanceSinceLastSpawn = 0;
@@ -41,16 +42,19 @@ namespace Assets.Source.Behaviours
             groundPosition = goTransform.position;
 
             // Deactivate on Land                        
-            App.Cache.jester.GetComponent<FlightRecorder>().OnLanded(() => { CanSpawn = false; });
+            App.Cache.JesterState.OnLanded(() => { CanSpawn = false; });
 
-            App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(AttemptSpawn);            
+            // Attempt to spawn based on travel distance
+            App.Cache.JesterState.DistanceProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe(AttemptSpawn);
         }
 
 
         // Checks if Spawn should occur and Spawns object
-        protected virtual void AttemptSpawn(UnitMeasurement distance)
+        protected virtual void AttemptSpawn(float distance)
         {           
-            if (CanSpawn && ShouldSpawn((int)distance.Meters))
+            if (CanSpawn && ShouldSpawn((int)distance))
             {
                 SpawnRandomItem();
             }

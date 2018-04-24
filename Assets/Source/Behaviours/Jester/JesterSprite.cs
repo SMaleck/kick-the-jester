@@ -12,12 +12,12 @@ namespace Assets.Source.Behaviours.Jester
         private float minRotationSpeed = 1f;
         private float maxRotationSpeed = 100f;
 
-        public void Awake()
+        private void Awake()
         {
-            App.Cache.jester.GetComponent<FlightRecorder>().OnStartedFlight(
+            App.Cache.JesterState.OnStartedFlight(
                 () => { ListenForImpacts = true; });
 
-            App.Cache.jester.GetComponent<FlightRecorder>().OnLanded(
+            App.Cache.JesterState.OnLanded(
                 () => { isRotating = false; });
         }
 
@@ -30,7 +30,7 @@ namespace Assets.Source.Behaviours.Jester
         }
 
 
-        public void Update()
+        private void Update()
         {
             if (isRotating)
             {

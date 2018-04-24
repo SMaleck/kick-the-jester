@@ -24,14 +24,12 @@ namespace Assets.Source.GameLogic
         #endregion
 
 
-        public void Awake()
+        private void Awake()
         {
-            App.Cache.jester.GetComponent<FlightRecorder>().OnLanded(OnLanded);
+            App.Cache.JesterState.OnLanded(OnLanded);
 
             App.Cache.userControl.AttachForKick(this.OnKick);
-            App.Cache.userControl.AttachForPause(this.OnPauseGame);
-
-            App.Cache.screenManager.OnSwitching(OnScreenSwitching);
+            App.Cache.userControl.AttachForPause(this.OnPauseGame);            
         }
 
 

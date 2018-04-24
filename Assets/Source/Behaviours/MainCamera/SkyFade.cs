@@ -1,6 +1,5 @@
 ﻿using Assets.Source.App;
-using Assets.Source.Behaviours.Jester;
-using Assets.Source.Models;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.MainCamera
@@ -9,18 +8,20 @@ namespace Assets.Source.Behaviours.MainCamera
     {
         public float maxY = 15;
         public float minY = -5;
-        public float maxHeight = 200;        
+        public float maxHeight = 200;
 
 
-        public void Start()
-        {            
-            App.Cache.jester.GetComponent<FlightRecorder>().OnHeightChanged(MoveSkyFade);           
+        private void Start()
+        {
+            App.Cache.JesterState.HeightProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe(MoveSkyFade);              
         }
 
 
-        public void MoveSkyFade(UnitMeasurement height)
+        private void MoveSkyFade(float height)
         {
-            float heightPercent = height.Units / maxHeight;           
+            float heightPercent = height / maxHeight;           
             float yRange = MathUtil.Difference(minY, maxY);
             
             float nextY = maxY - (heightPercent * yRange);            

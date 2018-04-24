@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
+using Assets.Source.Repositories;
 using System;
 using UnityEngine;
 
@@ -7,9 +8,9 @@ namespace Assets.Source.App
 {
     public static class Cache
     {
-        #region GAME LOGIC Components
-
-        // GameLogic is the GameObject which holds most global scripts
+        /* -------------------------------------------------------------------- */
+        #region GAME OBJECTS
+        
         private static GameObject _GameLogic;
         private static GameObject GameLogic
         {
@@ -22,7 +23,40 @@ namespace Assets.Source.App
 
                 return _GameLogic;
             }
-        }        
+        }
+
+        private static GameObject _Repositories;
+        private static GameObject Repositories
+        {
+            get
+            {
+                if (_Repositories == null)
+                {
+                    _Repositories = GameObject.Find(Constants.GO_REPOSITORIES);
+                }
+
+                return _Repositories;
+            }
+        }
+
+        #endregion
+
+
+        /* -------------------------------------------------------------------- */
+        #region COMPONENTS
+
+        private static JesterStateRepository _JesterState;
+        public static JesterStateRepository JesterState
+        {
+            get
+            {
+                if (_JesterState == null)
+                {
+                    _JesterState = Repositories.GetComponent<JesterStateRepository>();
+                }
+                return _JesterState;
+            }
+        }
 
         private static RxState _rxState;
         public static RxState rxState
@@ -73,7 +107,7 @@ namespace Assets.Source.App
             {
                 if (_userControl == null)
                 {
-                    _userControl = GameLogic.GetComponent<UserControl>();
+                    _userControl = GetComponent<UserControl>(Constants.GO_USER_CONTROL);
                 }
                 return _userControl;
             }
@@ -102,6 +136,21 @@ namespace Assets.Source.App
                     _playerProfile = GetComponent<PlayerProfile>(Constants.GO_PLAYER_PROFILE);
                 }
                 return _playerProfile;
+            }
+        }
+
+
+        private static Jester _jester;
+        public static Jester jester
+        {
+            get
+            {
+                if (_jester == null)
+                {
+                    _jester = GetComponent<Jester>(Constants.GO_JESTER);
+                }
+
+                return _jester;
             }
         }
 
@@ -136,21 +185,7 @@ namespace Assets.Source.App
             }
         }
 
-        private static Jester _jester;
-        public static Jester jester
-        {
-            get
-            {
-                if (_jester == null)
-                {
-                    _jester = GetComponent<Jester>(Constants.JESTER);
-                }
-
-                return _jester;
-            }
-        }
-
-
+        
         /* ------------------------------------------------------------------------------------ */
         #region Utilities
 

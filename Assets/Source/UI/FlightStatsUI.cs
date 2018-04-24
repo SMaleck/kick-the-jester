@@ -1,6 +1,6 @@
-﻿using Assets.Source.Behaviours.Jester;
+﻿using Assets.Source.App;
 using Assets.Source.GameLogic;
-using Assets.Source.Models;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,18 +20,25 @@ namespace Assets.Source.UI
         void Start()
         {
             // FLight Stats
-            App.Cache.jester.GetComponent<FlightRecorder>().OnDistanceChanged(
-                (UnitMeasurement value) => { UpdateText((int)value.Meters, txtDistance, "m"); });
+            App.Cache.JesterState.DistanceProperty.TakeUntilDestroy(this).SubscribeToText(txtDistance);
 
-            App.Cache.jester.GetComponent<FlightRecorder>().OnHeightChanged(
-                (UnitMeasurement value) => { UpdateText((int)value.Meters, txtHeight, "m"); });
+            App.Cache.JesterState.DistanceProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtDistance, "m"); });
 
-            App.Cache.jester.GetComponent<FlightRecorder>().OnVelocityChanged(
-                (SpeedMeasurement value) => { UpdateText(Mathf.Ceil(value.Kmh), txtVelocity, "km/h"); });
+            App.Cache.JesterState.HeightProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtHeight, "m"); });
+
+            App.Cache.JesterState.VelocityProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe((Vector2 value) => { UpdateText(Mathf.Ceil(value.magnitude), txtVelocity, "kmh"); });
 
             // Currency
-            App.Cache.currencyManager.OnCollectedChanged(
-                (int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
+            App.Cache.JesterState.CollectedCurrencyProperty
+                                 .TakeUntilDestroy(this)
+                                 .Subscribe((int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
+                
 
             // Setup listeners when Profile is loaded                        
             App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
@@ -45,7 +52,7 @@ namespace Assets.Source.UI
             App.Cache.playerProfile.OnCurrencyChanged(
                 (int value) => { UpdateText(value, txtTotalCurrency, "G"); });
         }
-        
+
         private void UpdateText(object value, Text uiElement, string suffix = "")
         {
             if(uiElement != null)

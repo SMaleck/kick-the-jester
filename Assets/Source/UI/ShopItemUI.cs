@@ -9,7 +9,7 @@ namespace Assets.Source.UI
     {
         public Text txtMoney;
 
-        public void Awake()
+        private void Awake()
         {
             App.Cache.playerProfile.OnProfileLoaded((PlayerProfile profile) => {
                 UpdateCurrency(profile.Currency);

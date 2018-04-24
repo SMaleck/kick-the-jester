@@ -1,28 +1,40 @@
 ﻿using Assets.Source.App;
-using Assets.Source.Models;
+using Assets.Source.Behaviours.MainCamera;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour
 {
-    // Event to notify when we start switching to another scene
-    private event NotifyEventHandler _OnSwitching = delegate { };
-    public void OnSwitching(NotifyEventHandler handler)
+    private ScreenFader fader;
+
+    private void Start()
     {
-        _OnSwitching += handler;        
+        fader = Camera.main.GetComponentInChildren<ScreenFader>();
+        fader.OnFadeComplete(Execute);
     }
 
 
+    private string nextScene = "";
+    private void Execute()
+    {
+        if (string.IsNullOrEmpty(nextScene))
+        {
+            return;
+        }
+
+        SceneManager.LoadSceneAsync(nextScene);
+    }
+
     public void StartGame()
     {
-        _OnSwitching();
-        SceneManager.LoadSceneAsync(Constants.SCENE_GAME);
+        nextScene = Constants.SCENE_GAME;
+        fader.FadeOut();
     }
 
 
     public void ShowShop()
     {
-        _OnSwitching();
-        SceneManager.LoadSceneAsync(Constants.SCENE_SHOP);
+        nextScene = Constants.SCENE_SHOP;
+        fader.FadeOut();
     }
 }

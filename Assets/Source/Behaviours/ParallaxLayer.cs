@@ -26,7 +26,7 @@ namespace Assets.Source.Behaviours
         private Vector2 lastCameraPos;
 
 
-        public void Awake()
+        private void Awake()
         {
             cameraTransform = Camera.main.transform;
             lastCameraPos = cameraTransform.position;
@@ -50,7 +50,7 @@ namespace Assets.Source.Behaviours
         }              
 
 
-        public void LateUpdate()
+        private void LateUpdate()
         {
             // Prallaxing
             if (UseSpeed)
