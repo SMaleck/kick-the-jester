@@ -10,32 +10,33 @@ using UnityEngine.SceneManagement;
 
 public class GameStateMachineTest
 {
+    private GameStateRepository repo = new GameStateRepository();
     private GameStateMachine machine;
 
     [SetUp]
     public void SetUp()
     {
-        machine = new GameStateMachine();
+        machine = new GameStateMachine(GameState.Launch, repo);
     }
 
     [Test]
     public void ShouldStartOnLaunchState()
     {
-        Assert.AreEqual(GameState.Launch, machine.State);
+        Assert.AreEqual(GameState.Launch, repo.State);
     }
 
     [Test]
     public void ShouldTogglePauseStateBackAndForth()
     {
-        Assert.AreEqual(GameState.Launch, machine.State);
+        Assert.AreEqual(GameState.Launch, repo.State);
 
         machine.TogglePause(true);
 
-        Assert.AreEqual(GameState.Paused, machine.State);
+        Assert.AreEqual(GameState.Paused, repo.State);
 
         machine.TogglePause(false);
 
-        Assert.AreEqual(GameState.Launch, machine.State);
+        Assert.AreEqual(GameState.Launch, repo.State);
     }
 
     [Test]
@@ -43,7 +44,7 @@ public class GameStateMachineTest
     {
         machine.ToFlight();
 
-        Assert.AreEqual(GameState.Flight, machine.State);
+        Assert.AreEqual(GameState.Flight, repo.State);
     }
 
     [Test]
@@ -51,7 +52,7 @@ public class GameStateMachineTest
     {
         machine.ToEnd();
 
-        Assert.AreEqual(GameState.End, machine.State);
+        Assert.AreEqual(GameState.End, repo.State);
     }
 
     [Test]
@@ -60,7 +61,7 @@ public class GameStateMachineTest
         machine.TogglePause(true);
         machine.ToFlight();
 
-        Assert.AreNotEqual(GameState.Flight, machine.State);
+        Assert.AreNotEqual(GameState.Flight, repo.State);
     }
 
     [Test]
@@ -69,7 +70,7 @@ public class GameStateMachineTest
         machine.ToEnd();
         machine.ToFlight();
 
-        Assert.AreNotEqual(GameState.Flight, machine.State);
+        Assert.AreNotEqual(GameState.Flight, repo.State);
     }
 
     [Test]
@@ -78,6 +79,6 @@ public class GameStateMachineTest
         machine.TogglePause(true);
         machine.ToEnd();
 
-        Assert.AreNotEqual(GameState.End, machine.State);
+        Assert.AreNotEqual(GameState.End, repo.State);
     }
 }

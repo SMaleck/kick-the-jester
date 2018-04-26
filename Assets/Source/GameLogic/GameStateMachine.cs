@@ -9,7 +9,9 @@ namespace Assets.Source.GameLogic
 
 
         public GameStateMachine(GameState state, GameStateRepository repo)
-        {            
+        {                        
+            this.repo = repo;
+            this.repo.State = state;
             previousState = state;
         }
 
