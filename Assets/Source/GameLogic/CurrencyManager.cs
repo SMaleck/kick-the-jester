@@ -26,7 +26,7 @@ namespace Assets.Source.GameLogic
 
             App.Cache.RepoRx.GameStateRepository.StateProperty
                                                 .TakeUntilDestroy(this)
-                                                .Where(e => e.Equals(GameState.End) || e.Equals(GameState.Switching))
+                                                .Where(e => e.Equals(GameState.End))
                                                 .Subscribe(OnEnd);
         }
 

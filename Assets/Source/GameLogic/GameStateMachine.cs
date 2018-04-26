@@ -4,14 +4,13 @@ namespace Assets.Source.GameLogic
 {
     public class GameStateMachine
     {        
-        private GameState StateBeforePause;
-        public GameState State { get; private set; }
-        
+        private GameStateRepository repo;        
+        private GameState previousState;
 
-        public GameStateMachine()
-        {
-            State = GameState.Launch;
-            StateBeforePause = State;
+
+        public GameStateMachine(GameState state, GameStateRepository repo)
+        {            
+            previousState = state;
         }
 
 
@@ -19,37 +18,31 @@ namespace Assets.Source.GameLogic
         {
             if (isPaused)
             {
-                StateBeforePause = State;
-                State = GameState.Paused;
+                previousState = repo.State;
+                repo.State = GameState.Paused;
             }
             else
             {
-                State = StateBeforePause;
+                repo.State = previousState;
             }
         }
 
 
         public void ToFlight()
         {
-            if(State != GameState.End && State != GameState.Paused)
+            if(repo.State != GameState.End && repo.State != GameState.Paused)
             {
-                State = GameState.Flight;
+                repo.State = GameState.Flight;
             }
         }
 
 
         public void ToEnd()
         {
-            if (State != GameState.Paused)
+            if (repo.State != GameState.Paused)
             {
-                State = GameState.End;
+                repo.State = GameState.End;
             }
-        }
-
-
-        public void ToSwitching()
-        {
-            State = GameState.Switching;
         }
     }
 }

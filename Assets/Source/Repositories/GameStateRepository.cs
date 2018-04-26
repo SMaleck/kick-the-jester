@@ -1,13 +1,8 @@
-﻿using Assets.Source.GameLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UniRx;
+﻿using UniRx;
 
 namespace Assets.Source.Repositories
 {
-    public enum GameState { Launch, Flight, End, Switching, Paused }
+    public enum GameState { Launch, Flight, End, Paused }
 
     public class GameStateRepository
     {       
