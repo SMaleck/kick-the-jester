@@ -30,7 +30,7 @@ namespace Assets.Source.Behaviours.Jester
             entityBody = gameObject.GetComponent<Rigidbody2D>();
 
             // Listen for events
-            App.Cache.userControl.AttachForKick(this.KickForward);
+            App.Cache.userControl.OnKick(KickForward);
             App.Cache.playerProfile.OnProfileLoaded(this.OnPlayerProfileLoaded);
 
             // Prevent kicking during pause or after game is over

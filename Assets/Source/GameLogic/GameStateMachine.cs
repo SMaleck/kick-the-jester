@@ -16,9 +16,9 @@ namespace Assets.Source.GameLogic
         }
 
 
-        public void TogglePause(bool isPaused)
-        {
-            if (isPaused)
+        public bool TogglePause()
+        {           
+            if (repo.State != GameState.Paused)
             {
                 previousState = repo.State;
                 repo.State = GameState.Paused;
@@ -27,6 +27,8 @@ namespace Assets.Source.GameLogic
             {
                 repo.State = previousState;
             }
+
+            return repo.State == GameState.Paused;
         }
 
 

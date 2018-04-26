@@ -1,60 +1,53 @@
-﻿using UnityEngine;
-using Assets.Source.App;
-using System;
-using UnityEngine.EventSystems;
-using UniRx;
+﻿using Assets.Source.Models;
 using Assets.Source.Repositories;
+using UniRx;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Source.GameLogic
 {
     public class UserControl : MonoBehaviour, IPointerDownHandler
     {
-        /* ----------------------------- EVENT HANDLING ----------------------------- */
-        #region EVENT HANDLING
+        // Internal Toggles
+        private bool canKick = false;
+        private bool canGoToShop = false;
 
-        public delegate void InputEventHandler();
-        public delegate void ToggleEventHandler(bool State);
 
-        public event InputEventHandler InputKickHandler = delegate { };
-        public event ToggleEventHandler InputPauseHandler = delegate { };
-
-        public void AttachForKick(InputEventHandler handler)
-        {            
-            InputKickHandler += handler;
-        }
-
-        // ONly GameStateManager should attach here, everything else should listen there
-        public void AttachForPause(ToggleEventHandler handler)
+        // INPUT EVENT: Kick Action
+        private event NotifyEventHandler _OnKick = delegate { };
+        public void OnKick(NotifyEventHandler handler)
         {
-            InputPauseHandler += handler;
+            _OnKick += handler;
         }
 
-        #endregion
 
-        /* ----------------------------- ----------------------------- */
+        // INPUT EVENT: Toggle Pause Action
+        private event NotifyEventHandler _OnTogglePause = delegate { };
+        public void OnTogglePause(NotifyEventHandler handler)
+        {
+            _OnTogglePause += handler;
+        }
 
-        private bool IsPaused = false;
-        private bool CanGoToShop = false;
 
         void Start()
         {
             App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)
-                                                .Where(e => e.Equals(GameState.End))
-                                                .Subscribe(ActivateShop);
+                                                .TakeUntilDestroy(this)                                                
+                                                .Subscribe(OnGameStateChanged);
         }
+
 
         void Update()
         {
             
-            if (Input.GetButtonDown("Kick"))
-            {                
-                InputKickHandler();
+            if (canKick && Input.GetButtonDown("Kick"))
+            {
+                _OnKick();
             }
 
             if (Input.GetButtonDown("Pause"))
             {
-                TooglePauseGame();
+                _OnTogglePause();
             }
 
             if (Input.GetButtonDown("Buy"))
@@ -62,7 +55,8 @@ namespace Assets.Source.GameLogic
                 ShowShop();
             }
         }
-        
+
+
         // Handles both touch and clicks
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -72,53 +66,55 @@ namespace Assets.Source.GameLogic
                     // well done. 14 fingers touch! ;D
                     App.Cache.playerProfile.Currency += 1000;
                     break;
+
                 case -1:
                 case 0:
-                    InputKickHandler();
+                    _OnKick();
                     break;
-                default:
-                    // nothing yet.
+
+                default:                    
                     break;
             }
         }
 
-        /* ----------------------------- SHOP ----------------------------- */
-        #region SHOP
+
+        // Handles Game State changing
+        public void OnGameStateChanged(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.Launch:
+                case GameState.Flight:
+                    canKick = true;
+                    break;                
+
+                case GameState.Paused:
+                    canKick = false;
+                    break;
+
+                case GameState.End:
+                    canKick = false;
+                    canGoToShop = true;
+                    break;
+            }            
+        }
+
+
+        /* ----------------------------- UI BUTTON METHODS ----------------------------- */
+        #region UI BUTTON METHODS
 
         public void ShowShop()
         {
-            if (CanGoToShop)
+            if (canGoToShop)
             {
                 App.Cache.screenManager.ShowShop();
             }
         }
 
-        public void ActivateShop(GameState state)
+
+        public void TooglePause()
         {
-            CanGoToShop = true;
-        }
-
-        #endregion
-
-        /* ----------------------------- PAUSE GAME ----------------------------- */
-        #region PAUSE GAME
-
-        public void PauseGame()
-        {
-            IsPaused = true;
-            InputPauseHandler(IsPaused);
-        }
-
-        public void UnPauseGame()
-        {
-            IsPaused = false;
-            InputPauseHandler(IsPaused);
-        }
-
-        public void TooglePauseGame()
-        {
-            IsPaused = !IsPaused;
-            InputPauseHandler(IsPaused);
+            _OnTogglePause();
         }
 
         #endregion

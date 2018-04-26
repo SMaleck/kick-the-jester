@@ -30,12 +30,10 @@ public class GameStateMachineTest
     {
         Assert.AreEqual(GameState.Launch, repo.State);
 
-        machine.TogglePause(true);
-
+        machine.TogglePause();
         Assert.AreEqual(GameState.Paused, repo.State);
 
-        machine.TogglePause(false);
-
+        machine.TogglePause();
         Assert.AreEqual(GameState.Launch, repo.State);
     }
 
@@ -58,7 +56,7 @@ public class GameStateMachineTest
     [Test]
     public void ShouldNotChangeToFlightStateDuringPause()
     {
-        machine.TogglePause(true);
+        machine.TogglePause();
         machine.ToFlight();
 
         Assert.AreNotEqual(GameState.Flight, repo.State);
@@ -76,7 +74,7 @@ public class GameStateMachineTest
     [Test]
     public void ShouldNotChangeToEndStateDuringPause()
     {
-        machine.TogglePause(true);
+        machine.TogglePause();
         machine.ToEnd();
 
         Assert.AreNotEqual(GameState.End, repo.State);

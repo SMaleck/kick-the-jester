@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Assets.Source.GameLogic
 {
     public class GameStateManager : MonoBehaviour
-    {        
+    {
+        private bool IsPaused;
         public GameStateMachine stateMachine;
 
 
@@ -15,22 +16,18 @@ namespace Assets.Source.GameLogic
             App.Cache.RepoRx.JesterStateRepository
                             .OnLanded(stateMachine.ToEnd);
 
-            App.Cache.userControl.AttachForKick(stateMachine.ToFlight);
+            App.Cache.userControl.OnKick(stateMachine.ToFlight);
 
-            App.Cache.userControl.AttachForPause(this.OnPauseGame);            
+            App.Cache.userControl.OnTogglePause(this.OnTogglePause);
         }
 
 
-        #region EVENT HANDLERS
-
         // Pauses the Game on a global level
-        private void OnPauseGame(bool isPaused)
+        private void OnTogglePause()
         {
-            stateMachine.TogglePause(isPaused);            
+            bool isPaused = stateMachine.TogglePause();
 
             Time.timeScale = isPaused ? 0 : 1;
         }
-
-        #endregion
     }
 }
