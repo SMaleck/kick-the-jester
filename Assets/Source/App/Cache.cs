@@ -58,21 +58,6 @@ namespace Assets.Source.App
             }
         }
 
-
-        private static RxState _rxState;
-        public static RxState rxState
-        {
-            get
-            {
-                if (_rxState == null)
-                {
-                    _rxState = GameLogic.GetComponent<RxState>();
-                }
-
-                return _rxState;
-            }
-        }
-
         private static GameStateManager _gameStateManager;
         public static GameStateManager gameStateManager
         {

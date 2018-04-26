@@ -41,6 +41,8 @@ namespace Assets.Source.Behaviours.Jester
         void Update()
         {
             UpdateInitialKickForceFactor();            
+
+            App.Cache.RepoRx.GameStateRepository.RelativeKickForce = MathUtil.AsPercent(initialKickForceFactor, maxForceFactor);
         }
 
         private void UpdateInitialKickForceFactor()
@@ -77,11 +79,6 @@ namespace Assets.Source.Behaviours.Jester
         #endregion
 
         #region METHODS
-
-        public int GetRelativeKickForce()
-        {
-            return MathUtil.AsPercent(initialKickForceFactor, maxForceFactor);
-        }
 
         private bool CanKick()
         {

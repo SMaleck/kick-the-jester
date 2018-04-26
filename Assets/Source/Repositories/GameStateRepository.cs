@@ -12,5 +12,13 @@ namespace Assets.Source.Repositories
             get { return StateProperty.Value; }
             set { StateProperty.Value = value; }
         }
+
+
+        public IntReactiveProperty RelativeKickForceProperty = new IntReactiveProperty(0);
+        public int RelativeKickForce
+        {
+            get { return RelativeKickForceProperty.Value; }
+            set { RelativeKickForceProperty.Value = value; }
+        }
     }
 }

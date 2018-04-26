@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.UI.Components
@@ -10,10 +11,12 @@ namespace Assets.Source.UI.Components
         private void Start()
         {            
             slider = gameObject.GetComponentInChildren<Slider>();
-            slider.maxValue = 100;
+            slider.maxValue = 100;                        
 
-            // Register for Updates
-            App.Cache.rxState.AttachForRelativeKickForce(this.UpdateUI);
+            App.Cache.RepoRx.GameStateRepository.RelativeKickForceProperty
+                                                .TakeUntilDestroy(this)
+                                                .Subscribe(UpdateUI);
+
             App.Cache.RepoRx.JesterStateRepository.OnStartedFlight(HideUI);
         }
 
