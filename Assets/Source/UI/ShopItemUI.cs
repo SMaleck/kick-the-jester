@@ -1,4 +1,5 @@
 ﻿using Assets.Source.GameLogic;
+using Assets.Source.Repositories;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ namespace Assets.Source.UI
 
         private void Awake()
         {
-            App.Cache.playerProfile.OnProfileLoaded((PlayerProfile profile) => {
+            App.Cache.playerProfile.OnProfileLoaded((PlayerProfileRepository profile) => {
                 UpdateCurrency(profile.Currency);
             });
 

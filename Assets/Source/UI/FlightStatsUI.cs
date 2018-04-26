@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.GameLogic;
+using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +45,7 @@ namespace Assets.Source.UI
             App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
         }
 
-        private void OnProfileLoaded(PlayerProfile profile)
+        private void OnProfileLoaded(PlayerProfileRepository profile)
         {
             App.Cache.playerProfile.OnBestDistanceChanged(
                 (int value) => { UpdateText(value, txtBestDistance, "m"); });

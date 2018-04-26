@@ -126,14 +126,14 @@ namespace Assets.Source.App
             }
         }
 
-        private static PlayerProfile _playerProfile;
-        public static PlayerProfile playerProfile
+        private static PlayerProfileRepository _playerProfile;
+        public static PlayerProfileRepository playerProfile
         {
             get
             {
                 if (_playerProfile == null)
                 {
-                    _playerProfile = GetComponent<PlayerProfile>(Constants.GO_PLAYER_PROFILE);
+                    _playerProfile = GetComponent<PlayerProfileRepository>(Constants.GO_PLAYER_PROFILE);
                 }
                 return _playerProfile;
             }

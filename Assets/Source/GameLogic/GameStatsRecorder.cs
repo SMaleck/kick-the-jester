@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Assets.Source.GameLogic
 {
     public class GameStatsRecorder : MonoBehaviour
     {
-        private PlayerProfile playerProfile;
+        private PlayerProfileRepository playerProfile;
         private int currentDistance = 0;
 
         // Use this for initialization
@@ -25,7 +26,7 @@ namespace Assets.Source.GameLogic
             currentDistance = MathUtil.UnitsToMeters(distance);
         }
 
-        private void OnProfileLoaded(PlayerProfile profile)
+        private void OnProfileLoaded(PlayerProfileRepository profile)
         {
             playerProfile = profile;
         }

@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.GameLogic;
+using Assets.Source.Repositories;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,7 +59,7 @@ namespace Assets.Source.Behaviours.Jester
 
         #region EVENT HANDLERS
 
-        private void OnPlayerProfileLoaded(PlayerProfile profile)
+        private void OnPlayerProfileLoaded(PlayerProfileRepository profile)
         {
             kicksAvailable = profile.KickCount;
         }
