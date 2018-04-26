@@ -2,6 +2,8 @@
 using Assets.Source.App;
 using System;
 using UnityEngine.EventSystems;
+using UniRx;
+using Assets.Source.Repositories;
 
 namespace Assets.Source.GameLogic
 {
@@ -36,7 +38,10 @@ namespace Assets.Source.GameLogic
 
         void Start()
         {
-            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Where(e => e.Equals(GameState.End))
+                                                .Subscribe(ActivateShop);
         }
 
         void Update()
@@ -88,13 +93,9 @@ namespace Assets.Source.GameLogic
             }
         }
 
-        public void OnGameStateChange(GameStateMachine.GameState gameState)
+        public void ActivateShop(GameState state)
         {
-            if (gameState == GameStateMachine.GameState.End)
-            {
-                // Allow going to the shop only after the game is over
-                CanGoToShop = true;
-            }
+            CanGoToShop = true;
         }
 
         #endregion

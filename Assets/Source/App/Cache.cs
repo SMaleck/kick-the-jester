@@ -45,18 +45,19 @@ namespace Assets.Source.App
         /* -------------------------------------------------------------------- */
         #region COMPONENTS
 
-        private static JesterStateRepository _JesterState;
-        public static JesterStateRepository JesterState
+        private static RepoRx _RepoRx;
+        public static RepoRx RepoRx
         {
             get
             {
-                if (_JesterState == null)
+                if (_RepoRx == null)
                 {
-                    _JesterState = Repositories.GetComponent<JesterStateRepository>();
+                    _RepoRx = Repositories.GetComponent<RepoRx>();
                 }
-                return _JesterState;
+                return _RepoRx;
             }
         }
+
 
         private static RxState _rxState;
         public static RxState rxState

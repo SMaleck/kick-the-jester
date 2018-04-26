@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.GameLogic;
+using Assets.Source.Repositories;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ namespace Assets.Source.Behaviours.Jester
             App.Cache.playerProfile.OnProfileLoaded(this.OnPlayerProfileLoaded);
 
             // Prevent kicking during pause or after game is over
-            DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
+            DeactivateOnStates(new List<GameState>() { GameState.Paused, GameState.End });
         }
 
         // Update is called once per frame

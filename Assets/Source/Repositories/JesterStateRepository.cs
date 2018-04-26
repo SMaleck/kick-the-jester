@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Repositories
 {
-    public class JesterStateRepository : MonoBehaviour
+    public class JesterStateRepository
     {
         /* ------------------------------------------------------------------------------------- */
         #region GENERAL FLIGHT STATE

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.Source.Repositories;
 
 namespace Assets.Source.GameLogic
 {
     public class GameStateMachine
-    {
-        public enum GameState { Launch, Flight, End, Switching, Paused }
-
+    {        
         private GameState StateBeforePause;
         public GameState State { get; private set; }
         

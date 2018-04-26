@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Repositories;
 using System;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -21,17 +22,18 @@ namespace Assets.Source.GameLogic
 
         private void Awake()
         {
-            jesterState = App.Cache.JesterState;
-            App.Cache.gameStateManager.OnGameStateChanged(OnGameStateChanged);
+            jesterState = App.Cache.RepoRx.JesterStateRepository;
+
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Where(e => e.Equals(GameState.End) || e.Equals(GameState.Switching))
+                                                .Subscribe(OnEnd);
         }
 
         // Commit Money to profile, if the game ended, or we are switching
-        private void OnGameStateChanged(GameStateMachine.GameState state)
+        private void OnEnd(GameState state)
         {
-            if(state == GameStateMachine.GameState.End || state == GameStateMachine.GameState.Switching)
-            {
-                TryCommitPools();
-            }
+            TryCommitPools();
         }
 
         public void AddPickup(int amount)

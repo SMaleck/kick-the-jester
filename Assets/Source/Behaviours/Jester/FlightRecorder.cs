@@ -12,7 +12,7 @@ namespace Assets.Source.Behaviours.Jester
 
         private void Start()
         {
-            jesterState = App.Cache.JesterState;
+            jesterState = App.Cache.RepoRx.JesterStateRepository;
             Origin = goTransform.position;            
         }
 

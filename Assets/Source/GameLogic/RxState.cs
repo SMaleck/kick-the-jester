@@ -10,16 +10,10 @@ namespace Assets.Source.GameLogic
     public class RxState : MonoBehaviour
     {
         #region EVENT HANDLERS
-
-        private event GameStateEventHandler OnGameStateChanged = delegate { };
+        
         private event IntValueEventHandler OnRelativeKickForceChanged = delegate { };
 
         #endregion
-
-        public void AttachForGameState(GameStateEventHandler handler)
-        {
-            OnGameStateChanged += handler;
-        }
 
         public void AttachForRelativeKickForce(IntValueEventHandler handler)
         {

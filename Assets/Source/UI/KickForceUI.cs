@@ -14,7 +14,7 @@ namespace Assets.Source.UI.Components
 
             // Register for Updates
             App.Cache.rxState.AttachForRelativeKickForce(this.UpdateUI);
-            App.Cache.JesterState.OnStartedFlight(HideUI);
+            App.Cache.RepoRx.JesterStateRepository.OnStartedFlight(HideUI);
         }
 
         private void HideUI()

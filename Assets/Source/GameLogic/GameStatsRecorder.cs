@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
 
@@ -12,11 +13,15 @@ namespace Assets.Source.GameLogic
         // Use this for initialization
         void Start()
         {
-            App.Cache.JesterState.DistanceProperty
+            App.Cache.RepoRx.JesterStateRepository.DistanceProperty
                                  .TakeUntilDestroy(this)
                                  .Subscribe(RecordDistance);
 
-            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Where(e => e.Equals(GameState.End))
+                                                .Subscribe(OnGameStateChange);
+
             App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 
@@ -30,9 +35,9 @@ namespace Assets.Source.GameLogic
             playerProfile = profile;
         }
 
-        private void OnGameStateChange(GameStateMachine.GameState state)
+        private void OnGameStateChange(GameState state)
         {
-            if (state == GameStateMachine.GameState.End && currentDistance > playerProfile.BestDistance)
+            if (state == GameState.End && currentDistance > playerProfile.BestDistance)
             {
                 playerProfile.BestDistance = currentDistance;
             }

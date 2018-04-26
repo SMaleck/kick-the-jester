@@ -2906,19 +2906,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1662104477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f70e0ce106fbea4fb40432edabe04ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 45b701a67cc51fe49a8490a5452cac2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DistanceProperty:
-    value: 0
-  HeightProperty:
-    value: 0
-  VelocityProperty:
-    value: {x: 0, y: 0}
-  CollectedCurrencyProperty:
-    value: 0
-  EarnedCurrencyProperty:
-    value: 0
 --- !u!1 &1683235448
 GameObject:
   m_ObjectHideFlags: 0

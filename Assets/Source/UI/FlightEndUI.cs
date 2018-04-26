@@ -1,7 +1,6 @@
-﻿using Assets.Source.App;
-using Assets.Source.GameLogic;
+﻿using Assets.Source.Repositories;
+using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Source.UI
 {
@@ -13,15 +12,15 @@ namespace Assets.Source.UI
             Panel.SetActive(false);
 
             // Register for Updates
-            App.Cache.gameStateManager.OnGameStateChanged(this.UpdateUI);
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Where(e => e.Equals(GameState.End))
+                                                .Subscribe(ActivatePanel);
         }
 
-        private void UpdateUI(GameStateMachine.GameState state)
-        {            
-            if(state == GameStateMachine.GameState.End)
-            {
-                Panel.SetActive(true);
-            }
+        private void ActivatePanel(GameState state)
+        {
+            Panel.SetActive(true);
         }
     }
 }
