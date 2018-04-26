@@ -3,6 +3,7 @@ using Assets.Source.Repositories;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
 namespace Assets.Source.UI
 {
@@ -12,11 +13,9 @@ namespace Assets.Source.UI
 
         private void Awake()
         {
-            App.Cache.playerProfile.OnProfileLoaded((PlayerProfileRepository profile) => {
-                UpdateCurrency(profile.Currency);
-            });
-
-            App.Cache.playerProfile.OnCurrencyChanged(UpdateCurrency);
+            App.Cache.playerProfile.currencyProperty
+                .TakeUntilDestroy(this)
+                .Subscribe((int value) => { UpdateCurrency(value); });
         }
 
         private void UpdateCurrency(int currency)

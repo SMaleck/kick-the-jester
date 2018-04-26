@@ -20,7 +20,7 @@ namespace Assets.Source.UI
 
         void Start()
         {
-            // FLight Stats
+            // Flight Stats
             App.Cache.JesterState.DistanceProperty.TakeUntilDestroy(this).SubscribeToText(txtDistance);
 
             App.Cache.JesterState.DistanceProperty
@@ -39,19 +39,15 @@ namespace Assets.Source.UI
             App.Cache.JesterState.CollectedCurrencyProperty
                                  .TakeUntilDestroy(this)
                                  .Subscribe((int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
-                
 
-            // Setup listeners when Profile is loaded                        
-            App.Cache.playerProfile.OnProfileLoaded(OnProfileLoaded);
-        }
+            // Setup listeners for Profile data
+            App.Cache.playerProfile.bestDistanceProperty
+                                .TakeUntilDestroy(this)
+                                .Subscribe((int value) => { UpdateText(value, txtBestDistance, "m"); });
 
-        private void OnProfileLoaded(PlayerProfileRepository profile)
-        {
-            App.Cache.playerProfile.OnBestDistanceChanged(
-                (int value) => { UpdateText(value, txtBestDistance, "m"); });
-
-            App.Cache.playerProfile.OnCurrencyChanged(
-                (int value) => { UpdateText(value, txtTotalCurrency, "G"); });
+            App.Cache.playerProfile.currencyProperty
+                                .TakeUntilDestroy(this)
+                                .Subscribe((int value) => { UpdateText(value, txtTotalCurrency, "G"); });
         }
 
         private void UpdateText(object value, Text uiElement, string suffix = "")

@@ -7,7 +7,6 @@ namespace Assets.Source.GameLogic
 {
     public class GameStatsRecorder : MonoBehaviour
     {
-        private PlayerProfileRepository playerProfile;
         private int currentDistance = 0;
 
         // Use this for initialization
@@ -18,7 +17,6 @@ namespace Assets.Source.GameLogic
                                  .Subscribe(RecordDistance);
 
             App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
-            App.Cache.playerProfile.OnProfileLoaded(this.OnProfileLoaded);
         }
 
         private void RecordDistance(float distance)
@@ -26,16 +24,11 @@ namespace Assets.Source.GameLogic
             currentDistance = MathUtil.UnitsToMeters(distance);
         }
 
-        private void OnProfileLoaded(PlayerProfileRepository profile)
-        {
-            playerProfile = profile;
-        }
-
         private void OnGameStateChange(GameStateMachine.GameState state)
         {
-            if (state == GameStateMachine.GameState.End && currentDistance > playerProfile.BestDistance)
+            if (state == GameStateMachine.GameState.End && currentDistance > App.Cache.playerProfile.BestDistance)
             {
-                playerProfile.BestDistance = currentDistance;
+                App.Cache.playerProfile.BestDistance = currentDistance;
             }
         }
     }

@@ -3,6 +3,7 @@ using Assets.Source.GameLogic;
 using Assets.Source.Repositories;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 namespace Assets.Source.Behaviours.Jester
 {
@@ -31,7 +32,8 @@ namespace Assets.Source.Behaviours.Jester
 
             // Listen for events
             App.Cache.userControl.AttachForKick(this.KickForward);
-            App.Cache.playerProfile.OnProfileLoaded(this.OnPlayerProfileLoaded);
+            App.Cache.playerProfile.kickCountProperty.TakeUntilDestroy(this)
+                .Subscribe((int value) => { kicksAvailable = value; });
 
             // Prevent kicking during pause or after game is over
             DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
@@ -59,11 +61,6 @@ namespace Assets.Source.Behaviours.Jester
 
         #region EVENT HANDLERS
 
-        private void OnPlayerProfileLoaded(PlayerProfileRepository profile)
-        {
-            kicksAvailable = profile.KickCount;
-        }
-        
         private void KickForward()
         {
             if (!IsActive || !CanKick()) { return; }

@@ -18,7 +18,7 @@ namespace Assets.Source.Repositories
 
         #region PROPERTIES
 
-        private FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(BASE_KICK_FORCE);
+        public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(BASE_KICK_FORCE);
         public float KickForce
         {
             get { return kickForceProperty.Value; }
@@ -29,7 +29,7 @@ namespace Assets.Source.Repositories
             }
         }
 
-        private IntReactiveProperty kickCountProperty = new IntReactiveProperty(BASE_KICK_COUNT);
+        public IntReactiveProperty kickCountProperty = new IntReactiveProperty(BASE_KICK_COUNT);
         public int KickCount
         {
             get { return kickCountProperty.Value; }
@@ -40,16 +40,7 @@ namespace Assets.Source.Repositories
             }
         }
 
-
-        // BEST DISTANCE
-        private event IntValueEventHandler _OnBestDistanceChanged = delegate { };
-        public void OnBestDistanceChanged(IntValueEventHandler handler)
-        {
-            _OnBestDistanceChanged += handler;
-            handler(BestDistance);
-        }
-
-        private IntReactiveProperty bestDistanceProperty = new IntReactiveProperty(0);
+        public IntReactiveProperty bestDistanceProperty = new IntReactiveProperty(0);
         public int BestDistance
         {
             get { return bestDistanceProperty.Value; }
@@ -57,7 +48,6 @@ namespace Assets.Source.Repositories
             {
                 bestDistanceProperty.Value = value;
                 PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
-                _OnBestDistanceChanged(bestDistanceProperty.Value);
             }
         }
 
@@ -69,7 +59,7 @@ namespace Assets.Source.Repositories
             handler(Currency);
         }
 
-        private IntReactiveProperty currencyProperty = new IntReactiveProperty(0);
+        public IntReactiveProperty currencyProperty = new IntReactiveProperty(0);
         public int Currency
         {
             get { return currencyProperty.Value; }
@@ -91,21 +81,7 @@ namespace Assets.Source.Repositories
             get { return isLoaded; }
             private set { isLoaded = value; }
         }
-
-        public delegate void ProfileLoadedEventHandler(PlayerProfileRepository profile);
-        private event ProfileLoadedEventHandler _OnProfileLoaded = delegate { };
-
-        public void OnProfileLoaded(ProfileLoadedEventHandler handler)
-        {
-            _OnProfileLoaded += handler;
-
-            // In case it is attached too late, call it now
-            if (isLoaded)
-            {
-                handler(this);
-            }
-        }
-
+        
         #endregion
 
         #region UNITY LIFECYCLE HOOKS
@@ -123,12 +99,10 @@ namespace Assets.Source.Repositories
         {
             // Load any persisted data
             LoadKickForce();
-            //LoadKickForceInFlight();
             LoadKickCount();
             LoadBestDistance();
             LoadCurrency();
 
-            _OnProfileLoaded(this);
             isLoaded = true;
         }
 
@@ -151,14 +125,6 @@ namespace Assets.Source.Repositories
                 kickCountProperty.Value = PlayerPrefs.GetInt(Constants.PREF_KICK_COUNT);
             }
         }
-
-        //private void LoadKickForceInFlight()
-        //{
-        //    if (PlayerPrefs.HasKey(Constants.PREF_KICK_FORCE_INFLIGHT))
-        //    {
-        //        kickForceInFlight = PlayerPrefs.GetInt(Constants.PREF_KICK_FORCE_INFLIGHT);
-        //    }
-        //}
 
         private void LoadKickForce()
         {
