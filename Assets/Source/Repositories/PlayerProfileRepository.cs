@@ -7,7 +7,7 @@ using UniRx;
 
 namespace Assets.Source.Repositories
 {
-    public class PlayerProfileRepository : MonoBehaviour
+    public class PlayerProfileRepository
     {
         #region CONSTANTS
 
@@ -91,18 +91,14 @@ namespace Assets.Source.Repositories
 
         #endregion
 
-        #region UNITY LIFECYCLE HOOKS
+        #region INITIALIZATION
 
-        void Awake()
+        public PlayerProfileRepository()
         {
-            // Keep max one instance of this class/gameobject
-            if (FindObjectsOfType(GetType()).Length <= 1)
-            {
-                DontDestroyOnLoad(this.gameObject);
-            }
+            LoadProfile();
         }
 
-        void Start()
+        private void LoadProfile()
         {
             // Load any persisted data
             LoadKickForce();

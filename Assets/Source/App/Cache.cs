@@ -112,16 +112,11 @@ namespace Assets.Source.App
             }
         }
 
-        private static PlayerProfileRepository _playerProfile;
         public static PlayerProfileRepository playerProfile
         {
             get
             {
-                if (_playerProfile == null)
-                {
-                    _playerProfile = GetComponent<PlayerProfileRepository>(Constants.GO_PLAYER_PROFILE);
-                }
-                return _playerProfile;
+                return RepoRx.PlayerProfileRepository;
             }
         }
 
