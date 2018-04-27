@@ -32,7 +32,8 @@ namespace Assets.Source.Behaviours.Jester
 
             // Listen for events
             App.Cache.userControl.OnKick(KickForward);
-            App.Cache.playerProfile.OnProfileLoaded(this.OnPlayerProfileLoaded);
+            App.Cache.playerProfile.OnLoaded(
+                () => { kicksAvailable = App.Cache.playerProfile.KickCount; });
 
             // Prevent kicking during pause or after game is over
             DeactivateOnStates(new List<GameState>() { GameState.Paused, GameState.End });

@@ -20,7 +20,7 @@ namespace Assets.Source.UI
 
         void Start()
         {
-            // FLight Stats
+            // Flight Stats
             App.Cache.RepoRx.JesterStateRepository
                             .DistanceProperty
                             .TakeUntilDestroy(this)
@@ -47,10 +47,14 @@ namespace Assets.Source.UI
                             .TakeUntilDestroy(this)
                             .Subscribe((int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
 
-
             App.Cache.playerProfile.currencyProperty
-                                .TakeUntilDestroy(this)
-                                .Subscribe((int value) => { UpdateText(value, txtTotalCurrency, "G"); });
+                            .TakeUntilDestroy(this)
+                            .Subscribe((int value) => { UpdateText(value, txtTotalCurrency, "G"); });
+
+            // Distance
+            App.Cache.playerProfile.bestDistanceProperty
+                            .TakeUntilDestroy(this)
+                            .Subscribe((int value) => { UpdateText(value, txtBestDistance, "m"); });
         }
 
         private void UpdateText(object value, Text uiElement, string suffix = "")

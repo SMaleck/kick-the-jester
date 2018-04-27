@@ -81,7 +81,14 @@ namespace Assets.Source.Repositories
             get { return isLoaded; }
             private set { isLoaded = value; }
         }
-        
+
+        private event NotifyEventHandler _OnLoaded = delegate { };
+        public void OnLoaded(NotifyEventHandler handler)
+        {
+            _OnLoaded += handler;
+            if (isLoaded) { handler(); }
+        }
+
         #endregion
 
         #region UNITY LIFECYCLE HOOKS
@@ -104,6 +111,7 @@ namespace Assets.Source.Repositories
             LoadCurrency();
 
             isLoaded = true;
+            _OnLoaded();
         }
 
         #endregion
