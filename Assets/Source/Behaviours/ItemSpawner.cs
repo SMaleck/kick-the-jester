@@ -1,6 +1,4 @@
-﻿using Assets.Source.Behaviours.Jester;
-using Assets.Source.Models;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours
@@ -25,7 +23,7 @@ namespace Assets.Source.Behaviours
         public float ProjectionMaxDeviation = 1f;
 
         [Range(0, 10000)]
-        public int MinDistanceBetweenSpawns = 100;
+        public int MinDistanceBetweenSpawns = 20;
 
         protected int lastSpawnPoint = 0;
         protected int distanceSinceLastSpawn = 0;

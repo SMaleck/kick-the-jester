@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Source.Behaviours.Jester;
+using UnityEngine;
 
 namespace Assets.Source.Items
 {
@@ -8,25 +9,18 @@ namespace Assets.Source.Items
         public float Strength = 5f;
 
         public ForceMode forceMode;
-
         public Vector2 Direction = new Vector2(1, 1);
 
-        public void OnTriggerEnter2D(Collider2D collision)
-        {
-            Rigidbody2D body;
-            if(!TryGetBody(collision, out body))
-            {
-                return;
-            }
 
+        protected override void Execute(Jester jester)
+        {            
             Vector2 force = Direction * Strength;
-            body.AddForce(ApplyForceMode(force, forceMode, body.mass));
 
-            // Disable this trigger
-            gameObject.GetComponent<Collider2D>().enabled = false;
+            jester.goBody.AddForce(ApplyForceMode(force, forceMode, jester.goBody.mass));
         }
 
-        Vector2 ApplyForceMode(Vector2 force, ForceMode forceMode, float mass)
+
+        private Vector2 ApplyForceMode(Vector2 force, ForceMode forceMode, float mass)
         {
             switch (forceMode)
             {

@@ -161,8 +161,8 @@ MonoBehaviour:
   - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
   SpawnChance: 0.5
   SpawnOnTrajectory: 1
-  ProjectionMaxDeviation: 5
-  MinDistanceBetweenSpawns: 200
+  ProjectionMaxDeviation: 3
+  MinDistanceBetweenSpawns: 50
 --- !u!114 &114793658618650866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,7 +193,7 @@ MonoBehaviour:
   SpawnChance: 0.8
   SpawnOnTrajectory: 0
   ProjectionMaxDeviation: 1
-  MinDistanceBetweenSpawns: 400
+  MinDistanceBetweenSpawns: 100
 --- !u!114 &114891765417956850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,5 +223,5 @@ MonoBehaviour:
   - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
   SpawnChance: 0.3
   SpawnOnTrajectory: 1
-  ProjectionMaxDeviation: 5
-  MinDistanceBetweenSpawns: 200
+  ProjectionMaxDeviation: 4
+  MinDistanceBetweenSpawns: 30

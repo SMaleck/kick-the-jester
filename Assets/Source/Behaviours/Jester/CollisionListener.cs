@@ -33,7 +33,7 @@ namespace Assets.Source.Behaviours.Jester
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            switch (collision.gameObject.tag.ToUpper())
+            switch (collision.gameObject.tag)
             {
                 case Constants.TAG_GROUND:
                     _OnGround();

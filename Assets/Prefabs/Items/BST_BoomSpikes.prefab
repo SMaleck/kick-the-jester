@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212794270740840680}
   - component: {fileID: 61526106488938970}
   - component: {fileID: 114971431162011130}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BST_BoomSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3ba0eb4b0ebef4d8a8dbafd3629126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffect: {fileID: 8300000, guid: 519b5609d20ed014c9b166ff5788d159, type: 3}
   Strength: 10
   forceMode: 1
   Direction: {x: 0, y: 1}

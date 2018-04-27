@@ -8,18 +8,9 @@ namespace Assets.Source.Items
         [Range(1, 5000)]
         public int CurrencyAmount = 5;
 
-        public void OnTriggerEnter2D(Collider2D collision)
+        protected override void Execute(Jester jester)
         {
-            Jester jester;
-            if (!TryGetJester(collision, out jester))
-            {
-                return;
-            }
-
             App.Cache.currencyManager.AddPickup(CurrencyAmount);
-
-            // Disable this trigger
-            gameObject.GetComponent<Collider2D>().enabled = false;
         }
     }
 }

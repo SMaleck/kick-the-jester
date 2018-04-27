@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212794270740840680}
   - component: {fileID: 61526106488938970}
   - component: {fileID: 114975201992891374}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: OBS_Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1faf46770cea74cb97749d255b2aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffect: {fileID: 0}
   StoppingPowerPercent: 1
 --- !u!212 &212794270740840680
 SpriteRenderer:

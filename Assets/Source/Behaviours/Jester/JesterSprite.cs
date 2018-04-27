@@ -20,7 +20,7 @@ namespace Assets.Source.Behaviours.Jester
             App.Cache.RepoRx.JesterStateRepository.OnLanded(
                 () => { isRotating = false; });
 
-            GetComponent<CollisionListener>().OnGround(SetRotation);
+            App.Cache.jester.Collisions.OnGround(SetRotation);
         }
 
 
@@ -35,8 +35,11 @@ namespace Assets.Source.Behaviours.Jester
 
         private void SetRotation()
         {
-            isRotating = true;
-            RotationSpeed = UnityEngine.Random.Range(minRotationSpeed, maxRotationSpeed);
+            if (ListenForImpacts)
+            {
+                isRotating = true;
+                RotationSpeed = UnityEngine.Random.Range(minRotationSpeed, maxRotationSpeed);
+            }
         }
     }
 }

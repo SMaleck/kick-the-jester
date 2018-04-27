@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Boost
+  - Pickup
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -15,8 +19,8 @@ TagManager:
   - 
   - Background
   - Screen
-  - 
-  - 
+  - Jester
+  - Items
   - 
   - 
   - 

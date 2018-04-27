@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212794270740840680}
   - component: {fileID: 61526106488938970}
   - component: {fileID: 114629072755771498}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PIK_GoldSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0129eb90259e94aa46a284fa1acd5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffect: {fileID: 8300000, guid: 04f802455729737408d1bd72be93f894, type: 3}
   CurrencyAmount: 100
 --- !u!212 &212794270740840680
 SpriteRenderer:
