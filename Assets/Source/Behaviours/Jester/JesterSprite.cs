@@ -19,14 +19,8 @@ namespace Assets.Source.Behaviours.Jester
 
             App.Cache.RepoRx.JesterStateRepository.OnLanded(
                 () => { isRotating = false; });
-        }
 
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (ListenForImpacts)
-            {
-                SetRotation();
-            }                        
+            GetComponent<CollisionListener>().OnGround(SetRotation);
         }
 
 
