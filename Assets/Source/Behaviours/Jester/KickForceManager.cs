@@ -31,18 +31,19 @@ namespace Assets.Source.Behaviours.Jester
             entityBody = gameObject.GetComponent<Rigidbody2D>();
 
             // Listen for events
-            App.Cache.userControl.AttachForKick(this.KickForward);
-            App.Cache.playerProfile.kickCountProperty.TakeUntilDestroy(this)
-                .Subscribe((int value) => { kicksAvailable = value; });
+            App.Cache.userControl.OnKick(KickForward);
+            App.Cache.playerProfile.OnProfileLoaded(this.OnPlayerProfileLoaded);
 
             // Prevent kicking during pause or after game is over
-            DeactivateOnStates(new List<GameStateMachine.GameState>() { GameStateMachine.GameState.Paused, GameStateMachine.GameState.End });
+            DeactivateOnStates(new List<GameState>() { GameState.Paused, GameState.End });
         }
 
         // Update is called once per frame
         void Update()
         {
             UpdateInitialKickForceFactor();            
+
+            App.Cache.RepoRx.GameStateRepository.RelativeKickForce = MathUtil.AsPercent(initialKickForceFactor, maxForceFactor);
         }
 
         private void UpdateInitialKickForceFactor()
@@ -74,11 +75,6 @@ namespace Assets.Source.Behaviours.Jester
         #endregion
 
         #region METHODS
-
-        public int GetRelativeKickForce()
-        {
-            return MathUtil.AsPercent(initialKickForceFactor, maxForceFactor);
-        }
 
         private bool CanKick()
         {

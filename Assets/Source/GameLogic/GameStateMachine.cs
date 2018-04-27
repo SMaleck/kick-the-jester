@@ -1,60 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Assets.Source.Repositories;
 
 namespace Assets.Source.GameLogic
 {
     public class GameStateMachine
-    {
-        public enum GameState { Launch, Flight, End, Switching, Paused }
+    {        
+        private GameStateRepository repo;        
+        private GameState previousState;
 
-        private GameState StateBeforePause;
-        public GameState State { get; private set; }
-        
 
-        public GameStateMachine()
-        {
-            State = GameState.Launch;
-            StateBeforePause = State;
+        public GameStateMachine(GameState state, GameStateRepository repo)
+        {                        
+            this.repo = repo;
+            this.repo.State = state;
+            previousState = state;
         }
 
 
-        public void TogglePause(bool isPaused)
-        {
-            if (isPaused)
+        public bool TogglePause()
+        {           
+            if (repo.State != GameState.Paused)
             {
-                StateBeforePause = State;
-                State = GameState.Paused;
+                previousState = repo.State;
+                repo.State = GameState.Paused;
             }
             else
             {
-                State = StateBeforePause;
+                repo.State = previousState;
             }
+
+            return repo.State == GameState.Paused;
         }
 
 
         public void ToFlight()
         {
-            if(State != GameState.End && State != GameState.Paused)
+            if(repo.State != GameState.End && repo.State != GameState.Paused)
             {
-                State = GameState.Flight;
+                repo.State = GameState.Flight;
             }
         }
 
 
         public void ToEnd()
         {
-            if (State != GameState.Paused)
+            if (repo.State != GameState.Paused)
             {
-                State = GameState.End;
+                repo.State = GameState.End;
             }
-        }
-
-
-        public void ToSwitching()
-        {
-            State = GameState.Switching;
         }
     }
 }

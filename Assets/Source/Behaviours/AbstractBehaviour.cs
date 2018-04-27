@@ -1,5 +1,6 @@
-﻿using Assets.Source.GameLogic;
+﻿using Assets.Source.Repositories;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours
@@ -15,15 +16,18 @@ namespace Assets.Source.Behaviours
         }
 
         protected bool IsActive = true;
-        private List<GameStateMachine.GameState> InactiveStates = new List<GameStateMachine.GameState>();
+        private List<GameState> InactiveStates = new List<GameState>();
 
-        protected void DeactivateOnStates(List<GameStateMachine.GameState> InactiveStates)
+        protected void DeactivateOnStates(List<GameState> InactiveStates)
         {
-            this.InactiveStates = InactiveStates;
-            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChanged);
+            this.InactiveStates = InactiveStates;            
+
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Subscribe(OnGameStateChanged);
         }
 
-        private void OnGameStateChanged(GameStateMachine.GameState state)
+        private void OnGameStateChanged(GameState state)
         {
             IsActive = !InactiveStates.Contains(state);
         }

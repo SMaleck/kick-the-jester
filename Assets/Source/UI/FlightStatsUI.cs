@@ -20,30 +20,33 @@ namespace Assets.Source.UI
 
         void Start()
         {
-            // Flight Stats
-            App.Cache.JesterState.DistanceProperty.TakeUntilDestroy(this).SubscribeToText(txtDistance);
+            // FLight Stats
+            App.Cache.RepoRx.JesterStateRepository
+                            .DistanceProperty
+                            .TakeUntilDestroy(this)
+                            .SubscribeToText(txtDistance);
 
-            App.Cache.JesterState.DistanceProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtDistance, "m"); });
+            App.Cache.RepoRx.JesterStateRepository
+                            .DistanceProperty
+                            .TakeUntilDestroy(this)
+                            .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtDistance, "m"); });
 
-            App.Cache.JesterState.HeightProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtHeight, "m"); });
+            App.Cache.RepoRx.JesterStateRepository
+                            .HeightProperty
+                            .TakeUntilDestroy(this)
+                            .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtHeight, "m"); });
 
-            App.Cache.JesterState.VelocityProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe((Vector2 value) => { UpdateText(Mathf.Ceil(value.magnitude), txtVelocity, "kmh"); });
+            App.Cache.RepoRx.JesterStateRepository
+                            .VelocityProperty
+                            .TakeUntilDestroy(this)
+                            .Subscribe((Vector2 value) => { UpdateText(Mathf.Ceil(value.magnitude), txtVelocity, "kmh"); });
 
             // Currency
-            App.Cache.JesterState.CollectedCurrencyProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe((int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
+            App.Cache.RepoRx.JesterStateRepository
+                            .CollectedCurrencyProperty
+                            .TakeUntilDestroy(this)
+                            .Subscribe((int value) => { UpdateText(value, txtCollectedCurrency, "G"); });
 
-            // Setup listeners for Profile data
-            App.Cache.playerProfile.bestDistanceProperty
-                                .TakeUntilDestroy(this)
-                                .Subscribe((int value) => { UpdateText(value, txtBestDistance, "m"); });
 
             App.Cache.playerProfile.currencyProperty
                                 .TakeUntilDestroy(this)

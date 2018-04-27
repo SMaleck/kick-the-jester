@@ -1,11 +1,18 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.MainCamera;
+using Assets.Source.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour
 {
     private ScreenFader fader;
+
+    private event NotifyEventHandler _OnStartLoading = delegate { };
+    public void OnStartLoading(NotifyEventHandler handler)
+    {
+        _OnStartLoading += handler;
+    }
 
     private void Start()
     {
@@ -22,8 +29,13 @@ public class ScreenManager : MonoBehaviour
             return;
         }
 
+        _OnStartLoading();
         SceneManager.LoadSceneAsync(nextScene);
     }
+
+
+    /* --------------------------------------------------------- */
+    #region SCENE LOADING
 
     public void StartGame()
     {
@@ -37,4 +49,6 @@ public class ScreenManager : MonoBehaviour
         nextScene = Constants.SCENE_SHOP;
         fader.FadeOut();
     }
+
+    #endregion
 }

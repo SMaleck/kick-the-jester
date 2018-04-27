@@ -145,7 +145,7 @@ namespace Assets.Source.GameLogic
         {
             if (PlayerPrefs.HasKey(Constants.PREF_KICK_COUNT))
             {
-                kickCount = PlayerPrefs.GetInt(Constants.PREF_KICK_COUNT);
+                kickCount = PlayerPrefs.GetInt(Constants.PREF_KICK_COUNT);                
             }
         }
 

@@ -13,7 +13,7 @@ namespace Assets.Source.Behaviours.MainCamera
 
         private void Start()
         {
-            App.Cache.JesterState.HeightProperty
+            App.Cache.RepoRx.JesterStateRepository.HeightProperty
                                  .TakeUntilDestroy(this)
                                  .Subscribe(MoveSkyFade);              
         }

@@ -12,11 +12,14 @@ namespace Assets.Source.GameLogic
         // Use this for initialization
         void Start()
         {
-            App.Cache.JesterState.DistanceProperty
+            App.Cache.RepoRx.JesterStateRepository.DistanceProperty
                                  .TakeUntilDestroy(this)
                                  .Subscribe(RecordDistance);
 
-            App.Cache.gameStateManager.OnGameStateChanged(this.OnGameStateChange);
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Where(e => e.Equals(GameState.End))
+                                                .Subscribe(OnGameStateChange);
         }
 
         private void RecordDistance(float distance)
@@ -24,9 +27,9 @@ namespace Assets.Source.GameLogic
             currentDistance = MathUtil.UnitsToMeters(distance);
         }
 
-        private void OnGameStateChange(GameStateMachine.GameState state)
+        private void OnGameStateChange(GameState state)
         {
-            if (state == GameStateMachine.GameState.End && currentDistance > App.Cache.playerProfile.BestDistance)
+            if (state == GameState.End && currentDistance > App.Cache.playerProfile.BestDistance)
             {
                 App.Cache.playerProfile.BestDistance = currentDistance;
             }
