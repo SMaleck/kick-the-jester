@@ -37,14 +37,14 @@ public class ScreenManager : MonoBehaviour
     /* --------------------------------------------------------- */
     #region SCENE LOADING
 
-    public void StartGame()
+    public void ToGame()
     {
         nextScene = Constants.SCENE_GAME;
         fader.FadeOut();
     }
 
 
-    public void ShowShop()
+    public void ToShop()
     {
         nextScene = Constants.SCENE_SHOP;
         fader.FadeOut();

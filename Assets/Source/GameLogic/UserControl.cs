@@ -107,7 +107,7 @@ namespace Assets.Source.GameLogic
         {
             if (canGoToShop)
             {
-                App.Cache.screenManager.ShowShop();
+                App.Cache.screenManager.ToShop();
             }
         }
 
