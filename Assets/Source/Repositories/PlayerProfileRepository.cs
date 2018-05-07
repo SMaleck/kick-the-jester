@@ -9,34 +9,30 @@ namespace Assets.Source.Repositories
 {
     public class PlayerProfileRepository
     {
-        #region CONSTANTS
-
-        private const float BASE_KICK_FORCE = 600f;
-        private const int BASE_KICK_COUNT = 2;
-
-        #endregion
-
         #region PROPERTIES
 
-        public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(BASE_KICK_FORCE);
+        private PlayerProfile profile;
+        private FileDataStorage<PlayerProfile> storage;
+
+        public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(PlayerProfile.BASE_KICK_FORCE);
         public float KickForce
         {
             get { return kickForceProperty.Value; }
             set
             {
                 kickForceProperty.Value = value;
-                PlayerPrefs.SetFloat(Constants.PREF_KICK_FORCE, value);
+                profile.KickForce = value;
             }
         }
 
-        public IntReactiveProperty kickCountProperty = new IntReactiveProperty(BASE_KICK_COUNT);
+        public IntReactiveProperty kickCountProperty = new IntReactiveProperty(PlayerProfile.BASE_KICK_COUNT);
         public int KickCount
         {
             get { return kickCountProperty.Value; }
             set
             {
                 kickCountProperty.Value = value;
-                PlayerPrefs.SetInt(Constants.PREF_KICK_COUNT, value);
+                profile.KickCount = value;
             }
         }
 
@@ -47,7 +43,7 @@ namespace Assets.Source.Repositories
             set
             {
                 bestDistanceProperty.Value = value;
-                PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
+                profile.BestDistance = value;
             }
         }
 
@@ -66,7 +62,7 @@ namespace Assets.Source.Repositories
             set
             {
                 currencyProperty.Value = value;
-                PlayerPrefs.SetInt(Constants.PREF_CURRENCY, value);
+                profile.Currency = value;
                 _OnCurrencyChanged(currencyProperty.Value);
             }
         }
@@ -93,14 +89,18 @@ namespace Assets.Source.Repositories
 
         #region INITIALIZATION
 
-        public PlayerProfileRepository()
+        public PlayerProfileRepository(FileDataStorage<PlayerProfile> dataStorage)
         {
+            if (dataStorage == null) { throw new System.ArgumentNullException("dataStorage"); }
+            this.storage = dataStorage;
+
             LoadProfile();
         }
 
         private void LoadProfile()
         {
             // Load any persisted data
+            profile = storage.LoadFromJson();
             LoadKickForce();
             LoadKickCount();
             LoadBestDistance();
@@ -116,43 +116,43 @@ namespace Assets.Source.Repositories
 
         private void LoadBestDistance()
         {
-            if (PlayerPrefs.HasKey(Constants.PREF_BEST_DISTANCE))
-            {
-                BestDistance = PlayerPrefs.GetInt(Constants.PREF_BEST_DISTANCE);
-            }
+            BestDistance = profile.BestDistance;
         }
 
         private void LoadKickCount()
         {
-            if (PlayerPrefs.HasKey(Constants.PREF_KICK_COUNT))
-            {
-                kickCountProperty.Value = PlayerPrefs.GetInt(Constants.PREF_KICK_COUNT);
-            }
+            KickCount = profile.KickCount;
         }
 
         private void LoadKickForce()
         {
-            if (PlayerPrefs.HasKey(Constants.PREF_KICK_FORCE))
-            {
-                kickForceProperty.Value = PlayerPrefs.GetFloat(Constants.PREF_KICK_FORCE);
-            }
+            KickForce = profile.KickForce;
         }
 
         private void LoadCurrency()
         {
-            if (PlayerPrefs.HasKey(Constants.PREF_CURRENCY))
-            {
-                Currency = PlayerPrefs.GetInt(Constants.PREF_CURRENCY);
-            }
+            Currency = profile.Currency;
         }
 
         #endregion
 
         public void ResetStats()
         {
-            KickCount = BASE_KICK_COUNT;
-            KickForce = BASE_KICK_FORCE;
+            KickCount = PlayerProfile.BASE_KICK_COUNT;
+            KickForce = PlayerProfile.BASE_KICK_FORCE;
             BestDistance = 0;
+        }
+
+        public void StoreProfile()
+        {
+            PlayerProfile profile = new PlayerProfile
+            {
+                BestDistance = BestDistance,
+                KickCount = KickCount,
+                KickForce = KickForce,
+                Currency = Currency
+            };
+            storage.SaveAsJson(profile);
         }
     }
 }

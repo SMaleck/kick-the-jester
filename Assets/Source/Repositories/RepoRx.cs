@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Source.App;
+using Assets.Source.Models;
+using UnityEngine;
 
 namespace Assets.Source.Repositories
 {
@@ -38,21 +40,22 @@ namespace Assets.Source.Repositories
         {
             get
             {
-                if (_PlayerProfileRepository == null)
-                {
-                    _PlayerProfileRepository = new PlayerProfileRepository();
-                }
-
+                CreatePlayerProfileRepository();
                 return _PlayerProfileRepository;
+            }
+        }
+
+        private void CreatePlayerProfileRepository()
+        {
+            if (_PlayerProfileRepository == null)
+            {
+                _PlayerProfileRepository = new PlayerProfileRepository(new FileDataStorage<PlayerProfile>("profile.save"));
             }
         }
 
         private void Awake()
         {
-            if (_PlayerProfileRepository == null)
-            {
-                _PlayerProfileRepository = new PlayerProfileRepository();
-            }
+            CreatePlayerProfileRepository();
         }
     }
 }
