@@ -4,39 +4,33 @@ using UnityEngine;
 using Assets.Source.App;
 using Assets.Source.Models;
 using UniRx;
+using System;
 
 namespace Assets.Source.Repositories
 {
     public class PlayerProfileRepository
     {
-        #region CONSTANTS
-
-        private const float BASE_KICK_FORCE = 600f;
-        private const int BASE_KICK_COUNT = 2;
-
-        #endregion
-
         #region PROPERTIES
 
-        public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(BASE_KICK_FORCE);
+        private FileDataStorage<PlayerProfile> storage;
+
+        public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(PlayerProfile.BASE_KICK_FORCE);
         public float KickForce
         {
             get { return kickForceProperty.Value; }
             set
             {
                 kickForceProperty.Value = value;
-                PlayerPrefs.SetFloat(Constants.PREF_KICK_FORCE, value);
             }
         }
 
-        public IntReactiveProperty kickCountProperty = new IntReactiveProperty(BASE_KICK_COUNT);
+        public IntReactiveProperty kickCountProperty = new IntReactiveProperty(PlayerProfile.BASE_KICK_COUNT);
         public int KickCount
         {
             get { return kickCountProperty.Value; }
             set
             {
                 kickCountProperty.Value = value;
-                PlayerPrefs.SetInt(Constants.PREF_KICK_COUNT, value);
             }
         }
 
@@ -47,7 +41,6 @@ namespace Assets.Source.Repositories
             set
             {
                 bestDistanceProperty.Value = value;
-                PlayerPrefs.SetInt(Constants.PREF_BEST_DISTANCE, value);
             }
         }
 
@@ -66,7 +59,6 @@ namespace Assets.Source.Repositories
             set
             {
                 currencyProperty.Value = value;
-                PlayerPrefs.SetInt(Constants.PREF_CURRENCY, value);
                 _OnCurrencyChanged(currencyProperty.Value);
             }
         }
@@ -93,66 +85,71 @@ namespace Assets.Source.Repositories
 
         #region INITIALIZATION
 
-        public PlayerProfileRepository()
+        public PlayerProfileRepository(FileDataStorage<PlayerProfile> dataStorage)
         {
+            if (dataStorage == null) { throw new System.ArgumentNullException("dataStorage"); }
+            this.storage = dataStorage;
+
             LoadProfile();
+            EnsureProfileDataPersistence();
+        }
+
+        /// <summary>
+        /// Ensures that data is saved to disk as required
+        /// </summary>
+        private void EnsureProfileDataPersistence()
+        {            
+            // Game over
+            
+            // Purchase
+
+            // Scene load
+            App.Cache.screenManager.OnStartLoading(SaveProfile);
+
+            // Application quit
+            Observable.OnceApplicationQuit().Subscribe(x => { SaveProfile(); });
         }
 
         private void LoadProfile()
         {
             // Load any persisted data
-            LoadKickForce();
-            LoadKickCount();
-            LoadBestDistance();
-            LoadCurrency();
+            PlayerProfile loadedProfile = storage.Load();
 
+            BestDistance = loadedProfile.BestDistance;
+            KickCount = loadedProfile.KickCount;
+            KickForce = loadedProfile.KickForce;
+            Currency = loadedProfile.Currency;
+            
             isLoaded = true;
             _OnLoaded();
         }
 
         #endregion
-
-        #region LOADERS
-
-        private void LoadBestDistance()
-        {
-            if (PlayerPrefs.HasKey(Constants.PREF_BEST_DISTANCE))
-            {
-                BestDistance = PlayerPrefs.GetInt(Constants.PREF_BEST_DISTANCE);
-            }
-        }
-
-        private void LoadKickCount()
-        {
-            if (PlayerPrefs.HasKey(Constants.PREF_KICK_COUNT))
-            {
-                kickCountProperty.Value = PlayerPrefs.GetInt(Constants.PREF_KICK_COUNT);
-            }
-        }
-
-        private void LoadKickForce()
-        {
-            if (PlayerPrefs.HasKey(Constants.PREF_KICK_FORCE))
-            {
-                kickForceProperty.Value = PlayerPrefs.GetFloat(Constants.PREF_KICK_FORCE);
-            }
-        }
-
-        private void LoadCurrency()
-        {
-            if (PlayerPrefs.HasKey(Constants.PREF_CURRENCY))
-            {
-                Currency = PlayerPrefs.GetInt(Constants.PREF_CURRENCY);
-            }
-        }
-
-        #endregion
-
+        
         public void ResetStats()
         {
-            KickCount = BASE_KICK_COUNT;
-            KickForce = BASE_KICK_FORCE;
+            KickCount = PlayerProfile.BASE_KICK_COUNT;
+            KickForce = PlayerProfile.BASE_KICK_FORCE;
             BestDistance = 0;
+        }
+
+        /// <summary>
+        /// Persists current profile data to disk.
+        /// See <see cref="PlayerProfile"/>
+        /// <para>
+        /// See also <seealso cref="FileDataStorage{T}"/>
+        /// </para>
+        /// </summary>
+        public void SaveProfile()
+        {
+            PlayerProfile profile = new PlayerProfile
+            {
+                BestDistance = BestDistance,
+                KickCount = KickCount,
+                KickForce = KickForce,
+                Currency = Currency
+            };
+            storage.Save(profile);
         }
     }
 }
