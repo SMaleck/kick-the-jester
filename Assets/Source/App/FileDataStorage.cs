@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace Assets.Source.App
 {
+    /// <summary>
+    /// <para>Class that can be used to store any object into a file in the system
+    /// </para>
+    /// <para>It uses <see cref="Application.persistentDataPath"/> as the folder</para>
+    /// <para>For the formats available, see <see cref="DataFormat"/></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class FileDataStorage<T> where T : Serializable, new()
     {
         public enum DataFormat { JSON }
@@ -58,14 +65,12 @@ namespace Assets.Source.App
             }
 
             string json = File.ReadAllText(path);
-            Debug.Log("Loaded JSON object: " + json);
             return JsonUtility.FromJson<T>(json);
         }
 
         private void SaveAsJson(T data)
         {
             string json = JsonUtility.ToJson(data);
-            Debug.Log("Saving JSON object: " + json);
             File.WriteAllText(path, json);
         }
     }
