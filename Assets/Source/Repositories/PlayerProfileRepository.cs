@@ -12,6 +12,7 @@ namespace Assets.Source.Repositories
     {
         #region PROPERTIES
 
+        PlayerProfile lastSavedProfileData;
         private FileDataStorage<PlayerProfile> storage;
 
         public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(PlayerProfile.BASE_KICK_FORCE);
@@ -94,34 +95,36 @@ namespace Assets.Source.Repositories
             EnsureProfileDataPersistence();
         }
 
+        private void LoadProfile()
+        {
+            // Load any persisted data
+            lastSavedProfileData = storage.Load();
+
+            BestDistance = lastSavedProfileData.BestDistance;
+            KickCount = lastSavedProfileData.KickCount;
+            KickForce = lastSavedProfileData.KickForce;
+            Currency = lastSavedProfileData.Currency;
+
+            isLoaded = true;
+            _OnLoaded();
+        }
+
         /// <summary>
         /// Ensures that data is saved to disk as required
         /// </summary>
         private void EnsureProfileDataPersistence()
-        {            
-            // Game over
-            
-            // Purchase
+        {
+            // Property changes
+            bestDistanceProperty.Subscribe(__ => { SaveProfile(); });
+            currencyProperty.Subscribe(__ => { SaveProfile(); });
+            kickCountProperty.Subscribe(__ => { SaveProfile(); });
+            kickForceProperty.Subscribe(__ => { SaveProfile(); });
 
             // Scene load
             App.Cache.screenManager.OnStartLoading(SaveProfile);
 
             // Application quit
-            Observable.OnceApplicationQuit().Subscribe(x => { SaveProfile(); });
-        }
-
-        private void LoadProfile()
-        {
-            // Load any persisted data
-            PlayerProfile loadedProfile = storage.Load();
-
-            BestDistance = loadedProfile.BestDistance;
-            KickCount = loadedProfile.KickCount;
-            KickForce = loadedProfile.KickForce;
-            Currency = loadedProfile.Currency;
-            
-            isLoaded = true;
-            _OnLoaded();
+            Observable.OnceApplicationQuit().Subscribe(__ => { SaveProfile(); });
         }
 
         #endregion
@@ -142,14 +145,25 @@ namespace Assets.Source.Repositories
         /// </summary>
         public void SaveProfile()
         {
-            PlayerProfile profile = new PlayerProfile
+            if (!MustSave) return;
+
+            lastSavedProfileData.BestDistance = BestDistance;
+            lastSavedProfileData.KickCount = KickCount;
+            lastSavedProfileData.KickForce = KickForce;
+            lastSavedProfileData.Currency = Currency;
+
+            storage.Save(lastSavedProfileData);
+        }
+
+        private Boolean MustSave
+        {
+            get
             {
-                BestDistance = BestDistance,
-                KickCount = KickCount,
-                KickForce = KickForce,
-                Currency = Currency
-            };
-            storage.Save(profile);
+                return BestDistance != lastSavedProfileData.BestDistance
+                        || KickCount != lastSavedProfileData.KickCount
+                        || KickForce != lastSavedProfileData.KickForce
+                        || Currency != lastSavedProfileData.Currency;
+            }
         }
     }
 }
