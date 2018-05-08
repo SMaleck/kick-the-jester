@@ -1,14 +1,32 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 
 namespace Assets.Source.GameLogic.Audio
 {
-    public enum SoundEffects { Kick, GroundHit, Pickup, BoostHit};
+    public enum AudioChannels { BGM, SFX };
 
     public class AudioService : MonoBehaviour
     {
-        [SerializeField] AudioChannel BGMChannel;
-        [SerializeField] AudioChannel SFXChannel;
-        
+        private AudioSourceFactory audioSourceFactory;
+
+        private AudioChannel BGMChannel;
+        private const float DEFAULT_BGM_VOLUME = 1.0f;
+
+        private AudioChannel SFXChannel;
+        private const float DEFAULT_SFX_VOLUME = 0.8f;
+
+
+        private void Awake()
+        {
+            audioSourceFactory = gameObject.AddComponent<AudioSourceFactory>();
+            BGMChannel = new AudioChannel(audioSourceFactory, DEFAULT_BGM_VOLUME, false);
+            SFXChannel = new AudioChannel(audioSourceFactory, DEFAULT_SFX_VOLUME, false);
+
+            // Listeners for Player Settings
+            App.Cache.RepoRx.UserSettingsRepository.MuteBGMProperty.Subscribe((bool value) => { BGMChannel.IsMuted = value; });
+            App.Cache.RepoRx.UserSettingsRepository.MuteSFXProperty.Subscribe((bool value) => { SFXChannel.IsMuted = value; });
+        }
+
 
         /* -------------------------------------- BGM CHANNEL -------------------------------------- */
         public void PlayBGM(AudioClip clip)
@@ -23,7 +41,12 @@ namespace Assets.Source.GameLogic.Audio
 
         public void ToggleBGMMuted()
         {
-            BGMChannel.ToggleMuted();
+            App.Cache.RepoRx.UserSettingsRepository.MuteBGM = !App.Cache.RepoRx.UserSettingsRepository.MuteBGM;
+        }
+
+        public bool IsBGMChannelMuted
+        {
+            get { return BGMChannel.IsMuted; }
         }
 
 
@@ -40,7 +63,12 @@ namespace Assets.Source.GameLogic.Audio
 
         public void ToggleSFXMuted()
         {
-            SFXChannel.ToggleMuted();
-        }        
+            App.Cache.RepoRx.UserSettingsRepository.MuteSFX = !App.Cache.RepoRx.UserSettingsRepository.MuteSFX;
+        }
+
+        public bool IsSFXChannelMuted
+        {
+            get { return SFXChannel.IsMuted; }
+        }
     }
 }

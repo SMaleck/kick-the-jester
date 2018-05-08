@@ -17,7 +17,7 @@ namespace Assets.Source.UI.Panels
                                                 .TakeUntilDestroy(this)                                                
                                                 .Subscribe(TooglePanel);
 
-            resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
+            resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());            
             toggleSFXMuteButton.OnClickAsObservable().Subscribe(_ => OnSFXMuteClicked());
             toggleBGMMuteButton.OnClickAsObservable().Subscribe(_ => OnBGMMuteClicked());
         }
@@ -35,15 +35,21 @@ namespace Assets.Source.UI.Panels
         }
 
 
-        private void OnSFXMuteClicked()
-        {
-
-        }
-
-
         private void OnBGMMuteClicked()
         {
+            App.Cache.audioService.ToggleBGMMuted();
+            bool isMuted = App.Cache.audioService.IsBGMChannelMuted;
 
+            toggleBGMMuteButton.GetComponentInChildren<Text>().text = "BGM " + (isMuted ? "(OFF)" : "(ON)");
         }
+
+
+        private void OnSFXMuteClicked()
+        {
+            App.Cache.audioService.ToggleSFXMuted();
+            bool isMuted = App.Cache.audioService.IsSFXChannelMuted;
+
+            toggleSFXMuteButton.GetComponentInChildren<Text>().text = "SFX " + (isMuted ? "(OFF)" : "(ON)");
+        }        
     }
 }

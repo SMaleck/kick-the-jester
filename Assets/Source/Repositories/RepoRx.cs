@@ -45,6 +45,20 @@ namespace Assets.Source.Repositories
             }
         }
 
+        private UserSettingsRepository _UserSettingsRepository;
+        public UserSettingsRepository UserSettingsRepository
+        {
+            get
+            {
+                if (_UserSettingsRepository == null)
+                {
+                    _UserSettingsRepository = new UserSettingsRepository();
+                }
+
+                return _UserSettingsRepository;
+            }
+        }
+
         private void CreatePlayerProfileRepository()
         {
             if (_PlayerProfileRepository == null)

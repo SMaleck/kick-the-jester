@@ -5,24 +5,9 @@ namespace Assets.Source.Items
 {
     public abstract class AbstractItem : MonoBehaviour
     {
-        [SerializeField]
-        private AudioClip soundEffect;
-        private AudioSource audioSource;
-
+        [SerializeField] private AudioClip soundEffect;        
 
         protected abstract void Execute(Jester jester);
-
-
-        // SETUP
-        protected virtual void Awake()
-        {
-            // Create the Audio Source if an aeffect was set
-            if(soundEffect != null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-                audioSource.clip = soundEffect;
-            }            
-        }
 
        
         // Self-Destruct if we moved out of the camera view
@@ -70,9 +55,9 @@ namespace Assets.Source.Items
         // Attempts to play the attached AudioSource
         protected void TryPlaySound()
         {
-            if (audioSource != null)
+            if (soundEffect != null)
             {
-                audioSource.Play();
+                App.Cache.audioService.PlaySFX(soundEffect);
             }
         }
     }

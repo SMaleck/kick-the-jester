@@ -5,37 +5,48 @@ using UnityEngine;
 
 namespace Assets.Source.GameLogic.Audio
 {
-    public class AudioChannel : MonoBehaviour
+    public class AudioChannel
     {
+        private readonly AudioSourceFactory audioSourceFactory;
         private List<AudioSource> sources = new List<AudioSource>();
 
         private readonly float minPitch = 0.65f;
         private readonly float maxPitch = 1.5f;
 
-        private const float DEFAULT_VOLUME = 0.8f;
-        private FloatReactiveProperty volumeProperty = new FloatReactiveProperty(DEFAULT_VOLUME);
+        private float defaultVolume = 0.8f;
+        private FloatReactiveProperty volumeProperty;
 
         public float Volume
         {
             get { return volumeProperty.Value; }
             set { volumeProperty.Value = Mathf.Clamp01(value); }
         }
-        
 
-        private void Awake()
+        public bool IsMuted
         {
-            volumeProperty.TakeUntilDestroy(this).Subscribe(_ => UpdateAudioSourceVolumes());
+            get { return Volume <= 0; }
+            set { Volume = value ? 0 : defaultVolume; }
+        }
+
+
+        public AudioChannel(AudioSourceFactory audioSourceFactory, float defaultVolume, bool isMuted)
+        {
+            this.audioSourceFactory = audioSourceFactory;
+            
+            // Set Volume
+            this.defaultVolume = defaultVolume;
+            volumeProperty = new FloatReactiveProperty(defaultVolume);
+
+            // Set volume based on muted flag
+            Volume = isMuted ? 0 : volumeProperty.Value;
+
+            // Listen to volume changes
+            volumeProperty.Subscribe(_ => UpdateAudioSourceVolumes());
         }
 
 
         /* --------------------------------------------------------------------------------------- */
         #region VOLUME MANAGEMENT
-
-        public void ToggleMuted()
-        {
-            Volume = (Volume <= 0) ? DEFAULT_VOLUME : 0;
-        }
-
 
         // Updates the Volume of all AudioSources with the currently set one
         private void UpdateAudioSourceVolumes()
@@ -58,7 +69,7 @@ namespace Assets.Source.GameLogic.Audio
             AudioSource audioSource = GetAudioSource();
 
             audioSource.clip = clip;
-            audioSource.loop = true;
+            audioSource.loop = loop;
 
             if (randomizePitch)
             {
@@ -74,23 +85,13 @@ namespace Assets.Source.GameLogic.Audio
             AudioSource audioSource = sources.FirstOrDefault(e => !e.isPlaying);
             if (audioSource == null)
             {
-                audioSource = AddNewAudioSource();
+                sources.Add(audioSourceFactory.Create());
+                audioSource = sources.Last();
+                audioSource.volume = Volume;
             }
 
             return audioSource;
         }
-
-
-        private AudioSource AddNewAudioSource()
-        {
-            sources.Add(gameObject.AddComponent<AudioSource>());
-
-            AudioSource audioSource = sources.Last();
-            audioSource.volume = Volume;
-
-            return audioSource;
-        }
-
 
         #endregion
     }
