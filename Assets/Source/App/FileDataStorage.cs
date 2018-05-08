@@ -7,6 +7,8 @@ namespace Assets.Source.App
 {
     public class FileDataStorage<T> where T : Serializable, new()
     {
+        public enum DataFormat { JSON }
+
         private string name;
         private string path;
 
@@ -17,7 +19,38 @@ namespace Assets.Source.App
                 (name.StartsWith("/") ? name : "/" + name);
         }
 
-        public T LoadFromJson()
+        /// <summary>
+        /// Loads persisted data from file using format given.
+        /// Formats supported, see <see cref="DataFormat"/> values
+        /// </summary>
+        public T Load(DataFormat format = DataFormat.JSON)
+        {
+            switch (format)
+            {
+                case DataFormat.JSON:
+                    return LoadFromJson();
+                default:
+                    throw new FormatException("Format requested is not available: " + format);
+            }
+        }
+
+        /// <summary>
+        /// Saves data to a file using the format given.
+        /// Formats supported, see <see cref="DataFormat"/> values
+        /// </summary>
+        public void Save(T data, DataFormat format = DataFormat.JSON)
+        {
+            switch (format)
+            {
+                case DataFormat.JSON:
+                    SaveAsJson(data);
+                    break;
+                default:
+                    throw new FormatException("Format requested is not available: " + format);
+            }
+        }
+
+        private T LoadFromJson()
         {
             if (!File.Exists(path))
             {
@@ -29,7 +62,7 @@ namespace Assets.Source.App
             return JsonUtility.FromJson<T>(json);
         }
 
-        public void SaveAsJson(T data)
+        private void SaveAsJson(T data)
         {
             string json = JsonUtility.ToJson(data);
             Debug.Log("Saving JSON object: " + json);

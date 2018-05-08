@@ -4,6 +4,7 @@ using UnityEngine;
 using Assets.Source.App;
 using Assets.Source.Models;
 using UniRx;
+using System;
 
 namespace Assets.Source.Repositories
 {
@@ -11,7 +12,6 @@ namespace Assets.Source.Repositories
     {
         #region PROPERTIES
 
-        private PlayerProfile profile;
         private FileDataStorage<PlayerProfile> storage;
 
         public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(PlayerProfile.BASE_KICK_FORCE);
@@ -21,7 +21,6 @@ namespace Assets.Source.Repositories
             set
             {
                 kickForceProperty.Value = value;
-                profile.KickForce = value;
             }
         }
 
@@ -32,7 +31,6 @@ namespace Assets.Source.Repositories
             set
             {
                 kickCountProperty.Value = value;
-                profile.KickCount = value;
             }
         }
 
@@ -43,7 +41,6 @@ namespace Assets.Source.Repositories
             set
             {
                 bestDistanceProperty.Value = value;
-                profile.BestDistance = value;
             }
         }
 
@@ -62,7 +59,6 @@ namespace Assets.Source.Repositories
             set
             {
                 currencyProperty.Value = value;
-                profile.Currency = value;
                 _OnCurrencyChanged(currencyProperty.Value);
             }
         }
@@ -95,47 +91,41 @@ namespace Assets.Source.Repositories
             this.storage = dataStorage;
 
             LoadProfile();
+            EnsureProfileDataPersistence();
+        }
+
+        /// <summary>
+        /// Ensures that data is saved to disk as required
+        /// </summary>
+        private void EnsureProfileDataPersistence()
+        {            
+            // Game over
+            
+            // Purchase
+
+            // Scene load
+            App.Cache.screenManager.OnStartLoading(SaveProfile);
+
+            // Application quit
+            Observable.OnceApplicationQuit().Subscribe(x => { SaveProfile(); });
         }
 
         private void LoadProfile()
         {
             // Load any persisted data
-            profile = storage.LoadFromJson();
-            LoadKickForce();
-            LoadKickCount();
-            LoadBestDistance();
-            LoadCurrency();
+            PlayerProfile loadedProfile = storage.Load();
 
+            BestDistance = loadedProfile.BestDistance;
+            KickCount = loadedProfile.KickCount;
+            KickForce = loadedProfile.KickForce;
+            Currency = loadedProfile.Currency;
+            
             isLoaded = true;
             _OnLoaded();
         }
 
         #endregion
-
-        #region LOADERS
-
-        private void LoadBestDistance()
-        {
-            BestDistance = profile.BestDistance;
-        }
-
-        private void LoadKickCount()
-        {
-            KickCount = profile.KickCount;
-        }
-
-        private void LoadKickForce()
-        {
-            KickForce = profile.KickForce;
-        }
-
-        private void LoadCurrency()
-        {
-            Currency = profile.Currency;
-        }
-
-        #endregion
-
+        
         public void ResetStats()
         {
             KickCount = PlayerProfile.BASE_KICK_COUNT;
@@ -143,7 +133,14 @@ namespace Assets.Source.Repositories
             BestDistance = 0;
         }
 
-        public void StoreProfile()
+        /// <summary>
+        /// Persists current profile data to disk.
+        /// See <see cref="PlayerProfile"/>
+        /// <para>
+        /// See also <seealso cref="FileDataStorage{T}"/>
+        /// </para>
+        /// </summary>
+        public void SaveProfile()
         {
             PlayerProfile profile = new PlayerProfile
             {
@@ -152,7 +149,7 @@ namespace Assets.Source.Repositories
                 KickForce = KickForce,
                 Currency = Currency
             };
-            storage.SaveAsJson(profile);
+            storage.Save(profile);
         }
     }
 }
