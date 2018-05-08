@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
+using Assets.Source.GameLogic.Audio;
 using Assets.Source.Repositories;
 using System;
 using UnityEngine;
@@ -112,6 +113,19 @@ namespace Assets.Source.App
             }
         }
 
+        private static AudioService _audioService;
+        public static AudioService audioService
+        {
+            get
+            {
+                if (_audioService == null)
+                {
+                    _audioService = GameLogic.GetComponent<AudioService>();
+                }
+                return _audioService;
+            }
+        }
+
         public static PlayerProfileRepository playerProfile
         {
             get
@@ -137,6 +151,20 @@ namespace Assets.Source.App
 
         #endregion
 
+        private static Camera _mainCamera;
+        public static Camera mainCamera
+        {
+            get
+            {
+                if (_mainCamera == null)
+                {
+                    _mainCamera = Camera.main;
+                }
+
+                return _mainCamera;
+            }
+        }
+
 
         private static float _cameraWidth;
         public static float cameraWidth
@@ -145,7 +173,7 @@ namespace Assets.Source.App
             {
                 if(_cameraWidth <= 0)
                 {                                        
-                    _cameraWidth = cameraHeight * Camera.main.aspect;
+                    _cameraWidth = cameraHeight * mainCamera.aspect;
                 }
 
                 return _cameraWidth;
@@ -159,7 +187,7 @@ namespace Assets.Source.App
             {
                 if (_cameraHeight <= 0)
                 {
-                    _cameraHeight = 2f * Camera.main.orthographicSize;                    
+                    _cameraHeight = 2f * mainCamera.orthographicSize;                    
                 }
 
                 return _cameraHeight;
