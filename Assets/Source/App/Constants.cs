@@ -2,6 +2,7 @@
 {
     public static class Constants
     {
+        public const string GO_SERVICES = "_Services";
         public const string GO_GAME_LOGIC = "_GameLogic";
         public const string GO_REPOSITORIES = "_Repositories";
         public const string GO_PLAYER_PROFILE = "_PlayerProfile";

@@ -10,7 +10,7 @@ namespace Assets.Source.UI.Panels
 
         private void Start()
         {
-            startButton.OnClickAsObservable().Subscribe(_ => App.Cache.screenManager.ToGame());
+            startButton.OnClickAsObservable().Subscribe(_ => App.Cache.Services.SceneTransitionService.ToGame());
         }
     }
 }

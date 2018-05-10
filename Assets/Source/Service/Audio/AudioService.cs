@@ -1,11 +1,11 @@
 ﻿using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.GameLogic.Audio
+namespace Assets.Source.Service.Audio
 {
     public enum AudioChannels { BGM, SFX };
 
-    public class AudioService : MonoBehaviour
+    public class AudioService
     {
         private AudioSourceFactory audioSourceFactory;
 
@@ -16,9 +16,10 @@ namespace Assets.Source.GameLogic.Audio
         private const float DEFAULT_SFX_VOLUME = 0.8f;
 
 
-        private void Awake()
+        public AudioService()
         {
-            audioSourceFactory = gameObject.AddComponent<AudioSourceFactory>();
+            audioSourceFactory = new AudioSourceFactory();
+
             BGMChannel = new AudioChannel(audioSourceFactory, DEFAULT_BGM_VOLUME, false);
             SFXChannel = new AudioChannel(audioSourceFactory, DEFAULT_SFX_VOLUME, false);
 

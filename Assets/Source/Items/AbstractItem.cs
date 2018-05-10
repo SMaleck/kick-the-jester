@@ -57,7 +57,7 @@ namespace Assets.Source.Items
         {
             if (soundEffect != null)
             {
-                App.Cache.audioService.PlaySFX(soundEffect);
+                App.Cache.Services.AudioService.PlaySFX(soundEffect);
             }
         }
     }

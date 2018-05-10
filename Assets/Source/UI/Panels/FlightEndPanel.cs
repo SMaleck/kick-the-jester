@@ -28,13 +28,13 @@ namespace Assets.Source.UI.Panels
 
         private void OnRetryClicked()
         {
-            App.Cache.screenManager.ToGame();
+            App.Cache.Services.SceneTransitionService.ToGame();
         }
 
 
         private void OnShopClicked()
         {
-            App.Cache.screenManager.ToShop();
+            App.Cache.Services.SceneTransitionService.ToShop();
         }
     }
 }

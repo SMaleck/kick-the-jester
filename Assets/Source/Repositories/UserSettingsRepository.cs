@@ -44,7 +44,7 @@ namespace Assets.Source.Repositories
             }
 
             // Save prefs on each Scene transition
-            App.Cache.screenManager.OnStartLoading(() => PlayerPrefs.Save());            
+            App.Cache.Services.SceneTransitionService.OnStartLoading(() => PlayerPrefs.Save());            
         }
     }
 }

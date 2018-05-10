@@ -8,7 +8,7 @@ namespace Assets.Source.Behaviours
 
         private void Start()
         {
-            App.Cache.audioService.PlayLoopingBGM(musicClip);
+            App.Cache.Services.AudioService.PlayLoopingBGM(musicClip);
         }
     }
 }

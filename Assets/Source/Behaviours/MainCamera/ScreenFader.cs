@@ -11,13 +11,24 @@ namespace Assets.Source.Behaviours.MainCamera
 
         private SpriteRenderer sprite;
 
-        // Is Faded
-        private event NotifyEventHandler _OnFadeComplete = delegate { };
-        public void OnFadeComplete(NotifyEventHandler handler)
+        // FADE COMPLETION EVENTS
+        private event NotifyEventHandler _OnFadeInComplete = delegate { };
+        public void OnFadeInComplete(NotifyEventHandler handler)
         {
-            _OnFadeComplete += handler;
+            _OnFadeInComplete += handler;
 
-            if (!isFading)
+            if (!isFading && direction <= -1)
+            {
+                handler();
+            }
+        }
+
+        private event NotifyEventHandler _OnFadeOutComplete = delegate { };
+        public void OnFadeOutComplete(NotifyEventHandler handler)
+        {
+            _OnFadeOutComplete += handler;
+
+            if (!isFading && direction >= 1)
             {
                 handler();
             }
@@ -50,10 +61,7 @@ namespace Assets.Source.Behaviours.MainCamera
                 isFading = sprite.color.a > 0 && sprite.color.a < 1;
 
                 // Call Handlers, if this was the last step of fading
-                if (!isFading)
-                {
-                    _OnFadeComplete();
-                }
+                CheckFadeCompletionState();
             }
         }
 
@@ -69,6 +77,21 @@ namespace Assets.Source.Behaviours.MainCamera
         {
             direction = 1;
             isFading = true;
+        }
+
+
+        // Fires the appropriate fading event
+        private void CheckFadeCompletionState()
+        {
+            if (!isFading && direction <= -1)
+            {
+                _OnFadeInComplete();
+            }
+            
+            if (!isFading && direction >= 1)
+            {
+                _OnFadeOutComplete();
+            }
         }
     }
 }

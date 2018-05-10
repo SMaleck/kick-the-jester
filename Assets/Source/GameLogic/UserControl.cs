@@ -49,11 +49,6 @@ namespace Assets.Source.GameLogic
             {
                 _OnTogglePause();
             }
-
-            if (Input.GetButtonDown("Buy"))
-            {
-                ShowShop();
-            }
         }
 
 
@@ -102,14 +97,6 @@ namespace Assets.Source.GameLogic
 
         /* ----------------------------- UI BUTTON METHODS ----------------------------- */
         #region UI BUTTON METHODS
-
-        public void ShowShop()
-        {
-            if (canGoToShop)
-            {
-                App.Cache.screenManager.ToShop();
-            }
-        }
 
 
         public void TooglePause()

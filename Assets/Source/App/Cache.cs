@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.GameLogic;
-using Assets.Source.GameLogic.Audio;
 using Assets.Source.Repositories;
+using Assets.Source.Service;
 using System;
 using UnityEngine;
 
@@ -9,9 +9,24 @@ namespace Assets.Source.App
 {
     public static class Cache
     {
+        private static Services services;
+        public static Services Services
+        {
+            get
+            {
+                if (services == null)
+                {
+                    services = GetComponentFrom<Services>(Constants.GO_SERVICES);
+                }
+
+                return services;
+            }
+        }
+
+
         /* -------------------------------------------------------------------- */
         #region GAME OBJECTS
-        
+
         private static GameObject _GameLogic;
         private static GameObject GameLogic
         {
@@ -94,38 +109,14 @@ namespace Assets.Source.App
             {
                 if (_userControl == null)
                 {
-                    _userControl = GetComponent<UserControl>(Constants.GO_USER_CONTROL);
+                    _userControl = GetComponentFrom<UserControl>(Constants.GO_USER_CONTROL);
                 }
                 return _userControl;
             }
         }
 
-        private static ScreenManager _screenManager;
-        public static ScreenManager screenManager
-        {
-            get
-            {
-                if (_screenManager == null)
-                {
-                    _screenManager = GameLogic.GetComponent<ScreenManager>();
-                }
-                return _screenManager;
-            }
-        }
 
-        private static AudioService _audioService;
-        public static AudioService audioService
-        {
-            get
-            {
-                if (_audioService == null)
-                {
-                    _audioService = GameLogic.GetComponent<AudioService>();
-                }
-                return _audioService;
-            }
-        }
-
+        // ToDo Remove
         public static PlayerProfileRepository playerProfile
         {
             get
@@ -142,7 +133,7 @@ namespace Assets.Source.App
             {
                 if (_jester == null)
                 {
-                    _jester = GetComponent<Jester>(Constants.GO_JESTER);
+                    _jester = GetComponentFrom<Jester>(Constants.GO_JESTER);
                 }
 
                 return _jester;
@@ -198,7 +189,7 @@ namespace Assets.Source.App
         /* ------------------------------------------------------------------------------------ */
         #region Utilities
 
-        private static T GetComponent<T>(string gameObjectId)
+        private static T GetComponentFrom<T>(string gameObjectId)
         {
             T component = GameObject.Find(gameObjectId).GetComponent<T>();
             AssertNotNull(component);

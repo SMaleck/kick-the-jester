@@ -8,7 +8,7 @@ namespace Assets.Source.Behaviours.Jester
 
         private void Awake()
         {
-            App.Cache.jester.Collisions.OnGround(() => App.Cache.audioService.PlayRandomizedSFX(acGroundHit));            
+            App.Cache.jester.Collisions.OnGround(() => App.Cache.Services.AudioService.PlayRandomizedSFX(acGroundHit));            
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.GameLogic.Audio
+namespace Assets.Source.Service.Audio
 {
     public class AudioChannel
     {

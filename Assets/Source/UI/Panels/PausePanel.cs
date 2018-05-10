@@ -8,6 +8,8 @@ namespace Assets.Source.UI.Panels
     public class PausePanel : MonoBehaviour
     {
         [SerializeField] Button resumeButton;
+        [SerializeField] Button retryButton;        
+
         [SerializeField] Button toggleSFXMuteButton;
         [SerializeField] Button toggleBGMMuteButton;
 
@@ -17,7 +19,9 @@ namespace Assets.Source.UI.Panels
                                                 .TakeUntilDestroy(this)                                                
                                                 .Subscribe(TooglePanel);
 
-            resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());            
+            resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
+            //retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
+
             toggleSFXMuteButton.OnClickAsObservable().Subscribe(_ => OnSFXMuteClicked());
             toggleBGMMuteButton.OnClickAsObservable().Subscribe(_ => OnBGMMuteClicked());
         }
@@ -35,10 +39,16 @@ namespace Assets.Source.UI.Panels
         }
 
 
+        private void OnRetryClicked()
+        {
+            App.Cache.Services.SceneTransitionService.ToGame();
+        }
+
+
         private void OnBGMMuteClicked()
         {
-            App.Cache.audioService.ToggleBGMMuted();
-            bool isMuted = App.Cache.audioService.IsBGMChannelMuted;
+            App.Cache.Services.AudioService.ToggleBGMMuted();
+            bool isMuted = App.Cache.Services.AudioService.IsBGMChannelMuted;
 
             toggleBGMMuteButton.GetComponentInChildren<Text>().text = "BGM " + (isMuted ? "(OFF)" : "(ON)");
         }
@@ -46,8 +56,8 @@ namespace Assets.Source.UI.Panels
 
         private void OnSFXMuteClicked()
         {
-            App.Cache.audioService.ToggleSFXMuted();
-            bool isMuted = App.Cache.audioService.IsSFXChannelMuted;
+            App.Cache.Services.AudioService.ToggleSFXMuted();
+            bool isMuted = App.Cache.Services.AudioService.IsSFXChannelMuted;
 
             toggleSFXMuteButton.GetComponentInChildren<Text>().text = "SFX " + (isMuted ? "(OFF)" : "(ON)");
         }        
