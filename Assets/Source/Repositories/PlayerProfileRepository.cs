@@ -45,13 +45,6 @@ namespace Assets.Source.Repositories
             }
         }
 
-        // CURRENCY
-        private event IntValueEventHandler _OnCurrencyChanged = delegate { };
-        public void OnCurrencyChanged(IntValueEventHandler handler)
-        {
-            _OnCurrencyChanged += handler;
-            handler(Currency);
-        }
 
         public IntReactiveProperty currencyProperty = new IntReactiveProperty(0);
         public int Currency
@@ -59,8 +52,7 @@ namespace Assets.Source.Repositories
             get { return currencyProperty.Value; }
             set
             {
-                currencyProperty.Value = value;
-                _OnCurrencyChanged(currencyProperty.Value);
+                currencyProperty.Value = value;                
             }
         }
 

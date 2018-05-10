@@ -9,8 +9,7 @@ namespace Assets.Source.GameLogic
     public class UserControl : MonoBehaviour, IPointerDownHandler
     {
         // Internal Toggles
-        private bool canKick = false;
-        private bool canGoToShop = false;
+        private bool canKick = false;        
 
 
         // INPUT EVENT: Kick Action
@@ -89,7 +88,6 @@ namespace Assets.Source.GameLogic
 
                 case GameState.End:
                     canKick = false;
-                    canGoToShop = true;
                     break;
             }            
         }
