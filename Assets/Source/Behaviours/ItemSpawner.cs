@@ -1,5 +1,6 @@
 ﻿using UniRx;
 using UnityEngine;
+using Assets.Source.App;
 
 namespace Assets.Source.Behaviours
 {
@@ -51,8 +52,8 @@ namespace Assets.Source.Behaviours
 
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distance)
-        {           
-            if (CanSpawn && ShouldSpawn((int)distance))
+        {
+            if (CanSpawn && ShouldSpawn(distance.ToMeters()))
             {
                 SpawnRandomItem();
             }
@@ -63,7 +64,7 @@ namespace Assets.Source.Behaviours
         protected virtual bool ShouldSpawn(int distance)
         {
             // Do not spawn if we should spawn on the ground and jester is moving upwards
-            if(!SpawnOnTrajectory && App.Cache.jester.goBody.velocity.y > 0)
+            if (!SpawnOnTrajectory && App.Cache.jester.goBody.velocity.y > 0)
             {
                 return false;
             }
