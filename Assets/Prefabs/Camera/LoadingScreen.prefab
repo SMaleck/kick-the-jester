@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4957953661685194}
   - component: {fileID: 212098840375842846}
-  - component: {fileID: 114740798044335064}
+  - component: {fileID: 114197032186703126}
   m_Layer: 0
-  m_Name: ScreenFader
+  m_Name: LoadingScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114740798044335064
+--- !u!114 &114197032186703126
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316204353002030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d080f2580ba441045958b2143f257328, type: 3}
+  m_Script: {fileID: 11500000, guid: dbb208c94468f2a4bae8ca16348a306f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212098840375842846

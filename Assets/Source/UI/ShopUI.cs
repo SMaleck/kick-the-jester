@@ -1,49 +1,58 @@
-﻿using Assets.Source.GameLogic;
-using Assets.Source.Repositories;
-using System;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
 
 namespace Assets.Source.UI
 {
-    public class ShopItemUI : MonoBehaviour
+    public class ShopUI : MonoBehaviour
     {
-        public Text txtMoney;
+        [SerializeField] private Button backButton;
+        [SerializeField] private Text txtMoney;
 
-        private void Awake()
+        [SerializeField] private Button kickForceUpgradeButton;
+        [SerializeField] private Button kickCountUpgradeButton;
+        [SerializeField] private Button statResetButton;
+
+
+        private void Start()
         {
-            App.Cache.playerProfile.currencyProperty
-                .TakeUntilDestroy(this)
-                .Subscribe((int value) => { UpdateCurrency(value); });
+            backButton.OnClickAsObservable().Subscribe(_ => App.Cache.Services.SceneTransitionService.ToGame());
+
+            kickForceUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickForceUpgrade());
+            kickCountUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickCountUpgrade());
+            statResetButton.OnClickAsObservable().Subscribe(_ => OnStatReset());
+
+            App.Cache.playerProfile.currencyProperty.Subscribe((int value) => { OnCurrencyChanged(value); });
         }
 
-        private void UpdateCurrency(int currency)
+
+        private void OnCurrencyChanged(int value)
         {
-            if(txtMoney != null)
-            {
-                txtMoney.text = currency + "G";
-            }
+            txtMoney.text = value + "G";
         }
 
-        public void PurchaseKickForceUpgrade()
+
+        public void OnKickForceUpgrade()
         {
             if (TryDeduct(200))
             {
                 App.Cache.playerProfile.KickForce += 200f;
-            }            
+            }
         }
 
-        public void PurchaseKickCountUpgrade()
+
+        public void OnKickCountUpgrade()
         {
             if (TryDeduct(500))
             {
                 int kickCount = App.Cache.playerProfile.KickCount;
                 App.Cache.playerProfile.KickCount = kickCount + 2;
-            }            
+            }
         }
 
-        public void PurchaseStatsReset()
+
+        public void OnStatReset()
         {
             App.Cache.playerProfile.ResetStats();
         }

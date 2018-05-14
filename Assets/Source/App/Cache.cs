@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Behaviours.Jester;
+using Assets.Source.Behaviours.MainCamera;
 using Assets.Source.GameLogic;
 using Assets.Source.Repositories;
 using Assets.Source.Service;
@@ -141,48 +142,10 @@ namespace Assets.Source.App
         }
 
         #endregion
-
-        private static Camera _mainCamera;
-        public static Camera mainCamera
+        
+        public static ICamera MainCamera
         {
-            get
-            {
-                if (_mainCamera == null)
-                {
-                    _mainCamera = Camera.main;
-                }
-
-                return _mainCamera;
-            }
-        }
-
-
-        private static float _cameraWidth;
-        public static float cameraWidth
-        {
-            get
-            {
-                if(_cameraWidth <= 0)
-                {                                        
-                    _cameraWidth = cameraHeight * mainCamera.aspect;
-                }
-
-                return _cameraWidth;
-            }
-        }
-
-        private static float _cameraHeight;
-        public static float cameraHeight
-        {
-            get
-            {
-                if (_cameraHeight <= 0)
-                {
-                    _cameraHeight = 2f * mainCamera.orthographicSize;                    
-                }
-
-                return _cameraHeight;
-            }
+            get { return Camera.main.GetComponent<ICamera>(); }
         }
 
         
