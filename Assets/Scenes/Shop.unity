@@ -1282,6 +1282,7 @@ GameObject:
   - component: {fileID: 1703221736}
   - component: {fileID: 1703221735}
   - component: {fileID: 1703221739}
+  - component: {fileID: 1703221740}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1386,6 +1387,19 @@ MonoBehaviour:
   kickForceUpgradeButton: {fileID: 1765523925}
   kickCountUpgradeButton: {fileID: 2015037844}
   statResetButton: {fileID: 1548281839}
+--- !u!114 &1703221740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1703221734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd10905cdda6c64ab0dc1974a0effe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefabs:
+  - {fileID: 1125575837733540, guid: 6c989e0e5041d2845aed069b7ba57a8a, type: 2}
 --- !u!1 &1765523923
 GameObject:
   m_ObjectHideFlags: 0

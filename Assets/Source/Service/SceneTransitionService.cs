@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.MainCamera;
 using Assets.Source.Models;
+using UniRx;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Source.Service
@@ -8,12 +9,14 @@ namespace Assets.Source.Service
     public class SceneTransitionService
     {
         private string nextScene = "";
+        public BoolReactiveProperty IsLoadingProperty = new BoolReactiveProperty(false);
+        
 
-
-        private event NotifyEventHandler _OnStartLoading = delegate { };
-        public void OnStartLoading(NotifyEventHandler handler)
+        public SceneTransitionService()
         {
-            _OnStartLoading += handler;
+            SceneManager.sceneLoaded += (Scene s, LoadSceneMode lm) => {
+                IsLoadingProperty.Value = false;
+            };
         }
 
 
@@ -24,7 +27,7 @@ namespace Assets.Source.Service
                 return;
             }
 
-            _OnStartLoading();
+            IsLoadingProperty.Value = true;
             SceneManager.LoadSceneAsync(nextScene);
         }
 

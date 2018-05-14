@@ -112,8 +112,10 @@ namespace Assets.Source.Repositories
             kickCountProperty.Subscribe(__ => { SaveProfile(); });
             kickForceProperty.Subscribe(__ => { SaveProfile(); });
 
-            // Scene load
-            App.Cache.Services.SceneTransitionService.OnStartLoading(SaveProfile);
+            // Scene load            
+            App.Cache.Services.SceneTransitionService.IsLoadingProperty
+                                                     .Where(e => e)
+                                                     .Subscribe(_ => SaveProfile());                                                     
 
             // Application quit
             Observable.OnceApplicationQuit().Subscribe(__ => { SaveProfile(); });
