@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.MainCamera
 {
-    public class LoadingScreen : AbstractBehaviour
+    public class ScreenFader : AbstractBehaviour
     {
         private bool isFading = false;
         private int direction = 1;
