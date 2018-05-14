@@ -574,7 +574,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1012196564
 GameObject:
@@ -740,47 +740,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1059719795}
---- !u!1 &1066626961
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1066626963}
-  - component: {fileID: 1066626962}
-  m_Layer: 0
-  m_Name: ShopManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1066626962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1066626961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cec4f26812ae004f80d915b682e8424, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  txtMoney: {fileID: 1309730469}
---- !u!4 &1066626963
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1066626961}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 548.2281, y: 371.2557, z: -8.75}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1167199145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,7 +1155,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1066626962}
+      - m_Target: {fileID: 0}
         m_MethodName: PurchaseStatsReset
         m_Mode: 1
         m_Arguments:
@@ -1322,6 +1281,7 @@ GameObject:
   - component: {fileID: 1703221737}
   - component: {fileID: 1703221736}
   - component: {fileID: 1703221735}
+  - component: {fileID: 1703221739}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1403,13 +1363,29 @@ RectTransform:
   - {fileID: 1548281838}
   - {fileID: 691728171}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1703221739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1703221734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86504618b750e704b821a8e434f16c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backButton: {fileID: 1493357614}
+  txtMoney: {fileID: 1309730469}
+  kickForceUpgradeButton: {fileID: 1765523925}
+  kickCountUpgradeButton: {fileID: 2015037844}
+  statResetButton: {fileID: 1548281839}
 --- !u!1 &1765523923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1463,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1066626962}
+      - m_Target: {fileID: 0}
         m_MethodName: PurchaseKickForceUpgrade
         m_Mode: 1
         m_Arguments:
@@ -1822,7 +1798,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1066626962}
+      - m_Target: {fileID: 0}
         m_MethodName: PurchaseKickCountUpgrade
         m_Mode: 1
         m_Arguments:
