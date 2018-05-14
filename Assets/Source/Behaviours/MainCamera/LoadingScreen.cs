@@ -3,36 +3,17 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.MainCamera
 {
-    public class ScreenFader : AbstractBehaviour
+    public class LoadingScreen : AbstractBehaviour
     {
         private bool isFading = false;
-        private int direction = 1;        
+        private int direction = 1;
         private float fadeSpeed = 2.3f;
 
         private SpriteRenderer sprite;
 
         // FADE COMPLETION EVENTS
         private event NotifyEventHandler _OnFadeInComplete = delegate { };
-        public void OnFadeInComplete(NotifyEventHandler handler)
-        {
-            _OnFadeInComplete += handler;
-
-            if (!isFading && direction <= -1)
-            {
-                handler();
-            }
-        }
-
         private event NotifyEventHandler _OnFadeOutComplete = delegate { };
-        public void OnFadeOutComplete(NotifyEventHandler handler)
-        {
-            _OnFadeOutComplete += handler;
-
-            if (!isFading && direction >= 1)
-            {
-                handler();
-            }
-        }
 
 
         private void Awake()
@@ -40,18 +21,11 @@ namespace Assets.Source.Behaviours.MainCamera
             // Ensure the Sprite is at full ALPHA
             sprite = GetComponent<SpriteRenderer>();
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-
-        }
-
-
-        private void Start()
-        {
-            FadeIn();
         }
 
 
         private void Update()
-        {
+        {            
             if (isFading)
             {
                 float nextAlpha = sprite.color.a + ((fadeSpeed * direction) * Time.deltaTime);
@@ -66,31 +40,43 @@ namespace Assets.Source.Behaviours.MainCamera
         }
 
 
-        public void FadeIn()
+        public void FadeIn(NotifyEventHandler callback)
         {
             direction = -1;
             isFading = true;
+
+            if(callback != null)
+            {
+                _OnFadeInComplete += callback;
+            }
         }
 
 
-        public void FadeOut()
+        public void FadeOut(NotifyEventHandler callback)
         {
             direction = 1;
             isFading = true;
+
+            if (callback != null)
+            {
+                _OnFadeOutComplete += callback;
+            }
         }
 
 
-        // Fires the appropriate fading event
+        // Fires the appropriate fading event and resets handlers
         private void CheckFadeCompletionState()
         {
             if (!isFading && direction <= -1)
             {
                 _OnFadeInComplete();
+                //_OnFadeInComplete = delegate { };
             }
-            
+
             if (!isFading && direction >= 1)
             {
                 _OnFadeOutComplete();
+                //_OnFadeOutComplete = delegate { };
             }
         }
     }

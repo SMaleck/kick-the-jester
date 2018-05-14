@@ -9,26 +9,6 @@ namespace Assets.Source.Service
     {
         private string nextScene = "";
 
-        private ScreenFader screenFader;
-        private ScreenFader ScreenFader
-        {
-            get
-            {
-                if (screenFader == null)
-                {
-                    screenFader = App.Cache.mainCamera.GetComponentInChildren<ScreenFader>();
-                }
-
-                return screenFader;
-            }
-        }
-
-
-        public SceneTransitionService()
-        {            
-            ScreenFader.OnFadeOutComplete(Execute);
-        }
-
 
         private event NotifyEventHandler _OnStartLoading = delegate { };
         public void OnStartLoading(NotifyEventHandler handler)
@@ -49,31 +29,22 @@ namespace Assets.Source.Service
         }
 
 
-        private void CheckScreenFader()
-        {
-            if(screenFader == null)
-            {
-                ScreenFader.OnFadeOutComplete(Execute);
-            }
-        }
-
-
         /* ---------------------------------------------------------------------------------------- */
         #region SCENE TRANSITIONS
 
         public void ToGame()
-        {
-            CheckScreenFader();
+        {         
             nextScene = Constants.SCENE_GAME;
-            ScreenFader.FadeOut();
+
+            App.Cache.MainCamera.FadeOut(Execute);
         }
 
 
         public void ToShop()
-        {
-            CheckScreenFader();
+        {            
             nextScene = Constants.SCENE_SHOP;
-            ScreenFader.FadeOut();
+
+            App.Cache.MainCamera.FadeOut(Execute);
         }
 
         #endregion
