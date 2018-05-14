@@ -29,12 +29,12 @@ namespace Assets.Source.UI
             App.Cache.RepoRx.JesterStateRepository
                             .DistanceProperty
                             .TakeUntilDestroy(this)
-                            .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtDistance, "m"); });
+                            .Subscribe((float value) => { UpdateText(value.ToMeters(), txtDistance, "m"); });
 
             App.Cache.RepoRx.JesterStateRepository
                             .HeightProperty
                             .TakeUntilDestroy(this)
-                            .Subscribe((float value) => { UpdateText(MathUtil.UnitsToMeters(value), txtHeight, "m"); });
+                            .Subscribe((float value) => { UpdateText(value.ToMeters(), txtHeight, "m"); });
 
             App.Cache.RepoRx.JesterStateRepository
                             .VelocityProperty

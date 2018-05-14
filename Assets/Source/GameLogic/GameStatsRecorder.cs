@@ -24,7 +24,7 @@ namespace Assets.Source.GameLogic
 
         private void RecordDistance(float distance)
         {
-            currentDistance = MathUtil.UnitsToMeters(distance);
+            currentDistance = distance.ToMeters();
         }
 
         private void OnGameStateChange(GameState state)
