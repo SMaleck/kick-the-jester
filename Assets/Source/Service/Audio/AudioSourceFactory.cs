@@ -7,7 +7,7 @@ namespace Assets.Source.Service.Audio
         private GameObject audioSourceContainer;
 
 
-        public AudioSource Create()
+        public AudioSource Create(float volume)
         {
             if(audioSourceContainer == null)
             {

@@ -9,10 +9,10 @@ namespace Assets.Source.Service.Audio
     {
         private AudioSourceFactory audioSourceFactory;
 
-        private AudioChannel BGMChannel;
+        public AudioChannel BGMChannel { get; private set; }
         private const float DEFAULT_BGM_VOLUME = 1.0f;
 
-        private AudioChannel SFXChannel;
+        public AudioChannel SFXChannel { get; private set; }
         private const float DEFAULT_SFX_VOLUME = 0.8f;
 
 
@@ -20,12 +20,18 @@ namespace Assets.Source.Service.Audio
         {
             audioSourceFactory = new AudioSourceFactory();
 
-            BGMChannel = new AudioChannel(audioSourceFactory, DEFAULT_BGM_VOLUME, false);
-            SFXChannel = new AudioChannel(audioSourceFactory, DEFAULT_SFX_VOLUME, false);
+            float BGMVolume = App.Cache.RepoRx.UserSettingsRepository.MuteBGM ? 0 : DEFAULT_BGM_VOLUME;
+            BGMChannel = new AudioChannel(audioSourceFactory, DEFAULT_BGM_VOLUME, BGMVolume, true);
+
+            float SFXVolume = App.Cache.RepoRx.UserSettingsRepository.MuteSFX ? 0 : DEFAULT_SFX_VOLUME;
+            SFXChannel = new AudioChannel(audioSourceFactory, DEFAULT_SFX_VOLUME, SFXVolume, false);
 
             // Listeners for Player Settings
-            App.Cache.RepoRx.UserSettingsRepository.MuteBGMProperty.Subscribe((bool value) => { BGMChannel.IsMuted = value; });
-            App.Cache.RepoRx.UserSettingsRepository.MuteSFXProperty.Subscribe((bool value) => { SFXChannel.IsMuted = value; });
+            App.Cache.RepoRx.UserSettingsRepository.MuteBGMProperty
+                                                   .Subscribe((bool value) => { BGMChannel.IsMuted = value; });
+
+            App.Cache.RepoRx.UserSettingsRepository.MuteSFXProperty
+                                                   .Subscribe((bool value) => { SFXChannel.IsMuted = value; });
         }
 
 
@@ -40,16 +46,6 @@ namespace Assets.Source.Service.Audio
             BGMChannel.PlayClip(clip, true, false);
         }
 
-        public void ToggleBGMMuted()
-        {
-            App.Cache.RepoRx.UserSettingsRepository.MuteBGM = !App.Cache.RepoRx.UserSettingsRepository.MuteBGM;
-        }
-
-        public bool IsBGMChannelMuted
-        {
-            get { return BGMChannel.IsMuted; }
-        }
-
 
         /* -------------------------------------- SFX CHANNEL -------------------------------------- */
         public void PlaySFX(AudioClip clip)
@@ -60,16 +56,6 @@ namespace Assets.Source.Service.Audio
         public void PlayRandomizedSFX(AudioClip clip)
         {
             SFXChannel.PlayClip(clip, false, true);
-        }
-
-        public void ToggleSFXMuted()
-        {
-            App.Cache.RepoRx.UserSettingsRepository.MuteSFX = !App.Cache.RepoRx.UserSettingsRepository.MuteSFX;
-        }
-
-        public bool IsSFXChannelMuted
-        {
-            get { return SFXChannel.IsMuted; }
         }
     }
 }

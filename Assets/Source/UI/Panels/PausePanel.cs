@@ -24,6 +24,17 @@ namespace Assets.Source.UI.Panels
 
             toggleSFXMuteButton.OnClickAsObservable().Subscribe(_ => OnSFXMuteClicked());
             toggleBGMMuteButton.OnClickAsObservable().Subscribe(_ => OnBGMMuteClicked());
+
+            // Listeners to User Settings
+            App.Cache.RepoRx.UserSettingsRepository.MuteBGMProperty.Subscribe((bool value) => 
+            {
+                toggleBGMMuteButton.GetComponentInChildren<Text>().text = "BGM " + (value ? "(OFF)" : "(ON)");                
+            });
+
+            App.Cache.RepoRx.UserSettingsRepository.MuteSFXProperty.Subscribe((bool value) => 
+            {
+                toggleSFXMuteButton.GetComponentInChildren<Text>().text = "SFX " + (value ? "(OFF)" : "(ON)");
+            });
         }
 
 
@@ -47,19 +58,13 @@ namespace Assets.Source.UI.Panels
 
         private void OnBGMMuteClicked()
         {
-            App.Cache.Services.AudioService.ToggleBGMMuted();
-            bool isMuted = App.Cache.Services.AudioService.IsBGMChannelMuted;
-
-            toggleBGMMuteButton.GetComponentInChildren<Text>().text = "BGM " + (isMuted ? "(OFF)" : "(ON)");
+            App.Cache.RepoRx.UserSettingsRepository.MuteBGM = !App.Cache.RepoRx.UserSettingsRepository.MuteBGM;
         }
 
 
         private void OnSFXMuteClicked()
         {
-            App.Cache.Services.AudioService.ToggleSFXMuted();
-            bool isMuted = App.Cache.Services.AudioService.IsSFXChannelMuted;
-
-            toggleSFXMuteButton.GetComponentInChildren<Text>().text = "SFX " + (isMuted ? "(OFF)" : "(ON)");
+            App.Cache.RepoRx.UserSettingsRepository.MuteSFX = !App.Cache.RepoRx.UserSettingsRepository.MuteSFX;
         }        
     }
 }
