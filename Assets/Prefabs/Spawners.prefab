@@ -162,7 +162,7 @@ MonoBehaviour:
   SpawnChance: 0.5
   SpawnOnTrajectory: 1
   ProjectionMaxDeviation: 3
-  MinDistanceBetweenSpawns: 50
+  MinDistanceBetweenSpawns: 300
 --- !u!114 &114793658618650866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,7 +193,7 @@ MonoBehaviour:
   SpawnChance: 0.8
   SpawnOnTrajectory: 0
   ProjectionMaxDeviation: 1
-  MinDistanceBetweenSpawns: 100
+  MinDistanceBetweenSpawns: 180
 --- !u!114 &114891765417956850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,4 +224,4 @@ MonoBehaviour:
   SpawnChance: 0.3
   SpawnOnTrajectory: 1
   ProjectionMaxDeviation: 4
-  MinDistanceBetweenSpawns: 30
+  MinDistanceBetweenSpawns: 250
