@@ -32,3 +32,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# IGNORE PLUGINS. There are Unity Asset Store Plugins that canot be shared on github
+/Assets/Plugins
+/Assets/Arrow Mobile UI for UGUI.meta
+/Assets/Arrow Mobile UI for UGUI
