@@ -5,7 +5,8 @@ using UnityEngine.UI;
 namespace Assets.Source.UI.Panels
 {
     public class LoadingPanel : MonoBehaviour
-    {
+    {        
+        [SerializeField] private GameObject Panel;
         [SerializeField] private Image spinnerImage;
 
         private bool isRotating = false;
@@ -14,8 +15,8 @@ namespace Assets.Source.UI.Panels
 
 
         private void Start()
-        {
-            gameObject.SetActive(false);
+        {            
+            Panel.SetActive(false);
             App.Cache.Services.SceneTransitionService.IsLoadingProperty
                                                      .Where(e => e)
                                                      .Subscribe(_ => Activate())
@@ -33,9 +34,8 @@ namespace Assets.Source.UI.Panels
 
 
         private void Activate()
-        {
-            Debug.Log("HERE");
-            gameObject.SetActive(true);
+        {            
+            Panel.SetActive(true);
             isRotating = true;
         }
     }

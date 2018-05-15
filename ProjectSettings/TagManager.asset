@@ -54,3 +54,9 @@ TagManager:
   - name: UI
     uniqueID: 709991735
     locked: 0
+  - name: ScreenFader
+    uniqueID: 2461966547
+    locked: 0
+  - name: LoadingUI
+    uniqueID: 2258303353
+    locked: 0

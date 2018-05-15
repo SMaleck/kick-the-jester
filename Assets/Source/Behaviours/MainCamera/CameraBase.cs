@@ -8,7 +8,7 @@ namespace Assets.Source.Behaviours.MainCamera
         public Camera UCamera { get; protected set; }
 
         [SerializeField] protected GameObject prefabLoadingScreen;
-        protected LoadingScreen loadingScreen;
+        protected ScreenFader loadingScreen;
 
 
         protected float _cameraWidth;
@@ -47,7 +47,7 @@ namespace Assets.Source.Behaviours.MainCamera
             // Setup Loading Screen
             var goLoadingScreen = GameObject.Instantiate(prefabLoadingScreen);
             goLoadingScreen.transform.SetParent(this.transform);
-            loadingScreen = goLoadingScreen.GetComponent<LoadingScreen>();            
+            loadingScreen = goLoadingScreen.GetComponent<ScreenFader>();            
         }
 
 
