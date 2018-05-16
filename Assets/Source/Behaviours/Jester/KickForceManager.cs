@@ -44,7 +44,7 @@ namespace Assets.Source.Behaviours.Jester
         {
             UpdateInitialKickForceFactor();            
 
-            App.Cache.RepoRx.GameStateRepository.RelativeKickForce = MathUtil.AsPercent(initialKickForceFactor, maxForceFactor);
+            App.Cache.RepoRx.GameStateRepository.RelativeKickForce = initialKickForceFactor.AsPercent(maxForceFactor);
         }
 
         private void UpdateInitialKickForceFactor()

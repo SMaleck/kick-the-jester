@@ -19,16 +19,16 @@ namespace Assets.Source.Behaviours.Jester
 
         private void LateUpdate()
         {
-            jesterState.Distance = MathUtil.Difference(Origin.x, goTransform.position.x);
-            jesterState.Height = MathUtil.Difference(Origin.y, goTransform.position.y);
+            jesterState.Distance = Origin.x.Difference(goTransform.position.x);
+            jesterState.Height = Origin.y.Difference(goTransform.position.y);
 
             jesterState.Velocity = goBody.velocity;
 
             // Check if Flight has Started
-            jesterState.IsStarted = !MathUtil.NearlyEqual(jesterState.Distance, 0);
+            jesterState.IsStarted = !jesterState.Distance.IsNearlyEqual(0);
 
             // Check if Jester has landed
-            jesterState.IsLanded = jesterState.IsStarted && MathUtil.NearlyEqual(jesterState.Velocity.magnitude, 0);
+            jesterState.IsLanded = jesterState.IsStarted && jesterState.Velocity.magnitude.IsNearlyEqual(0);
         }
     }
 }

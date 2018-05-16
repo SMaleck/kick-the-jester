@@ -22,7 +22,7 @@ namespace Assets.Source.Behaviours.MainCamera
         private void MoveSkyFade(float height)
         {
             float heightPercent = height / maxHeight;           
-            float yRange = MathUtil.Difference(minY, maxY);
+            float yRange = minY.Difference(maxY);
             
             float nextY = maxY - (heightPercent * yRange);            
 
