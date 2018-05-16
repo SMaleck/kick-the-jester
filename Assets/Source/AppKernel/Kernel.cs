@@ -28,6 +28,8 @@ namespace Assets.Source.AppKernel
 
             DontDestroyOnLoad(gameObject);
 
+            // Initialisation order is important due to inter-dependencies
+            // TODO: Resolve implicit interdependency
             SceneTransitionService = new SceneTransitionService();
             PlayerProfileService = new PlayerProfileService(new FileDataStorage<PlayerProfile>("profile.save"));
             UserSettingsService = new UserSettingsService();            
