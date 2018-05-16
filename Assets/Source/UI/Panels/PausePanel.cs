@@ -11,8 +11,8 @@ namespace Assets.Source.UI.Panels
         [SerializeField] Button resumeButton;
         [SerializeField] Button retryButton;        
 
-        [SerializeField] Button toggleSFXMuteButton;
-        [SerializeField] Button toggleBGMMuteButton;
+        [SerializeField] Toggle SFXMuteToggle;
+        [SerializeField] Toggle BGMMuteToggle;
 
         private void Awake()
         {
@@ -21,21 +21,13 @@ namespace Assets.Source.UI.Panels
                                                 .Subscribe(TooglePanel);
 
             resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
-            //retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
+            retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
 
-            toggleSFXMuteButton.OnClickAsObservable().Subscribe(_ => OnSFXMuteClicked());
-            toggleBGMMuteButton.OnClickAsObservable().Subscribe(_ => OnBGMMuteClicked());
+            BGMMuteToggle.isOn = Kernel.UserSettingsService.MuteBGM;
+            SFXMuteToggle.isOn = Kernel.UserSettingsService.MuteSFX;
 
-            // Listeners to User Settings
-            Kernel.UserSettingsService.MuteBGMProperty.Subscribe((bool value) => 
-            {
-                toggleBGMMuteButton.GetComponentInChildren<Text>().text = "BGM " + (value ? "(OFF)" : "(ON)");                
-            }).AddTo(this);
-
-            Kernel.UserSettingsService.MuteSFXProperty.Subscribe((bool value) => 
-            {
-                toggleSFXMuteButton.GetComponentInChildren<Text>().text = "SFX " + (value ? "(OFF)" : "(ON)");
-            }).AddTo(this);
+            BGMMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnBGMMuteClicked());
+            SFXMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnSFXMuteClicked());                       
         }
 
 

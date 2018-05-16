@@ -35,5 +35,7 @@ sysinfo.txt
 
 # IGNORE PLUGINS. There are Unity Asset Store Plugins that canot be shared on github
 /Assets/Plugins
+/Assets/LeanTween
+/Assets/LeanTween.meta
 /Assets/Arrow Mobile UI for UGUI.meta
 /Assets/Arrow Mobile UI for UGUI
