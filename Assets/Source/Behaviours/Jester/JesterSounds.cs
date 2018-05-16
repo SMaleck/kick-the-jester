@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Source.AppKernel;
+using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester
 {
@@ -8,7 +9,7 @@ namespace Assets.Source.Behaviours.Jester
 
         private void Awake()
         {
-            App.Cache.jester.Collisions.OnGround(() => App.Cache.Services.AudioService.PlayRandomizedSFX(acGroundHit));            
+            App.Cache.jester.Collisions.OnGround(() => Kernel.AudioService.PlayRandomizedSFX(acGroundHit));            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Assets.Source.AppKernel;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +18,10 @@ namespace Assets.Source.UI.Panels
         private void Start()
         {            
             Panel.SetActive(false);
-            App.Cache.Services.SceneTransitionService.IsLoadingProperty
-                                                     .Where(e => e)
-                                                     .Subscribe(_ => Activate())
-                                                     .AddTo(this);
+            Kernel.SceneTransitionService.IsLoadingProperty
+                                         .Where(e => e)
+                                         .Subscribe(_ => Activate())
+                                         .AddTo(this);
         }
 
 

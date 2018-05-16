@@ -1,4 +1,5 @@
-﻿using Assets.Source.Repositories;
+﻿using Assets.Source.AppKernel;
+using Assets.Source.Repositories;
 using System;
 using UniRx;
 using UnityEngine;
@@ -8,17 +9,6 @@ namespace Assets.Source.GameLogic
     public class CurrencyManager : MonoBehaviour
     {
         private JesterStateRepository jesterState;
-
-        #region PROPERTIES
-
-        private bool CanDoTransactions
-        {
-            get { return App.Cache.playerProfile.IsLoaded; }
-        }
-
-
-        #endregion
-
 
         private void Awake()
         {
@@ -56,12 +46,7 @@ namespace Assets.Source.GameLogic
         /// <returns></returns>
         public bool TryCommitPools()
         {
-            if (!CanDoTransactions)
-            {
-                return false;
-            }
-
-            App.Cache.playerProfile.Currency += Math.Abs(jesterState.CollectedCurrency) + Math.Abs(jesterState.EarnedCurrency);
+            Kernel.PlayerProfileService.Currency += Math.Abs(jesterState.CollectedCurrency) + Math.Abs(jesterState.EarnedCurrency);
             jesterState.CollectedCurrency = 0;
             jesterState.EarnedCurrency = 0;
 

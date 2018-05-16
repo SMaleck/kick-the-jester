@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Assets.Source.App;
+﻿using Assets.Source.App;
 using Assets.Source.Models;
-using UniRx;
 using System;
+using UniRx;
 
-namespace Assets.Source.Repositories
+namespace Assets.Source.AppKernel.UserData
 {
-    public class PlayerProfileRepository
+    public class PlayerProfileService : AbstractPersistentDataService
     {
         #region PROPERTIES
 
@@ -78,7 +75,8 @@ namespace Assets.Source.Repositories
 
         #region INITIALIZATION
 
-        public PlayerProfileRepository(FileDataStorage<PlayerProfile> dataStorage)
+        public PlayerProfileService(FileDataStorage<PlayerProfile> dataStorage)
+            : base()
         {
             if (dataStorage == null) { throw new System.ArgumentNullException("dataStorage"); }
             this.storage = dataStorage;
@@ -86,6 +84,27 @@ namespace Assets.Source.Repositories
             LoadProfile();
             EnsureProfileDataPersistence();
         }
+
+
+        /// <summary>
+        /// Persists current profile data to disk.
+        /// See <see cref="PlayerProfile"/>
+        /// <para>
+        /// See also <seealso cref="FileDataStorage{T}"/>
+        /// </para>
+        /// </summary>
+        public override void Save()
+        {
+            if (!MustSave) return;
+
+            lastSavedProfileData.BestDistance = BestDistance;
+            lastSavedProfileData.KickCount = KickCount;
+            lastSavedProfileData.KickForce = KickForce;
+            lastSavedProfileData.Currency = Currency;
+
+            storage.Save(lastSavedProfileData);
+        }
+
 
         private void LoadProfile()
         {
@@ -107,18 +126,10 @@ namespace Assets.Source.Repositories
         private void EnsureProfileDataPersistence()
         {
             // Property changes
-            bestDistanceProperty.Subscribe(__ => { SaveProfile(); });
-            currencyProperty.Subscribe(__ => { SaveProfile(); });
-            kickCountProperty.Subscribe(__ => { SaveProfile(); });
-            kickForceProperty.Subscribe(__ => { SaveProfile(); });
-
-            // Scene load            
-            App.Cache.Services.SceneTransitionService.IsLoadingProperty
-                                                     .Where(e => e)
-                                                     .Subscribe(_ => SaveProfile());                                                     
-
-            // Application quit
-            Observable.OnceApplicationQuit().Subscribe(__ => { SaveProfile(); });
+            bestDistanceProperty.Subscribe(__ => { Save(); });
+            currencyProperty.Subscribe(__ => { Save(); });
+            kickCountProperty.Subscribe(__ => { Save(); });
+            kickForceProperty.Subscribe(__ => { Save(); });
         }
 
         #endregion
@@ -129,25 +140,7 @@ namespace Assets.Source.Repositories
             KickForce = PlayerProfile.BASE_KICK_FORCE;
             BestDistance = 0;
         }
-
-        /// <summary>
-        /// Persists current profile data to disk.
-        /// See <see cref="PlayerProfile"/>
-        /// <para>
-        /// See also <seealso cref="FileDataStorage{T}"/>
-        /// </para>
-        /// </summary>
-        public void SaveProfile()
-        {
-            if (!MustSave) return;
-
-            lastSavedProfileData.BestDistance = BestDistance;
-            lastSavedProfileData.KickCount = KickCount;
-            lastSavedProfileData.KickForce = KickForce;
-            lastSavedProfileData.Currency = Currency;
-
-            storage.Save(lastSavedProfileData);
-        }
+        
 
         private Boolean MustSave
         {

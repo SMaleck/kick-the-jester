@@ -1,4 +1,5 @@
-﻿using Assets.Source.Repositories;
+﻿using Assets.Source.AppKernel;
+using Assets.Source.Repositories;
 using System.Linq;
 using UniRx;
 using UnityEngine;
@@ -28,13 +29,13 @@ namespace Assets.Source.UI.Panels
 
         private void OnRetryClicked()
         {
-            App.Cache.Services.SceneTransitionService.ToGame();
+            Kernel.SceneTransitionService.ToGame();
         }
 
 
         private void OnShopClicked()
         {
-            App.Cache.Services.SceneTransitionService.ToShop();
+            Kernel.SceneTransitionService.ToShop();
         }
     }
 }

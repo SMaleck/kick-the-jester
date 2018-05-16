@@ -4,6 +4,7 @@ using Assets.Source.Repositories;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Assets.Source.AppKernel;
 
 namespace Assets.Source.Behaviours.Jester
 {
@@ -32,8 +33,7 @@ namespace Assets.Source.Behaviours.Jester
 
             // Listen for events
             App.Cache.userControl.OnKick(KickForward);
-            App.Cache.playerProfile.OnLoaded(
-                () => { kicksAvailable = App.Cache.playerProfile.KickCount; });
+            kicksAvailable = Kernel.PlayerProfileService.KickCount;
 
             // Prevent kicking during pause or after game is over
             DeactivateOnStates(new List<GameState>() { GameState.Paused, GameState.End });
@@ -90,8 +90,8 @@ namespace Assets.Source.Behaviours.Jester
         // Calculates the Force that will be applied to the Kick
         private Vector3 GetAppliedKickForce()
         {
-            float currentForceMagnitude = isInitialKick ? App.Cache.playerProfile.KickForce * initialKickForceFactor
-                : App.Cache.playerProfile.KickForce;
+            float currentForceMagnitude = isInitialKick ? Kernel.PlayerProfileService.KickForce * initialKickForceFactor
+                : Kernel.PlayerProfileService.KickForce;
             
             return forceDirection * currentForceMagnitude;
         }

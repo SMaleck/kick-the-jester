@@ -56,11 +56,6 @@ namespace Assets.Source.GameLogic
         {
             switch (eventData.pointerId)
             {
-                case 13:
-                    // well done. 14 fingers touch! ;D
-                    App.Cache.playerProfile.Currency += 1000;
-                    break;
-
                 case -1:
                 case 0:
                     _OnKick();

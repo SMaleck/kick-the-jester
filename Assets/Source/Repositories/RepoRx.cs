@@ -1,6 +1,4 @@
-﻿using Assets.Source.App;
-using Assets.Source.Models;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Source.Repositories
 {
@@ -33,43 +31,6 @@ namespace Assets.Source.Repositories
 
                 return _JesterStateRepository;
             }
-        }
-
-        private PlayerProfileRepository _PlayerProfileRepository;
-        public PlayerProfileRepository PlayerProfileRepository
-        {
-            get
-            {
-                CreatePlayerProfileRepository();
-                return _PlayerProfileRepository;
-            }
-        }
-
-        private UserSettingsRepository _UserSettingsRepository;
-        public UserSettingsRepository UserSettingsRepository
-        {
-            get
-            {
-                if (_UserSettingsRepository == null)
-                {
-                    _UserSettingsRepository = new UserSettingsRepository();
-                }
-
-                return _UserSettingsRepository;
-            }
-        }
-
-        private void CreatePlayerProfileRepository()
-        {
-            if (_PlayerProfileRepository == null)
-            {
-                _PlayerProfileRepository = new PlayerProfileRepository(new FileDataStorage<PlayerProfile>("profile.save"));
-            }
-        }
-
-        private void Awake()
-        {
-            CreatePlayerProfileRepository();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Assets.Source.Behaviours.Jester;
+﻿using Assets.Source.AppKernel;
+using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 
 namespace Assets.Source.Items
@@ -57,7 +58,7 @@ namespace Assets.Source.Items
         {
             if (soundEffect != null)
             {
-                App.Cache.Services.AudioService.PlaySFX(soundEffect);
+                Kernel.AudioService.PlaySFX(soundEffect);
             }
         }
     }

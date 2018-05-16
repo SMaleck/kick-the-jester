@@ -1,10 +1,8 @@
 ﻿using Assets.Source.App;
-using Assets.Source.Behaviours.MainCamera;
-using Assets.Source.Models;
 using UniRx;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Source.Service
+namespace Assets.Source.AppKernel
 {
     public class SceneTransitionService
     {

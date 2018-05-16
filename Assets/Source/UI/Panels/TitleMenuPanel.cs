@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Assets.Source.AppKernel;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ namespace Assets.Source.UI.Panels
 
         private void Start()
         {
-            startButton.OnClickAsObservable().Subscribe(_ => App.Cache.Services.SceneTransitionService.ToGame());
+            startButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.AppKernel;
 using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
@@ -29,9 +30,9 @@ namespace Assets.Source.GameLogic
 
         private void OnGameStateChange(GameState state)
         {
-            if (state == GameState.End && currentDistance > App.Cache.playerProfile.BestDistance)
+            if (state == GameState.End && currentDistance > Kernel.PlayerProfileService.BestDistance)
             {
-                App.Cache.playerProfile.BestDistance = currentDistance;
+                Kernel.PlayerProfileService.BestDistance = currentDistance;
             }
         }
     }

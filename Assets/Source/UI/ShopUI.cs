@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Source.AppKernel;
+using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,13 +18,13 @@ namespace Assets.Source.UI
 
         private void Start()
         {
-            backButton.OnClickAsObservable().Subscribe(_ => App.Cache.Services.SceneTransitionService.ToGame());
+            backButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
 
             kickForceUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickForceUpgrade());
             kickCountUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickCountUpgrade());
             statResetButton.OnClickAsObservable().Subscribe(_ => OnStatReset());
 
-            App.Cache.playerProfile.currencyProperty.Subscribe((int value) => { OnCurrencyChanged(value); });
+            Kernel.PlayerProfileService.currencyProperty.Subscribe((int value) => { OnCurrencyChanged(value); });
         }
 
 
@@ -37,7 +38,7 @@ namespace Assets.Source.UI
         {
             if (TryDeduct(200))
             {
-                App.Cache.playerProfile.KickForce += 200f;
+                Kernel.PlayerProfileService.KickForce += 200f;
             }
         }
 
@@ -46,15 +47,15 @@ namespace Assets.Source.UI
         {
             if (TryDeduct(500))
             {
-                int kickCount = App.Cache.playerProfile.KickCount;
-                App.Cache.playerProfile.KickCount = kickCount + 2;
+                int kickCount = Kernel.PlayerProfileService.KickCount;
+                Kernel.PlayerProfileService.KickCount = kickCount + 2;
             }
         }
 
 
         public void OnStatReset()
         {
-            App.Cache.playerProfile.ResetStats();
+            Kernel.PlayerProfileService.ResetStats();
         }
 
 
@@ -65,15 +66,15 @@ namespace Assets.Source.UI
         /// <returns></returns>
         public bool TryDeduct(int amount)
         {
-            if (!App.Cache.playerProfile.IsLoaded)
+            if (!Kernel.PlayerProfileService.IsLoaded)
             {
                 return false;
             }
 
             // Check if player has enough money
-            if (App.Cache.playerProfile.Currency >= amount)
+            if (Kernel.PlayerProfileService.Currency >= amount)
             {
-                App.Cache.playerProfile.Currency -= Math.Abs(amount);
+                Kernel.PlayerProfileService.Currency -= Math.Abs(amount);
             }
 
             return true;

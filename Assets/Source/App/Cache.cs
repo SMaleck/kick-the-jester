@@ -2,7 +2,6 @@
 using Assets.Source.Behaviours.MainCamera;
 using Assets.Source.GameLogic;
 using Assets.Source.Repositories;
-using Assets.Source.Service;
 using System;
 using UnityEngine;
 
@@ -10,21 +9,6 @@ namespace Assets.Source.App
 {
     public static class Cache
     {
-        private static Services services;
-        public static Services Services
-        {
-            get
-            {
-                if (services == null)
-                {
-                    services = GetComponentFrom<Services>(Constants.GO_SERVICES);
-                }
-
-                return services;
-            }
-        }
-
-
         /* -------------------------------------------------------------------- */
         #region GAME OBJECTS
 
@@ -113,16 +97,6 @@ namespace Assets.Source.App
                     _userControl = GetComponentFrom<UserControl>(Constants.GO_USER_CONTROL);
                 }
                 return _userControl;
-            }
-        }
-
-
-        // ToDo Remove
-        public static PlayerProfileRepository playerProfile
-        {
-            get
-            {
-                return RepoRx.PlayerProfileRepository;
             }
         }
 

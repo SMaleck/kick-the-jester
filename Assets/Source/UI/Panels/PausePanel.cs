@@ -1,4 +1,5 @@
-﻿using Assets.Source.Repositories;
+﻿using Assets.Source.AppKernel;
+using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,15 +27,15 @@ namespace Assets.Source.UI.Panels
             toggleBGMMuteButton.OnClickAsObservable().Subscribe(_ => OnBGMMuteClicked());
 
             // Listeners to User Settings
-            App.Cache.RepoRx.UserSettingsRepository.MuteBGMProperty.Subscribe((bool value) => 
+            Kernel.UserSettingsService.MuteBGMProperty.Subscribe((bool value) => 
             {
                 toggleBGMMuteButton.GetComponentInChildren<Text>().text = "BGM " + (value ? "(OFF)" : "(ON)");                
-            });
+            }).AddTo(this);
 
-            App.Cache.RepoRx.UserSettingsRepository.MuteSFXProperty.Subscribe((bool value) => 
+            Kernel.UserSettingsService.MuteSFXProperty.Subscribe((bool value) => 
             {
                 toggleSFXMuteButton.GetComponentInChildren<Text>().text = "SFX " + (value ? "(OFF)" : "(ON)");
-            });
+            }).AddTo(this);
         }
 
 
@@ -52,19 +53,19 @@ namespace Assets.Source.UI.Panels
 
         private void OnRetryClicked()
         {
-            App.Cache.Services.SceneTransitionService.ToGame();
+            Kernel.SceneTransitionService.ToGame();
         }
 
 
         private void OnBGMMuteClicked()
         {
-            App.Cache.RepoRx.UserSettingsRepository.MuteBGM = !App.Cache.RepoRx.UserSettingsRepository.MuteBGM;
+            Kernel.UserSettingsService.MuteBGM = !Kernel.UserSettingsService.MuteBGM;
         }
 
 
         private void OnSFXMuteClicked()
         {
-            App.Cache.RepoRx.UserSettingsRepository.MuteSFX = !App.Cache.RepoRx.UserSettingsRepository.MuteSFX;
+            Kernel.UserSettingsService.MuteSFX = !Kernel.UserSettingsService.MuteSFX;
         }        
     }
 }

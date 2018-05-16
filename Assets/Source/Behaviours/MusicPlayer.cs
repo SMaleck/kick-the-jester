@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Source.AppKernel;
+using UnityEngine;
 
 namespace Assets.Source.Behaviours
 {
@@ -8,7 +9,7 @@ namespace Assets.Source.Behaviours
 
         private void Start()
         {
-            App.Cache.Services.AudioService.PlayLoopingBGM(musicClip);
+            Kernel.AudioService.PlayLoopingBGM(musicClip);
         }
     }
 }
