@@ -15,7 +15,7 @@ namespace Assets.Source.Behaviours.Jester.Components
             this.owner = owner;            
             origin = owner.goTransform.position;
 
-            Observable.EveryLateUpdate().Subscribe(_ => LateUpdate());
+            Observable.EveryLateUpdate().Subscribe(_ => LateUpdate()).AddTo(owner);
 
             // Is Started Flag
             App.Cache.RepoRx.JesterStateRepository.DistanceProperty

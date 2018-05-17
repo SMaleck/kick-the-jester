@@ -29,7 +29,7 @@ namespace Assets.Source.Behaviours.Jester
 
             owner.Collisions.OnGround(SetRotation);
 
-            Observable.EveryUpdate().Subscribe(_ => Update());
+            Observable.EveryUpdate().Subscribe(_ => Update()).AddTo(owner);
         }
 
 
