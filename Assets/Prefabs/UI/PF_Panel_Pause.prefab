@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 225559199971470148}
   - component: {fileID: 114694817022154158}
   m_Layer: 5
-  m_Name: PF_PausePanel
+  m_Name: PF_Panel_Pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
