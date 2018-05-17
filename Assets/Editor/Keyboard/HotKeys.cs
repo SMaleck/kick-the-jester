@@ -18,7 +18,7 @@ namespace Assets.Editor.Keyboard
         /// <summary>
         /// Runs the game from the Default scene.
         /// </summary>
-        [MenuItem("Tools/Run Game #_r")]
+        [MenuItem("Tools/Run Game %L")]
         static void RunGameFromDefaultScene()
         {
             if (EditorApplication.isPlaying)
@@ -27,11 +27,13 @@ namespace Assets.Editor.Keyboard
                 return;
             }
 
-            EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-            EditorPrefs.SetString(LAST_ACTIVE_SCENE, EditorSceneManager.GetActiveScene().path);
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            {
+                EditorPrefs.SetString(LAST_ACTIVE_SCENE, EditorSceneManager.GetActiveScene().path);
 
-            EditorSceneManager.OpenScene(EditorBuildSettings.scenes[0].path);
-            EditorApplication.isPlaying = true;
+                EditorSceneManager.OpenScene(EditorBuildSettings.scenes[0].path);
+                EditorApplication.isPlaying = true;
+            }            
         }
 
         static void StateChanged(PlayModeStateChange state)
