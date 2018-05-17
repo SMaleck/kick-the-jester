@@ -526,6 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba4065917e192a4f900b822242498ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideOnStart: 0
   PauseButton: {fileID: 114013886657874434}
   DistanceText: {fileID: 114183805179765290}
   HeightText: {fileID: 114934816558391102}
