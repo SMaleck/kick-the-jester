@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 224922692202620832}
   - component: {fileID: 222965849225028506}
   - component: {fileID: 114183805179765290}
+  - component: {fileID: 114815910193267974}
   m_Layer: 5
   m_Name: DistanceText
   m_TagString: Untagged
@@ -171,6 +172,7 @@ GameObject:
   - component: {fileID: 224446683018897290}
   - component: {fileID: 222124912716644490}
   - component: {fileID: 114934816558391102}
+  - component: {fileID: 114160675290431960}
   m_Layer: 5
   m_Name: HeightText
   m_TagString: Untagged
@@ -239,6 +241,7 @@ GameObject:
   - component: {fileID: 224716948783926470}
   - component: {fileID: 222569553755733418}
   - component: {fileID: 114592784405140606}
+  - component: {fileID: 114341882045808294}
   m_Layer: 5
   m_Name: CurrencyText
   m_TagString: Untagged
@@ -368,6 +371,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114160675290431960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607933667602292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f689c0a0e12082a42a4f915cfd36717d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114183805179765290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,7 +406,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2374c345489f3cc488a20cd0b4297206, type: 3}
-    m_FontSize: 22
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -401,6 +418,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: DISTANCE
+--- !u!114 &114341882045808294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1858019986976846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f689c0a0e12082a42a4f915cfd36717d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114592784405140606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -422,7 +453,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2374c345489f3cc488a20cd0b4297206, type: 3}
-    m_FontSize: 22
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -461,6 +492,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114815910193267974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1204564970910288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f689c0a0e12082a42a4f915cfd36717d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114818963367649680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -526,7 +571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba4065917e192a4f900b822242498ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideOnStart: 0
   PauseButton: {fileID: 114013886657874434}
   DistanceText: {fileID: 114183805179765290}
   HeightText: {fileID: 114934816558391102}
@@ -552,7 +596,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 2374c345489f3cc488a20cd0b4297206, type: 3}
-    m_FontSize: 22
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
