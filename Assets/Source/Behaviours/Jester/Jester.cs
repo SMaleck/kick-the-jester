@@ -1,5 +1,7 @@
 ﻿using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
+using Assets.Source.Repositories;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester
@@ -19,7 +21,7 @@ namespace Assets.Source.Behaviours.Jester
             {
                 if(_Collisions == null)
                 {
-                    _Collisions = GetBehaviour<CollisionListener>();
+                    _Collisions = GetComponentInChildren<CollisionListener>();
                 }
 
                 return _Collisions;
@@ -32,25 +34,21 @@ namespace Assets.Source.Behaviours.Jester
         private JesterSprite spriteEffects;
 
         private void Start()
-        {            
+        {
             flightRecorder = new FlightRecorder(this);
             soundEffects = new JesterSounds(this, soundEffectsConfig);
             spriteEffects = new JesterSprite(this, goSprite, spriteEffectsConfig);
+
+            // Listen to Pause State
+            App.Cache.RepoRx.GameStateRepository.StateProperty
+                                                .TakeUntilDestroy(this)
+                                                .Subscribe(OnPauseStateChanged);            
         }
 
-
-        // Utility to get behaviours on the Jester, since some might be on children
-        public T GetBehaviour<T>()
+        
+        private void OnPauseStateChanged(GameState state)
         {
-            T behaviour = GetComponent<T>();
-
-            // Try to find in children if first attempt was unsuccessfull
-            if(behaviour == null)
-            {
-                behaviour = GetComponentInChildren<T>();
-            }
-
-            return behaviour;
+            goBody.simulated = !state.Equals(GameState.Paused);
         }
     }
 }

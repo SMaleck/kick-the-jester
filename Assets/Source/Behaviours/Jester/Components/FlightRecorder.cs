@@ -20,7 +20,7 @@ namespace Assets.Source.Behaviours.Jester.Components
             // Is Started Flag
             App.Cache.RepoRx.JesterStateRepository.DistanceProperty
                                                   .Where(e => !e.IsNearlyEqual(0))
-                                                  .Subscribe(_ => App.Cache.RepoRx.JesterStateRepository.IsStarted = true);
+                                                  .Subscribe(_ => App.Cache.RepoRx.JesterStateRepository.IsStarted = true);                                      
 
             // Is Landed Flag
             App.Cache.RepoRx.JesterStateRepository.VelocityProperty
