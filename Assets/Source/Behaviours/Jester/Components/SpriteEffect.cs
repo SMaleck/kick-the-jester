@@ -22,8 +22,8 @@ namespace Assets.Source.Behaviours.Jester.Components
             this.goSprite = goSprite;
             this.config = config;
 
-            owner.OnStarted.Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
-            owner.OnLanded.Subscribe(_ => { listenForImpacts = isRotating = false; }).AddTo(owner);
+            owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
+            owner.IsLandedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = isRotating = false; }).AddTo(owner);
 
             owner.Collisions.OnGround(SetRotation);            
         }

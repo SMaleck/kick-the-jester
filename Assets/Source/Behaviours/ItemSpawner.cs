@@ -34,14 +34,14 @@ namespace Assets.Source.Behaviours
         protected System.Random randomPoolIndex;
 
 
-        public virtual void Awake()
+        private void Start()
         {
             randomPoolIndex = new System.Random();
             offsetX = goTransform.position.x - App.Cache.jester.goTransform.position.x;
             groundPosition = goTransform.position;
 
             // Deactivate on Land                        
-            App.Cache.jester.OnLanded.Subscribe(_ => { CanSpawn = false; }).AddTo(this);
+            App.Cache.jester.IsLandedProperty.Where(e => e).Subscribe(_ => { CanSpawn = false; }).AddTo(this);
 
             // Attempt to spawn based on travel distance
             App.Cache.jester.DistanceProperty                                 

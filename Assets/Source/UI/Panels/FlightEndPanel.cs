@@ -1,6 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.AppKernel;
-using Assets.Source.Repositories;
+using Assets.Source.GameLogic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
@@ -22,10 +22,10 @@ namespace Assets.Source.UI.Panels
             gameObject.SetActive(false);
 
             // Activate on Flight End
-            App.Cache.RepoRx.GameStateRepository.StateProperty                                                
-                                                .Where(e => e.Equals(GameState.End))
-                                                .Subscribe(_ => OnFlightEnd())
-                                                .AddTo(this);
+            App.Cache.GameStateMachine.StateProperty                                                
+                                      .Where(e => e.Equals(GameState.End))
+                                      .Subscribe(_ => OnFlightEnd())
+                                      .AddTo(this);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
             shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked());

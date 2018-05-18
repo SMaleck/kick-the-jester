@@ -1,7 +1,7 @@
 ﻿using Assets.Source.AppKernel;
 using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
-using Assets.Source.Repositories;
+using Assets.Source.GameLogic;
 using UniRx;
 using UnityEngine;
 
@@ -11,9 +11,9 @@ namespace Assets.Source.Behaviours.Jester
     {
         /* -------------------------------------------------------------------------------------- */
         #region REACTIVE COMMANDS / PROPERTIES
-        
-        public ReactiveCommand OnStarted;        
-        public ReactiveCommand OnLanded;
+
+        public BoolReactiveProperty IsStartedProperty = new BoolReactiveProperty(false);        
+        public BoolReactiveProperty IsLandedProperty = new BoolReactiveProperty(false);        
 
         public FloatReactiveProperty DistanceProperty = new FloatReactiveProperty(0);
         public float Distance
@@ -50,6 +50,13 @@ namespace Assets.Source.Behaviours.Jester
             set { EarnedCurrencyProperty.Value = value; }
         }
 
+        public IntReactiveProperty RelativeKickForceProperty = new IntReactiveProperty(0);
+        public int RelativeKickForce
+        {
+            get { return RelativeKickForceProperty.Value; }
+            set { RelativeKickForceProperty.Value = value; }
+        }
+
         #endregion
 
 
@@ -80,10 +87,9 @@ namespace Assets.Source.Behaviours.Jester
         private SpriteEffect spriteEffects;
         private KickForce kickForce;
 
-        #endregion
+        #endregion        
 
-
-        private void Start()
+        private void Awake()
         {
             flightRecorder = new FlightRecorder(this);
             soundEffects = new SoundEffect(this, soundEffectsConfig);
@@ -91,9 +97,9 @@ namespace Assets.Source.Behaviours.Jester
             kickForce = new KickForce(this, Kernel.PlayerProfileService.KickCount);
 
             // Listen to Pause State
-            App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)
-                                                .Subscribe(OnPauseStateChanged);
+            App.Cache.GameStateMachine.StateProperty                                      
+                                      .Subscribe(OnPauseStateChanged)
+                                      .AddTo(this);
         }
 
         

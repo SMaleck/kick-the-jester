@@ -1,4 +1,4 @@
-﻿using Assets.Source.Repositories;
+﻿using Assets.Source.GameLogic;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -13,23 +13,6 @@ namespace Assets.Source.Behaviours
             {
                 return gameObject.transform;
             }
-        }
-
-        protected bool IsActive = true;
-        private List<GameState> InactiveStates = new List<GameState>();
-
-        protected void DeactivateOnStates(List<GameState> InactiveStates)
-        {
-            this.InactiveStates = InactiveStates;            
-
-            App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)
-                                                .Subscribe(OnGameStateChanged);
-        }
-
-        private void OnGameStateChanged(GameState state)
-        {
-            IsActive = !InactiveStates.Contains(state);
         }
     }
 }

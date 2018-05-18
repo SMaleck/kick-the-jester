@@ -13,11 +13,11 @@ namespace Assets.Source.UI.Components
             slider = gameObject.GetComponentInChildren<Slider>();
             slider.maxValue = 100;                        
 
-            App.Cache.RepoRx.GameStateRepository.RelativeKickForceProperty
-                                                .TakeUntilDestroy(this)
-                                                .Subscribe(UpdateUI);
+            App.Cache.jester.RelativeKickForceProperty                                                
+                            .Subscribe(UpdateUI)
+                            .AddTo(this);
 
-            App.Cache.jester.OnStarted.Subscribe(_ => { gameObject.SetActive(false); });
+            App.Cache.jester.IsStartedProperty.Where(e => e).Subscribe(_ => { gameObject.SetActive(false); });
         }
 
         private void UpdateUI(int value)

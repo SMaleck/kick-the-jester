@@ -1,7 +1,6 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using Assets.Source.Behaviours.MainCamera;
 using Assets.Source.GameLogic;
-using Assets.Source.Repositories;
 using System;
 using UnityEngine;
 
@@ -46,30 +45,17 @@ namespace Assets.Source.App
         /* -------------------------------------------------------------------- */
         #region COMPONENTS
 
-        private static RepoRx _RepoRx;
-        public static RepoRx RepoRx
+        private static GameStateMachine gameStateMachine;
+        public static GameStateMachine GameStateMachine
         {
             get
             {
-                if (_RepoRx == null)
+                if (gameStateMachine == null)
                 {
-                    _RepoRx = Repositories.GetComponent<RepoRx>();
-                }
-                return _RepoRx;
-            }
-        }
-
-        private static GameStateManager _gameStateManager;
-        public static GameStateManager gameStateManager
-        {
-            get
-            {
-                if (_gameStateManager == null)
-                {
-                    _gameStateManager = GameLogic.GetComponent<GameStateManager>();
+                    gameStateMachine = GameLogic.GetComponent<GameStateMachine>();
                 }
 
-                return _gameStateManager;
+                return gameStateMachine;
             }
         }
 

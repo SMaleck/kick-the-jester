@@ -1,6 +1,5 @@
 ﻿using Assets.Source.App;
 using Assets.Source.AppKernel;
-using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
 
@@ -17,10 +16,10 @@ namespace Assets.Source.GameLogic
                             .Subscribe(RecordDistance)
                             .AddTo(this);
 
-            App.Cache.RepoRx.GameStateRepository.StateProperty                                                
-                                                .Where(e => e.Equals(GameState.End))
-                                                .Subscribe(OnGameStateChange)
-                                                .AddTo(this);
+            App.Cache.GameStateMachine.StateProperty                                                
+                                      .Where(e => e.Equals(GameState.End))
+                                      .Subscribe(OnGameStateChange)
+                                      .AddTo(this);
         }
 
         private void RecordDistance(float distance)

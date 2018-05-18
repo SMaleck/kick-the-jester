@@ -12,13 +12,18 @@ namespace Assets.Source.Behaviours.Jester.Components
 
         public FlightRecorder(Jester owner)
             : base(owner, false)
-        {            
+        {
             origin = owner.goTransform.position;
 
-            owner.OnStarted = owner.DistanceProperty.Select(e => !e.IsNearlyEqual(0)).ToReactiveCommand();
-            owner.OnStarted.Subscribe(_ => jesterIsStarted = true).AddTo(owner);
+            // Listen to distance so we can update is started
+            owner.DistanceProperty.Where(e => !e.IsNearlyEqual(0))
+                                  .Subscribe(_ => { owner.IsStartedProperty.Value = true; })
+                                  .AddTo(owner);
 
-            owner.OnLanded = owner.VelocityProperty.Select(e => e.magnitude.IsNearlyEqual(0) && jesterIsStarted).ToReactiveCommand();
+            // Listen to velocity, so we can update landed
+            owner.VelocityProperty.Where(e => e.magnitude.IsNearlyEqual(0) && owner.IsStartedProperty.Value)
+                                  .Subscribe(__ => { owner.IsLandedProperty.Value = true; })
+                                  .AddTo(owner);
         }
 
 

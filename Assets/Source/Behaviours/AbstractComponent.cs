@@ -15,7 +15,7 @@ namespace Assets.Source.Behaviours
             this.owner = owner;
             this.isPausable = isPausable;
 
-            App.Cache.RepoRx.GameStateRepository.IsPausedProperty.Subscribe((bool value) => OnPause(value)).AddTo(owner);
+            App.Cache.GameStateMachine.IsPausedProperty.Subscribe((bool value) => OnPause(value)).AddTo(owner);
 
             Observable.EveryUpdate().Subscribe(_ => UpdateProxy(Update)).AddTo(owner);
             Observable.EveryFixedUpdate().Subscribe(_ => UpdateProxy(FixedUpdate)).AddTo(owner);
@@ -25,7 +25,7 @@ namespace Assets.Source.Behaviours
         
         private void UpdateProxy(UpdateHandler handler)
         {
-            if (isPausable && App.Cache.RepoRx.GameStateRepository.IsPaused) { return; }
+            if (isPausable && App.Cache.GameStateMachine.IsPaused) { return; }
             handler();
         }
         

@@ -37,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4621858714732094}
   - component: {fileID: 114096175909236702}
-  - component: {fileID: 114105730235228812}
   - component: {fileID: 50655206807969356}
   - component: {fileID: 58849016534238798}
   m_Layer: 10
@@ -165,21 +164,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9070d8631c106e9499fb2d512ee0b853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsStartedProperty:
+    value: 0
+  IsLandedProperty:
+    value: 0
+  DistanceProperty:
+    value: 0
+  HeightProperty:
+    value: 0
+  VelocityProperty:
+    value: {x: 0, y: 0}
+  CollectedCurrencyProperty:
+    value: 0
+  EarnedCurrencyProperty:
+    value: 0
+  RelativeKickForceProperty:
+    value: 0
   soundEffectsConfig: {fileID: 11400000, guid: 5089bb4e8e2784c4ca0d662924a55d24, type: 2}
   spriteEffectsConfig: {fileID: 11400000, guid: 5312f3049a91c2b41975a32022c3d52a,
     type: 2}
   goSprite: {fileID: 1761647027227642}
---- !u!114 &114105730235228812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1605968396887398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad00eb47f3543784aa8749fe0f14bc54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114985361404021046
 MonoBehaviour:
   m_ObjectHideFlags: 1

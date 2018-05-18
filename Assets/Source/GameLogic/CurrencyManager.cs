@@ -1,5 +1,4 @@
 ﻿using Assets.Source.AppKernel;
-using Assets.Source.Repositories;
 using System;
 using UniRx;
 using UnityEngine;
@@ -10,10 +9,10 @@ namespace Assets.Source.GameLogic
     {        
         private void Awake()
         {          
-            App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)
-                                                .Where(e => e.Equals(GameState.End))
-                                                .Subscribe(OnEnd);
+            App.Cache.GameStateMachine.StateProperty
+                                      .Where(e => e.Equals(GameState.End))
+                                      .Subscribe(OnEnd)
+                                      .AddTo(this);
         }
 
         // Commit Money to profile, if the game ended, or we are switching

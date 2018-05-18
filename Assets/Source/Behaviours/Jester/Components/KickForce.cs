@@ -1,6 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.AppKernel;
-using Assets.Source.Repositories;
+using Assets.Source.GameLogic;
 using UniRx;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ namespace Assets.Source.Behaviours.Jester.Components
             App.Cache.userControl.OnKick(KickForward);
 
             // Prevent kicking during pause or after game is over
-            App.Cache.RepoRx.GameStateRepository.StateProperty.Subscribe((GameState state) => 
+            App.Cache.GameStateMachine.StateProperty.Subscribe((GameState state) => 
             {
                 isActive = !state.Equals(GameState.Paused) || !state.Equals(GameState.End);
             }).AddTo(owner);            
@@ -38,7 +38,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         {
             UpdateInitialKickForceFactor();            
 
-            App.Cache.RepoRx.GameStateRepository.RelativeKickForce = initialKickForceFactor.AsPercent(maxForceFactor);
+            owner.RelativeKickForce = initialKickForceFactor.AsPercent(maxForceFactor);
         }
 
 

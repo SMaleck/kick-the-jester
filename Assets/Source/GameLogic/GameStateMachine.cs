@@ -1,51 +1,83 @@
-﻿using Assets.Source.Repositories;
+﻿using UniRx;
+using UnityEngine;
 
 namespace Assets.Source.GameLogic
 {
-    public class GameStateMachine
-    {        
-        private GameStateRepository repo;        
+    public enum GameState { Launch, Flight, End, Paused }
+
+    public class GameStateMachine : MonoBehaviour
+    {
+        #region REACTIVE PROPERTIES
+
+        public ReactiveProperty<GameState> StateProperty = new ReactiveProperty<GameState>();
+        public GameState State
+        {
+            get { return StateProperty.Value; }
+            set
+            {
+                StateProperty.Value = value;
+                IsPaused = value.Equals(GameState.Paused);
+            }
+        }
+
+        public BoolReactiveProperty IsPausedProperty = new BoolReactiveProperty(false);
+        public bool IsPaused
+        {
+            get { return IsPausedProperty.Value; }
+            set { IsPausedProperty.Value = value; }
+        }        
+
+        #endregion
+
+        
         private GameState previousState;
 
+        private void Awake()
+        {
+            State = GameState.Launch;
+            previousState = State;
 
-        public GameStateMachine(GameState state, GameStateRepository repo)
-        {                        
-            this.repo = repo;
-            this.repo.State = state;
-            previousState = state;
+            App.Cache.jester.IsLandedProperty
+                            .Where(e => e)
+                            .Subscribe(_ => ToEnd())
+                            .AddTo(this);
+
+            App.Cache.userControl.OnKick(ToFlight);
+
+            App.Cache.userControl.OnTogglePause(() => { TogglePause(); });            
         }
 
 
         public bool TogglePause()
         {           
-            if (repo.State != GameState.Paused)
+            if (State != GameState.Paused)
             {
-                previousState = repo.State;
-                repo.State = GameState.Paused;
+                previousState = State;
+                State = GameState.Paused;
             }
             else
             {
-                repo.State = previousState;
+                State = previousState;
             }
 
-            return repo.State == GameState.Paused;
+            return State == GameState.Paused;
         }
 
 
         public void ToFlight()
         {
-            if(repo.State != GameState.End && repo.State != GameState.Paused)
+            if(State != GameState.End && State != GameState.Paused)
             {
-                repo.State = GameState.Flight;
+                State = GameState.Flight;
             }
         }
 
 
         public void ToEnd()
         {
-            if (repo.State != GameState.Paused)
+            if (State != GameState.Paused)
             {
-                repo.State = GameState.End;
+                State = GameState.End;
             }
         }
     }

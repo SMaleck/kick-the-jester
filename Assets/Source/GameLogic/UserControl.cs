@@ -1,5 +1,4 @@
 ﻿using Assets.Source.Models;
-using Assets.Source.Repositories;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -30,9 +29,9 @@ namespace Assets.Source.GameLogic
 
         void Start()
         {
-            App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)                                                
-                                                .Subscribe(OnGameStateChanged);
+            App.Cache.GameStateMachine.StateProperty
+                                      .Subscribe(OnGameStateChanged)
+                                      .AddTo(this);
         }
 
 
