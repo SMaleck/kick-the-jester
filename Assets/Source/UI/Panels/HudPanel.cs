@@ -29,7 +29,7 @@ namespace Assets.Source.UI.Panels
                             .AddTo(this);
 
             // Currency
-            App.Cache.jester.CollectedCurrencyProperty
+            App.Cache.CurrencyRecorder.CurrencyCollectedProperty
                             .SubscribeToText(CollectedCurrencyText, e => string.Format("{0}G", e))                            
                             .AddTo(this);
         }

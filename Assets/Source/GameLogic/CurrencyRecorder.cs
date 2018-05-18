@@ -5,8 +5,15 @@ using UnityEngine;
 
 namespace Assets.Source.GameLogic
 {
-    public class CurrencyManager : MonoBehaviour
-    {        
+    public class CurrencyRecorder : MonoBehaviour
+    {
+        public IntReactiveProperty CurrencyCollectedProperty = new IntReactiveProperty(0);
+        public int CurrencyCollected
+        {
+            get { return CurrencyCollectedProperty.Value; }
+            set { CurrencyCollectedProperty.Value = value; }
+        }
+
         private void Awake()
         {          
             App.Cache.GameStateMachine.StateProperty
@@ -24,14 +31,7 @@ namespace Assets.Source.GameLogic
         public void AddPickup(int amount)
         {
             if (amount <= 0) { return; }
-            App.Cache.jester.CollectedCurrency += amount;
-        }
-
-
-        public void AddRoundEnd(int amount)
-        {
-            if (amount <= 0) { return; }
-            App.Cache.jester.EarnedCurrency += amount;
+            CurrencyCollected += amount;
         }
 
 
@@ -41,11 +41,14 @@ namespace Assets.Source.GameLogic
         /// <returns></returns>
         public bool TryCommitPools()
         {
-            Kernel.PlayerProfileService.Currency += Math.Abs(App.Cache.jester.CollectedCurrency) + Math.Abs(App.Cache.jester.EarnedCurrency);
-            App.Cache.jester.CollectedCurrency = 0;
-            App.Cache.jester.EarnedCurrency = 0;
-
+            Kernel.PlayerProfileService.Currency += Math.Abs(CurrencyCollected) + Math.Abs(CalculateCurrencyEarnedInFlight());
             return true;
+        }
+
+        public int CalculateCurrencyEarnedInFlight()
+        {
+            // 10% of the distance achieved
+            return Mathf.RoundToInt(App.Cache.jester.Distance.ToMeters() * 0.1f);
         }
     }
 }

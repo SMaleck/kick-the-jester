@@ -59,17 +59,17 @@ namespace Assets.Source.App
             }
         }
 
-        private static CurrencyManager _currencyManager;
-        public static CurrencyManager currencyManager
+        private static CurrencyRecorder _currencyRecorder;
+        public static CurrencyRecorder CurrencyRecorder
         {
             get
             {
-                if (_currencyManager == null)
+                if (_currencyRecorder == null)
                 {
-                    _currencyManager = GameLogic.GetComponent<CurrencyManager>();
+                    _currencyRecorder = GameLogic.GetComponent<CurrencyRecorder>();
                 }
 
-                return _currencyManager;
+                return _currencyRecorder;
             }
         }
 
