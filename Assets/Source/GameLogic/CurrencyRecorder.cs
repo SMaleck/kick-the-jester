@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Models;
 using System;
 using UniRx;
 using UnityEngine;
@@ -14,8 +15,17 @@ namespace Assets.Source.GameLogic
             set { CurrencyCollectedProperty.Value = value; }
         }
 
+        public bool HasCommitted { get; private set; }
+        private event NotifyEventHandler _OnCommit = delegate { };
+        public void OnCommit(NotifyEventHandler handler)
+        {
+            _OnCommit += handler;
+            if (HasCommitted) handler();
+        }
+
         private void Awake()
-        {          
+        {
+            HasCommitted = false;
             App.Cache.GameStateMachine.StateProperty
                                       .Where(e => e.Equals(GameState.End))
                                       .Subscribe(OnEnd)
@@ -39,9 +49,10 @@ namespace Assets.Source.GameLogic
         /// Commits the accumulated money pools to the PlayerProfile
         /// </summary>
         /// <returns></returns>
-        public bool TryCommitPools()
+        private bool TryCommitPools()
         {
             Kernel.PlayerProfileService.Currency += Math.Abs(CurrencyCollected) + Math.Abs(CalculateCurrencyEarnedInFlight());
+            _OnCommit();
             return true;
         }
 
