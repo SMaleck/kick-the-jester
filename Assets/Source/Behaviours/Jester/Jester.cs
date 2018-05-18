@@ -10,7 +10,6 @@ namespace Assets.Source.Behaviours.Jester
     public class Jester : AbstractBodyBehaviour
     {
         [SerializeField] private JesterSoundEffectsConfig soundEffectsConfig;
-
         [SerializeField] private JesterSpriteEffectsConfig spriteEffectsConfig;
         [SerializeField] private GameObject goSprite;
 
@@ -31,15 +30,15 @@ namespace Assets.Source.Behaviours.Jester
 
 
         private FlightRecorder flightRecorder;
-        private SoundEffects soundEffects;
-        private JesterSprite spriteEffects;
+        private SoundEffect soundEffects;
+        private SpriteEffect spriteEffects;
         private KickForce kickForce;
 
         private void Start()
         {
             flightRecorder = new FlightRecorder(this);
-            soundEffects = new SoundEffects(this, soundEffectsConfig);
-            spriteEffects = new JesterSprite(this, goSprite, spriteEffectsConfig);
+            soundEffects = new SoundEffect(this, soundEffectsConfig);
+            spriteEffects = new SpriteEffect(this, goSprite, spriteEffectsConfig);
             kickForce = new KickForce(this, Kernel.PlayerProfileService.KickCount);
 
             // Listen to Pause State

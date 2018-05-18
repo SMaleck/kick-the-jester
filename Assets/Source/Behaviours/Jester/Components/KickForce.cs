@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class KickForce : AbstractJesterComponent
+    public class KickForce : AbstractComponent<Jester>
     {
         private bool isActive = false;
 

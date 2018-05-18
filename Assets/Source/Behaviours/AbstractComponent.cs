@@ -1,15 +1,16 @@
 ﻿using UniRx;
+using UnityEngine;
 
-namespace Assets.Source.Behaviours.Jester.Components
+namespace Assets.Source.Behaviours
 {
-    public abstract class AbstractJesterComponent
+    public abstract class AbstractComponent<T> where T : MonoBehaviour
     {
         private delegate void UpdateHandler();
 
-        protected readonly Jester owner;
+        protected readonly T owner;
         protected readonly bool isPausable;        
 
-        public AbstractJesterComponent(Jester owner, bool isPausable)
+        public AbstractComponent(T owner, bool isPausable = true)
         {
             this.owner = owner;
             this.isPausable = isPausable;

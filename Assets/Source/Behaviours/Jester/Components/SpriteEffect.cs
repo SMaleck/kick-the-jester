@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class JesterSprite : AbstractJesterComponent
+    public class SpriteEffect : AbstractComponent<Jester>
     {
         private readonly GameObject goSprite;
         private readonly JesterSpriteEffectsConfig config;
@@ -16,7 +16,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         private Vector3 rotationDirection = new Vector3(0, 0, -1);
 
 
-        public JesterSprite(Jester owner, GameObject goSprite, JesterSpriteEffectsConfig config)
+        public SpriteEffect(Jester owner, GameObject goSprite, JesterSpriteEffectsConfig config)
             : base(owner, true)
         {
             this.goSprite = goSprite;

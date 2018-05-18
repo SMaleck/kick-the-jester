@@ -88,16 +88,10 @@ namespace Assets.Source.GameLogic
         }
 
 
-        /* ----------------------------- UI BUTTON METHODS ----------------------------- */
-        #region UI BUTTON METHODS
-
-
         public void TooglePause()
         {
             _OnTogglePause();
         }
-
-        #endregion
     }
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class FlightRecorder : AbstractJesterComponent
+    public class FlightRecorder : AbstractComponent<Jester>
     {        
         private readonly Vector3 origin;
 
