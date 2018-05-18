@@ -1,4 +1,4 @@
-﻿using Assets.Source.AppKernel;
+﻿using Assets.Source.App;
 using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 

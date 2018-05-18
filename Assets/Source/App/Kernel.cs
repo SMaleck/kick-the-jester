@@ -1,11 +1,11 @@
 ﻿using Assets.Source.App;
-using Assets.Source.AppKernel.Audio;
-using Assets.Source.AppKernel.UserData;
+using Assets.Source.App.Audio;
+using Assets.Source.App.Storage;
 using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.AppKernel
+namespace Assets.Source.App
 {
     /// <summary>
     /// The Kernel initialises all artefacts which do NOT destroy between scene loads.

@@ -1,4 +1,4 @@
-﻿using Assets.Source.AppKernel;
+﻿using Assets.Source.App;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours

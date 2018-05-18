@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Source.AppKernel
+namespace Assets.Source.App
 {
     public class SceneTransitionService
     {

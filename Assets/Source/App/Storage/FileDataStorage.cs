@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace Assets.Source.App
+namespace Assets.Source.App.Storage
 {
     /// <summary>
     /// <para>Class that can be used to store any object into a file in the system

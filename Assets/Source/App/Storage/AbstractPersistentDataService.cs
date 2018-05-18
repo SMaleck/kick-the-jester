@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UniRx;
 
-namespace Assets.Source.AppKernel.UserData
+namespace Assets.Source.App.Storage
 {
     public abstract class AbstractPersistentDataService
     {

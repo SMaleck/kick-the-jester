@@ -1,4 +1,4 @@
-﻿using Assets.Source.AppKernel;
+﻿using Assets.Source.App;
 using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
 using Assets.Source.GameLogic;

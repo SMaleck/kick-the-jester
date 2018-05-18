@@ -1,4 +1,4 @@
-﻿using Assets.Source.AppKernel;
+﻿using Assets.Source.App;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

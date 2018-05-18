@@ -3,7 +3,7 @@ using Assets.Source.Models;
 using System;
 using UniRx;
 
-namespace Assets.Source.AppKernel.UserData
+namespace Assets.Source.App.Storage
 {
     public class PlayerProfileService : AbstractPersistentDataService
     {

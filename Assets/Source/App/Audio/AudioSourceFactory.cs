@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.AppKernel.Audio
+namespace Assets.Source.App.Audio
 {
     public class AudioSourceFactory
     {

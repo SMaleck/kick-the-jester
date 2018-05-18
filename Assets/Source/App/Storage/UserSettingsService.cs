@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.AppKernel.UserData
+namespace Assets.Source.App.Storage
 {
     public class UserSettingsService : AbstractPersistentDataService
     {

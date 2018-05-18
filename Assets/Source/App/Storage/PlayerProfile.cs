@@ -1,7 +1,7 @@
 ﻿using Assets.Source.App;
 using System;
 
-namespace Assets.Source.Models
+namespace Assets.Source.App.Storage
 {
     public class PlayerProfile : Serializable
     {
