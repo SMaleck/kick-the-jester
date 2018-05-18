@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.UI
 {
-    public class ShopUI : MonoBehaviour
+    public class ShopPanel : MonoBehaviour
     {
         [SerializeField] private Button backButton;
         [SerializeField] private Text txtMoney;
