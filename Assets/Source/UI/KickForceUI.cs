@@ -17,12 +17,7 @@ namespace Assets.Source.UI.Components
                                                 .TakeUntilDestroy(this)
                                                 .Subscribe(UpdateUI);
 
-            App.Cache.RepoRx.JesterStateRepository.OnStartedFlight(HideUI);
-        }
-
-        private void HideUI()
-        {
-            gameObject.SetActive(false);
+            App.Cache.jester.OnStarted.Subscribe(_ => { gameObject.SetActive(false); });
         }
 
         private void UpdateUI(int value)

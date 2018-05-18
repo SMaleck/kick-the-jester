@@ -41,12 +41,12 @@ namespace Assets.Source.Behaviours
             groundPosition = goTransform.position;
 
             // Deactivate on Land                        
-            App.Cache.RepoRx.JesterStateRepository.OnLanded(() => { CanSpawn = false; });
+            App.Cache.jester.OnLanded.Subscribe(_ => { CanSpawn = false; }).AddTo(this);
 
             // Attempt to spawn based on travel distance
-            App.Cache.RepoRx.JesterStateRepository.DistanceProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe(AttemptSpawn);
+            App.Cache.jester.DistanceProperty                                 
+                            .Subscribe(AttemptSpawn)
+                            .AddTo(this);
         }
 
 

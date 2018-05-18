@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Repositories;
 using UnityEngine;
+using UniRx;
 
 namespace Assets.Source.GameLogic
 {
@@ -12,8 +13,7 @@ namespace Assets.Source.GameLogic
         {            
             stateMachine = new GameStateMachine(GameState.Launch, App.Cache.RepoRx.GameStateRepository);
 
-            App.Cache.RepoRx.JesterStateRepository
-                            .OnLanded(stateMachine.ToEnd);
+            App.Cache.jester.OnLanded.Subscribe(_ => stateMachine.ToEnd()).AddTo(this);
 
             App.Cache.userControl.OnKick(stateMachine.ToFlight);
 

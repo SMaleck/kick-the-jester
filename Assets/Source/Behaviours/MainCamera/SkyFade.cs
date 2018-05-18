@@ -13,9 +13,9 @@ namespace Assets.Source.Behaviours.MainCamera
 
         private void Start()
         {
-            App.Cache.RepoRx.JesterStateRepository.HeightProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe(MoveSkyFade);              
+            App.Cache.jester.HeightProperty
+                            .Subscribe(MoveSkyFade)
+                            .AddTo(this);
         }
 
 

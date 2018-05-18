@@ -1,7 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.AppKernel;
 using Assets.Source.Repositories;
-using System;
 using System.Linq;
 using UniRx;
 using UnityEngine;
@@ -23,27 +22,27 @@ namespace Assets.Source.UI.Panels
             gameObject.SetActive(false);
 
             // Activate on Flight End
-            App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)
+            App.Cache.RepoRx.GameStateRepository.StateProperty                                                
                                                 .Where(e => e.Equals(GameState.End))
-                                                .Subscribe(_ => OnFlightEnd());
+                                                .Subscribe(_ => OnFlightEnd())
+                                                .AddTo(this);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
             shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked());
 
-            App.Cache.RepoRx.JesterStateRepository.CollectedCurrencyProperty
-                                                  .TakeUntilDestroy(this)
-                                                  .Subscribe(x => { currencyCollected.text = x.ToString() + "G"; });
+            App.Cache.jester.CollectedCurrencyProperty
+                            .Subscribe(x => { currencyCollected.text = x.ToString() + "G"; })
+                            .AddTo(this);
             
-            Kernel.PlayerProfileService.bestDistanceProperty
-                                                 .TakeUntilDestroy(this)
-                                                 .Subscribe(x => { bestDistance.text = x.ToString() + "m"; });
+            Kernel.PlayerProfileService.bestDistanceProperty                                       
+                                       .Subscribe(x => { bestDistance.text = x.ToString() + "m"; })
+                                       .AddTo(this);
             
         }
 
         private void OnFlightEnd()
         {
-            distance.text = App.Cache.RepoRx.JesterStateRepository.Distance.ToMeters().ToString() + "m";
+            distance.text = App.Cache.jester.Distance.ToMeters().ToString() + "m";
             currency.text = Kernel.PlayerProfileService.Currency.ToString() + "G";
 
             gameObject.SetActive(true);

@@ -17,20 +17,5 @@ namespace Assets.Source.Repositories
                 return _GameStateRepository;
             }
         }
-
-
-        private JesterStateRepository _JesterStateRepository;
-        public JesterStateRepository JesterStateRepository
-        {
-            get
-            {
-                if (_JesterStateRepository == null)
-                {
-                    _JesterStateRepository = new JesterStateRepository();
-                }
-
-                return _JesterStateRepository;
-            }
-        }
     }
 }

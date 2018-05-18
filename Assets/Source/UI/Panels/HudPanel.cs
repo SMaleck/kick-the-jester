@@ -20,19 +20,16 @@ namespace Assets.Source.UI.Panels
                        .AddTo(this);
 
             // Flight Stats
-            App.Cache.RepoRx.JesterStateRepository
-                            .DistanceProperty
+            App.Cache.jester.DistanceProperty
                             .SubscribeToText(DistanceText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
-            App.Cache.RepoRx.JesterStateRepository
-                            .HeightProperty
+            App.Cache.jester.HeightProperty
                             .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
             // Currency
-            App.Cache.RepoRx.JesterStateRepository
-                            .CollectedCurrencyProperty
+            App.Cache.jester.CollectedCurrencyProperty
                             .SubscribeToText(CollectedCurrencyText, e => string.Format("{0}G", e))                            
                             .AddTo(this);
         }

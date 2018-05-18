@@ -13,14 +13,14 @@ namespace Assets.Source.GameLogic
         // Use this for initialization
         void Start()
         {
-            App.Cache.RepoRx.JesterStateRepository.DistanceProperty
-                                 .TakeUntilDestroy(this)
-                                 .Subscribe(RecordDistance);
+            App.Cache.jester.DistanceProperty                            
+                            .Subscribe(RecordDistance)
+                            .AddTo(this);
 
-            App.Cache.RepoRx.GameStateRepository.StateProperty
-                                                .TakeUntilDestroy(this)
+            App.Cache.RepoRx.GameStateRepository.StateProperty                                                
                                                 .Where(e => e.Equals(GameState.End))
-                                                .Subscribe(OnGameStateChange);
+                                                .Subscribe(OnGameStateChange)
+                                                .AddTo(this);
         }
 
         private void RecordDistance(float distance)

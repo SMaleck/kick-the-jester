@@ -7,31 +7,27 @@ namespace Assets.Source.Behaviours.Jester.Components
     public class FlightRecorder : AbstractComponent<Jester>
     {        
         private readonly Vector3 origin;
+        private bool jesterIsStarted = false;
 
 
         public FlightRecorder(Jester owner)
             : base(owner, false)
         {            
-            origin = owner.goTransform.position;            
+            origin = owner.goTransform.position;
 
-            // Is Started Flag
-            App.Cache.RepoRx.JesterStateRepository.DistanceProperty
-                                                  .Where(e => !e.IsNearlyEqual(0))
-                                                  .Subscribe(_ => App.Cache.RepoRx.JesterStateRepository.IsStarted = true);                                      
+            owner.OnStarted = owner.DistanceProperty.Select(e => !e.IsNearlyEqual(0)).ToReactiveCommand();
+            owner.OnStarted.Subscribe(_ => jesterIsStarted = true).AddTo(owner);
 
-            // Is Landed Flag
-            App.Cache.RepoRx.JesterStateRepository.VelocityProperty
-                                                  .Where(e => e.magnitude.IsNearlyEqual(0) && App.Cache.RepoRx.JesterStateRepository.IsStarted)
-                                                  .Subscribe(_ => App.Cache.RepoRx.JesterStateRepository.IsLanded = true);
+            owner.OnLanded = owner.VelocityProperty.Select(e => e.magnitude.IsNearlyEqual(0) && jesterIsStarted).ToReactiveCommand();
         }
 
 
         protected override void LateUpdate()
         {
-            App.Cache.RepoRx.JesterStateRepository.Distance = origin.x.Difference(owner.goTransform.position.x);
-            App.Cache.RepoRx.JesterStateRepository.Height = origin.y.Difference(owner.goTransform.position.y);
+            owner.Distance = origin.x.Difference(owner.goTransform.position.x);
+            owner.Height = origin.y.Difference(owner.goTransform.position.y);
 
-            App.Cache.RepoRx.JesterStateRepository.Velocity = owner.goBody.velocity;
+            owner.Velocity = owner.goBody.velocity;
         }
     }
 }

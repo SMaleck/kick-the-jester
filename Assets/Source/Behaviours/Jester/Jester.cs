@@ -9,6 +9,53 @@ namespace Assets.Source.Behaviours.Jester
 {
     public class Jester : AbstractBodyBehaviour
     {
+        /* -------------------------------------------------------------------------------------- */
+        #region REACTIVE COMMANDS / PROPERTIES
+        
+        public ReactiveCommand OnStarted;        
+        public ReactiveCommand OnLanded;
+
+        public FloatReactiveProperty DistanceProperty = new FloatReactiveProperty(0);
+        public float Distance
+        {
+            get { return DistanceProperty.Value; }
+            set { DistanceProperty.Value = value; }
+        }
+
+        public FloatReactiveProperty HeightProperty = new FloatReactiveProperty(0);
+        public float Height
+        {
+            get { return HeightProperty.Value; }
+            set { HeightProperty.Value = value; }
+        }
+
+        public Vector2ReactiveProperty VelocityProperty = new Vector2ReactiveProperty();
+        public Vector2 Velocity
+        {
+            get { return VelocityProperty.Value; }
+            set { VelocityProperty.Value = value; }
+        }
+
+        public IntReactiveProperty CollectedCurrencyProperty = new IntReactiveProperty(0);
+        public int CollectedCurrency
+        {
+            get { return CollectedCurrencyProperty.Value; }
+            set { CollectedCurrencyProperty.Value = value; }
+        }
+
+        public IntReactiveProperty EarnedCurrencyProperty = new IntReactiveProperty(0);
+        public int EarnedCurrency
+        {
+            get { return EarnedCurrencyProperty.Value; }
+            set { EarnedCurrencyProperty.Value = value; }
+        }
+
+        #endregion
+
+
+        /* -------------------------------------------------------------------------------------- */
+        #region COMPONENTS        
+
         [SerializeField] private JesterSoundEffectsConfig soundEffectsConfig;
         [SerializeField] private JesterSpriteEffectsConfig spriteEffectsConfig;
         [SerializeField] private GameObject goSprite;
@@ -19,7 +66,7 @@ namespace Assets.Source.Behaviours.Jester
         {
             get
             {
-                if(_Collisions == null)
+                if (_Collisions == null)
                 {
                     _Collisions = GetComponentInChildren<CollisionListener>();
                 }
@@ -28,11 +75,13 @@ namespace Assets.Source.Behaviours.Jester
             }
         }
 
-
         private FlightRecorder flightRecorder;
         private SoundEffect soundEffects;
         private SpriteEffect spriteEffects;
         private KickForce kickForce;
+
+        #endregion
+
 
         private void Start()
         {

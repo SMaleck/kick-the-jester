@@ -7,13 +7,9 @@ using UnityEngine;
 namespace Assets.Source.GameLogic
 {
     public class CurrencyManager : MonoBehaviour
-    {
-        private JesterStateRepository jesterState;
-
+    {        
         private void Awake()
-        {
-            jesterState = App.Cache.RepoRx.JesterStateRepository;
-
+        {          
             App.Cache.RepoRx.GameStateRepository.StateProperty
                                                 .TakeUntilDestroy(this)
                                                 .Where(e => e.Equals(GameState.End))
@@ -29,14 +25,14 @@ namespace Assets.Source.GameLogic
         public void AddPickup(int amount)
         {
             if (amount <= 0) { return; }
-            jesterState.CollectedCurrency += amount;
+            App.Cache.jester.CollectedCurrency += amount;
         }
 
 
         public void AddRoundEnd(int amount)
         {
             if (amount <= 0) { return; }
-            jesterState.EarnedCurrency += amount;
+            App.Cache.jester.EarnedCurrency += amount;
         }
 
 
@@ -46,9 +42,9 @@ namespace Assets.Source.GameLogic
         /// <returns></returns>
         public bool TryCommitPools()
         {
-            Kernel.PlayerProfileService.Currency += Math.Abs(jesterState.CollectedCurrency) + Math.Abs(jesterState.EarnedCurrency);
-            jesterState.CollectedCurrency = 0;
-            jesterState.EarnedCurrency = 0;
+            Kernel.PlayerProfileService.Currency += Math.Abs(App.Cache.jester.CollectedCurrency) + Math.Abs(App.Cache.jester.EarnedCurrency);
+            App.Cache.jester.CollectedCurrency = 0;
+            App.Cache.jester.EarnedCurrency = 0;
 
             return true;
         }

@@ -9,7 +9,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         private readonly GameObject goSprite;
         private readonly JesterSpriteEffectsConfig config;
 
-        private bool ListenForImpacts = false;
+        private bool listenForImpacts = false;
         private bool isRotating = false;
 
         private float currentRotationSpeed = 0;
@@ -22,11 +22,8 @@ namespace Assets.Source.Behaviours.Jester.Components
             this.goSprite = goSprite;
             this.config = config;
 
-            App.Cache.RepoRx.JesterStateRepository.OnStartedFlight(
-                () => { ListenForImpacts = true; });
-
-            App.Cache.RepoRx.JesterStateRepository.OnLanded(
-                () => { isRotating = false; });
+            owner.OnStarted.Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
+            owner.OnLanded.Subscribe(_ => { listenForImpacts = isRotating = false; }).AddTo(owner);
 
             owner.Collisions.OnGround(SetRotation);            
         }
@@ -43,7 +40,7 @@ namespace Assets.Source.Behaviours.Jester.Components
 
         private void SetRotation()
         {
-            if (ListenForImpacts)
+            if (listenForImpacts)
             {
                 isRotating = true;
                 currentRotationSpeed = UnityEngine.Random.Range(config.MinRotationSpeed, config.MaxRotationSpeed);
