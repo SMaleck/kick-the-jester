@@ -37,7 +37,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         {
             UpdateInitialKickForceFactor();            
 
-            owner.RelativeKickForce = initialKickForceFactor.AsPercent(maxForceFactor);
+            owner.RelativeKickForce = initialKickForceFactor.AsRelativeTo1(maxForceFactor);
         }
 
 

@@ -50,8 +50,8 @@ namespace Assets.Source.Behaviours.Jester
             set { EarnedCurrencyProperty.Value = value; }
         }
 
-        public IntReactiveProperty RelativeKickForceProperty = new IntReactiveProperty(0);
-        public int RelativeKickForce
+        public FloatReactiveProperty RelativeKickForceProperty = new FloatReactiveProperty(0f);
+        public float RelativeKickForce
         {
             get { return RelativeKickForceProperty.Value; }
             set { RelativeKickForceProperty.Value = value; }
