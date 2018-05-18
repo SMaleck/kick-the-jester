@@ -1,5 +1,4 @@
-﻿using Assets.Source.App;
-using Assets.Source.Models;
+﻿using Assets.Source.Models;
 using System;
 using UniRx;
 
@@ -83,6 +82,8 @@ namespace Assets.Source.App.Storage
 
             LoadProfile();
             EnsureProfileDataPersistence();
+
+            IsLoadedProperty.Value = true;
         }
 
 

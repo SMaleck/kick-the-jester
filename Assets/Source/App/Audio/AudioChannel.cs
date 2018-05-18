@@ -62,7 +62,7 @@ namespace Assets.Source.App.Audio
 
             // Set default and current Volume
             this.defaultVolume = defaultVolume;                       
-            Volume = volume;
+            Volume = volume;            
 
             // Listen to volume changes
             VolumeProperty.Subscribe(_ => UpdateAudioSourceVolumes());            

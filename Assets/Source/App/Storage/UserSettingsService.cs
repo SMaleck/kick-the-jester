@@ -42,7 +42,9 @@ namespace Assets.Source.App.Storage
             if (PlayerPrefs.HasKey(MUTE_SFX_KEY))
             {
                 MuteSFX = Convert.ToBoolean(PlayerPrefs.GetInt(MUTE_SFX_KEY));
-            }          
+            }
+
+            IsLoadedProperty.Value = true;
         }
 
 

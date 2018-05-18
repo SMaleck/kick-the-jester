@@ -5,6 +5,8 @@ namespace Assets.Source.App.Storage
 {
     public abstract class AbstractPersistentDataService
     {
+        public BoolReactiveProperty IsLoadedProperty = new BoolReactiveProperty(false);
+
         public AbstractPersistentDataService()
         {
             // Save on each Scene Load       

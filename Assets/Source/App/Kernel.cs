@@ -1,7 +1,5 @@
-﻿using Assets.Source.App;
-using Assets.Source.App.Audio;
+﻿using Assets.Source.App.Audio;
 using Assets.Source.App.Storage;
-using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 
@@ -32,7 +30,7 @@ namespace Assets.Source.App
             // TODO: Resolve implicit interdependency
             SceneTransitionService = new SceneTransitionService();
             PlayerProfileService = new PlayerProfileService(new FileDataStorage<PlayerProfile>("profile.save"));
-            UserSettingsService = new UserSettingsService();            
+            UserSettingsService = new UserSettingsService();
             AudioService = new AudioService();
 
             Kernel.Ready.Value = true;

@@ -16,6 +16,7 @@ namespace Assets.Source.App.Audio
             }
 
             AudioSource audioSource = audioSourceContainer.AddComponent<AudioSource>();
+            audioSource.volume = volume;
             return audioSource;
         }
     }
