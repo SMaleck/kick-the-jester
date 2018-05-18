@@ -1,4 +1,5 @@
-﻿using Assets.Source.Behaviours.Jester.Components;
+﻿using Assets.Source.AppKernel;
+using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
 using Assets.Source.Repositories;
 using UniRx;
@@ -30,19 +31,21 @@ namespace Assets.Source.Behaviours.Jester
 
 
         private FlightRecorder flightRecorder;
-        private JesterSounds soundEffects;
+        private SoundEffects soundEffects;
         private JesterSprite spriteEffects;
+        private KickForce kickForce;
 
         private void Start()
         {
             flightRecorder = new FlightRecorder(this);
-            soundEffects = new JesterSounds(this, soundEffectsConfig);
+            soundEffects = new SoundEffects(this, soundEffectsConfig);
             spriteEffects = new JesterSprite(this, goSprite, spriteEffectsConfig);
+            kickForce = new KickForce(this, Kernel.PlayerProfileService.KickCount);
 
             // Listen to Pause State
             App.Cache.RepoRx.GameStateRepository.StateProperty
                                                 .TakeUntilDestroy(this)
-                                                .Subscribe(OnPauseStateChanged);            
+                                                .Subscribe(OnPauseStateChanged);
         }
 
         

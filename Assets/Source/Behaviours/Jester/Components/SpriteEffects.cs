@@ -2,9 +2,9 @@
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours.Jester
+namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class JesterSprite
+    public class JesterSprite : AbstractJesterComponent
     {
         private readonly GameObject goSprite;
         private readonly JesterSpriteEffectsConfig config;
@@ -17,6 +17,7 @@ namespace Assets.Source.Behaviours.Jester
 
 
         public JesterSprite(Jester owner, GameObject goSprite, JesterSpriteEffectsConfig config)
+            : base(owner, true)
         {
             this.goSprite = goSprite;
             this.config = config;
@@ -27,13 +28,11 @@ namespace Assets.Source.Behaviours.Jester
             App.Cache.RepoRx.JesterStateRepository.OnLanded(
                 () => { isRotating = false; });
 
-            owner.Collisions.OnGround(SetRotation);
-
-            Observable.EveryUpdate().Subscribe(_ => Update()).AddTo(owner);
+            owner.Collisions.OnGround(SetRotation);            
         }
 
 
-        private void Update()
+        protected override void Update()
         {
             if (isRotating)
             {

@@ -4,18 +4,15 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class FlightRecorder
-    {
-        private readonly AbstractBodyBehaviour owner;
+    public class FlightRecorder : AbstractJesterComponent
+    {        
         private readonly Vector3 origin;
 
 
-        public FlightRecorder(AbstractBodyBehaviour owner)
-        {
-            this.owner = owner;            
-            origin = owner.goTransform.position;
-
-            Observable.EveryLateUpdate().Subscribe(_ => LateUpdate()).AddTo(owner);
+        public FlightRecorder(Jester owner)
+            : base(owner, false)
+        {            
+            origin = owner.goTransform.position;            
 
             // Is Started Flag
             App.Cache.RepoRx.JesterStateRepository.DistanceProperty
@@ -29,7 +26,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         }
 
 
-        private void LateUpdate()
+        protected override void LateUpdate()
         {
             App.Cache.RepoRx.JesterStateRepository.Distance = origin.x.Difference(owner.goTransform.position.x);
             App.Cache.RepoRx.JesterStateRepository.Height = origin.y.Difference(owner.goTransform.position.y);
