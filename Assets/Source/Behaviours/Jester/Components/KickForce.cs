@@ -1,16 +1,14 @@
 ﻿using Assets.Source.App;
-using Assets.Source.GameLogic;
-using Assets.Source.Repositories;
-using System.Collections.Generic;
-using UnityEngine;
-using UniRx;
 using Assets.Source.AppKernel;
+using Assets.Source.Repositories;
+using UniRx;
+using UnityEngine;
 
-namespace Assets.Source.Behaviours.Jester
+namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class KickForceManager : AbstractBehaviour
+    public class KickForce : AbstractJesterComponent
     {
-        #region PROPERTIES
+        private bool isActive = false;
 
         private bool isInitialKick = true;
         private Vector3 forceDirection = new Vector3(1, 1, 0);
@@ -18,34 +16,31 @@ namespace Assets.Source.Behaviours.Jester
         private float maxForceFactor = 2;
         private float initialKickForceFactor = 1f;
         private bool initialFactorGrows = true;
-        private int kicksAvailable = 1;
+        private int kickCount = 1;
 
-        private Rigidbody2D entityBody;
 
-        #endregion
-
-        #region UNITY LIFECYCLE
-
-        // ------------------------ START
-        private void Start()
+        public KickForce(Jester owner, int kickCount)
+            : base(owner, true)
         {
-            entityBody = gameObject.GetComponent<Rigidbody2D>();
-
-            // Listen for events
+            this.kickCount = kickCount;
             App.Cache.userControl.OnKick(KickForward);
-            kicksAvailable = Kernel.PlayerProfileService.KickCount;
 
             // Prevent kicking during pause or after game is over
-            DeactivateOnStates(new List<GameState>() { GameState.Paused, GameState.End });
+            App.Cache.RepoRx.GameStateRepository.StateProperty.Subscribe((GameState state) => 
+            {
+                isActive = !state.Equals(GameState.Paused) || !state.Equals(GameState.End);
+            }).AddTo(owner);            
         }
 
-        // Update is called once per frame
-        void Update()
+
+        // UPDATE
+        protected override void Update()
         {
             UpdateInitialKickForceFactor();            
 
             App.Cache.RepoRx.GameStateRepository.RelativeKickForce = initialKickForceFactor.AsPercent(maxForceFactor);
         }
+
 
         private void UpdateInitialKickForceFactor()
         {
@@ -59,34 +54,19 @@ namespace Assets.Source.Behaviours.Jester
                 : initialKickForceFactor - x;
         }
 
-        #endregion
 
-        #region EVENT HANDLERS
-
+        // Kicks the Jester forward
         private void KickForward()
         {
-            if (!IsActive || !CanKick()) { return; }
+            if (!isActive || kickCount <= 0) { return; }
 
-            TrackKickUsage();
-            entityBody.AddForce(GetAppliedKickForce());
+            kickCount--;
+            owner.goBody.AddForce(GetAppliedKickForce());
 
             if (isInitialKick) { isInitialKick = false; }
         }
 
-        #endregion
 
-        #region METHODS
-
-        private bool CanKick()
-        {
-            return kicksAvailable > 0;
-        }
-
-        private void TrackKickUsage()
-        {
-            kicksAvailable--;
-        }
-        
         // Calculates the Force that will be applied to the Kick
         private Vector3 GetAppliedKickForce()
         {
@@ -94,8 +74,6 @@ namespace Assets.Source.Behaviours.Jester
                 : Kernel.PlayerProfileService.KickForce;
             
             return forceDirection * currentForceMagnitude;
-        }
-        
-        #endregion
+        }       
     }
 }

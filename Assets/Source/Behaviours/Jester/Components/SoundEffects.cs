@@ -3,11 +3,12 @@ using Assets.Source.Config;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class JesterSounds
+    public class SoundEffects : AbstractJesterComponent
     {
         private readonly JesterSoundEffectsConfig config;
 
-        public JesterSounds(Jester owner, JesterSoundEffectsConfig config)
+        public SoundEffects(Jester owner, JesterSoundEffectsConfig config)
+            : base(owner, false)
         {
             this.config = config;
 
