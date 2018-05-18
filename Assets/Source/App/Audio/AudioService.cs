@@ -16,7 +16,7 @@ namespace Assets.Source.App.Audio
 
         public AudioService()
         {
-            audioSourceFactory = new AudioSourceFactory();
+            audioSourceFactory = new AudioSourceFactory();            
 
             float BGMVolume = Kernel.UserSettingsService.MuteBGM ? 0 : DEFAULT_BGM_VOLUME;
             BGMChannel = new AudioChannel(audioSourceFactory, DEFAULT_BGM_VOLUME, BGMVolume, true);
