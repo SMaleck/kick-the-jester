@@ -10,7 +10,7 @@ namespace Assets.Source.Items
 
         protected override void Execute(Jester jester)
         {
-            App.Cache.currencyManager.AddPickup(CurrencyAmount);
+            App.Cache.CurrencyRecorder.AddPickup(CurrencyAmount);
         }
     }
 }

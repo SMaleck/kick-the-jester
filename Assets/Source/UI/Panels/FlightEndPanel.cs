@@ -26,24 +26,27 @@ namespace Assets.Source.UI.Panels
                                       .Subscribe(_ => OnFlightEnd())
                                       .AddTo(this);
 
-            retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
-            shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked());
+            retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked()).AddTo(this);
+            shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked()).AddTo(this);
 
-            App.Cache.jester.CollectedCurrencyProperty
-                            .Subscribe(x => { currencyCollected.text = x.ToString() + "G"; })
-                            .AddTo(this);
-            
-            Kernel.PlayerProfileService.bestDistanceProperty                                       
-                                       .Subscribe(x => { bestDistance.text = x.ToString() + "m"; })
-                                       .AddTo(this);
-            
+            App.Cache.jester.DistanceProperty
+                            .TakeUntilDestroy(this)
+                            .Subscribe(x => { distance.text = x.ToMeters() + "m"; });
+
+            Kernel.PlayerProfileService.bestDistanceProperty
+                                       .TakeUntilDestroy(this)
+                                       .Subscribe(x => { bestDistance.text = x.ToString() + "m"; });
+            Kernel.PlayerProfileService.currencyProperty
+                                       .TakeUntilDestroy(this)
+                                       .Subscribe(x => { currency.text = x + "G"; });
+
+            App.Cache.CurrencyRecorder.CurrencyCollectedProperty
+                                      .TakeUntilDestroy(this)
+                                      .Subscribe(x => { currencyCollected.text = x + "G"; });
         }
 
         private void OnFlightEnd()
         {
-            distance.text = App.Cache.jester.Distance.ToMeters().ToString() + "m";
-            currency.text = Kernel.PlayerProfileService.Currency.ToString() + "G";
-
             gameObject.SetActive(true);
         }
 
