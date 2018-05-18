@@ -590,7 +590,7 @@ MonoBehaviour:
   PauseButton: {fileID: 114013886657874434}
   DistanceText: {fileID: 114183805179765290}
   HeightText: {fileID: 114934816558391102}
-  CollectedCurrencyText: {fileID: 114592784405140606}
+  BestDistanceText: {fileID: 114592784405140606}
 --- !u!114 &114934816558391102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -845,8 +845,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 60, y: 0}
-  m_SizeDelta: {x: -60, y: 0}
+  m_AnchoredPosition: {x: 65, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224463480998078990
 RectTransform:
@@ -917,8 +917,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 60, y: 0}
-  m_SizeDelta: {x: -60, y: 0}
+  m_AnchoredPosition: {x: 65, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224747089331002294
 RectTransform:
@@ -995,6 +995,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 60, y: 0}
-  m_SizeDelta: {x: -60, y: 0}
+  m_AnchoredPosition: {x: 65, y: 0}
+  m_SizeDelta: {x: -65, y: 0}
   m_Pivot: {x: 0, y: 0.5}

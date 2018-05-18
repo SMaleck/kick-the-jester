@@ -11,15 +11,14 @@ namespace Assets.Source.UI.Panels
 
         [SerializeField] Text DistanceText;
         [SerializeField] Text HeightText;
-        [SerializeField] Text CollectedCurrencyText;
+        [SerializeField] Text BestDistanceText;
 
         private void Start()
         {
             PauseButton.OnClickAsObservable()
                        .Subscribe(_ => App.Cache.userControl.TooglePause())
                        .AddTo(this);
-
-            // Flight Stats
+            
             App.Cache.jester.DistanceProperty
                             .SubscribeToText(DistanceText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
@@ -28,10 +27,9 @@ namespace Assets.Source.UI.Panels
                             .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
-            // Currency
-            App.Cache.CurrencyRecorder.CurrencyCollectedProperty
-                            .SubscribeToText(CollectedCurrencyText, e => string.Format("{0}G", e))                            
-                            .AddTo(this);
+            Kernel.PlayerProfileService.bestDistanceProperty
+                                       .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e))
+                                       .AddTo(this);
         }
     }
 }
