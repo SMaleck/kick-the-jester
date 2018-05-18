@@ -24,7 +24,7 @@ namespace Assets.Source.UI
             kickCountUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickCountUpgrade());
             statResetButton.OnClickAsObservable().Subscribe(_ => OnStatReset());
 
-            Kernel.PlayerProfileService.currencyProperty.Subscribe((int value) => { OnCurrencyChanged(value); });
+            Kernel.PlayerProfileService.currencyProperty.Subscribe((int value) => { OnCurrencyChanged(value); }).AddTo(this);
         }
 
 
