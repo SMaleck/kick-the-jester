@@ -35,29 +35,9 @@ namespace Assets.Source.Behaviours.Jester
             get { return VelocityProperty.Value; }
             set { VelocityProperty.Value = value; }
         }
-<<<<<<< HEAD
-
-        public IntReactiveProperty CollectedCurrencyProperty = new IntReactiveProperty(0);
-        public int CollectedCurrency
-        {
-            get { return CollectedCurrencyProperty.Value; }
-            set { CollectedCurrencyProperty.Value = value; }
-        }
-
-        public IntReactiveProperty EarnedCurrencyProperty = new IntReactiveProperty(0);
-        public int EarnedCurrency
-        {
-            get { return EarnedCurrencyProperty.Value; }
-            set { EarnedCurrencyProperty.Value = value; }
-        }
 
         public FloatReactiveProperty RelativeKickForceProperty = new FloatReactiveProperty(0f);
         public float RelativeKickForce
-=======
-        
-        public IntReactiveProperty RelativeKickForceProperty = new IntReactiveProperty(0);
-        public int RelativeKickForce
->>>>>>> cd60d76b4c539867612ad4908d6424cf33864655
         {
             get { return RelativeKickForceProperty.Value; }
             set { RelativeKickForceProperty.Value = value; }
