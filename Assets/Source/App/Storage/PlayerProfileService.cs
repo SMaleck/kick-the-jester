@@ -101,6 +101,7 @@ namespace Assets.Source.App.Storage
 
         #endregion
         
+
         public void ResetStats()
         {
             KickCount = PlayerProfile.BASE_KICK_COUNT;

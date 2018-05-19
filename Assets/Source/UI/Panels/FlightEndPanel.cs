@@ -36,7 +36,7 @@ namespace Assets.Source.UI.Panels
                             .AddTo(this);
 
             Kernel.PlayerProfileService.bestDistanceProperty
-                                       .Subscribe(x => { bestDistance.text = x.ToString() + "m"; })
+                                       .SubscribeToText(bestDistance, e => string.Format("{0}m", e.ToMeters()))
                                        .AddTo(this);
 
             initialCurrencyAmount = Kernel.PlayerProfileService.Currency;

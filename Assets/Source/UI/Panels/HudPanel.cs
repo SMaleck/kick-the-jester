@@ -28,7 +28,7 @@ namespace Assets.Source.UI.Panels
                             .AddTo(this);
 
             Kernel.PlayerProfileService.bestDistanceProperty
-                                       .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e))
+                                       .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
                                        .AddTo(this);
         }
     }

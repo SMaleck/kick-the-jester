@@ -14,6 +14,11 @@ namespace Assets.Source.App
             return (int)(value * Constants.UNIT_TO_METERS_FACTOR);
         }
 
+        public static int ToMeters(this int value)
+        {
+            return (int)(value * Constants.UNIT_TO_METERS_FACTOR);
+        }
+
         /// <summary>
         /// Returns the representation of this float in percentage relative to the max value given.
         /// </summary>

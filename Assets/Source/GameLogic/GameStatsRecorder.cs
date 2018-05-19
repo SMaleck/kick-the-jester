@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using System;
 using UniRx;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Assets.Source.GameLogic
 {
     public class GameStatsRecorder : MonoBehaviour
     {
-        private int currentDistance = 0;
+        private float currentDistance = 0;
 
         // Use this for initialization
         void Start()
@@ -23,14 +24,14 @@ namespace Assets.Source.GameLogic
 
         private void RecordDistance(float distance)
         {
-            currentDistance = distance.ToMeters();
+            currentDistance = distance;
         }
 
         private void OnGameStateChange(GameState state)
         {
             if (state == GameState.End && currentDistance > Kernel.PlayerProfileService.BestDistance)
             {
-                Kernel.PlayerProfileService.BestDistance = currentDistance;
+                Kernel.PlayerProfileService.BestDistance = (int)Math.Round(currentDistance);
             }
         }
     }
