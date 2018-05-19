@@ -10,6 +10,13 @@ namespace Assets.Source.App.Storage
         PlayerProfile lastSavedProfileData;
         private FileDataStorage<PlayerProfile> storage;
 
+        public FloatReactiveProperty maxVelocityProperty = new FloatReactiveProperty(PlayerProfile.BASE_MAX_VELOCITY);
+        public float MaxVelocity
+        {
+            get { return maxVelocityProperty.Value; }
+            set { maxVelocityProperty.Value = value; }
+        }
+
         public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(PlayerProfile.BASE_KICK_FORCE);
         public float KickForce
         {
@@ -43,6 +50,7 @@ namespace Assets.Source.App.Storage
 
         #region INITIALIZATION
 
+        // CONSTRUCTOR --------------------------------------------------------
         public PlayerProfileService(FileDataStorage<PlayerProfile> dataStorage)
             : base()
         {
@@ -56,6 +64,32 @@ namespace Assets.Source.App.Storage
         }
 
 
+        private void LoadProfile()
+        {
+            // Load any persisted data
+            lastSavedProfileData = storage.Load();
+
+            MaxVelocity = lastSavedProfileData.MaxVelocity;
+            KickCount = lastSavedProfileData.KickCount;
+            KickForce = lastSavedProfileData.KickForce;
+            BestDistance = lastSavedProfileData.BestDistance;
+            Currency = lastSavedProfileData.Currency;
+        }
+
+        /// <summary>
+        /// Ensures that data is saved to disk as required
+        /// </summary>
+        private void EnsureProfileDataPersistence()
+        {            
+            maxVelocityProperty.Subscribe(_ => Save());
+            kickCountProperty.Subscribe(_ => Save());
+            kickForceProperty.Subscribe(_ => Save());
+            bestDistanceProperty.Subscribe(_ => Save());
+            currencyProperty.Subscribe(_ => Save());
+        }
+
+        #endregion
+
         /// <summary>
         /// Persists current profile data to disk.
         /// See <see cref="PlayerProfile"/>
@@ -65,42 +99,17 @@ namespace Assets.Source.App.Storage
         /// </summary>
         public override void Save()
         {
-            if (!MustSave) return;
+            if (!MustSave) { return; }
 
-            lastSavedProfileData.BestDistance = BestDistance;
+            lastSavedProfileData.MaxVelocity = MaxVelocity;
             lastSavedProfileData.KickCount = KickCount;
             lastSavedProfileData.KickForce = KickForce;
+            lastSavedProfileData.BestDistance = BestDistance;
             lastSavedProfileData.Currency = Currency;
 
             storage.Save(lastSavedProfileData);
         }
 
-
-        private void LoadProfile()
-        {
-            // Load any persisted data
-            lastSavedProfileData = storage.Load();
-
-            BestDistance = lastSavedProfileData.BestDistance;
-            KickCount = lastSavedProfileData.KickCount;
-            KickForce = lastSavedProfileData.KickForce;
-            Currency = lastSavedProfileData.Currency;
-        }
-
-        /// <summary>
-        /// Ensures that data is saved to disk as required
-        /// </summary>
-        private void EnsureProfileDataPersistence()
-        {
-            // Property changes
-            bestDistanceProperty.Subscribe(__ => { Save(); });
-            currencyProperty.Subscribe(__ => { Save(); });
-            kickCountProperty.Subscribe(__ => { Save(); });
-            kickForceProperty.Subscribe(__ => { Save(); });
-        }
-
-        #endregion
-        
 
         public void ResetStats()
         {
@@ -114,10 +123,11 @@ namespace Assets.Source.App.Storage
         {
             get
             {
-                return BestDistance != lastSavedProfileData.BestDistance
-                        || KickCount != lastSavedProfileData.KickCount
-                        || KickForce != lastSavedProfileData.KickForce
-                        || Currency != lastSavedProfileData.Currency;
+                return MaxVelocity != lastSavedProfileData.MaxVelocity
+                    || KickCount != lastSavedProfileData.KickCount
+                    || KickForce != lastSavedProfileData.KickForce
+                    || BestDistance != lastSavedProfileData.BestDistance
+                    || Currency != lastSavedProfileData.Currency;
             }
         }
     }

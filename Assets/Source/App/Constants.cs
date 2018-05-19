@@ -22,9 +22,5 @@
         public const string TAG_OBSTACLE = "Obstacle";
         public const string TAG_BOOST = "Boost";
         public const string TAG_PICKUP = "Pickup";
-
-
-        /* -------------------- Jester Configuration */
-        public const float MAX_SPEED = 5f;
     }
 }
