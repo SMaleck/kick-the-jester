@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114382005532873760}
   - component: {fileID: 114383517775631022}
   m_Layer: 5
-  m_Name: LoadingCanvas
+  m_Name: PF_Canvas_Loading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,7 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
-using Assets.Source.GameLogic;
 using UniRx;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Assets.Source.Behaviours.Jester
     public class Jester : AbstractBodyBehaviour
     {
         /* -------------------------------------------------------------------------------------- */
-        #region REACTIVE COMMANDS / PROPERTIES
+        #region REACTIVE PROPERTIES
 
         public BoolReactiveProperty IsStartedProperty = new BoolReactiveProperty(false);        
         public BoolReactiveProperty IsLandedProperty = new BoolReactiveProperty(false);        
@@ -83,15 +82,15 @@ namespace Assets.Source.Behaviours.Jester
             kickForce = new KickForce(this, Kernel.PlayerProfileService.KickCount);
 
             // Listen to Pause State
-            App.Cache.GameStateMachine.StateProperty                                      
-                                      .Subscribe(OnPauseStateChanged)
-                                      .AddTo(this);
+            Kernel.AppState.IsPausedProperty
+                           .Subscribe(OnPauseStateChanged)
+                           .AddTo(this);
         }
 
         
-        private void OnPauseStateChanged(GameState state)
+        private void OnPauseStateChanged(bool IsPaused)
         {
-            goBody.simulated = !state.Equals(GameState.Paused);
+            goBody.simulated = !IsPaused;
         }
     }
 }

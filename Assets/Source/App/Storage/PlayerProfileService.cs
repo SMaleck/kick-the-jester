@@ -1,5 +1,4 @@
-﻿using Assets.Source.Models;
-using System;
+﻿using System;
 using UniRx;
 
 namespace Assets.Source.App.Storage
@@ -15,62 +14,32 @@ namespace Assets.Source.App.Storage
         public float KickForce
         {
             get { return kickForceProperty.Value; }
-            set
-            {
-                kickForceProperty.Value = value;
-            }
+            set { kickForceProperty.Value = value; }
         }
 
         public IntReactiveProperty kickCountProperty = new IntReactiveProperty(PlayerProfile.BASE_KICK_COUNT);
         public int KickCount
         {
             get { return kickCountProperty.Value; }
-            set
-            {
-                kickCountProperty.Value = value;
-            }
+            set { kickCountProperty.Value = value; }
         }
 
         public IntReactiveProperty bestDistanceProperty = new IntReactiveProperty(0);
         public int BestDistance
         {
             get { return bestDistanceProperty.Value; }
-            set
-            {
-                bestDistanceProperty.Value = value;
-            }
+            set { bestDistanceProperty.Value = value; }
         }
-
 
         public IntReactiveProperty currencyProperty = new IntReactiveProperty(0);
         public int Currency
         {
             get { return currencyProperty.Value; }
-            set
-            {
-                currencyProperty.Value = value;                
-            }
+            set { currencyProperty.Value = value; }
         }
 
         #endregion
 
-        #region EVENTS
-
-        private bool isLoaded = false;
-        public bool IsLoaded
-        {
-            get { return isLoaded; }
-            private set { isLoaded = value; }
-        }
-
-        private event NotifyEventHandler _OnLoaded = delegate { };
-        public void OnLoaded(NotifyEventHandler handler)
-        {
-            _OnLoaded += handler;
-            if (isLoaded) { handler(); }
-        }
-
-        #endregion
 
         #region INITIALIZATION
 
@@ -116,9 +85,6 @@ namespace Assets.Source.App.Storage
             KickCount = lastSavedProfileData.KickCount;
             KickForce = lastSavedProfileData.KickForce;
             Currency = lastSavedProfileData.Currency;
-
-            isLoaded = true;
-            _OnLoaded();
         }
 
         /// <summary>

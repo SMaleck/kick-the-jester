@@ -1,5 +1,4 @@
 ﻿using Assets.Source.App;
-using Assets.Source.GameLogic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,9 +15,10 @@ namespace Assets.Source.UI.Panels
 
         private void Awake()
         {
-            App.Cache.GameStateMachine.StateProperty                                      
-                                      .Subscribe(TooglePanel)
-                                      .AddTo(this);
+            // Toggle this panel on/off depending on pause state
+            Kernel.AppState.IsPausedProperty
+                           .Subscribe((bool isPaused) => { gameObject.SetActive(isPaused); })
+                           .AddTo(this);
 
             resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
@@ -28,12 +28,6 @@ namespace Assets.Source.UI.Panels
 
             BGMMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnBGMMuteClicked());
             SFXMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnSFXMuteClicked());                       
-        }
-
-
-        private void TooglePanel(GameState state)
-        {
-            gameObject.SetActive(state == GameState.Paused);
         }
 
 

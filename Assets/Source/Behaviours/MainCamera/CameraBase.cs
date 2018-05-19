@@ -1,4 +1,7 @@
-﻿using Assets.Source.Models;
+﻿using Assets.Source.App;
+using Assets.Source.Behaviours.MainCamera.Components;
+using Assets.Source.Models;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.MainCamera
@@ -7,8 +10,11 @@ namespace Assets.Source.Behaviours.MainCamera
     {        
         public Camera UCamera { get; protected set; }
 
-        [SerializeField] protected GameObject prefabLoadingScreen;
-        protected ScreenFader loadingScreen;
+        [SerializeField] protected GameObject pfSkyFade;
+        [SerializeField] protected SpriteRenderer screenFaderSprite;
+
+        protected ScreenFader screenFader;
+        protected FollowTarget followTarget;
 
 
         protected float _cameraWidth;
@@ -44,28 +50,51 @@ namespace Assets.Source.Behaviours.MainCamera
         {
             UCamera = GetComponent<Camera>();
 
-            // Setup Loading Screen
-            var goLoadingScreen = GameObject.Instantiate(prefabLoadingScreen);
-            goLoadingScreen.transform.SetParent(this.transform);
-            loadingScreen = goLoadingScreen.GetComponent<ScreenFader>();            
+            if (!Kernel.Ready.Value)
+            {
+                Kernel.Ready.Where(e => e).Subscribe(_ => SetupFader()).AddTo(this);
+            }
+            else
+            {
+                SetupFader();
+            }            
+        }
+
+        private void SetupFader()
+        {
+            screenFader = new ScreenFader(this, screenFaderSprite);
+            FadeIn(null);
         }
 
 
-        protected virtual void Start()
+        private void Start()
         {
-            FadeIn(null);
+            // Setup following component, if jester is present in the scene
+            try
+            {
+                if (App.Cache.jester != null)
+                {
+                    followTarget = new FollowTarget(this, App.Cache.jester.goTransform);
+
+
+                    // Setup Sky Gradient
+                    var goSkyFade = GameObject.Instantiate(pfSkyFade);
+                    goSkyFade.transform.SetParent(this.transform);
+                }
+            }
+            catch { }
         }
 
 
         public void FadeIn(NotifyEventHandler callback)
         {
-            loadingScreen.FadeIn(callback);
+            screenFader.FadeIn(callback);
         }
 
 
         public void FadeOut(NotifyEventHandler callback)
         {
-            loadingScreen.FadeOut(callback);
+            screenFader.FadeOut(callback);
         }
     }
 }

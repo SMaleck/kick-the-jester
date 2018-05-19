@@ -25,25 +25,17 @@ namespace Assets.Source.App
             }
         }
 
-        private static GameObject _Repositories;
-        private static GameObject Repositories
-        {
-            get
-            {
-                if (_Repositories == null)
-                {
-                    _Repositories = GameObject.Find(Constants.GO_REPOSITORIES);
-                }
-
-                return _Repositories;
-            }
-        }
-
         #endregion
 
 
         /* -------------------------------------------------------------------- */
         #region COMPONENTS
+
+        public static ICamera MainCamera
+        {
+            get { return Camera.main.GetComponent<ICamera>(); }
+        }
+
 
         private static GameStateMachine gameStateMachine;
         public static GameStateMachine GameStateMachine
@@ -102,11 +94,6 @@ namespace Assets.Source.App
         }
 
         #endregion
-        
-        public static ICamera MainCamera
-        {
-            get { return Camera.main.GetComponent<ICamera>(); }
-        }
 
         
         /* ------------------------------------------------------------------------------------ */

@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Assets.Source.App;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.GameLogic
@@ -44,11 +45,15 @@ namespace Assets.Source.GameLogic
 
             App.Cache.userControl.OnKick(ToFlight);
 
-            App.Cache.userControl.OnTogglePause(() => { TogglePause(); });            
+            App.Cache.userControl.OnTogglePause(() => { TogglePause(); });
+
+
+            // Set global paused state
+            Kernel.AppState.IsPausedProperty.Value = State.Equals(GameState.Paused);
         }
 
 
-        public bool TogglePause()
+        public void TogglePause()
         {           
             if (State != GameState.Paused)
             {
@@ -60,7 +65,7 @@ namespace Assets.Source.GameLogic
                 State = previousState;
             }
 
-            return State == GameState.Paused;
+            Kernel.AppState.IsPausedProperty.Value = State.Equals(GameState.Paused);
         }
 
 

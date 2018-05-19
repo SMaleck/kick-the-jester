@@ -27,8 +27,11 @@ namespace Assets.Source.GameLogic
         }
 
 
-        void Start()
+        private void Start()
         {
+            // Attach this to the camer, so th raycast works correctly
+            this.transform.SetParent(App.Cache.MainCamera.UCamera.transform);
+
             App.Cache.GameStateMachine.StateProperty
                                       .Subscribe(OnGameStateChanged)
                                       .AddTo(this);

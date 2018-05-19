@@ -1,9 +1,9 @@
 ﻿using Assets.Source.Models;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours.MainCamera
+namespace Assets.Source.Behaviours.MainCamera.Components
 {
-    public class ScreenFader : AbstractBehaviour
+    public class ScreenFader : AbstractComponent<CameraBase>
     {
         private bool isFading = false;
         private int direction = 1;
@@ -16,16 +16,17 @@ namespace Assets.Source.Behaviours.MainCamera
         private event NotifyEventHandler _OnFadeOutComplete = delegate { };
 
 
-        private void Awake()
+        public ScreenFader(CameraBase owner, SpriteRenderer sprite)
+            : base(owner)
         {
             // Ensure the Sprite is at full ALPHA
-            sprite = GetComponent<SpriteRenderer>();
+            this.sprite = sprite;
             sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
         }
 
 
-        private void Update()
-        {            
+        protected override void Update()
+        {
             if (isFading)
             {
                 float nextAlpha = sprite.color.a + ((fadeSpeed * direction) * Time.deltaTime);
@@ -45,7 +46,7 @@ namespace Assets.Source.Behaviours.MainCamera
             direction = -1;
             isFading = true;
 
-            if(callback != null)
+            if (callback != null)
             {
                 _OnFadeInComplete += callback;
             }

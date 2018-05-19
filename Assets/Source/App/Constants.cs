@@ -1,14 +1,10 @@
 ﻿namespace Assets.Source.App
 {
     public static class Constants
-    {
-        public const string GO_SERVICES = "_Services";
+    {        
         public const string GO_GAME_LOGIC = "_GameLogic";
-        public const string GO_REPOSITORIES = "_Repositories";
-        public const string GO_PLAYER_PROFILE = "_PlayerProfile";
         public const string GO_USER_CONTROL = "UserControl";        
-        public const string GO_JESTER = "Jester";
-        public const string UI_CANVAS = "UICanvas";
+        public const string GO_JESTER = "Jester";        
 
         // SCENES
         public const string SCENE_GAME = "Game";

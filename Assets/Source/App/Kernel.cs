@@ -11,9 +11,9 @@ namespace Assets.Source.App
     /// </summary>
     public class Kernel : MonoBehaviour
     {
-        public static BoolReactiveProperty Ready = new BoolReactiveProperty(false);
+        public static BoolReactiveProperty Ready = new BoolReactiveProperty(false);        
 
-
+        public static AppState AppState { get; private set; }
         public static SceneTransitionService SceneTransitionService { get; private set; }
         public static AudioService AudioService { get; private set; }
         public static PlayerProfileService PlayerProfileService { get; private set; }
@@ -28,6 +28,7 @@ namespace Assets.Source.App
 
             // Initialisation order is important due to inter-dependencies
             // TODO: Resolve implicit interdependency
+            AppState = new AppState();
             SceneTransitionService = new SceneTransitionService();
             PlayerProfileService = new PlayerProfileService(new FileDataStorage<PlayerProfile>("profile.save"));
             UserSettingsService = new UserSettingsService();

@@ -66,11 +66,6 @@ namespace Assets.Source.UI
         /// <returns></returns>
         public bool TryDeduct(int amount)
         {
-            if (!Kernel.PlayerProfileService.IsLoaded)
-            {
-                return false;
-            }
-
             // Check if player has enough money
             if (Kernel.PlayerProfileService.Currency >= amount)
             {
