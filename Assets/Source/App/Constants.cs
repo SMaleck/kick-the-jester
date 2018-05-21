@@ -9,12 +9,13 @@
         // SCENES
         public const string SCENE_GAME = "Game";
         public const string SCENE_SHOP = "Shop";
-
-
-        // ToDo: Figure out actual factor
+        
         public const int FLOAT_PRECISION_DIGITS = 4;
         public const int FLOAT_PRECISION_FACTOR = 100;
-        public const float UNIT_TO_METERS_FACTOR = 5f;
+
+        // The Jester is 3x3 units big
+        // We assume here that the jester is around 1,5m high
+        public const float UNIT_TO_METERS_FACTOR = 2f;
 
 
         /* -------------------- ITEM TAGS */

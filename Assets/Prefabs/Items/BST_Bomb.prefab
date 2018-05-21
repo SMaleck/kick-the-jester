@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61526106488938970}
   - component: {fileID: 114971431162011130}
   m_Layer: 11
-  m_Name: BST_BoomSpikes
+  m_Name: BST_Bomb
   m_TagString: Boost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +37,7 @@ Transform:
   m_GameObject: {fileID: 1176274882300718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: -3.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,14 +58,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.62}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1.5, y: 1.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.62}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &114971431162011130
 MonoBehaviour:
@@ -116,8 +116,8 @@ SpriteRenderer:
   m_SortingLayerID: -922635221
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2064c59324869c3428efefb102f14539, type: 3}
-  m_Color: {r: 0.17387542, g: 0.9852941, b: 0.21304743, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c634b07bd4f5ab848b6a0a776a2d7815, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -584,6 +584,16 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 736072196}
+    - target: {fileID: 223171171930499756, guid: c6c54e3085e0de74eb98e32e8d1ed09c,
+        type: 2}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 223171171930499756, guid: c6c54e3085e0de74eb98e32e8d1ed09c,
+        type: 2}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6c54e3085e0de74eb98e32e8d1ed09c, type: 2}
   m_IsPrefabParent: 0
@@ -904,6 +914,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 212308774653784350, guid: 9bdb73a2b53c9a748bae2f95733b3c45,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: baede9b85c3f9214188230b426417af0,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9bdb73a2b53c9a748bae2f95733b3c45, type: 2}
   m_IsPrefabParent: 0

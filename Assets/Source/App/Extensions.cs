@@ -11,12 +11,12 @@ namespace Assets.Source.App
         /// <returns>The amount of meters after conversion</returns>
         public static int ToMeters(this float value)
         {
-            return (int)(value * Constants.UNIT_TO_METERS_FACTOR);
+            return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
         }
 
         public static int ToMeters(this int value)
         {
-            return (int)(value * Constants.UNIT_TO_METERS_FACTOR);
+            return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
         }
 
         /// <summary>

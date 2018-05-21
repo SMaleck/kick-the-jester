@@ -29,7 +29,7 @@ namespace Assets.Source.GameLogic
 
         private void Start()
         {
-            // Attach this to the camer, so th raycast works correctly
+            // Attach this to the camera, so the raycast works correctly
             this.transform.SetParent(App.Cache.MainCamera.UCamera.transform);
 
             App.Cache.GameStateMachine.StateProperty

@@ -1,6 +1,5 @@
 ﻿using UniRx;
 using UnityEngine;
-using Assets.Source.App;
 
 namespace Assets.Source.Behaviours
 {
@@ -53,7 +52,7 @@ namespace Assets.Source.Behaviours
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distance)
         {
-            if (CanSpawn && ShouldSpawn(distance.ToMeters()))
+            if (CanSpawn && ShouldSpawn((int)distance))
             {
                 SpawnRandomItem();
             }
