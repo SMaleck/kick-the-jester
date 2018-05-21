@@ -13,6 +13,9 @@ namespace Assets.Source.UI
 
         [SerializeField] private Button kickForceUpgradeButton;
         [SerializeField] private Button kickCountUpgradeButton;
+        [SerializeField] private Button shootForceUpButton;
+        [SerializeField] private Button shootCountUpButton;
+
         [SerializeField] private Button statResetButton;
 
 
@@ -20,35 +23,48 @@ namespace Assets.Source.UI
         {
             backButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
 
-            kickForceUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickForceUpgrade());
-            kickCountUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickCountUpgrade());
-            statResetButton.OnClickAsObservable().Subscribe(_ => OnStatReset());
+            Kernel.PlayerProfileService.RP_Currency
+                                       .SubscribeToText(txtMoney, e => e.ToString())
+                                       .AddTo(this);
 
-            Kernel.PlayerProfileService.currencyProperty.Subscribe((int value) => { OnCurrencyChanged(value); }).AddTo(this);
+            kickForceUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickForceUp());
+            kickCountUpgradeButton.OnClickAsObservable().Subscribe(_ => OnShootCountUp());
+
+            statResetButton.OnClickAsObservable().Subscribe(_ => OnStatReset());            
         }
 
 
-        private void OnCurrencyChanged(int value)
-        {
-            txtMoney.text = value + "G";
-        }
+        /* UPGRADE BUTTONS */
 
-
-        public void OnKickForceUpgrade()
+        public void OnMaxVelocityUp()
         {
             if (TryDeduct(200))
             {
-                Kernel.PlayerProfileService.KickForce += 200f;
+                Kernel.UpgradeService.MaxVelocityUp();
             }
         }
 
+        public void OnKickForceUp()
+        {
+            if (TryDeduct(200))
+            {
+                Kernel.UpgradeService.KickForceUp();
+            }
+        }
 
-        public void OnKickCountUpgrade()
+        public void OnShootForceUp()
         {
             if (TryDeduct(500))
             {
-                int kickCount = Kernel.PlayerProfileService.KickCount;
-                Kernel.PlayerProfileService.KickCount = kickCount + 2;
+                Kernel.UpgradeService.ShootForceUp();
+            }
+        }
+
+        public void OnShootCountUp()
+        {
+            if (TryDeduct(500))
+            {
+                Kernel.UpgradeService.ShootCountUp();
             }
         }
 

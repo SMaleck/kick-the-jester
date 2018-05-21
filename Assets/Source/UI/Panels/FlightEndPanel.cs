@@ -35,7 +35,7 @@ namespace Assets.Source.UI.Panels
                             .Subscribe(x => { distance.text = x.ToMeters() + "m"; })
                             .AddTo(this);
 
-            Kernel.PlayerProfileService.bestDistanceProperty
+            Kernel.PlayerProfileService.RP_BestDistance
                                        .SubscribeToText(bestDistance, e => string.Format("{0}m", e.ToMeters()))
                                        .AddTo(this);
 

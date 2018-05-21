@@ -1,48 +1,61 @@
-﻿using System;
+﻿using Assets.Source.App.Upgrades;
+using System;
 using UniRx;
 
 namespace Assets.Source.App.Storage
 {
     public class PlayerProfileService : AbstractPersistentDataService
     {
-        #region PROPERTIES
+        private readonly FileDataStorage<PlayerProfile> storage;
+        private PlayerProfile lastSavedProfileData;
+        
 
-        PlayerProfile lastSavedProfileData;
-        private FileDataStorage<PlayerProfile> storage;
+        /* -------------------------------------------------------------------------- */
+        #region PROFILE DATA
 
-        public FloatReactiveProperty maxVelocityProperty = new FloatReactiveProperty(PlayerProfile.BASE_MAX_VELOCITY);
+        /* UPGRADEABLE PROPERTIES */
+        public IntReactiveProperty RP_MaxVelocityLevel = new IntReactiveProperty(0);
+        public IntReactiveProperty RP_KickForceLevel = new IntReactiveProperty(0);
+        public IntReactiveProperty RP_ShootForceLevel = new IntReactiveProperty(0);
+        public IntReactiveProperty RP_ShootCountLevel = new IntReactiveProperty(0);
+
+        
+        /* DERIVED VALUES */
+
         public float MaxVelocity
         {
-            get { return maxVelocityProperty.Value; }
-            set { maxVelocityProperty.Value = value; }
+            get { return UpgradeTree.MaxVelocity[RP_MaxVelocityLevel.Value]; }
         }
 
-        public FloatReactiveProperty kickForceProperty = new FloatReactiveProperty(PlayerProfile.BASE_KICK_FORCE);
         public float KickForce
         {
-            get { return kickForceProperty.Value; }
-            set { kickForceProperty.Value = value; }
+            get { return UpgradeTree.KickForce[RP_KickForceLevel.Value]; }
         }
 
-        public IntReactiveProperty kickCountProperty = new IntReactiveProperty(PlayerProfile.BASE_KICK_COUNT);
-        public int KickCount
+        public float ShootForce
         {
-            get { return kickCountProperty.Value; }
-            set { kickCountProperty.Value = value; }
+            get { return UpgradeTree.ShootForce[RP_ShootForceLevel.Value]; }
         }
 
-        public IntReactiveProperty bestDistanceProperty = new IntReactiveProperty(0);
+        public int ShootCount
+        {
+            get { return UpgradeTree.ShootCount[RP_ShootCountLevel.Value]; }
+        }
+
+
+        /* RECORDED DATA */
+        public IntReactiveProperty RP_BestDistance = new IntReactiveProperty(0);
         public int BestDistance
         {
-            get { return bestDistanceProperty.Value; }
-            set { bestDistanceProperty.Value = value; }
+            get { return RP_BestDistance.Value; }
+            set { RP_BestDistance.Value = value; }
         }
 
-        public IntReactiveProperty currencyProperty = new IntReactiveProperty(0);
+        public IntReactiveProperty RP_Currency = new IntReactiveProperty(0);
         public int Currency
         {
-            get { return currencyProperty.Value; }
-            set { currencyProperty.Value = value; }
+            get { return RP_Currency.Value; }
+            set { RP_Currency.Value = value; }
         }
 
         #endregion
@@ -53,8 +66,7 @@ namespace Assets.Source.App.Storage
         // CONSTRUCTOR --------------------------------------------------------
         public PlayerProfileService(FileDataStorage<PlayerProfile> dataStorage)
             : base()
-        {
-            if (dataStorage == null) { throw new System.ArgumentNullException("dataStorage"); }
+        {            
             this.storage = dataStorage;
 
             LoadProfile();
@@ -69,9 +81,11 @@ namespace Assets.Source.App.Storage
             // Load any persisted data
             lastSavedProfileData = storage.Load();
 
-            MaxVelocity = lastSavedProfileData.MaxVelocity;
-            KickCount = lastSavedProfileData.KickCount;
-            KickForce = lastSavedProfileData.KickForce;
+            RP_MaxVelocityLevel.Value = lastSavedProfileData.MaxVelocityLevel;
+            RP_KickForceLevel.Value = lastSavedProfileData.KickForceLevel;
+            RP_ShootForceLevel.Value = lastSavedProfileData.ShootForceLevel;
+            RP_ShootCountLevel.Value = lastSavedProfileData.ShootCountLevel;    
+            
             BestDistance = lastSavedProfileData.BestDistance;
             Currency = lastSavedProfileData.Currency;
         }
@@ -81,11 +95,13 @@ namespace Assets.Source.App.Storage
         /// </summary>
         private void EnsureProfileDataPersistence()
         {            
-            maxVelocityProperty.Subscribe(_ => Save());
-            kickCountProperty.Subscribe(_ => Save());
-            kickForceProperty.Subscribe(_ => Save());
-            bestDistanceProperty.Subscribe(_ => Save());
-            currencyProperty.Subscribe(_ => Save());
+            RP_MaxVelocityLevel.Subscribe(_ => Save());
+            RP_KickForceLevel.Subscribe(_ => Save());
+            RP_ShootForceLevel.Subscribe(_ => Save());
+            RP_ShootCountLevel.Subscribe(_ => Save());
+            
+            RP_BestDistance.Subscribe(_ => Save());
+            RP_Currency.Subscribe(_ => Save());
         }
 
         #endregion
@@ -101,9 +117,11 @@ namespace Assets.Source.App.Storage
         {
             if (!MustSave) { return; }
 
-            lastSavedProfileData.MaxVelocity = MaxVelocity;
-            lastSavedProfileData.KickCount = KickCount;
-            lastSavedProfileData.KickForce = KickForce;
+            lastSavedProfileData.MaxVelocityLevel = RP_MaxVelocityLevel.Value;
+            lastSavedProfileData.KickForceLevel = RP_KickForceLevel.Value;
+            lastSavedProfileData.ShootForceLevel = RP_ShootForceLevel.Value;
+            lastSavedProfileData.ShootCountLevel = RP_ShootCountLevel.Value;            
+
             lastSavedProfileData.BestDistance = BestDistance;
             lastSavedProfileData.Currency = Currency;
 
@@ -113,8 +131,11 @@ namespace Assets.Source.App.Storage
 
         public void ResetStats()
         {
-            KickCount = PlayerProfile.BASE_KICK_COUNT;
-            KickForce = PlayerProfile.BASE_KICK_FORCE;
+            RP_MaxVelocityLevel.Value = 0;
+            RP_KickForceLevel.Value = 0;
+            RP_ShootForceLevel.Value = 0;
+            RP_ShootCountLevel.Value = 0;
+
             BestDistance = 0;
         }
         
@@ -123,9 +144,10 @@ namespace Assets.Source.App.Storage
         {
             get
             {
-                return MaxVelocity != lastSavedProfileData.MaxVelocity
-                    || KickCount != lastSavedProfileData.KickCount
-                    || KickForce != lastSavedProfileData.KickForce
+                return RP_MaxVelocityLevel.Value != lastSavedProfileData.MaxVelocityLevel
+                    || RP_KickForceLevel.Value != lastSavedProfileData.KickForceLevel
+                    || RP_ShootForceLevel.Value != lastSavedProfileData.ShootForceLevel
+                    || RP_ShootCountLevel.Value != lastSavedProfileData.ShootCountLevel
                     || BestDistance != lastSavedProfileData.BestDistance
                     || Currency != lastSavedProfileData.Currency;
             }

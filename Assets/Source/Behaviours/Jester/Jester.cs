@@ -42,6 +42,13 @@ namespace Assets.Source.Behaviours.Jester
             set { RelativeKickForceProperty.Value = value; }
         }
 
+        public FloatReactiveProperty RelativeVelocityProperty = new FloatReactiveProperty(0f);
+        public float RelativeVelocity
+        {
+            get { return RelativeVelocityProperty.Value; }
+            set { RelativeVelocityProperty.Value = value; }
+        }
+
         #endregion
 
 
@@ -74,12 +81,13 @@ namespace Assets.Source.Behaviours.Jester
 
         #endregion        
 
+
         private void Awake()
         {
             flightRecorder = new FlightRecorder(this);
             soundEffects = new SoundEffect(this, soundEffectsConfig);
             spriteEffects = new SpriteEffect(this, goSprite, spriteEffectsConfig);
-            kickForce = new KickForce(this, Kernel.PlayerProfileService.KickCount);
+            kickForce = new KickForce(this, new JesterMovementConfig());
 
             // Listen to Pause State
             Kernel.AppState.IsPausedProperty

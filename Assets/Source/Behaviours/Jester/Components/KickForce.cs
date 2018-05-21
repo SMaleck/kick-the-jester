@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Config;
 using Assets.Source.GameLogic;
 using UniRx;
 using UnityEngine;
@@ -7,37 +8,61 @@ namespace Assets.Source.Behaviours.Jester.Components
 {
     public class KickForce : AbstractComponent<Jester>
     {
-        private bool isActive = false;
+        private readonly JesterMovementConfig config;
 
+        private bool isActive = false;       
         private bool isInitialKick = true;
+
         private Vector3 forceDirection = new Vector3(1, 1, 0);
 
-        private float maxForceFactor = 2;
-        private float initialKickForceFactor = 1f;
-        private bool initialFactorGrows = true;
-        private int kickCount = 1;
+        // Initial Kick on round start        
+        private float maxKickForceFactor = 1f;
+        private float kickForceFactor = 1f;
+        private bool kickForceFactorGrows = true;
+        
+        // Shoots during flight        
+        private int shootCount;
 
 
-        public KickForce(Jester owner, int kickCount)
+        public KickForce(Jester owner, JesterMovementConfig config)
             : base(owner, true)
         {
-            this.kickCount = kickCount;
-            App.Cache.userControl.OnKick(KickForward);
+            this.config = config;                        
+            this.shootCount = config.ShootCount;
 
-            // Prevent kicking during pause or after game is over
-            App.Cache.GameStateMachine.StateProperty.Subscribe((GameState state) => 
-            {
-                isActive = !state.Equals(GameState.Paused) || !state.Equals(GameState.End);
-            }).AddTo(owner);            
+
+            // Listen to user Input
+            App.Cache.userControl.OnKick(OnInputProxy);
+
+            // Deactivate during Pause
+            Kernel.AppState.IsPausedProperty
+                           .Subscribe((bool value) => { isActive = value; })
+                           .AddTo(owner);
+
+            // Deactivate when Game Ends
+            App.Cache.GameStateMachine.StateProperty
+                                      .Subscribe((GameState state) => { isActive = !state.Equals(GameState.End); })
+                                      .AddTo(owner);            
         }
 
 
         // UPDATE
         protected override void Update()
         {
-            UpdateInitialKickForceFactor();            
+            if (isInitialKick)
+            {
+                UpdateInitialKickForceFactor();
+                owner.RelativeKickForce = kickForceFactor.AsRelativeTo1(maxKickForceFactor);
+            }            
 
-            owner.RelativeKickForce = initialKickForceFactor.AsRelativeTo1(maxForceFactor);
+            // Limit Velocity
+            if (owner.goBody.velocity.magnitude > config.MaxVelocity)
+            {
+                owner.goBody.velocity = owner.goBody.velocity.normalized * config.MaxVelocity;
+            }
+
+            // Update Owner's relative velocity
+            owner.RelativeVelocity = owner.goBody.velocity.magnitude.AsRelativeTo1(config.MaxVelocity);
         }
 
 
@@ -45,34 +70,60 @@ namespace Assets.Source.Behaviours.Jester.Components
         {
             float x = Time.deltaTime;
 
-            if (initialKickForceFactor + x > maxForceFactor) { initialFactorGrows = false; }
-            if (initialKickForceFactor - x < 0) { initialFactorGrows = true; }
+            if (kickForceFactor + x > maxKickForceFactor) { kickForceFactorGrows = false; }
+            if (kickForceFactor - x < 0) { kickForceFactorGrows = true; }
 
-            initialKickForceFactor = initialFactorGrows ? 
-                initialKickForceFactor + x 
-                : initialKickForceFactor - x;
+            kickForceFactor = kickForceFactorGrows ? 
+                kickForceFactor + x 
+                : kickForceFactor - x;
         }
 
 
-        // Kicks the Jester forward
-        private void KickForward()
+        /* --------------------------------------------------------------------------- */
+        #region INPUT HANDLING
+
+        // Proxy to catch user input. Depending on the current state we kick or shoot
+        private void OnInputProxy()
         {
-            if (!isActive || kickCount <= 0) { return; }
+            if (isInitialKick)
+            {
+                OnInputKick();
+                return;
+            }
 
-            kickCount--;
-            owner.goBody.AddForce(GetAppliedKickForce());
-
-            if (isInitialKick) { isInitialKick = false; }
+            OnInputShoot();
         }
 
 
-        // Calculates the Force that will be applied to the Kick
-        private Vector3 GetAppliedKickForce()
+        // Initial Kick at the round start
+        private void OnInputKick()
         {
-            float currentForceMagnitude = isInitialKick ? Kernel.PlayerProfileService.KickForce * initialKickForceFactor
-                : Kernel.PlayerProfileService.KickForce;
+            if (!isActive || !isInitialKick) { return; }
             
-            return forceDirection * currentForceMagnitude;
-        }       
+            isInitialKick = false;
+
+            Vector3 appliedForce = forceDirection * (config.KickForce * kickForceFactor);
+            ApplyForce(appliedForce);
+        }
+
+
+        // In-flight force
+        private void OnInputShoot()
+        {
+            if (!isActive || shootCount <= 0) { return; }
+
+            shootCount--;
+
+            Vector3 appliedForce = forceDirection * config.ShootForce;
+            ApplyForce(appliedForce);
+        }
+
+
+        private void ApplyForce(Vector3 appliedForce)
+        {
+            owner.goBody.AddForce(appliedForce, ForceMode2D.Impulse);
+        }
+
+        #endregion     
     }
 }

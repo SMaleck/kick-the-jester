@@ -16,7 +16,10 @@ namespace Assets.Source.Items
             body.velocity = body.velocity.normalized * VelocityReductionAmount;
 
             // Remove bouncy material, so Jester will not bounce on land
-            jester.GetComponent<Collider2D>().sharedMaterial = null;
+            if(StoppingPowerPercent >= 1)
+            {
+                jester.GetComponent<Collider2D>().sharedMaterial = null;
+            }            
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Assets.Source.Behaviours.MainCamera.Components
 
 
         public ScreenFader(CameraBase owner, SpriteRenderer sprite)
-            : base(owner)
+            : base(owner, false)
         {
             // Ensure the Sprite is at full ALPHA
             this.sprite = sprite;

@@ -13,6 +13,8 @@ namespace Assets.Source.UI.Panels
         [SerializeField] Text HeightText;
         [SerializeField] Text BestDistanceText;
 
+        [SerializeField] UIProgressBar velocityBar;
+
         private void Start()
         {
             PauseButton.OnClickAsObservable()
@@ -27,9 +29,17 @@ namespace Assets.Source.UI.Panels
                             .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
-            Kernel.PlayerProfileService.bestDistanceProperty
+            Kernel.PlayerProfileService.RP_BestDistance
                                        .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
                                        .AddTo(this);
+
+            App.Cache.jester.RelativeVelocityProperty
+                            .Subscribe((float value) => { velocityBar.fillAmount = value; })
+                            .AddTo(this);
+
+            // Activate Velocity display only after start
+            velocityBar.gameObject.SetActive(false);
+            App.Cache.jester.IsStartedProperty.Where(e => e).Subscribe(_ => { velocityBar.gameObject.SetActive(true); });
         }
     }
 }
