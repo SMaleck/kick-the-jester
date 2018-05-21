@@ -24,22 +24,22 @@ namespace Assets.Source.App.Storage
 
         public float MaxVelocity
         {
-            get { return UpgradeTree.MaxVelocity[RP_MaxVelocityLevel.Value]; }
+            get { return UpgradeTree.MaxVelocity[RP_MaxVelocityLevel.Value].Value; }
         }
 
         public float KickForce
         {
-            get { return UpgradeTree.KickForce[RP_KickForceLevel.Value]; }
+            get { return UpgradeTree.KickForce[RP_KickForceLevel.Value].Value; }
         }
 
         public float ShootForce
         {
-            get { return UpgradeTree.ShootForce[RP_ShootForceLevel.Value]; }
+            get { return UpgradeTree.ShootForce[RP_ShootForceLevel.Value].Value; }
         }
 
         public int ShootCount
         {
-            get { return UpgradeTree.ShootCount[RP_ShootCountLevel.Value]; }
+            get { return UpgradeTree.ShootCount[RP_ShootCountLevel.Value].Value; }
         }
 
 

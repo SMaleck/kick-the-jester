@@ -1,5 +1,4 @@
 ﻿using Assets.Source.App;
-using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,85 +9,73 @@ namespace Assets.Source.UI
     {
         [SerializeField] private Button backButton;
         [SerializeField] private Text txtMoney;
-
-        [SerializeField] private Button kickForceUpgradeButton;
-        [SerializeField] private Button kickCountUpgradeButton;
-        [SerializeField] private Button shootForceUpButton;
-        [SerializeField] private Button shootCountUpButton;
-
         [SerializeField] private Button statResetButton;
 
+        // Max Velocity
+        [SerializeField] private Text maxVelocityLevel;
+        [SerializeField] private Text maxVelocityCost;
+        [SerializeField] private Button maxVelocityUp;
 
+        // Kick Force
+        [SerializeField] private Text kickForceLevel;
+        [SerializeField] private Text kickForceCost;
+        [SerializeField] private Button kickForceUp;
+
+        // Shoot Force
+        [SerializeField] private Text shootForceLevel;
+        [SerializeField] private Text shootForceCost;
+        [SerializeField] private Button shootForceUp;
+
+        // Shoot Force
+        [SerializeField] private Text shootCountLevel;
+        [SerializeField] private Text shootCountCost;
+        [SerializeField] private Button shootCountUp;
+
+        
         private void Start()
         {
+            // Correct own position, because the spawning tends to screw it up
+            transform.localPosition = new Vector3(0, 0, 0);
+
             backButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
 
             Kernel.PlayerProfileService.RP_Currency
                                        .SubscribeToText(txtMoney, e => e.ToString())
                                        .AddTo(this);
 
-            kickForceUpgradeButton.OnClickAsObservable().Subscribe(_ => OnKickForceUp());
-            kickCountUpgradeButton.OnClickAsObservable().Subscribe(_ => OnShootCountUp());
+            // Upgrades
+            maxVelocityUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.MaxVelocityUp()).AddTo(this);
+            Kernel.PlayerProfileService.RP_MaxVelocityLevel.SubscribeToText(maxVelocityLevel).AddTo(this);
+            Kernel.UpgradeService.MaxVelocityCost.Subscribe((int value) => UpdateCost(value, maxVelocityCost, maxVelocityUp)).AddTo(this);
 
-            statResetButton.OnClickAsObservable().Subscribe(_ => OnStatReset());            
+            kickForceUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.KickForceUp()).AddTo(this);
+            Kernel.PlayerProfileService.RP_KickForceLevel.SubscribeToText(kickForceLevel).AddTo(this);
+            Kernel.UpgradeService.KickForceCost.Subscribe((int value) => UpdateCost(value, kickForceCost, kickForceUp)).AddTo(this);
+
+            shootForceUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.ShootForceUp()).AddTo(this);
+            Kernel.PlayerProfileService.RP_ShootForceLevel.SubscribeToText(shootForceLevel).AddTo(this);
+            Kernel.UpgradeService.ShootForceCost.Subscribe((int value) => UpdateCost(value, shootForceCost, shootForceUp)).AddTo(this);
+
+            shootCountUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.ShootCountUp()).AddTo(this);
+            Kernel.PlayerProfileService.RP_ShootCountLevel.SubscribeToText(shootCountLevel).AddTo(this);
+            Kernel.UpgradeService.ShootCountCost.Subscribe((int value) => UpdateCost(value, shootCountCost, shootCountUp)).AddTo(this);
+
+            // Stat Reset
+            statResetButton.OnClickAsObservable().Subscribe(_ => Kernel.PlayerProfileService.ResetStats());
         }
 
 
-        /* UPGRADE BUTTONS */
-
-        public void OnMaxVelocityUp()
+        private void UpdateCost(int cost, Text label, Button buy)
         {
-            if (TryDeduct(200))
+            // Zero means MAX level is reached
+            if(cost <= 0)
             {
-                Kernel.UpgradeService.MaxVelocityUp();
-            }
-        }
-
-        public void OnKickForceUp()
-        {
-            if (TryDeduct(200))
-            {
-                Kernel.UpgradeService.KickForceUp();
-            }
-        }
-
-        public void OnShootForceUp()
-        {
-            if (TryDeduct(500))
-            {
-                Kernel.UpgradeService.ShootForceUp();
-            }
-        }
-
-        public void OnShootCountUp()
-        {
-            if (TryDeduct(500))
-            {
-                Kernel.UpgradeService.ShootCountUp();
-            }
-        }
-
-
-        public void OnStatReset()
-        {
-            Kernel.PlayerProfileService.ResetStats();
-        }
-
-
-        /// <summary>
-        /// Deducts Currency from the PlayerProfile, if there is enough
-        /// </summary>
-        /// <param name="amount">The amount to deduct, ABS amount will be processed</param>
-        /// <returns></returns>
-        public bool TryDeduct(int amount)
-        {
-            // Check if player has enough money
-            if (Kernel.PlayerProfileService.Currency >= amount)
-            {
-                Kernel.PlayerProfileService.Currency -= Math.Abs(amount);
+                label.text = "- - -";
+                return;
             }
 
-            return true;
+            label.text = cost.ToString();
+            buy.interactable = cost <= Kernel.PlayerProfileService.Currency;
         }
     }
 }

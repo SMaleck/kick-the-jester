@@ -6,8 +6,10 @@ namespace Assets.Source.Behaviours.Jester.Components
 {
     public class SpriteEffect : AbstractComponent<Jester>
     {
-        private readonly GameObject goSprite;
         private readonly JesterSpriteEffectsConfig config;
+
+        private readonly GameObject goSprite;                
+        private SpriteRenderer sprite;
 
         private bool listenForImpacts = false;
         private bool isRotating = false;
@@ -19,13 +21,17 @@ namespace Assets.Source.Behaviours.Jester.Components
         public SpriteEffect(Jester owner, GameObject goSprite, JesterSpriteEffectsConfig config)
             : base(owner, true)
         {
-            this.goSprite = goSprite;
             this.config = config;
 
-            owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
-            owner.IsLandedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = isRotating = false; }).AddTo(owner);
+            this.goSprite = goSprite;
+            sprite = goSprite.GetComponent<SpriteRenderer>();            
 
-            owner.Collisions.OnGround(SetRotation);            
+            owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
+            owner.IsLandedProperty.Where(e => e).Subscribe(_ => OnLanded()).AddTo(owner);
+
+            // Impact Listeners
+            owner.Collisions.OnGround(OnImpact);
+            owner.Collisions.OnBoost(OnImpact);
         }
 
 
@@ -38,13 +44,29 @@ namespace Assets.Source.Behaviours.Jester.Components
         }
 
 
-        private void SetRotation()
+        private void OnImpact()
         {
             if (listenForImpacts)
             {
+                // Set rotation
                 isRotating = true;
                 currentRotationSpeed = UnityEngine.Random.Range(config.MinRotationSpeed, config.MaxRotationSpeed);
+
+                // Switch Sprite
+                int index = Random.Range(0, config.ImpactSpritePool.Length);
+                sprite.sprite = config.ImpactSpritePool[index];
             }
+        }
+
+
+        private void OnLanded()
+        {
+            // Stop rotating and rest
+            listenForImpacts = isRotating = false;
+            goSprite.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+            // Switch Sprite            
+            sprite.sprite = config.LandingSprite;
         }
     }
 }

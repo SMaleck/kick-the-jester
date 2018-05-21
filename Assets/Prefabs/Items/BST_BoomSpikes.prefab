@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114971431162011130}
   m_Layer: 11
   m_Name: BST_BoomSpikes
-  m_TagString: Untagged
+  m_TagString: Boost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

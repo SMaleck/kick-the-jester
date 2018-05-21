@@ -14,7 +14,7 @@ namespace Assets.Source.Behaviours
             {
                 GameObject go = GameObject.Instantiate(prefab);
                 go.transform.SetParent(goTransform);
-                go.transform.localScale = new Vector3(1, 1, 1);
+                go.transform.localScale = new Vector3(1, 1, 1);                
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Assets.Source.Behaviours.Jester.Components
                                   .AddTo(owner);
 
             // Listen to velocity, so we can update landed
-            owner.VelocityProperty.Where(e => e.magnitude.IsNearlyEqual(0) && owner.IsStartedProperty.Value)
+            owner.VelocityProperty.Where(e => e.magnitude.IsNearlyEqual(0) && owner.Height.ToMeters() == 0 && owner.IsStartedProperty.Value)
                                   .Subscribe(__ => { owner.IsLandedProperty.Value = true; })
                                   .AddTo(owner);
         }

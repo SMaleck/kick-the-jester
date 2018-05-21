@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 1761647027227642}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4621858714732094}
   m_RootOrder: 0
@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1605968396887398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
+  m_LocalPosition: {x: -2, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4322321505897652}
@@ -137,7 +137,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.01
+  m_Radius: 1.52
 --- !u!58 &58849016534238798
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -152,7 +152,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.95
+  m_Radius: 1.5
 --- !u!114 &114096175909236702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,11 +174,9 @@ MonoBehaviour:
     value: 0
   VelocityProperty:
     value: {x: 0, y: 0}
-  CollectedCurrencyProperty:
-    value: 0
-  EarnedCurrencyProperty:
-    value: 0
   RelativeKickForceProperty:
+    value: 0
+  RelativeVelocityProperty:
     value: 0
   soundEffectsConfig: {fileID: 11400000, guid: 5089bb4e8e2784c4ca0d662924a55d24, type: 2}
   spriteEffectsConfig: {fileID: 11400000, guid: 5312f3049a91c2b41975a32022c3d52a,
@@ -229,7 +227,7 @@ SpriteRenderer:
   m_SortingLayerID: -922635221
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8104e2027c2c07a4b8b9ab12c95fd2df, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2a7c9c1631a69549885317289d3d4df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
