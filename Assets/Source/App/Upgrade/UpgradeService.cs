@@ -10,30 +10,15 @@ namespace Assets.Source.App.Upgrade
     {
         private readonly PlayerProfileService playerProfile;
 
-        /* -------------------------------------------------------------------------- */
-        #region UPGRADE STAT COSTS            
-
-        public IntReactiveProperty MaxVelocityCost = new IntReactiveProperty(0);
-        public IntReactiveProperty KickForceCost = new IntReactiveProperty(0);
-        public IntReactiveProperty ShootForceCost = new IntReactiveProperty(0);
-        public IntReactiveProperty ShootCountCost = new IntReactiveProperty(0);
-
-        #endregion
-        
         public UpgradeService(PlayerProfileService playerProfile)
         {
             this.playerProfile = playerProfile;
-
-            playerProfile.RP_MaxVelocityLevel.Subscribe((int value) => SetCostFor(value, UpgradeTree.MaxVelocityPath, MaxVelocityCost));
-            playerProfile.RP_KickForceLevel.Subscribe((int value) => SetCostFor(value, UpgradeTree.KickForcePath, KickForceCost));
-            playerProfile.RP_ShootForceLevel.Subscribe((int value) => SetCostFor(value, UpgradeTree.ShootForcePath, ShootForceCost));
-            playerProfile.RP_ShootCountLevel.Subscribe((int value) => SetCostFor(value, UpgradeTree.ShootCountPath, ShootCountCost));
         }
 
         /// <summary>
         /// Upgrades a level if possible, deducting the corresponding cost.
         /// </summary>
-        private void StatUp<T>(IntReactiveProperty RP_CurrentLevel, UpgradePath<T> upgradePath)
+        private void PurchaseNextLevel<T>(IntReactiveProperty RP_CurrentLevel, UpgradePath<T> upgradePath)
         {
             int currentLevel = RP_CurrentLevel.Value;
 
@@ -63,32 +48,27 @@ namespace Assets.Source.App.Upgrade
             return true;
         }
 
-        private void SetCostFor<T>(int currentLevel, UpgradePath<T> upgradePath, IntReactiveProperty costProperty)
-        {
-            costProperty.Value = upgradePath.UpgradeCost(currentLevel);
-        }
-
         /* -------------------------------------------------------------------------- */
         #region UPGRADE STATS INTERFACE
 
         public void MaxVelocityUp()
         {
-            StatUp(playerProfile.RP_MaxVelocityLevel, UpgradeTree.MaxVelocityPath);                       
+            PurchaseNextLevel(playerProfile.RP_MaxVelocityLevel, UpgradeTree.MaxVelocityPath);                       
         }
 
         public void KickForceUp()
         {
-            StatUp(playerProfile.RP_KickForceLevel, UpgradeTree.KickForcePath);            
+            PurchaseNextLevel(playerProfile.RP_KickForceLevel, UpgradeTree.KickForcePath);            
         }
 
         public void ShootForceUp()
         {
-            StatUp(playerProfile.RP_ShootForceLevel, UpgradeTree.ShootForcePath);
+            PurchaseNextLevel(playerProfile.RP_ShootForceLevel, UpgradeTree.ShootForcePath);
         }
 
         public void ShootCountUp()
         {
-            StatUp(playerProfile.RP_ShootCountLevel, UpgradeTree.ShootCountPath);
+            PurchaseNextLevel(playerProfile.RP_ShootCountLevel, UpgradeTree.ShootCountPath);
         }
 
         #endregion

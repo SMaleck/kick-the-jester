@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.App.Upgrade;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,19 +46,27 @@ namespace Assets.Source.UI.Panels
             // Upgrades
             maxVelocityUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.MaxVelocityUp()).AddTo(this);
             Kernel.PlayerProfileService.RP_MaxVelocityLevel.SubscribeToText(maxVelocityLevel).AddTo(this);
-            Kernel.UpgradeService.MaxVelocityCost.Subscribe((int value) => UpdateCost(value, maxVelocityCost, maxVelocityUp)).AddTo(this);
-
+            Kernel.PlayerProfileService.RP_MaxVelocityLevel
+                .Subscribe(level => UpdateUI(UpgradeTree.MaxVelocityPath.UpgradeCost(level), maxVelocityCost, maxVelocityUp))
+                .AddTo(this);
+            
             kickForceUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.KickForceUp()).AddTo(this);
             Kernel.PlayerProfileService.RP_KickForceLevel.SubscribeToText(kickForceLevel).AddTo(this);
-            Kernel.UpgradeService.KickForceCost.Subscribe((int value) => UpdateCost(value, kickForceCost, kickForceUp)).AddTo(this);
+            Kernel.PlayerProfileService.RP_KickForceLevel
+                .Subscribe(level => UpdateUI(UpgradeTree.KickForcePath.UpgradeCost(level), kickForceCost, kickForceUp))
+                .AddTo(this);
 
             shootForceUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.ShootForceUp()).AddTo(this);
             Kernel.PlayerProfileService.RP_ShootForceLevel.SubscribeToText(shootForceLevel).AddTo(this);
-            Kernel.UpgradeService.ShootForceCost.Subscribe((int value) => UpdateCost(value, shootForceCost, shootForceUp)).AddTo(this);
+            Kernel.PlayerProfileService.RP_ShootForceLevel
+                .Subscribe(level => UpdateUI(UpgradeTree.ShootForcePath.UpgradeCost(level), shootForceCost, shootForceUp))
+                .AddTo(this);
 
             shootCountUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.ShootCountUp()).AddTo(this);
             Kernel.PlayerProfileService.RP_ShootCountLevel.SubscribeToText(shootCountLevel).AddTo(this);
-            Kernel.UpgradeService.ShootCountCost.Subscribe((int value) => UpdateCost(value, shootCountCost, shootCountUp)).AddTo(this);
+            Kernel.PlayerProfileService.RP_ShootCountLevel
+                .Subscribe(level => UpdateUI(UpgradeTree.ShootCountPath.UpgradeCost(level), shootCountCost, shootCountUp))
+                .AddTo(this);
 
             // Stat Reset
             statResetButton.OnClickAsObservable().Subscribe(_ => Kernel.PlayerProfileService.ResetStats()).AddTo(this);
@@ -77,7 +86,7 @@ namespace Assets.Source.UI.Panels
         }
 
 
-        private void UpdateCost(int cost, Text label, Button buy)
+        private void UpdateUI(int cost, Text label, Button buy)
         {
             // Zero means MAX level is reached
             if(cost <= 0)
