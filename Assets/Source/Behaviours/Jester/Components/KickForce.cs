@@ -72,7 +72,7 @@ namespace Assets.Source.Behaviours.Jester.Components
             float x = Time.deltaTime;
 
             if (kickForceFactor + x > maxKickForceFactor) { kickForceFactorGrows = false; }
-            if (kickForceFactor - x < 0) { kickForceFactorGrows = true; }
+            if (kickForceFactor - x < 0.01f) { kickForceFactorGrows = true; }
 
             kickForceFactor = kickForceFactorGrows ? 
                 kickForceFactor + x 
