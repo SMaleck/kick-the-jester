@@ -76,7 +76,7 @@ namespace Assets.Source.App
             int val1 = value1.ToInt();
             int val2 = value2.ToInt();
 
-            int result = Math.Abs(Math.Abs(val1) - Math.Abs(val2));
+            int result = Math.Abs(val1 - val2);
 
             return (float)result / Constants.FLOAT_PRECISION_FACTOR;
         }

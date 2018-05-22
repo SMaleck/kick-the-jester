@@ -29,8 +29,8 @@ namespace Assets.Source.Behaviours.Jester.Components
 
         protected override void LateUpdate()
         {
-            owner.Distance = origin.x.Difference(owner.goTransform.position.x);
-            owner.Height = origin.y.Difference(owner.goTransform.position.y);
+            owner.Distance = owner.goTransform.position.x.Difference(origin.x);
+            owner.Height = owner.goTransform.position.y.Difference(origin.y);
 
             owner.Velocity = owner.goBody.velocity;
         }
