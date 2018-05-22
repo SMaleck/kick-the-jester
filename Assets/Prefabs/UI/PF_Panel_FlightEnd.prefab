@@ -883,6 +883,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d5bb19c35820e46867d7735127829a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startActive: 0
+  resetScale: 1
+  resetPosition: 1
   retryButton: {fileID: 114796992364770552}
   shopButton: {fileID: 114363685892990878}
   distance: {fileID: 114568132948786310}

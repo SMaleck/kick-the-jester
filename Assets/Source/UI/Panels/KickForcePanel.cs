@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 namespace Assets.Source.UI.Panels
 {
-    public class KickForcePanel : MonoBehaviour
+    public class KickForcePanel : AbstractPanel
     {
         [SerializeField] private UIProgressBar kickForceSlider;
 
-        private void Start()
-        {                                    
+        public override void Setup()
+        {
+            base.Setup();
+
             App.Cache.jester.RelativeKickForceProperty                                                
                             .Subscribe((float value) => { kickForceSlider.fillAmount = value; })
                             .AddTo(this);

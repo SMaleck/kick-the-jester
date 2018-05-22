@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.UI.Panels
 {
-    public class HudPanel : MonoBehaviour
+    public class HudPanel : AbstractPanel
     {
         [SerializeField] Button PauseButton;
 
@@ -15,8 +15,10 @@ namespace Assets.Source.UI.Panels
 
         [SerializeField] UIProgressBar velocityBar;
 
-        private void Start()
+        public override void Setup()
         {
+            base.Setup();
+
             PauseButton.OnClickAsObservable()
                        .Subscribe(_ => App.Cache.userControl.TooglePause())
                        .AddTo(this);

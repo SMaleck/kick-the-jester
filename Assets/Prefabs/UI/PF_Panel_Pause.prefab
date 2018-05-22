@@ -894,6 +894,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844df024958911e4287b31a2dc7cf047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startActive: 0
+  resetScale: 1
+  resetPosition: 1
   resumeButton: {fileID: 114184493849221716}
   retryButton: {fileID: 114374614704643370}
   SFXMuteToggle: {fileID: 114823677300856744}

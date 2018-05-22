@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.UI.Panels
 {
-    public class PausePanel : MonoBehaviour
+    public class PausePanel : AbstractPanel
     {
         [SerializeField] Button resumeButton;
         [SerializeField] Button retryButton;        
@@ -13,8 +13,10 @@ namespace Assets.Source.UI.Panels
         [SerializeField] Toggle SFXMuteToggle;
         [SerializeField] Toggle BGMMuteToggle;
 
-        private void Awake()
+        public override void Setup()            
         {
+            base.Setup();
+
             // Toggle this panel on/off depending on pause state
             Kernel.AppState.IsPausedProperty
                            .Subscribe((bool isPaused) => { gameObject.SetActive(isPaused); })

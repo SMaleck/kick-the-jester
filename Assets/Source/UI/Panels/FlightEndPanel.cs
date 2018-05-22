@@ -1,14 +1,11 @@
 ﻿using Assets.Source.App;
-using Assets.Source.GameLogic;
-using System;
-using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.UI.Panels
 {
-    public class FlightEndPanel : MonoBehaviour
+    public class FlightEndPanel : AbstractPanel
     {
         [SerializeField] Button retryButton;
         [SerializeField] Button shopButton;
@@ -22,9 +19,9 @@ namespace Assets.Source.UI.Panels
         private int initialCurrencyAmount;
         private int finalCurrencyAmount;
 
-        private void Awake()
+        public override void Setup()
         {
-            gameObject.SetActive(false);
+            base.Setup();            
             
             App.Cache.CurrencyRecorder.OnCommit(OnFlightEnd);
 

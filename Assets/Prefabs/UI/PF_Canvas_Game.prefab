@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223171171930499756}
   - component: {fileID: 114613973022336322}
   - component: {fileID: 114387695053877632}
-  - component: {fileID: 114063947151870182}
+  - component: {fileID: 114003808655037042}
   m_Layer: 5
   m_Name: PF_Canvas_Game
   m_TagString: Untagged
@@ -30,7 +30,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114063947151870182
+--- !u!114 &114003808655037042
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -38,12 +38,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1805248092654100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd10905cdda6c64ab0dc1974a0effe5, type: 3}
+  m_Script: {fileID: 11500000, guid: 92be2e855ba314b4bb85ac2fabe3f1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Prefabs:
-  - {fileID: 1321897989718098, guid: ca4f7a38edd9e104bb5aa944cabc35d4, type: 2}
   - {fileID: 1624366043050262, guid: f64003a38cd5a784aa49b243bd12dd7a, type: 2}
+  - {fileID: 1321897989718098, guid: ca4f7a38edd9e104bb5aa944cabc35d4, type: 2}
   - {fileID: 1212672086919612, guid: 4e0deee73b03d114db9ca3aadb3b7811, type: 2}
   - {fileID: 1401963056995822, guid: 86089090b2a8c7a40b8d5a92183e4106, type: 2}
 --- !u!114 &114387695053877632
