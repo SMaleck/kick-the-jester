@@ -37,12 +37,12 @@ namespace Assets.Source.Behaviours.Jester.Components
 
             // Deactivate during Pause
             Kernel.AppState.IsPausedProperty
-                           .Subscribe((bool value) => { isActive = value; })
+                           .Subscribe((bool value) => { isActive = !value; })
                            .AddTo(owner);
 
             // Deactivate when Game Ends
             App.Cache.GameStateMachine.StateProperty
-                                      .Subscribe((GameState state) => { isActive = !state.Equals(GameState.End); })
+                                      .Subscribe((GameState state) => { isActive = !state.Equals(GameState.Paused) && !state.Equals(GameState.End); })
                                       .AddTo(owner);            
         }
 
@@ -86,6 +86,8 @@ namespace Assets.Source.Behaviours.Jester.Components
         // Proxy to catch user input. Depending on the current state we kick or shoot
         private void OnInputProxy()
         {
+            if(!isActive) { return; }
+
             if (isInitialKick)
             {
                 OnInputKick();
@@ -99,7 +101,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         // Initial Kick at the round start
         private void OnInputKick()
         {
-            if (!isActive || !isInitialKick) { return; }
+            if (!isInitialKick) { return; }
             
             isInitialKick = false;
             MessageBroker.Default.Publish(JesterEffects.Kick);
@@ -112,7 +114,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         // In-flight force
         private void OnInputShoot()
         {
-            if (!isActive || shootCount <= 0) { return; }
+            if (shootCount <= 0) { return; }
 
             shootCount--;
             owner.AvailableShotsProperty.Value = shootCount;
