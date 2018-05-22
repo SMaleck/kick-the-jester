@@ -8,8 +8,9 @@ namespace Assets.Source.Behaviours.Jester.Components
     {
         private readonly JesterSpriteEffectsConfig config;
 
-        private readonly GameObject goSprite;                
-        private SpriteRenderer sprite;
+        // GAme Object for trhe Jester's sprite
+        private readonly GameObject goJesterSprite;                
+        private SpriteRenderer jesterSprite;
 
         private bool listenForImpacts = false;
         private bool isRotating = false;
@@ -18,20 +19,45 @@ namespace Assets.Source.Behaviours.Jester.Components
         private Vector3 rotationDirection = new Vector3(0, 0, -1);
 
 
-        public SpriteEffect(Jester owner, GameObject goSprite, JesterSpriteEffectsConfig config)
+        // GameObject for the Effects Sprite
+        private readonly GameObject goEffectSprite;
+        private Animator effectAnimator;        
+        
+
+
+        public SpriteEffect(Jester owner, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config)
             : base(owner, true)
         {
             this.config = config;
 
-            this.goSprite = goSprite;
-            sprite = goSprite.GetComponent<SpriteRenderer>();            
+            // Setup Jester Sprite
+            this.goJesterSprite = goJesterSprite;
+            jesterSprite = this.goJesterSprite.GetComponent<SpriteRenderer>();
 
+            // Setup Effects Sprite
+            this.goEffectSprite = goEffectSprite;
+            this.effectAnimator = this.goEffectSprite.GetComponent<Animator>();            
+
+            // Event Listeners
             owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
             owner.IsLandedProperty.Where(e => e).Subscribe(_ => OnLanded()).AddTo(owner);
+
+            // Kick & Shot Listeners
+            MessageBroker.Default.Receive<JesterEffects>()
+                                 .Where(e => e.Equals(JesterEffects.Kick))
+                                 .Subscribe(_ => OnKickHit())
+                                 .AddTo(owner);
+
+            MessageBroker.Default.Receive<JesterEffects>()
+                                 .Where(e => e.Equals(JesterEffects.Shot))
+                                 .Subscribe(_ => OnShotHit())
+                                 .AddTo(owner);
 
             // Impact Listeners
             owner.Collisions.OnGround(OnImpact);
             owner.Collisions.OnBoost(OnImpact);
+
+            
         }
 
 
@@ -39,7 +65,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         {
             if (isRotating)
             {
-                goSprite.transform.Rotate(rotationDirection * currentRotationSpeed * Time.deltaTime);
+                goJesterSprite.transform.Rotate(rotationDirection * currentRotationSpeed * Time.deltaTime);
             }
         }
 
@@ -54,7 +80,7 @@ namespace Assets.Source.Behaviours.Jester.Components
 
                 // Switch Sprite
                 int index = Random.Range(0, config.ImpactSpritePool.Length);
-                sprite.sprite = config.ImpactSpritePool[index];
+                jesterSprite.sprite = config.ImpactSpritePool[index];
             }
         }
 
@@ -63,10 +89,22 @@ namespace Assets.Source.Behaviours.Jester.Components
         {
             // Stop rotating and rest
             listenForImpacts = isRotating = false;
-            goSprite.transform.rotation = new Quaternion(0, 0, 0, 0);
+            goJesterSprite.transform.rotation = new Quaternion(0, 0, 0, 0);
 
             // Switch Sprite            
-            sprite.sprite = config.LandingSprite;
+            jesterSprite.sprite = config.LandingSprite;
+        }
+
+
+        private void OnKickHit()
+        {
+
+        }
+
+
+        private void OnShotHit()
+        {            
+            effectAnimator.Play("Anim_Projectile_Shoot");
         }
     }
 }

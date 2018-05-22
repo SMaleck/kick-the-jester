@@ -1,18 +1,21 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
+using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester
 {
+    public enum JesterEffects { Kick, Shot, Impact }
+
     public class Jester : AbstractBodyBehaviour
     {
         /* -------------------------------------------------------------------------------------- */
         #region REACTIVE PROPERTIES
 
-        public BoolReactiveProperty IsStartedProperty = new BoolReactiveProperty(false);        
-        public BoolReactiveProperty IsLandedProperty = new BoolReactiveProperty(false);        
+        public BoolReactiveProperty IsStartedProperty = new BoolReactiveProperty(false);
+        public BoolReactiveProperty IsLandedProperty = new BoolReactiveProperty(false);
 
         public FloatReactiveProperty DistanceProperty = new FloatReactiveProperty(0);
         public float Distance
@@ -49,6 +52,13 @@ namespace Assets.Source.Behaviours.Jester
             set { RelativeVelocityProperty.Value = value; }
         }
 
+        public IntReactiveProperty AvailableShotsProperty = new IntReactiveProperty(0);
+        public int AvailableShots
+        {
+            get { return AvailableShotsProperty.Value; }
+            set { AvailableShotsProperty.Value = value; }
+        }
+
         #endregion
 
 
@@ -57,7 +67,8 @@ namespace Assets.Source.Behaviours.Jester
 
         [SerializeField] private JesterSoundEffectsConfig soundEffectsConfig;
         [SerializeField] private JesterSpriteEffectsConfig spriteEffectsConfig;
-        [SerializeField] private GameObject goSprite;
+        [SerializeField] private GameObject goJesterSprite;
+        [SerializeField] private GameObject goEffectSprite;
 
 
         private CollisionListener _Collisions;
@@ -75,8 +86,8 @@ namespace Assets.Source.Behaviours.Jester
         }
 
         private FlightRecorder flightRecorder;
-        private SoundEffect soundEffects;
-        private SpriteEffect spriteEffects;
+        private SoundEffect soundEffect;
+        private SpriteEffect spriteEffect;
         private KickForce kickForce;
 
         #endregion        
@@ -85,8 +96,8 @@ namespace Assets.Source.Behaviours.Jester
         private void Awake()
         {
             flightRecorder = new FlightRecorder(this);
-            soundEffects = new SoundEffect(this, soundEffectsConfig);
-            spriteEffects = new SpriteEffect(this, goSprite, spriteEffectsConfig);
+            soundEffect = new SoundEffect(this, soundEffectsConfig);
+            spriteEffect = new SpriteEffect(this, goJesterSprite, goEffectSprite, spriteEffectsConfig);
             kickForce = new KickForce(this, new JesterMovementConfig());
 
             // Listen to Pause State

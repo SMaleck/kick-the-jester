@@ -8,7 +8,7 @@ namespace Assets.Source.Behaviours.Jester.Components
 {
     public class KickForce : AbstractComponent<Jester>
     {
-        private readonly JesterMovementConfig config;
+        private readonly JesterMovementConfig config;        
 
         private bool isActive = false;       
         private bool isInitialKick = true;
@@ -27,9 +27,10 @@ namespace Assets.Source.Behaviours.Jester.Components
         public KickForce(Jester owner, JesterMovementConfig config)
             : base(owner, true)
         {
-            this.config = config;                        
+            this.config = config;            
             this.shootCount = config.ShootCount;
 
+            owner.AvailableShotsProperty.Value = shootCount;
 
             // Listen to user Input
             App.Cache.userControl.OnKick(OnInputProxy);
@@ -101,6 +102,7 @@ namespace Assets.Source.Behaviours.Jester.Components
             if (!isActive || !isInitialKick) { return; }
             
             isInitialKick = false;
+            MessageBroker.Default.Publish(JesterEffects.Kick);
 
             Vector3 appliedForce = forceDirection * (config.KickForce * kickForceFactor);
             ApplyForce(appliedForce);
@@ -113,6 +115,8 @@ namespace Assets.Source.Behaviours.Jester.Components
             if (!isActive || shootCount <= 0) { return; }
 
             shootCount--;
+            owner.AvailableShotsProperty.Value = shootCount;
+            MessageBroker.Default.Publish(JesterEffects.Shot);            
 
             Vector3 appliedForce = forceDirection * config.ShootForce;
             ApplyForce(appliedForce);
