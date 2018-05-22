@@ -75,7 +75,13 @@ namespace Assets.Source.UI.Panels
                 go.transform.localScale = Vector3.one;
 
                 shotCountIcons.Add(go.GetComponent<Image>());                
-            }            
+            }
+
+            // Set all to full Opacity
+            foreach (Image img in shotCountIcons)
+            {
+                img.color = new Color(1, 1, 1, 1);
+            }
         }
 
 
