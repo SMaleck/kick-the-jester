@@ -60,7 +60,7 @@ namespace Assets.Source.UI.Panels
             Kernel.UpgradeService.ShootCountCost.Subscribe((int value) => UpdateCost(value, shootCountCost, shootCountUp)).AddTo(this);
 
             // Stat Reset
-            statResetButton.OnClickAsObservable().Subscribe(_ => Kernel.PlayerProfileService.ResetStats());
+            statResetButton.OnClickAsObservable().Subscribe(_ => Kernel.PlayerProfileService.ResetStats()).AddTo(this);
         }
 
 
@@ -82,12 +82,15 @@ namespace Assets.Source.UI.Panels
             // Zero means MAX level is reached
             if(cost <= 0)
             {
-                label.text = "- - -";
+                label.text = "MAX";
+                buy.interactable = false;
                 return;
             }
 
             label.text = cost.ToString();
-            buy.interactable = cost <= Kernel.PlayerProfileService.Currency;
+
+            ReactiveCommand hasEnoughCurrency = Kernel.PlayerProfileService.RP_Currency.Select(x => x >= cost).ToReactiveCommand();
+            hasEnoughCurrency.BindTo(buy).AddTo(this);
         }
     }
 }

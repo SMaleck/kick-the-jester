@@ -1,4 +1,4 @@
-﻿using Assets.Source.App.Upgrades;
+﻿using Assets.Source.App.Upgrade;
 using System;
 using UniRx;
 
@@ -24,22 +24,22 @@ namespace Assets.Source.App.Storage
 
         public float MaxVelocity
         {
-            get { return UpgradeTree.MaxVelocity[RP_MaxVelocityLevel.Value].Value; }
+            get { return UpgradeTree.MaxVelocityPath.ValueAt(RP_MaxVelocityLevel.Value); }
         }
 
         public float KickForce
         {
-            get { return UpgradeTree.KickForce[RP_KickForceLevel.Value].Value; }
+            get { return UpgradeTree.KickForcePath.ValueAt(RP_KickForceLevel.Value); }
         }
 
         public float ShootForce
         {
-            get { return UpgradeTree.ShootForce[RP_ShootForceLevel.Value].Value; }
+            get { return UpgradeTree.ShootForcePath.ValueAt(RP_ShootForceLevel.Value); }
         }
 
         public int ShootCount
         {
-            get { return UpgradeTree.ShootCount[RP_ShootCountLevel.Value].Value; }
+            get { return UpgradeTree.ShootCountPath.ValueAt(RP_ShootCountLevel.Value); }
         }
 
 
