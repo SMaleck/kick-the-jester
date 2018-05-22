@@ -3,9 +3,9 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Source.UI
+namespace Assets.Source.UI.Panels
 {
-    public class ShopPanel : MonoBehaviour
+    public class ShopPanel : AbstractPanel
     {
         [SerializeField] private Button backButton;
         [SerializeField] private Text txtMoney;
@@ -31,16 +31,15 @@ namespace Assets.Source.UI
         [SerializeField] private Text shootCountCost;
         [SerializeField] private Button shootCountUp;
 
-        
-        private void Start()
+
+        public override void Setup()
         {
-            // Correct own position, because the spawning tends to screw it up
-            transform.localPosition = new Vector3(0, 0, 0);
+            base.Setup();
 
             backButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
 
             Kernel.PlayerProfileService.RP_Currency
-                                       .SubscribeToText(txtMoney, e => e.ToString())
+                                       .Subscribe(OnCurrencyChange)                                       
                                        .AddTo(this);
 
             // Upgrades
@@ -62,6 +61,19 @@ namespace Assets.Source.UI
 
             // Stat Reset
             statResetButton.OnClickAsObservable().Subscribe(_ => Kernel.PlayerProfileService.ResetStats());
+        }
+
+
+        private void OnCurrencyChange(int currency)
+        {
+            txtMoney.text = currency.ToString();
+
+        }
+
+
+        private void CheckUpdatesAffordable()
+        {
+
         }
 
 

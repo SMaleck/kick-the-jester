@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223594914526093836}
   - component: {fileID: 114281337963601876}
   - component: {fileID: 114627516452781566}
-  - component: {fileID: 114098955879260640}
+  - component: {fileID: 114711433742745468}
   m_Layer: 5
   m_Name: PF_Canvas_Shop
   m_TagString: Untagged
@@ -30,19 +30,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114098955879260640
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1048770583962602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd10905cdda6c64ab0dc1974a0effe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Prefabs:
-  - {fileID: 1279927652540200, guid: 47810b6923fbbcd4ebeddbe1f16006da, type: 2}
 --- !u!114 &114281337963601876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,6 +67,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114711433742745468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1048770583962602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92be2e855ba314b4bb85ac2fabe3f1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefabs:
+  - {fileID: 1279927652540200, guid: 47810b6923fbbcd4ebeddbe1f16006da, type: 2}
 --- !u!223 &223594914526093836
 Canvas:
   m_ObjectHideFlags: 1

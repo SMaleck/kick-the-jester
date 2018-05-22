@@ -9,7 +9,7 @@ namespace Assets.Source.App.Upgrades
         private readonly PlayerProfileService playerProfile;
 
         /* -------------------------------------------------------------------------- */
-        #region UPGRADE STAT COSTS
+        #region UPGRADE STAT COSTS            
 
         public IntReactiveProperty MaxVelocityCost = new IntReactiveProperty(0);
         public IntReactiveProperty KickForceCost = new IntReactiveProperty(0);
