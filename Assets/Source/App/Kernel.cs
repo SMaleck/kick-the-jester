@@ -1,6 +1,6 @@
 ﻿using Assets.Source.App.Audio;
 using Assets.Source.App.Storage;
-using Assets.Source.App.Upgrades;
+using Assets.Source.App.Upgrade;
 using UniRx;
 using UnityEngine;
 
