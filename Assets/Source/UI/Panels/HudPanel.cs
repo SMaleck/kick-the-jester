@@ -15,6 +15,8 @@ namespace Assets.Source.UI.Panels
 
         [SerializeField] UIProgressBar velocityBar;
 
+        //[SerializeField] PAnel BestDistanceText;
+
         public override void Setup()
         {
             base.Setup();
