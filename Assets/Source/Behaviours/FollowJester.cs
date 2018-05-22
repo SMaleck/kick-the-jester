@@ -16,7 +16,7 @@ namespace Assets.Source.Behaviours
 
         void Start()
         {
-            target = App.Cache.jester.goTransform;
+            target = App.Cache.Jester.goTransform;
 
             origin = goTransform.position;
 

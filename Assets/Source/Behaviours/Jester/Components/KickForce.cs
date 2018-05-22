@@ -1,14 +1,16 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Behaviours.GameLogic;
 using Assets.Source.Config;
-using Assets.Source.GameLogic;
 using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class KickForce : AbstractComponent<Jester>
+    public class KickForce : AbstractComponent<JesterContainer>
     {
-        private readonly JesterMovementConfig config;        
+        private readonly JesterMovementConfig config;
+        private readonly GameLogicContainer gameLogic;
+        private readonly UserControl userControl;
 
         private bool isActive = false;       
         private bool isInitialKick = true;
@@ -24,26 +26,31 @@ namespace Assets.Source.Behaviours.Jester.Components
         private int shootCount;
 
 
-        public KickForce(Jester owner, JesterMovementConfig config)
+        public KickForce(JesterContainer owner, JesterMovementConfig config, GameLogicContainer gameLogic, UserControl userControl)
             : base(owner, true)
         {
-            this.config = config;            
+            this.config = config;
+            this.gameLogic = gameLogic;
+            this.userControl = userControl;
             this.shootCount = config.ShootCount;
 
             owner.AvailableShotsProperty.Value = shootCount;
 
             // Listen to user Input
-            App.Cache.userControl.OnKick(OnInputProxy);
+            userControl.OnKick(OnInputProxy);
 
-            // Deactivate during Pause
-            Kernel.AppState.IsPausedProperty
-                           .Subscribe((bool value) => { isActive = !value; })
-                           .AddTo(owner);
 
             // Deactivate when Game Ends
-            App.Cache.GameStateMachine.StateProperty
-                                      .Subscribe((GameState state) => { isActive = !state.Equals(GameState.Paused) && !state.Equals(GameState.End); })
-                                      .AddTo(owner);            
+            gameLogic.StateProperty
+                     .Subscribe((GameState state) => { isActive = !state.Equals(GameState.Paused) && !state.Equals(GameState.End); })
+                     .AddTo(owner);            
+        }
+
+
+        // On Pause deactivate
+        protected override void OnPause(bool isPaused)
+        {
+            isActive = !isPaused;
         }
 
 

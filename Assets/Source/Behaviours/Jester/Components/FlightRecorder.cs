@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class FlightRecorder : AbstractComponent<Jester>
+    public class FlightRecorder : AbstractComponent<JesterContainer>
     {        
         private readonly Vector3 origin;
         private bool jesterIsStarted = false;
 
 
-        public FlightRecorder(Jester owner)
+        public FlightRecorder(JesterContainer owner)
             : base(owner, false)
         {
             origin = owner.goTransform.position;

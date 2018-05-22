@@ -1,9 +1,10 @@
-﻿using Assets.Source.Models;
+﻿using Assets.Source.Behaviours.GameLogic;
+using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Source.GameLogic
+namespace Assets.Source.Behaviours
 {
     public class UserControl : MonoBehaviour, IPointerDownHandler
     {
@@ -32,9 +33,9 @@ namespace Assets.Source.GameLogic
             // Attach this to the camera, so the raycast works correctly
             this.transform.SetParent(App.Cache.MainCamera.UCamera.transform);
 
-            App.Cache.GameStateMachine.StateProperty
-                                      .Subscribe(OnGameStateChanged)
-                                      .AddTo(this);
+            App.Cache.GameLogic.StateProperty
+                               .Subscribe(OnGameStateChanged)
+                               .AddTo(this);
         }
 
 

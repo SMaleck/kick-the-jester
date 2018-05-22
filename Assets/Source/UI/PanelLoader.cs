@@ -8,7 +8,7 @@ namespace Assets.Source.UI
     {
         [SerializeField] private List<GameObject> Prefabs;
 
-        private void Awake()
+        private void Start()
         {
             foreach (GameObject prefab in Prefabs)
             {

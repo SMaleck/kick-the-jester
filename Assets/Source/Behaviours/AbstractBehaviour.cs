@@ -1,7 +1,4 @@
-﻿using Assets.Source.GameLogic;
-using System.Collections.Generic;
-using UniRx;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Source.Behaviours
 {

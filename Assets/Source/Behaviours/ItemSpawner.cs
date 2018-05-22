@@ -36,14 +36,14 @@ namespace Assets.Source.Behaviours
         private void Start()
         {
             randomPoolIndex = new System.Random();
-            offsetX = goTransform.position.x - App.Cache.jester.goTransform.position.x;
+            offsetX = goTransform.position.x - App.Cache.Jester.goTransform.position.x;
             groundPosition = goTransform.position;
 
             // Deactivate on Land                        
-            App.Cache.jester.IsLandedProperty.Where(e => e).Subscribe(_ => { CanSpawn = false; }).AddTo(this);
+            App.Cache.Jester.IsLandedProperty.Where(e => e).Subscribe(_ => { CanSpawn = false; }).AddTo(this);
 
             // Attempt to spawn based on travel distance
-            App.Cache.jester.DistanceProperty                                 
+            App.Cache.Jester.DistanceProperty                                 
                             .Subscribe(AttemptSpawn)
                             .AddTo(this);
         }
@@ -63,7 +63,7 @@ namespace Assets.Source.Behaviours
         protected virtual bool ShouldSpawn(int distance)
         {
             // Do not spawn if we should spawn on the ground and jester is moving upwards
-            if (!SpawnOnTrajectory && App.Cache.jester.goBody.velocity.y > 0)
+            if (!SpawnOnTrajectory && App.Cache.Jester.goBody.velocity.y > 0)
             {
                 return false;
             }
@@ -137,8 +137,8 @@ namespace Assets.Source.Behaviours
 
         private Vector2 GetProjectedPosition()
         {
-            Vector2 jesterVelocity = App.Cache.jester.goBody.velocity;
-            Vector2 jesterPos = App.Cache.jester.goTransform.position;
+            Vector2 jesterVelocity = App.Cache.Jester.goBody.velocity;
+            Vector2 jesterPos = App.Cache.Jester.goTransform.position;
             Vector2 v2Gravity = Physics.gravity;
 
             // The jester's travel-time from his current position to the Spawners X

@@ -1,16 +1,16 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 
-namespace Assets.Source.Items
+namespace Assets.Source.Behaviours.Items
 {
     public class Pickup : AbstractItem
     {
         [Range(1, 5000)]
         public int CurrencyAmount = 5;
 
-        protected override void Execute(Jester jester)
+        protected override void Execute(JesterContainer jester)
         {
-            App.Cache.CurrencyRecorder.AddPickup(CurrencyAmount);
+            App.Cache.GameLogic.currencyRecorder.AddPickup(CurrencyAmount);
         }
     }
 }

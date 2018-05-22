@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class SpriteEffect : AbstractComponent<Jester>
+    public class SpriteEffect : AbstractComponent<JesterContainer>
     {
         private readonly JesterSpriteEffectsConfig config;
 
@@ -26,7 +26,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         
 
 
-        public SpriteEffect(Jester owner, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config)
+        public SpriteEffect(JesterContainer owner, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config)
             : base(owner, true)
         {
             this.config = config;
@@ -56,9 +56,7 @@ namespace Assets.Source.Behaviours.Jester.Components
 
             // Impact Listeners
             owner.Collisions.OnGround(OnImpact);
-            owner.Collisions.OnBoost(OnImpact);
-
-            
+            owner.Collisions.OnBoost(OnImpact);            
         }
 
 

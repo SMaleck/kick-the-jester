@@ -2,13 +2,13 @@
 using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 
-namespace Assets.Source.Items
+namespace Assets.Source.Behaviours.Items
 {
     public abstract class AbstractItem : MonoBehaviour
     {
         [SerializeField] private AudioClip soundEffect;        
 
-        protected abstract void Execute(Jester jester);
+        protected abstract void Execute(JesterContainer jester);
 
        
         // Self-Destruct if we moved out of the camera view
@@ -25,7 +25,7 @@ namespace Assets.Source.Items
         public void OnTriggerEnter2D(Collider2D collision)
         {
             // Safety Check: Only execute if we collided with the Jester
-            Jester jester = collision.gameObject.GetComponent<Jester>();
+            JesterContainer jester = collision.gameObject.GetComponent<JesterContainer>();
 
             if (jester != null)
             {

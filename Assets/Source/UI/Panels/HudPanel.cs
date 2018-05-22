@@ -30,11 +30,11 @@ namespace Assets.Source.UI.Panels
                        .Subscribe(_ => App.Cache.userControl.TooglePause())
                        .AddTo(this);
             
-            App.Cache.jester.DistanceProperty
+            App.Cache.Jester.DistanceProperty
                             .SubscribeToText(DistanceText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
-            App.Cache.jester.HeightProperty
+            App.Cache.Jester.HeightProperty
                             .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
@@ -42,17 +42,17 @@ namespace Assets.Source.UI.Panels
                                        .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
                                        .AddTo(this);
 
-            App.Cache.jester.RelativeVelocityProperty
+            App.Cache.Jester.RelativeVelocityProperty
                             .Subscribe((float value) => { velocityBar.fillAmount = value; })
                             .AddTo(this);
 
-            App.Cache.jester.AvailableShotsProperty
+            App.Cache.Jester.AvailableShotsProperty
                             .Subscribe(OnShotCountChanged)
                             .AddTo(this);
 
             // Activate Velocity display only after start
             velocityBar.gameObject.SetActive(false);
-            App.Cache.jester.IsStartedProperty.Where(e => e).Subscribe(_ => { velocityBar.gameObject.SetActive(true); });
+            App.Cache.Jester.IsStartedProperty.Where(e => e).Subscribe(_ => { velocityBar.gameObject.SetActive(true); });
         }
 
 
