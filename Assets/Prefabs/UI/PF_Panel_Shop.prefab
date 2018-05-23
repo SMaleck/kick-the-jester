@@ -2217,7 +2217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startActive: 1
   resetScale: 1
-  resetPosition: 0
+  resetPosition: 1
   backButton: {fileID: 114066563468198296}
   txtMoney: {fileID: 114394883314093576}
   statResetButton: {fileID: 114267391456748674}
