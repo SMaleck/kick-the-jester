@@ -9,8 +9,7 @@ namespace Assets.Source.Behaviours.MainCamera
     public class CameraBase : AbstractBehaviour, ICamera
     {        
         public Camera UCamera { get; protected set; }
-
-        [SerializeField] protected GameObject pfSkyFade;
+        
         [SerializeField] protected SpriteRenderer screenFaderSprite;
 
         protected ScreenFader screenFader;
@@ -75,11 +74,6 @@ namespace Assets.Source.Behaviours.MainCamera
                 if (App.Cache.Jester != null)
                 {
                     followTarget = new FollowTarget(this, App.Cache.Jester.goTransform);
-
-
-                    // Setup Sky Gradient
-                    var goSkyFade = GameObject.Instantiate(pfSkyFade);
-                    goSkyFade.transform.SetParent(this.transform);
                 }
             }
             catch { }

@@ -82,7 +82,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.6627451, g: 0.7607843, b: 0.91764706, a: 0}
+  m_BackGroundColor: {r: 0.03529412, g: 0, b: 0.1254902, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c10289f11044ed41af75d3df66ce4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pfSkyFade: {fileID: 1244776785424292, guid: 2e3f6ed8ec037e649a5d001217a2d30d, type: 2}
   screenFaderSprite: {fileID: 212854814959035168}
 --- !u!124 &124799225002414142
 Behaviour:
