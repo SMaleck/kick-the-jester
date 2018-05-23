@@ -1,9 +1,5 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.GameLogic.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UniRx;
 
 namespace Assets.Source.Behaviours.GameLogic
