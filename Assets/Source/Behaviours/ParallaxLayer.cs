@@ -6,8 +6,9 @@ namespace Assets.Source.Behaviours
 {
     public class ParallaxLayer : AbstractBehaviour
     {
-        public bool UseSpeed = true;
-        public bool Repeat = true;
+        [SerializeField] private bool UseSpeed = true;
+        [SerializeField] private bool Repeat = true;
+        [SerializeField] private GameObject goSprite;
 
         // RANGE [0, 1]
         // <0: Super Speed!
@@ -26,18 +27,16 @@ namespace Assets.Source.Behaviours
         private Vector2 lastCameraPos;
 
 
-        private void Awake()
+        private void Start()
         {
-            cameraTransform = Camera.main.transform;
+            cameraTransform = App.Cache.MainCamera.UCamera.transform;
             lastCameraPos = cameraTransform.position;
 
-            spriteWidth = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
+            spriteWidth = goSprite.GetComponent<SpriteRenderer>().bounds.size.x;
 
             // Create Left and Right Clones
             if (Repeat)
             {
-                GameObject goSprite = gameObject.GetComponentInChildren<SpriteRenderer>().gameObject;
-
                 CreateAdjecentClone(goSprite, spriteWidth);
                 CreateAdjecentClone(goSprite, -spriteWidth);                
             }
@@ -76,9 +75,9 @@ namespace Assets.Source.Behaviours
         private void CreateAdjecentClone(GameObject toClone, float OffsetX)
         {            
             GameObject goCopy = GameObject.Instantiate(toClone);
-            goCopy.transform.parent = goTransform;
+            goCopy.transform.SetParent(goTransform);
 
-            goCopy.transform.position = new Vector3(goCopy.transform.position.x + OffsetX, goCopy.transform.position.y, goCopy.transform.position.z);
+            goCopy.transform.localPosition = new Vector3(goCopy.transform.localPosition.x + OffsetX, 0, 0);
         }
 
 
@@ -98,8 +97,9 @@ namespace Assets.Source.Behaviours
 
         // Moves the left-most sprite to the right end
         private void ScrollRight()
-        {            
-            spriteTransforms[leftSpriteIndex].position = Vector3.right * (spriteTransforms[rightSpriteIndex].position.x + spriteWidth);
+        {
+            Vector3 nextPos = new Vector3(spriteTransforms[rightSpriteIndex].position.x + spriteWidth, spriteTransforms[rightSpriteIndex].position.y, spriteTransforms[rightSpriteIndex].position.z);
+            spriteTransforms[leftSpriteIndex].position = nextPos;
 
             rightSpriteIndex = leftSpriteIndex;
             leftSpriteIndex++;
