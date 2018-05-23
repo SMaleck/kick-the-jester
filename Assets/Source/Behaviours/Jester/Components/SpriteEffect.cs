@@ -101,7 +101,7 @@ namespace Assets.Source.Behaviours.Jester.Components
 
         private void OnKickHit()
         {
-
+            jesterSprite.sprite = config.LaunchSprite;
         }
 
 

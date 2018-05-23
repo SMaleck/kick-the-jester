@@ -110,8 +110,8 @@ namespace Assets.Source.Behaviours.Jester.Components
         {
             if (!isInitialKick) { return; }
             
-            isInitialKick = false;
-            MessageBroker.Default.Publish(JesterEffects.Kick);
+            isInitialKick = false;            
+            MessageBroker.Default.Publish(JesterEffects.Kick);            
 
             Vector3 appliedForce = forceDirection * (config.KickForce * kickForceFactor);
             ApplyForce(appliedForce);

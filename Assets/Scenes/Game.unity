@@ -747,7 +747,7 @@ GameObject:
   - component: {fileID: 1896679255}
   - component: {fileID: 886429530}
   m_Layer: 9
-  m_Name: UserControl
+  m_Name: _UserControl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

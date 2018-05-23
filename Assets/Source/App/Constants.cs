@@ -3,7 +3,7 @@
     public static class Constants
     {        
         public const string GO_GAME_LOGIC = "_GameLogic";
-        public const string GO_USER_CONTROL = "UserControl";        
+        public const string GO_USER_CONTROL = "_UserControl";        
         public const string GO_JESTER = "Jester";        
 
         // SCENES

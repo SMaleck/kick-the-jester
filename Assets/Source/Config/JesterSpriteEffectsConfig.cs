@@ -8,6 +8,7 @@ namespace Assets.Source.Config
         public float MaxRotationSpeed = 100f;
         
         public Sprite[] ImpactSpritePool;
+        public Sprite LaunchSprite;
         public Sprite LandingSprite;        
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours
+namespace Assets.Source.Behaviours.Items
 {
     public class ItemSpawner : AbstractBehaviour
     {

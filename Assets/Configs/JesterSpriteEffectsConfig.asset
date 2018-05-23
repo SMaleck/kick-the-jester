@@ -19,4 +19,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2dfa99d8d83156f4583491b3469eff59, type: 3}
   - {fileID: 21300000, guid: 1dc7fde2c6701ae4692b765c6aa5b9ac, type: 3}
   - {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
+  LaunchSprite: {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
   LandingSprite: {fileID: 21300000, guid: f1b2d190a6e530748a5b01f1661583c0, type: 3}
