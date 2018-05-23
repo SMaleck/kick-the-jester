@@ -23,12 +23,12 @@ namespace Assets.Source.UI.Panels
         {
             base.Setup();            
             
-            App.Cache.CurrencyRecorder.OnCommit(OnFlightEnd);
+            App.Cache.GameLogic.currencyRecorder.OnCommit(OnFlightEnd);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked()).AddTo(this);
             shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked()).AddTo(this);
             
-            App.Cache.jester.DistanceProperty
+            App.Cache.Jester.DistanceProperty
                             .Subscribe(x => { distance.text = x.ToMeters() + "m"; })
                             .AddTo(this);
 
@@ -37,13 +37,6 @@ namespace Assets.Source.UI.Panels
                                        .AddTo(this);
 
             initialCurrencyAmount = Kernel.PlayerProfileService.Currency;
-            //Kernel.PlayerProfileService.currencyProperty
-            //                           .Subscribe(x => { finalCurrencyAmount = x; })
-            //                           .AddTo(this);
-
-            //App.Cache.CurrencyRecorder.CurrencyCollectedProperty
-            //                          .Subscribe(x => { finalCurrencyCollected = x; })
-            //                          .AddTo(this);
             
 
             currencyCollected.text = "0G";
@@ -53,8 +46,8 @@ namespace Assets.Source.UI.Panels
 
         private void OnFlightEnd()
         {
-            int currencyEarnedByDistance = App.Cache.CurrencyRecorder.CalculateCurrencyEarnedInFlight();
-            finalCurrencyCollected = App.Cache.CurrencyRecorder.CurrencyCollected;
+            int currencyEarnedByDistance = App.Cache.GameLogic.currencyRecorder.CalculateCurrencyEarnedInFlight();
+            finalCurrencyCollected = App.Cache.GameLogic.currencyRecorder.CurrencyCollected;
             finalCurrencyAmount = Kernel.PlayerProfileService.Currency;
 
             LeanTween.sequence()

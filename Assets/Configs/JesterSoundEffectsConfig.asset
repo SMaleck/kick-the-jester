@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 685a3e93bd9a6c0489f8a7f5b3cdce1e, type: 3}
   m_Name: JesterSoundEffectsConfig
   m_EditorClassIdentifier: 
-  GroundHit: {fileID: 8300000, guid: 4b70846e583049a46af0c026dce91c10, type: 3}
+  GroundHit: {fileID: 8300000, guid: 832fc518a28b529459f9a8f8b906ccc4, type: 3}

@@ -12,11 +12,11 @@ namespace Assets.Source.UI.Panels
         {
             base.Setup();
 
-            App.Cache.jester.RelativeKickForceProperty                                                
+            App.Cache.Jester.RelativeKickForceProperty                                                
                             .Subscribe((float value) => { kickForceSlider.fillAmount = value; })
                             .AddTo(this);
 
-            App.Cache.jester.IsStartedProperty.Where(e => e).Subscribe(_ => { gameObject.SetActive(false); });
+            App.Cache.Jester.IsStartedProperty.Where(e => e).Subscribe(_ => { gameObject.SetActive(false); });
         }
     }
 }

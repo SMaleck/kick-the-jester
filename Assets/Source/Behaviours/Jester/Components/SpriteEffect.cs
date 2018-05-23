@@ -1,10 +1,11 @@
 ﻿using Assets.Source.Config;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class SpriteEffect : AbstractComponent<Jester>
+    public class SpriteEffect : AbstractComponent<JesterContainer>
     {
         private readonly JesterSpriteEffectsConfig config;
 
@@ -25,7 +26,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         
 
 
-        public SpriteEffect(Jester owner, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config)
+        public SpriteEffect(JesterContainer owner, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config)
             : base(owner, true)
         {
             this.config = config;
@@ -55,9 +56,7 @@ namespace Assets.Source.Behaviours.Jester.Components
 
             // Impact Listeners
             owner.Collisions.OnGround(OnImpact);
-            owner.Collisions.OnBoost(OnImpact);
-
-            
+            owner.Collisions.OnBoost(OnImpact);            
         }
 
 
@@ -79,8 +78,12 @@ namespace Assets.Source.Behaviours.Jester.Components
                 currentRotationSpeed = UnityEngine.Random.Range(config.MinRotationSpeed, config.MaxRotationSpeed);
 
                 // Switch Sprite
-                int index = Random.Range(0, config.ImpactSpritePool.Length);
-                jesterSprite.sprite = config.ImpactSpritePool[index];
+
+                // Get all sprites that are not the one currently used, and get a random index from that
+                var currentPool = config.ImpactSpritePool.Where(e => !e.Equals(jesterSprite.sprite));
+                int index = Random.Range(0, currentPool.Count());
+
+                jesterSprite.sprite = currentPool.ElementAt(index);
             }
         }
 
@@ -98,13 +101,14 @@ namespace Assets.Source.Behaviours.Jester.Components
 
         private void OnKickHit()
         {
-
+            jesterSprite.sprite = config.LaunchSprite;
         }
 
 
         private void OnShotHit()
         {            
             effectAnimator.Play("Anim_Projectile_Shoot");
+            OnImpact();
         }
     }
 }

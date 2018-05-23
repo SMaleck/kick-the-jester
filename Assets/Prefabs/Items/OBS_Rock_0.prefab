@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61526106488938970}
   - component: {fileID: 114975201992891374}
   m_Layer: 11
-  m_Name: OBS_Rock
+  m_Name: OBS_Rock_0
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

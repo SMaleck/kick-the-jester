@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Source.GameLogic;
 using NUnit.Framework;
 using UnityEditor.TestTools;
 using UnityEngine.SceneManagement;

@@ -1,6 +1,7 @@
-﻿using Assets.Source.Behaviours.Jester;
+﻿using Assets.Source.Behaviours;
+using Assets.Source.Behaviours.GameLogic;
+using Assets.Source.Behaviours.Jester;
 using Assets.Source.Behaviours.MainCamera;
-using Assets.Source.GameLogic;
 using System;
 using UnityEngine;
 
@@ -8,62 +9,41 @@ namespace Assets.Source.App
 {
     public static class Cache
     {
-        /* -------------------------------------------------------------------- */
-        #region GAME OBJECTS
-
-        private static GameObject _GameLogic;
-        private static GameObject GameLogic
-        {
-            get
-            {
-                if (_GameLogic == null)
-                {
-                    _GameLogic = GameObject.Find(Constants.GO_GAME_LOGIC);
-                }
-
-                return _GameLogic;
-            }
-        }
-
-        #endregion
-
-
-        /* -------------------------------------------------------------------- */
-        #region COMPONENTS
-
         public static ICamera MainCamera
         {
             get { return Camera.main.GetComponent<ICamera>(); }
         }
 
 
-        private static GameStateMachine gameStateMachine;
-        public static GameStateMachine GameStateMachine
+        private static GameLogicContainer _gameLogic;
+        public static GameLogicContainer GameLogic
         {
             get
             {
-                if (gameStateMachine == null)
+                if (_gameLogic == null)
                 {
-                    gameStateMachine = GameLogic.GetComponent<GameStateMachine>();
+                    _gameLogic = GetComponentFrom<GameLogicContainer>(Constants.GO_GAME_LOGIC);
                 }
 
-                return gameStateMachine;
+                return _gameLogic;
             }
         }
 
-        private static CurrencyRecorder _currencyRecorder;
-        public static CurrencyRecorder CurrencyRecorder
+
+        private static JesterContainer _jester;
+        public static JesterContainer Jester
         {
             get
             {
-                if (_currencyRecorder == null)
+                if (_jester == null)
                 {
-                    _currencyRecorder = GameLogic.GetComponent<CurrencyRecorder>();
+                    _jester = GetComponentFrom<JesterContainer>(Constants.GO_JESTER);
                 }
 
-                return _currencyRecorder;
+                return _jester;
             }
         }
+
 
         private static UserControl _userControl;
         public static UserControl userControl
@@ -79,23 +59,6 @@ namespace Assets.Source.App
         }
 
 
-        private static Jester _jester;
-        public static Jester jester
-        {
-            get
-            {
-                if (_jester == null)
-                {
-                    _jester = GetComponentFrom<Jester>(Constants.GO_JESTER);
-                }
-
-                return _jester;
-            }
-        }
-
-        #endregion
-
-        
         /* ------------------------------------------------------------------------------------ */
         #region Utilities
 

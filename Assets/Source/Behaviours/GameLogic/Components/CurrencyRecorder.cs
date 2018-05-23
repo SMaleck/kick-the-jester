@@ -1,13 +1,30 @@
 ﻿using Assets.Source.App;
+using Assets.Source.App.Storage;
 using Assets.Source.Models;
 using System;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.GameLogic
+namespace Assets.Source.Behaviours.GameLogic.Components
 {
-    public class CurrencyRecorder : MonoBehaviour
-    {
+    public class CurrencyRecorder : AbstractComponent<GameLogicContainer>
+    {        
+        private readonly PlayerProfileService playerProfileService;
+
+        public CurrencyRecorder(GameLogicContainer owner, PlayerProfileService playerProfileService) 
+            : base(owner)
+        {            
+            this.playerProfileService = playerProfileService;
+
+            HasCommitted = false;
+
+            owner.StateProperty
+                 .Where(e => e.Equals(GameState.End))
+                 .Subscribe(OnEnd)
+                 .AddTo(owner);
+        }
+
         public IntReactiveProperty CurrencyCollectedProperty = new IntReactiveProperty(0);
         public int CurrencyCollected
         {
@@ -23,14 +40,6 @@ namespace Assets.Source.GameLogic
             if (HasCommitted) handler();
         }
 
-        private void Awake()
-        {
-            HasCommitted = false;
-            App.Cache.GameStateMachine.StateProperty
-                                      .Where(e => e.Equals(GameState.End))
-                                      .Subscribe(OnEnd)
-                                      .AddTo(this);
-        }
 
         // Commit Money to profile, if the game ended, or we are switching
         private void OnEnd(GameState state)
@@ -51,7 +60,7 @@ namespace Assets.Source.GameLogic
         /// <returns></returns>
         private bool TryCommitPools()
         {
-            Kernel.PlayerProfileService.Currency += Math.Abs(CurrencyCollected) + Math.Abs(CalculateCurrencyEarnedInFlight());
+            playerProfileService.Currency += Math.Abs(CurrencyCollected) + Math.Abs(CalculateCurrencyEarnedInFlight());
             _OnCommit();
             return true;
         }
@@ -59,7 +68,7 @@ namespace Assets.Source.GameLogic
         public int CalculateCurrencyEarnedInFlight()
         {
             // 10% of the distance achieved
-            return Mathf.RoundToInt(App.Cache.jester.Distance.ToMeters() * 0.1f);
+            return Mathf.RoundToInt(App.Cache.Jester.Distance.ToMeters() * 0.1f);
         }
     }
 }

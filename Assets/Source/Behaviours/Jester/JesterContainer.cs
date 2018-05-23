@@ -1,7 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
-using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace Assets.Source.Behaviours.Jester
 {
     public enum JesterEffects { Kick, Shot, Impact }
 
-    public class Jester : AbstractBodyBehaviour
+    public class JesterContainer : AbstractBodyBehaviour
     {
         /* -------------------------------------------------------------------------------------- */
         #region REACTIVE PROPERTIES
@@ -96,9 +95,9 @@ namespace Assets.Source.Behaviours.Jester
         private void Awake()
         {
             flightRecorder = new FlightRecorder(this);
-            soundEffect = new SoundEffect(this, soundEffectsConfig);
+            soundEffect = new SoundEffect(this, soundEffectsConfig, Kernel.AudioService);
             spriteEffect = new SpriteEffect(this, goJesterSprite, goEffectSprite, spriteEffectsConfig);
-            kickForce = new KickForce(this, new JesterMovementConfig());
+            kickForce = new KickForce(this, new JesterMovementConfig(), App.Cache.GameLogic, App.Cache.userControl);
 
             // Listen to Pause State
             Kernel.AppState.IsPausedProperty

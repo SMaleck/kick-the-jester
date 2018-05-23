@@ -72,9 +72,9 @@ namespace Assets.Source.Behaviours.MainCamera
             // Setup following component, if jester is present in the scene
             try
             {
-                if (App.Cache.jester != null)
+                if (App.Cache.Jester != null)
                 {
-                    followTarget = new FollowTarget(this, App.Cache.jester.goTransform);
+                    followTarget = new FollowTarget(this, App.Cache.Jester.goTransform);
 
 
                     // Setup Sky Gradient

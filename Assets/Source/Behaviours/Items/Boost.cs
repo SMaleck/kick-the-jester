@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Behaviours.Jester;
 using UnityEngine;
 
-namespace Assets.Source.Items
+namespace Assets.Source.Behaviours.Items
 {
     public class Boost : AbstractItem
     {
@@ -12,7 +12,7 @@ namespace Assets.Source.Items
         public Vector2 Direction = new Vector2(1, 1);
 
 
-        protected override void Execute(Jester jester)
+        protected override void Execute(JesterContainer jester)
         {            
             Vector2 force = Direction * Strength;
 

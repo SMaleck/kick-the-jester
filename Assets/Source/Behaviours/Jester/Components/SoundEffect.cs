@@ -1,18 +1,20 @@
-﻿using Assets.Source.App;
+﻿using Assets.Source.App.Audio;
 using Assets.Source.Config;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
-    public class SoundEffect : AbstractComponent<Jester>
+    public class SoundEffect : AbstractComponent<JesterContainer>
     {
         private readonly JesterSoundEffectsConfig config;
+        private readonly AudioService audioService;
 
-        public SoundEffect(Jester owner, JesterSoundEffectsConfig config)
+        public SoundEffect(JesterContainer owner, JesterSoundEffectsConfig config, AudioService audioService)
             : base(owner, false)
         {
             this.config = config;
+            this.audioService = audioService;
 
-            owner.Collisions.OnGround(() => Kernel.AudioService.PlayRandomizedSFX(config.GroundHit));
+            owner.Collisions.OnGround(() => audioService.PlayRandomizedSFX(config.GroundHit));
         }
     }
 }
