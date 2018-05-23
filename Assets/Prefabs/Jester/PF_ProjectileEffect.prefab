@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c2fb1bbd796c1419450da42095255c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomize: 0
+  randomize: 1
   clip: {fileID: 8300000, guid: 74fa72c842cc0274b96bb9c9d622bfe8, type: 3}
 --- !u!212 &212661129957765310
 SpriteRenderer:
@@ -106,7 +106,7 @@ SpriteRenderer:
   m_SortingLayerID: -922635221
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5c7e928c788949346a09ed4d6e6aaa0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3107a47bfc8aca468ea43c5abd544c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
