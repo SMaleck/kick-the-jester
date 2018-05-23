@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3ba0eb4b0ebef4d8a8dbafd3629126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEffect: {fileID: 8300000, guid: 519b5609d20ed014c9b166ff5788d159, type: 3}
+  soundEffect: {fileID: 8300000, guid: 59acd8414b154794d87fa49512e36102, type: 3}
   Strength: 10
   forceMode: 1
   Direction: {x: 0, y: 1}

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4676930310889996}
   - component: {fileID: 212661129957765310}
   - component: {fileID: 95690625746412294}
+  - component: {fileID: 114861924153305558}
   m_Layer: 0
   m_Name: PF_ProjectileEffect
   m_TagString: Untagged
@@ -58,6 +59,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114861924153305558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1681256128431784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c2fb1bbd796c1419450da42095255c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomize: 0
+  clip: {fileID: 8300000, guid: 74fa72c842cc0274b96bb9c9d622bfe8, type: 3}
 --- !u!212 &212661129957765310
 SpriteRenderer:
   m_ObjectHideFlags: 1
