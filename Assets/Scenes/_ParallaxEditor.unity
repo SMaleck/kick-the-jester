@@ -140,15 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee68b56bd156544cb2aca46aa2fad80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerConfigs:
-  - SortingLayer: 
-    SortingOrder: 0
-    UseSpeed: 0
-    Repeat: 0
-    Speed: 0
-    Sprite: {fileID: 21300000, guid: dcb6a918ffde92a4393103e13b8b575b, type: 3}
-    LocalPosition: {x: 0, y: 0, z: 0}
-    Scale: {x: 0, y: 0, z: 0}
+  config: {fileID: 11400000, guid: 6bc75b0affd2a014fa455e77afbf59c1, type: 2}
 --- !u!4 &846545168
 Transform:
   m_ObjectHideFlags: 0

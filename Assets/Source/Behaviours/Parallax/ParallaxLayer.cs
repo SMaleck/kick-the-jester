@@ -61,6 +61,7 @@ namespace Assets.Source.Behaviours.Parallax
             spriteRenderer.sortingLayerName = config.SortingLayer;
             spriteRenderer.sortingOrder = config.SortingOrder;
 
+            go.name = "PrxLayer_" + spriteRenderer.sprite.name;
             return go;
         }
 
