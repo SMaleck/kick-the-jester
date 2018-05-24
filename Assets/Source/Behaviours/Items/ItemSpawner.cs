@@ -2,32 +2,15 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Assets.Source.Config;
 
 namespace Assets.Source.Behaviours.Items
 {
     public class ItemSpawner : AbstractBehaviour
     {
+        public SpawningLanesConfig spawningLanesConfig;
+
         private bool CanSpawn = true;
-
-        public GameObject[] ItemPool;
-        
-        // Percent-based Spawn chance
-        [Range(0.0f, 1.0f)]
-        public float SpawnChance = 0.8f;
-
-        // If this is set, item will be spanwed on the Jesters projected trajectory
-        public bool SpawnOnTrajectory = true;
-        private float minTrajectorySpawnHeight = 5f;
-
-        // Determines by how much the Spawn location can deviate from the projected position
-        // This has no effect if SpawnOnTrajectory = false
-        [Range(0.0f, 15)]
-        public float ProjectionMaxDeviation = 1f;
-
-        [Range(0, 10000)]
-        public int MinDistanceBetweenSpawns = 20;
-
-        public float minimumHeight = 0f;
 
         protected int lastSpawnPoint = 0;
         protected int distanceSinceLastSpawn = 0;
@@ -67,7 +50,7 @@ namespace Assets.Source.Behaviours.Items
         protected virtual bool ShouldSpawn(int distance)
         {
             // Do not spawn if we should spawn on the ground and jester is moving upwards
-            if (!SpawnOnTrajectory && App.Cache.Jester.goBody.velocity.y > 0)
+            if (!spawningLanesConfig.SpawnOnTrajectory && App.Cache.Jester.goBody.velocity.y > 0)
             {
                 return false;
             }
@@ -75,10 +58,10 @@ namespace Assets.Source.Behaviours.Items
             distanceSinceLastSpawn = distance - lastSpawnPoint;
 
             // Check if the minimum Distance since last Spawn was travelled
-            if (distanceSinceLastSpawn >= MinDistanceBetweenSpawns)
+            if (distanceSinceLastSpawn >= spawningLanesConfig.MinDistanceBetweenSpawns)
             {
                 // Randomly decide whether to spawn
-                bool result = SpawnChance >= UnityEngine.Random.Range(0.01f, 1.0f);
+                bool result = spawningLanesConfig.SpawnChance >= UnityEngine.Random.Range(0.01f, 1.0f);
 
                 if (result)
                 {
@@ -97,9 +80,12 @@ namespace Assets.Source.Behaviours.Items
         // Spawns a random item from the pool
         protected virtual void SpawnRandomItem()
         {
-            int index = randomPoolIndex.Next(0, ItemPool.Length);
+            // TODO: has to get one spawning lane instance
+            SpawningLane spawningLane = spawningLanesConfig.SpawningLanes[0];
 
-            GameObject go = Instantiate(ItemPool[index]);
+            int index = randomPoolIndex.Next(0, spawningLane.itemPool.Count);
+
+            GameObject go = Instantiate(spawningLane.itemPool[index]);
             go.transform.position = GetSpawnPosition();
         }
 
@@ -107,7 +93,7 @@ namespace Assets.Source.Behaviours.Items
         // Returns the spawn position, based on the set config
         protected virtual Vector2 GetSpawnPosition()
         {
-            if (SpawnOnTrajectory)
+            if (spawningLanesConfig.SpawnOnTrajectory)
             {
                 return GetProjectedSpawnPosition();
             }
@@ -124,15 +110,15 @@ namespace Assets.Source.Behaviours.Items
             Vector2 projectedPosition = GetProjectedPosition();
 
             // Introduce deviation
-            float deviationX = UnityEngine.Random.Range(-ProjectionMaxDeviation, ProjectionMaxDeviation);
-            float deviationY = UnityEngine.Random.Range(-ProjectionMaxDeviation, ProjectionMaxDeviation);
+            float deviationX = UnityEngine.Random.Range(-spawningLanesConfig.ProjectionMaxDeviation, spawningLanesConfig.ProjectionMaxDeviation);
+            float deviationY = UnityEngine.Random.Range(-spawningLanesConfig.ProjectionMaxDeviation, spawningLanesConfig.ProjectionMaxDeviation);
 
             projectedPosition.Set(projectedPosition.x + deviationX, projectedPosition.y + deviationY);
 
             // Cap projected position at min Height
-            if (projectedPosition.y <= minTrajectorySpawnHeight)
+            if (projectedPosition.y <= spawningLanesConfig.minimumHeight)
             {
-                projectedPosition.Set(projectedPosition.x, minTrajectorySpawnHeight);
+                projectedPosition.Set(projectedPosition.x, spawningLanesConfig.minimumHeight);
             }
 
             return projectedPosition;

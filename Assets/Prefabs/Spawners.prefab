@@ -157,12 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f8c54ad46ab7646a621cee68418a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemPool:
-  - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
-  SpawnChance: 0.5
-  SpawnOnTrajectory: 1
-  ProjectionMaxDeviation: 3
-  MinDistanceBetweenSpawns: 125
+  spawningLanesConfig: {fileID: 11400000, guid: f450d52475899464db6b7af49d053857,
+    type: 2}
 --- !u!114 &114793658618650866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,14 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f8c54ad46ab7646a621cee68418a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemPool:
-  - {fileID: 1176274882300718, guid: 12044bc0e533d7942948a614f072ccce, type: 2}
-  - {fileID: 1176274882300718, guid: ce5a6b5ac264f2d4f807bb2bae04d48e, type: 2}
-  - {fileID: 1176274882300718, guid: 8088ecc1434d7824abd176bbc88e44f1, type: 2}
-  SpawnChance: 0.8
-  SpawnOnTrajectory: 0
-  ProjectionMaxDeviation: 1
-  MinDistanceBetweenSpawns: 60
+  spawningLanesConfig: {fileID: 11400000, guid: 812e785e91338a244a862227b9b50878,
+    type: 2}
 --- !u!114 &114891765417956850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,9 +211,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f8c54ad46ab7646a621cee68418a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemPool:
-  - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
-  SpawnChance: 0.3
-  SpawnOnTrajectory: 1
-  ProjectionMaxDeviation: 4
-  MinDistanceBetweenSpawns: 110
+  spawningLanesConfig: {fileID: 11400000, guid: 72f1c87af4014de49934dd4e492fa88a,
+    type: 2}
