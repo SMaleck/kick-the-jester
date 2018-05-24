@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours
-{
+{    
     public class ParallaxLayer : AbstractBehaviour
     {
         [SerializeField] private bool UseSpeed = true;
