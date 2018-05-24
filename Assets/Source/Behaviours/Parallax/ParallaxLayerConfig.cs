@@ -20,7 +20,7 @@ namespace Assets.Source.Behaviours.Parallax
         public float Speed;
         public Sprite Sprite;
 
-        public Vector3 LocalPosition = Vector3.zero;
+        public Vector3 Position = Vector3.zero;
         public Vector3 Scale = Vector3.one;
     }
 }
