@@ -18,6 +18,6 @@ MonoBehaviour:
     - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
   SpawnChance: 0.306
   SpawnOnTrajectory: 1
-  MaxDeviation: 1
-  MinDistanceBetweenSpawns: 100
+  MaxDeviation: 8.21
+  MinDistanceBetweenSpawns: 130
   MinHeight: 5

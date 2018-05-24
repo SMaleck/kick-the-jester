@@ -132,7 +132,7 @@ namespace Assets.Source.Behaviours.Items
             float deviationX = Random.Range(-spawningLanesConfig.MaxDeviation,
                 spawningLanesConfig.MaxDeviation);
 
-            var spawnPosition = new Vector2(goTransform.position.x + deviationX, randomPosY);
+            var spawnPosition = new Vector2(goTransform.position.x + deviationX, groundPosition.y + randomPosY);
             return spawnPosition;
         }
 
