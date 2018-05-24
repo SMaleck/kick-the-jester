@@ -1,33 +1,14 @@
 ﻿using UniRx;
 using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
+using Assets.Source.Config;
 
 namespace Assets.Source.Behaviours.Items
 {
     public class ItemSpawner : AbstractBehaviour
     {
+        public SpawningLanesConfig spawningLanesConfig;
+
         private bool CanSpawn = true;
-
-        public GameObject[] ItemPool;
-        
-        // Percent-based Spawn chance
-        [Range(0.0f, 1.0f)]
-        public float SpawnChance = 0.8f;
-
-        // If this is set, item will be spanwed on the Jesters projected trajectory
-        public bool SpawnOnTrajectory = true;
-        private float minTrajectorySpawnHeight = 5f;
-
-        // Determines by how much the Spawn location can deviate from the projected position
-        // This has no effect if SpawnOnTrajectory = false
-        [Range(0.0f, 15)]
-        public float ProjectionMaxDeviation = 1f;
-
-        [Range(0, 10000)]
-        public int MinDistanceBetweenSpawns = 20;
-
-        public float minimumHeight = 0f;
 
         protected int lastSpawnPoint = 0;
         protected int distanceSinceLastSpawn = 0;
@@ -56,67 +37,107 @@ namespace Assets.Source.Behaviours.Items
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distance)
         {
-            if (CanSpawn && ShouldSpawn((int)distance))
+            if (!CanSpawn) { return; }
+
+            // Try a spawn in each of the lanes
+            for (var i=0; i < spawningLanesConfig.SpawningLanes.Count; i++)
             {
-                SpawnRandomItem();
+                SpawningLane spawningLane = spawningLanesConfig.SpawningLanes[i];
+
+                if (ShouldSpawn((int)distance, spawningLane))
+                {
+                    SpawnRandomItem(spawningLane);
+                }
             }
         }
 
 
-        // Checks whether we should spawn an obstacle, based on some rules
-        protected virtual bool ShouldSpawn(int distance)
+        /// <summary>
+        /// <para> Checks whether we should spawn an item, based on some rules</para>
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        protected virtual bool ShouldSpawn(int distance, SpawningLane spawningLane)
         {
-            // Do not spawn if we should spawn on the ground and jester is moving upwards
-            if (!SpawnOnTrajectory && App.Cache.Jester.goBody.velocity.y > 0)
+            // Sanity check
+            if (spawningLane.itemPool.Count == 0)
+            {
+                Debug.LogWarning("Item Pool is empty! Please verify if everything is correctly setup in the spawners");
+                return false;
+            }
+
+            // Do not spawn if the jester is above the lane max height and is also moving upwards
+            if (!spawningLanesConfig.SpawnOnTrajectory &&
+                App.Cache.Jester.goBody.position.y > spawningLane.maxHeight &&
+                App.Cache.Jester.goBody.velocity.y > 0)
             {
                 return false;
             }
 
             distanceSinceLastSpawn = distance - lastSpawnPoint;
 
-            // Check if the minimum Distance since last Spawn was travelled
-            if (distanceSinceLastSpawn >= MinDistanceBetweenSpawns)
+            // Do not spawn if the minimum distance since last Spawn was not travelled yet
+            if (distanceSinceLastSpawn <= spawningLanesConfig.MinDistanceBetweenSpawns)
             {
-                // Randomly decide whether to spawn
-                bool result = SpawnChance >= UnityEngine.Random.Range(0.01f, 1.0f);
+                return false;
+            }
+            
+            // Randomly decide whether to spawn
+            bool result = spawningLanesConfig.SpawnChance >= Random.Range(0.01f, 1.0f);
 
-                if (result)
-                {
-                    // Reset distance tracking
-                    lastSpawnPoint = distance;
-                    distanceSinceLastSpawn = 0;
-                }
-
-                return result;
+            if (result)
+            {
+                // Reset distance tracking
+                lastSpawnPoint = distance;
+                distanceSinceLastSpawn = 0;
             }
 
-            return false;
+            return result;
         }
 
 
         // Spawns a random item from the pool
-        protected virtual void SpawnRandomItem()
+        protected virtual void SpawnRandomItem(SpawningLane spawningLane)
         {
-            int index = randomPoolIndex.Next(0, ItemPool.Length);
+            var itemPool = spawningLane.itemPool;
+            int index = randomPoolIndex.Next(0, itemPool.Count);
 
-            GameObject go = Instantiate(ItemPool[index]);
-            go.transform.position = GetSpawnPosition();
+            GameObject go = Instantiate(itemPool[index]);
+            go.transform.position = GetSpawnPosition(spawningLane);
         }
 
 
         // Returns the spawn position, based on the set config
-        protected virtual Vector2 GetSpawnPosition()
+        protected virtual Vector2 GetSpawnPosition(SpawningLane spawningLane)
         {
-            if (SpawnOnTrajectory)
+            if (spawningLanesConfig.SpawnOnTrajectory)
             {
                 return GetProjectedSpawnPosition();
             }
 
-            return new Vector2(goTransform.position.x, groundPosition.y);
+            return GetSpawnPositionInsideLane(spawningLane);
+        }
+
+        /// <summary>
+        /// Calculates the spawn position, according to the spawning lane restrictions
+        /// </summary>
+        /// <param name="spawningLane"></param>
+        /// <returns></returns>
+        private Vector2 GetSpawnPositionInsideLane(SpawningLane spawningLane)
+        {
+            // Random spread within the lane
+            float randomPosY = Random.Range(spawningLane.minHeight, spawningLane.maxHeight);
+            
+            // Introduce deviation on x position
+            float deviationX = Random.Range(-spawningLanesConfig.MaxDeviation,
+                spawningLanesConfig.MaxDeviation);
+
+            var spawnPosition = new Vector2(goTransform.position.x + deviationX, groundPosition.y + randomPosY);
+            return spawnPosition;
         }
 
 
-        // Claculates the Jester's projetced position for spawning
+        // Calculates the Jester's projected position for spawning
         // Adds deviation from the calculated position, based on config above
         // Position is capped at ground level        
         private Vector2 GetProjectedSpawnPosition()
@@ -124,15 +145,17 @@ namespace Assets.Source.Behaviours.Items
             Vector2 projectedPosition = GetProjectedPosition();
 
             // Introduce deviation
-            float deviationX = UnityEngine.Random.Range(-ProjectionMaxDeviation, ProjectionMaxDeviation);
-            float deviationY = UnityEngine.Random.Range(-ProjectionMaxDeviation, ProjectionMaxDeviation);
+            float deviationX = Random.Range(-spawningLanesConfig.MaxDeviation,
+                spawningLanesConfig.MaxDeviation);
+            float deviationY = Random.Range(-spawningLanesConfig.MaxDeviation,
+                spawningLanesConfig.MaxDeviation);
 
             projectedPosition.Set(projectedPosition.x + deviationX, projectedPosition.y + deviationY);
 
             // Cap projected position at min Height
-            if (projectedPosition.y <= minTrajectorySpawnHeight)
+            if (projectedPosition.y <= spawningLanesConfig.MinHeight)
             {
-                projectedPosition.Set(projectedPosition.x, minTrajectorySpawnHeight);
+                projectedPosition.Set(projectedPosition.x, spawningLanesConfig.MinHeight);
             }
 
             return projectedPosition;

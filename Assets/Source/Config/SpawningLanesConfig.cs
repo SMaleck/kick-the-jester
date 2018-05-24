@@ -16,14 +16,14 @@ namespace Assets.Source.Config
         public bool SpawnOnTrajectory = true;
 
         // Determines by how much the Spawn location can deviate from the projected position
-        // This has no effect if SpawnOnTrajectory = false
         [Range(0.0f, 15)]
-        public float ProjectionMaxDeviation = 1f;
+        public float MaxDeviation = 1f;
 
-        [Range(0, 10000)]
+        [Range(0, 1000)]
+        [Tooltip("In Units")]
         public int MinDistanceBetweenSpawns = 20;
 
-        public float minimumHeight = 0f;
+        public float MinHeight = 0f;
 
     }
 }
