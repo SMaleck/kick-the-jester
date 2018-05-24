@@ -16,8 +16,8 @@ MonoBehaviour:
     maxHeight: 0
     itemPool:
     - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
-  SpawnChance: 0.8
+  SpawnChance: 0.306
   SpawnOnTrajectory: 1
-  ProjectionMaxDeviation: 1
-  MinDistanceBetweenSpawns: 20
-  minimumHeight: 0
+  MaxDeviation: 1
+  MinDistanceBetweenSpawns: 100
+  MinHeight: 5

@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using Assets.Source.Behaviours.Items;
+using System.Reflection;
 
 namespace Assets.Editor.Inspector
 {
@@ -94,13 +95,18 @@ namespace Assets.Editor.Inspector
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("SpawnChance"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("SpawnOnTrajectory"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("ProjectionMaxDeviation"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("MinDistanceBetweenSpawns"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("minimumHeight"));
-            Show(serializedObject.FindProperty("SpawningLanes"), EditorListOption.All);
+            FieldInfo[] properties = typeof(SpawningLanesConfig).GetFields(BindingFlags.Instance | BindingFlags.Public);
 
+            for (var i = 0; i < properties.Length; i++)
+            {
+                if (properties[i].Name.Equals("SpawningLanes"))
+                {
+                    Show(serializedObject.FindProperty(properties[i].Name), EditorListOption.All);
+                } else
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty(properties[i].Name));
+                }
+            }
 
             serializedObject.ApplyModifiedProperties();
         }
