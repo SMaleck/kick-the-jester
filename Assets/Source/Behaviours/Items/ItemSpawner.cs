@@ -1,5 +1,7 @@
 ﻿using UniRx;
 using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
 
 namespace Assets.Source.Behaviours.Items
 {
@@ -8,7 +10,7 @@ namespace Assets.Source.Behaviours.Items
         private bool CanSpawn = true;
 
         public GameObject[] ItemPool;
-
+        
         // Percent-based Spawn chance
         [Range(0.0f, 1.0f)]
         public float SpawnChance = 0.8f;
@@ -24,6 +26,8 @@ namespace Assets.Source.Behaviours.Items
 
         [Range(0, 10000)]
         public int MinDistanceBetweenSpawns = 20;
+
+        public float minimumHeight = 0f;
 
         protected int lastSpawnPoint = 0;
         protected int distanceSinceLastSpawn = 0;
