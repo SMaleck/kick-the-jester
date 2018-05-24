@@ -16,7 +16,10 @@ namespace Assets.Source.Behaviours
             this.owner = owner;
             this.isPausable = isPausable;
 
-            Kernel.AppState.IsPausedProperty.Subscribe((bool value) => OnPause(value)).AddTo(owner);
+            if (isPausable)
+            {
+                Kernel.AppState.IsPausedProperty.Subscribe((bool value) => OnPause(value)).AddTo(owner);
+            }            
 
             Observable.EveryUpdate().Subscribe(_ => UpdateProxy(Update)).AddTo(owner);
             Observable.EveryFixedUpdate().Subscribe(_ => UpdateProxy(FixedUpdate)).AddTo(owner);
