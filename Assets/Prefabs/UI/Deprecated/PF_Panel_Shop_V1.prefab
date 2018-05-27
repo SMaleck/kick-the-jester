@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 225597420704852124}
   - component: {fileID: 114529272054112478}
   m_Layer: 5
-  m_Name: PF_Panel_Shop_BACK
+  m_Name: PF_Panel_Shop_V1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2219,6 +2219,7 @@ MonoBehaviour:
   resetScale: 1
   resetPosition: 1
   localPosition: {x: 0, y: 0, z: 0}
+  panelConfirmReset: {fileID: 0}
   backButton: {fileID: 114066563468198296}
   txtMoney: {fileID: 114394883314093576}
   statResetButton: {fileID: 114267391456748674}

@@ -7,6 +7,8 @@ namespace Assets.Source.UI.Panels
 {
     public class FlightEndPanel : AbstractPanel
     {
+        [SerializeField] GameObject newBestLabel;
+
         [SerializeField] Button retryButton;
         [SerializeField] Button shopButton;
         [SerializeField] Text distance;
@@ -21,8 +23,10 @@ namespace Assets.Source.UI.Panels
 
         public override void Setup()
         {
-            base.Setup();            
-            
+            base.Setup();
+            newBestLabel.SetActive(false);
+
+
             App.Cache.GameLogic.currencyRecorder.OnCommit(OnFlightEnd);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked()).AddTo(this);
@@ -51,8 +55,8 @@ namespace Assets.Source.UI.Panels
             finalCurrencyAmount = Kernel.PlayerProfileService.Currency;
 
             LeanTween.sequence()
-                .append(LeanTween.value(gameObject, OnCurrencyCollectedTween, 0f, finalCurrencyCollected, 1.5f))
-                .append(LeanTween.value(gameObject, OnCurrencyDistanceTween, 0f, currencyEarnedByDistance, 1.5f))
+                .append(LeanTween.value(gameObject, OnCurrencyCollectedTween, 0f, finalCurrencyCollected, 1f))
+                .append(LeanTween.value(gameObject, OnCurrencyDistanceTween, 0f, currencyEarnedByDistance, 1f))
                 .append(LeanTween.value(gameObject, OnCurrencyTotalTween, initialCurrencyAmount, finalCurrencyAmount, 1f));
 
             gameObject.SetActive(true);

@@ -886,6 +886,8 @@ MonoBehaviour:
   startActive: 0
   resetScale: 1
   resetPosition: 1
+  localPosition: {x: 0, y: 0, z: 0}
+  newBestLabel: {fileID: 0}
   retryButton: {fileID: 114796992364770552}
   shopButton: {fileID: 114363685892990878}
   distance: {fileID: 114568132948786310}
