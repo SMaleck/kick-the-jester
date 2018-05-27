@@ -35,4 +35,4 @@ Generated using  [Bfxr](https://www.bfxr.net/)
 ## *Other 3rd Party Resources*
 
 **Music**\
-[Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack) by [Tristan Lohengrin]()(https://www.tristanlohengrin.fr/)
+[Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack) by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)
