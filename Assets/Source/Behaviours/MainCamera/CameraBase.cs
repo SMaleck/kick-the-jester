@@ -73,7 +73,7 @@ namespace Assets.Source.Behaviours.MainCamera
             {
                 if (App.Cache.Jester != null)
                 {
-                    followTarget = new FollowTarget(this, App.Cache.Jester.goTransform);
+                    followTarget = new FollowTarget(this, App.Cache.Jester);
                 }
             }
             catch { }
