@@ -6,7 +6,8 @@ namespace Assets.Source.Behaviours.Items
 {
     public abstract class AbstractItem : MonoBehaviour
     {
-        [SerializeField] private AudioClip soundEffect;        
+        [SerializeField] protected bool isDestructible = true;
+        [SerializeField] protected AudioClip soundEffect;        
 
         protected abstract void Execute(JesterContainer jester);
 
@@ -27,14 +28,19 @@ namespace Assets.Source.Behaviours.Items
             // Safety Check: Only execute if we collided with the Jester
             JesterContainer jester = collision.gameObject.GetComponent<JesterContainer>();
 
-            if (jester != null)
-            {
-                TryPlaySound();
-                Execute(jester);
+            if (jester == null) { return; }
 
-                // Disable this trigger
-                gameObject.GetComponent<Collider2D>().enabled = false;
-            }            
+            TryPlaySound();
+            Execute(jester);
+
+            // Disable this trigger
+            gameObject.GetComponent<Collider2D>().enabled = false;
+
+            // Self Destroy if set
+            if (isDestructible)
+            {
+                SelfDestruct();
+            }
         }
 
 

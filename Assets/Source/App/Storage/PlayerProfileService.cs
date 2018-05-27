@@ -135,6 +135,7 @@ namespace Assets.Source.App.Storage
             RP_KickForceLevel.Value = 0;
             RP_ShootForceLevel.Value = 0;
             RP_ShootCountLevel.Value = 0;
+            RP_Currency.Value = 0;
 
             BestDistance = 0;
         }

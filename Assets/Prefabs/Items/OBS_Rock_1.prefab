@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1faf46770cea74cb97749d255b2aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestructible: 0
   soundEffect: {fileID: 0}
   StoppingPowerPercent: 1
 --- !u!212 &212794270740840680

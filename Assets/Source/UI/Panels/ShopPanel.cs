@@ -8,6 +8,8 @@ namespace Assets.Source.UI.Panels
 {
     public class ShopPanel : AbstractPanel
     {
+        [SerializeField] private GameObject panelConfirmReset;
+
         [SerializeField] private Button backButton;
         [SerializeField] private Text txtMoney;
         [SerializeField] private Button statResetButton;
@@ -36,6 +38,9 @@ namespace Assets.Source.UI.Panels
         public override void Setup()
         {
             base.Setup();
+
+            // Setup Confirm Panel
+            panelConfirmReset.GetComponent<AbstractPanel>().Setup();
 
             backButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
 
@@ -69,7 +74,7 @@ namespace Assets.Source.UI.Panels
                 .AddTo(this);
 
             // Stat Reset
-            statResetButton.OnClickAsObservable().Subscribe(_ => Kernel.PlayerProfileService.ResetStats()).AddTo(this);
+            statResetButton.OnClickAsObservable().Subscribe(_ => panelConfirmReset.SetActive(true)).AddTo(this);
         }
 
 
@@ -78,13 +83,6 @@ namespace Assets.Source.UI.Panels
             txtMoney.text = currency.ToString();
 
         }
-
-
-        private void CheckUpdatesAffordable()
-        {
-
-        }
-
 
         private void UpdateUI(int cost, Text label, Button buy)
         {
