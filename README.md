@@ -15,6 +15,10 @@ Currently you can only start the project from the `Title` scene, because there a
 - - - -
 # **Asset Sources & Credits**
 
+## **Code**
+* [jonashartmann](https://github.com/jonashartmann)
+* [smaleck](https://github.com/SMaleck)
+
 ## *Original Assets*
 
 **Backgrounds, Characters & Items**\
