@@ -7,6 +7,7 @@ namespace Assets.Source.UI.Panels
         [SerializeField] protected bool startActive = true;
         [SerializeField] protected bool resetScale = true;
         [SerializeField] protected bool resetPosition = true;
+        [SerializeField] protected Vector3 localPosition = Vector3.zero;
 
 
         public virtual void Setup()
@@ -22,7 +23,7 @@ namespace Assets.Source.UI.Panels
             // Reset Position as well
             if (resetPosition)
             {
-                transform.localPosition = Vector3.zero;
+                transform.localPosition = localPosition;
             }
         }
     }
