@@ -23,7 +23,7 @@ namespace Assets.Source.Behaviours.GameLogic
         {            
             gameStateMachine = new GameStateMachine(this, StateProperty, Kernel.AppState, App.Cache.userControl, App.Cache.Jester);
             gameStatsRecorder = new GameStatsRecorder(this, Kernel.PlayerProfileService, App.Cache.Jester);
-            currencyRecorder = new CurrencyRecorder(this, Kernel.PlayerProfileService);
+            currencyRecorder = new CurrencyRecorder(this, Kernel.PlayerProfileService, App.Cache.Jester);
         }
     }
 }

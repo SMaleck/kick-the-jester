@@ -1,7 +1,9 @@
 ﻿using Assets.Source.App;
 using Assets.Source.App.Storage;
+using Assets.Source.Behaviours.Jester;
 using Assets.Source.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
@@ -11,13 +13,23 @@ namespace Assets.Source.Behaviours.GameLogic.Components
     public class CurrencyRecorder : AbstractComponent<GameLogicContainer>
     {        
         private readonly PlayerProfileService playerProfileService;
+        private readonly JesterContainer jester;
 
-        public CurrencyRecorder(GameLogicContainer owner, PlayerProfileService playerProfileService) 
+        private int collectedCurrency = 0;
+
+        private float meterToCurrencyFactor = 0.5f;
+        private int earnedCurrency
+        {
+            get { return Mathf.RoundToInt(jester.Distance.ToMeters() * meterToCurrencyFactor); }
+        }
+
+
+        /* -------------------------------------------------------------------------- */
+        public CurrencyRecorder(GameLogicContainer owner, PlayerProfileService playerProfileService, JesterContainer jester) 
             : base(owner)
         {            
             this.playerProfileService = playerProfileService;
-
-            HasCommitted = false;
+            this.jester = jester;            
 
             owner.StateProperty
                  .Where(e => e.Equals(GameState.End))
@@ -25,50 +37,41 @@ namespace Assets.Source.Behaviours.GameLogic.Components
                  .AddTo(owner);
         }
 
-        public IntReactiveProperty CurrencyCollectedProperty = new IntReactiveProperty(0);
-        public int CurrencyCollected
-        {
-            get { return CurrencyCollectedProperty.Value; }
-            set { CurrencyCollectedProperty.Value = value; }
-        }
-
-        public bool HasCommitted { get; private set; }
-        private event NotifyEventHandler _OnCommit = delegate { };
-        public void OnCommit(NotifyEventHandler handler)
-        {
-            _OnCommit += handler;
-            if (HasCommitted) handler();
-        }
-
-
-        // Commit Money to profile, if the game ended, or we are switching
+        
+        // Commits the accumulated money pools to the PlayerProfile
         private void OnEnd(GameState state)
         {
-            TryCommitPools();
+            IDictionary<string, int> result = GetResults();
+
+            foreach(int value in result.Values)
+            {
+                playerProfileService.Currency += Math.Abs(value);
+            }     
         }
 
+
+        /* -------------------------------------------------------------------------- */
+        #region INTERFACE
+
+        // Adds money to the pickup counter
         public void AddPickup(int amount)
         {
             if (amount <= 0) { return; }
-            CurrencyCollected += amount;
+            collectedCurrency += amount;
         }
 
 
-        /// <summary>
-        /// Commits the accumulated money pools to the PlayerProfile
-        /// </summary>
-        /// <returns></returns>
-        private bool TryCommitPools()
+        // Returns a complete set of the earned currency for the round
+        public IDictionary<string, int> GetResults()
         {
-            playerProfileService.Currency += Math.Abs(CurrencyCollected) + Math.Abs(CalculateCurrencyEarnedInFlight());
-            _OnCommit();
-            return true;
+            Dictionary<string, int> result = new Dictionary<string, int>();
+
+            result.Add("from distance", collectedCurrency);
+            result.Add("from pickups", earnedCurrency);
+
+            return result;
         }
 
-        public int CalculateCurrencyEarnedInFlight()
-        {
-            // 10% of the distance achieved
-            return Mathf.RoundToInt(App.Cache.Jester.Distance.ToMeters() * 0.1f);
-        }
+        #endregion
     }
 }

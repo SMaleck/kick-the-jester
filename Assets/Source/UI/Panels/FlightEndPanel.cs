@@ -1,4 +1,9 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Behaviours.GameLogic;
+using Assets.Source.UI.Elements;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,17 +11,19 @@ using UnityEngine.UI;
 namespace Assets.Source.UI.Panels
 {
     public class FlightEndPanel : AbstractPanel
-    {
-        [SerializeField] GameObject newBestLabel;
-
+    {               
         [SerializeField] Button retryButton;
         [SerializeField] Button shopButton;
+
         [SerializeField] Text distance;
         [SerializeField] Text bestDistance;
-        [SerializeField] Text currencyCollected;
-        [SerializeField] Text currencyEarnedByDistance;
+        [SerializeField] GameObject newBestLabel;
+
+        [SerializeField] RectTransform currencyContainer;
+        [SerializeField] GameObject pfCurrencyItem;
         [SerializeField] Text currency;
 
+        
         private int finalCurrencyCollected;
         private int initialCurrencyAmount;
         private int finalCurrencyAmount;
@@ -26,8 +33,10 @@ namespace Assets.Source.UI.Panels
             base.Setup();
             newBestLabel.SetActive(false);
 
-
-            App.Cache.GameLogic.currencyRecorder.OnCommit(OnFlightEnd);
+            App.Cache.GameLogic.StateProperty
+                               .Where(e => e.Equals(GameState.End))
+                               .Subscribe(_ => OnFlightEnd())
+                               .AddTo(this);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked()).AddTo(this);
             shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked()).AddTo(this);
@@ -43,13 +52,37 @@ namespace Assets.Source.UI.Panels
             initialCurrencyAmount = Kernel.PlayerProfileService.Currency;
             
 
-            currencyCollected.text = "0G";
-            currencyEarnedByDistance.text = "0G";
+
             currency.text = initialCurrencyAmount + "G";
         }
 
         private void OnFlightEnd()
         {
+            IDictionary<string, int> currencyResults = App.Cache.GameLogic.currencyRecorder.GetResults();
+            List<CurrencyItem> currencyItems = new List<CurrencyItem>();
+
+            // Create currency Items
+            foreach(string key in currencyResults.Keys)
+            {
+                GameObject go = GameObject.Instantiate(pfCurrencyItem);
+                go.GetComponent<RectTransform>().SetParent(currencyContainer);
+
+                currencyItems.Add(go.GetComponent<CurrencyItem>());
+
+                var ci = currencyItems.Last();
+                ci.Label = key;
+                ci.Value = currencyResults[key].ToString();
+            }
+
+            // Adjust positions for all items
+            for(int i = 0; i < currencyItems.Count; i++)
+            {
+                RectTransform rectT = currencyItems[i].gameObject.GetComponent<RectTransform>();
+                Vector3 newPos = new Vector3(rectT.position.x, currencyItems[i].Height * i, rectT.position.z);
+                rectT.position = newPos;
+            }
+
+            /*
             int currencyEarnedByDistance = App.Cache.GameLogic.currencyRecorder.CalculateCurrencyEarnedInFlight();
             finalCurrencyCollected = App.Cache.GameLogic.currencyRecorder.CurrencyCollected;
             finalCurrencyAmount = Kernel.PlayerProfileService.Currency;
@@ -59,6 +92,7 @@ namespace Assets.Source.UI.Panels
                 .append(LeanTween.value(gameObject, OnCurrencyDistanceTween, 0f, currencyEarnedByDistance, 1f))
                 .append(LeanTween.value(gameObject, OnCurrencyTotalTween, initialCurrencyAmount, finalCurrencyAmount, 1f));
 
+            */
             gameObject.SetActive(true);
         }
 
@@ -69,12 +103,12 @@ namespace Assets.Source.UI.Panels
 
         private void OnCurrencyDistanceTween(float currency)
         {
-            currencyEarnedByDistance.text = Mathf.RoundToInt(currency) + "G";
+            //currencyEarnedByDistance.text = Mathf.RoundToInt(currency) + "G";
         }
 
         private void OnCurrencyCollectedTween(float currency)
         {
-            currencyCollected.text = Mathf.RoundToInt(currency) + "G";
+            //currencyCollected.text = Mathf.RoundToInt(currency) + "G";
         }
 
         private void OnRetryClicked()
