@@ -87,7 +87,8 @@ namespace Assets.Source.Behaviours.Jester
         private FlightRecorder flightRecorder;
         private SoundEffect soundEffect;
         private SpriteEffect spriteEffect;
-        private KickForce kickForce;
+        private MotionBoot motionBoot;
+        private MotionShoot motionShoot;
 
         #endregion        
 
@@ -97,7 +98,8 @@ namespace Assets.Source.Behaviours.Jester
             flightRecorder = new FlightRecorder(this);
             soundEffect = new SoundEffect(this, soundEffectsConfig, Kernel.AudioService);
             spriteEffect = new SpriteEffect(this, goJesterSprite, goEffectSprite, spriteEffectsConfig);
-            kickForce = new KickForce(this, new JesterMovementConfig(), App.Cache.GameLogic, App.Cache.userControl);
+            motionBoot = new MotionBoot(this, new MotionConfig(), App.Cache.GameLogic, App.Cache.userControl);
+            motionShoot = new MotionShoot(this, new MotionShootConfig(), App.Cache.GameLogic, App.Cache.userControl);
 
             // Listen to Pause State
             Kernel.AppState.IsPausedProperty
