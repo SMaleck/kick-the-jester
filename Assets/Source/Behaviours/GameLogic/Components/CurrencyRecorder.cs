@@ -66,8 +66,8 @@ namespace Assets.Source.Behaviours.GameLogic.Components
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
 
-            result.Add("from distance", collectedCurrency);
-            result.Add("from pickups", earnedCurrency);
+            result.Add("from distance", earnedCurrency);
+            result.Add("from pickups", collectedCurrency);
 
             return result;
         }
