@@ -7,18 +7,19 @@ namespace Assets.Source.Behaviours
 {
     public class Knight : AbstractBehaviour
     {        
-        [SerializeField] private AudioClip KickSound;
-        private Animator animator;
+        [SerializeField] private AudioClip KickSound;        
         private bool hasKicked = false;
 
+        private AnimationComponent<Knight> animComponent;
+
         private void Awake()
-        {
-            animator = GetComponent<Animator>();
+        {            
+            animComponent = new AnimationComponent<Knight>(this, GetComponent<Animator>());
 
             App.Cache.userControl.OnKick(() => {
-                if (!hasKicked)
+                if (!hasKicked && !IsPausedProperty.Value)
                 {
-                    animator.Play("Anim_Knight_Kick");
+                    animComponent.Play("Anim_Knight_Kick");
                     hasKicked = true;
                 }                
             });

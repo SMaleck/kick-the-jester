@@ -13,7 +13,7 @@ namespace Assets.Source.UI
             foreach (GameObject prefab in Prefabs)
             {
                 GameObject go = GameObject.Instantiate(prefab);
-                go.transform.SetParent(gameObject.transform);
+                go.transform.SetParent(gameObject.transform, false);
 
                 go.GetComponent<AbstractPanel>().Setup();
             }

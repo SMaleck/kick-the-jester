@@ -1,4 +1,5 @@
-﻿using Assets.Source.Behaviours.GameLogic;
+﻿using Assets.Source.App;
+using Assets.Source.Behaviours.GameLogic;
 using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Assets.Source.Behaviours
     public class UserControl : MonoBehaviour, IPointerDownHandler
     {
         // Internal Toggles
-        private bool canKick = false;        
+        private bool kickEnabled = false;        
 
 
         // INPUT EVENT: Kick Action
@@ -33,16 +34,20 @@ namespace Assets.Source.Behaviours
             // Attach this to the camera, so the raycast works correctly
             this.transform.SetParent(App.Cache.MainCamera.UCamera.transform);
 
+            Kernel.AppState.IsPausedProperty
+                           .Subscribe((bool value) => { kickEnabled = !value; })
+                           .AddTo(this);
+
             App.Cache.GameLogic.StateProperty
-                               .Subscribe(OnGameStateChanged)
-                               .AddTo(this);
+                               .Subscribe((GameState state) => { kickEnabled = !state.Equals(GameState.Paused) && !state.Equals(GameState.End); })
+                               .AddTo(this);            
         }
 
 
         void Update()
         {
             
-            if (canKick && Input.GetButtonDown("Kick"))
+            if (kickEnabled && Input.GetButtonDown("Kick"))
             {
                 _OnKick();
             }
@@ -61,33 +66,15 @@ namespace Assets.Source.Behaviours
             {
                 case -1:
                 case 0:
-                    _OnKick();
+                    if (kickEnabled)
+                    {
+                        _OnKick();
+                    }                    
                     break;
 
                 default:                    
                     break;
             }
-        }
-
-
-        // Handles Game State changing
-        public void OnGameStateChanged(GameState state)
-        {
-            switch (state)
-            {
-                case GameState.Launch:
-                case GameState.Flight:
-                    canKick = true;
-                    break;                
-
-                case GameState.Paused:
-                    canKick = false;
-                    break;
-
-                case GameState.End:
-                    canKick = false;
-                    break;
-            }            
         }
 
 

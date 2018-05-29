@@ -1,10 +1,8 @@
-﻿using Assets.Source.App;
-using UniRx;
-using UnityEngine;
+﻿using UniRx;
 
 namespace Assets.Source.Behaviours
 {
-    public abstract class AbstractComponent<T> where T : MonoBehaviour
+    public abstract class AbstractComponent<T> where T : AbstractBehaviour
     {
         private delegate void UpdateHandler();
 
@@ -16,10 +14,7 @@ namespace Assets.Source.Behaviours
             this.owner = owner;
             this.isPausable = isPausable;
 
-            if (isPausable)
-            {
-                Kernel.AppState.IsPausedProperty.Subscribe((bool value) => OnPause(value)).AddTo(owner);
-            }            
+            owner.IsPausedProperty.Subscribe((bool value) => OnPause(value)).AddTo(owner);
 
             Observable.EveryUpdate().Subscribe(_ => UpdateProxy(Update)).AddTo(owner);
             Observable.EveryFixedUpdate().Subscribe(_ => UpdateProxy(FixedUpdate)).AddTo(owner);
@@ -29,7 +24,7 @@ namespace Assets.Source.Behaviours
         
         private void UpdateProxy(UpdateHandler handler)
         {
-            if (isPausable && Kernel.AppState.IsPausedProperty.Value) { return; }
+            if (isPausable && owner.IsPausedProperty.Value) { return; }
             handler();
         }
         
