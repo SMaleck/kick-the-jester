@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.GameLogic;
 using Assets.Source.UI.Elements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
@@ -22,6 +23,7 @@ namespace Assets.Source.UI.Panels
         [SerializeField] GameObject pfCurrencyItem;
         [SerializeField] Text currency;
 
+        private double activationDelay = 0.7;
         private float initialBestDistance;
 
         public override void Setup()
@@ -30,7 +32,7 @@ namespace Assets.Source.UI.Panels
 
             App.Cache.GameLogic.StateProperty
                                .Where(e => e.Equals(GameState.End))
-                               .Subscribe(_ => OnFlightEnd())
+                               .Subscribe(_ => OnFlightEndDelayed())
                                .AddTo(this);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked()).AddTo(this);
@@ -52,6 +54,12 @@ namespace Assets.Source.UI.Panels
             Kernel.PlayerProfileService.RP_BestDistance
                                        .Subscribe(e => { newBestLabel.SetActive(e > initialBestDistance); })
                                        .AddTo(this);
+        }
+
+
+        private void OnFlightEndDelayed()
+        {
+            Observable.Timer(TimeSpan.FromSeconds(activationDelay)).Subscribe(_ => OnFlightEnd()).AddTo(this);
         }
 
 
@@ -94,7 +102,7 @@ namespace Assets.Source.UI.Panels
             int totalCurrency = Kernel.PlayerProfileService.Currency;
             ltSeq.append(LeanTween.value(this.gameObject, (float value) => { currency.text = Mathf.RoundToInt(value).ToString(); }, totalCurrency - flightCurrency, totalCurrency, 1f));
 
-            // Activate Panel
+            // Activate Panel            
             gameObject.SetActive(true);
         }
 
