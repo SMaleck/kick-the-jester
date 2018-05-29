@@ -5,7 +5,7 @@ namespace Assets.Source.App
     public static class Extensions
     {
         /// <summary>
-        /// Transforms a float value representing _units_ into its equivalent _meters_ in game.
+        /// Transforms a float value representing _units_ into its equivalent _meters_ in game using <see cref="Constants.UNIT_TO_METERS_FACTOR"/>.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The amount of meters after conversion</returns>
@@ -17,6 +17,16 @@ namespace Assets.Source.App
         public static int ToMeters(this int value)
         {
             return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
+        }
+
+        public static string ToMetersString(this float value)
+        {
+            return string.Format("{0}m", value.ToMeters());
+        }
+
+        public static string ToMetersString(this int value)
+        {
+            return string.Format("{0}m", value.ToMeters());
         }
 
         /// <summary>

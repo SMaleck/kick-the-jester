@@ -42,10 +42,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefabs:
-  - {fileID: 1411047845587674, guid: f64003a38cd5a784aa49b243bd12dd7a, type: 2}
   - {fileID: 1321897989718098, guid: ca4f7a38edd9e104bb5aa944cabc35d4, type: 2}
-  - {fileID: 1532492271772472, guid: 332b82f9d50817349aeb6159c7fdc3d8, type: 2}
   - {fileID: 1401963056995822, guid: 86089090b2a8c7a40b8d5a92183e4106, type: 2}
+  - {fileID: 1532492271772472, guid: 332b82f9d50817349aeb6159c7fdc3d8, type: 2}
+  - {fileID: 1411047845587674, guid: f64003a38cd5a784aa49b243bd12dd7a, type: 2}
 --- !u!114 &114387695053877632
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -22,10 +22,11 @@ namespace Assets.Source.UI.Panels
         [SerializeField] GameObject pfCurrencyItem;
         [SerializeField] Text currency;
 
+        private float initialBestDistance;
+
         public override void Setup()
         {
-            base.Setup();
-            newBestLabel.SetActive(false);
+            base.Setup();            
 
             App.Cache.GameLogic.StateProperty
                                .Where(e => e.Equals(GameState.End))
@@ -44,6 +45,13 @@ namespace Assets.Source.UI.Panels
                                        .AddTo(this);
               
             currency.text = Kernel.PlayerProfileService.Currency.ToString();
+
+            // Setup new Best Distance Marker
+            initialBestDistance = Kernel.PlayerProfileService.BestDistance;
+
+            Kernel.PlayerProfileService.RP_BestDistance
+                                       .Subscribe(e => { newBestLabel.SetActive(e > initialBestDistance); })
+                                       .AddTo(this);
         }
 
 

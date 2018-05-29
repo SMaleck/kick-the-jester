@@ -37,7 +37,7 @@ namespace Assets.Source.Behaviours.GameLogic.Components
         {
             if (state == GameState.End && currentDistance > playerProfileService.BestDistance)
             {
-                playerProfileService.BestDistance = (int)Math.Round(currentDistance);
+                playerProfileService.BestDistance = (int)(currentDistance);
             }
         }
     }
