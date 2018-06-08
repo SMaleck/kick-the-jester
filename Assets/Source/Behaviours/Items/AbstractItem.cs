@@ -7,7 +7,8 @@ namespace Assets.Source.Behaviours.Items
     public abstract class AbstractItem : MonoBehaviour
     {
         [SerializeField] protected bool isDestructible = true;
-        [SerializeField] protected AudioClip soundEffect;        
+        [SerializeField] protected AudioClip soundEffect;
+        [SerializeField] protected GameObject particleEffect;
 
         protected abstract void Execute(JesterContainer jester);
 
@@ -31,6 +32,7 @@ namespace Assets.Source.Behaviours.Items
             if (jester == null) { return; }
 
             TryPlaySound();
+            TryPlayParticleEffect();
             Execute(jester);
 
             // Disable this trigger
@@ -65,6 +67,16 @@ namespace Assets.Source.Behaviours.Items
             if (soundEffect != null)
             {
                 Kernel.AudioService.PlaySFX(soundEffect);
+            }
+        }
+
+
+        // Attempts to play the attached Particle Effect
+        protected void TryPlayParticleEffect()
+        {
+            if (particleEffect != null)
+            {
+                Kernel.PfxService.PlayAt(particleEffect, transform.position);
             }
         }
     }

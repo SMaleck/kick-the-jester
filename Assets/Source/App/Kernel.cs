@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App.Audio;
+using Assets.Source.App.ParticleEffects;
 using Assets.Source.App.Storage;
 using Assets.Source.App.Upgrade;
 using UniRx;
@@ -20,6 +21,7 @@ namespace Assets.Source.App
         public static PlayerProfileService PlayerProfileService { get; private set; }
         public static UserSettingsService UserSettingsService { get; private set; }
         public static UpgradeService UpgradeService { get; private set; }
+        public static PfxService PfxService { get; private set; }
 
 
         private void Awake()
@@ -35,8 +37,8 @@ namespace Assets.Source.App
             PlayerProfileService = new PlayerProfileService(new FileDataStorage<PlayerProfile>("profile.save"));
             UserSettingsService = new UserSettingsService();
             AudioService = new AudioService();
-
             UpgradeService = new UpgradeService(PlayerProfileService);
+            PfxService = new PfxService();
 
             Kernel.Ready.Value = true;
         }

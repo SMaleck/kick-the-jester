@@ -11,6 +11,16 @@ namespace Assets.Source.Behaviours.Jester
     public class JesterContainer : AbstractBodyBehaviour
     {
         /* -------------------------------------------------------------------------------------- */
+        #region ANIMATOINS & EFFECTS
+
+        [SerializeField] private Animator animator;
+        [SerializeField] public Transform Slot_GroundTouch;
+        [SerializeField] public Transform Slot_KickTouch;
+
+        #endregion
+
+
+        /* -------------------------------------------------------------------------------------- */
         #region REACTIVE PROPERTIES
 
         public BoolReactiveProperty IsStartedProperty = new BoolReactiveProperty(false);
@@ -97,14 +107,14 @@ namespace Assets.Source.Behaviours.Jester
         {
             flightRecorder = new FlightRecorder(this);
             soundEffect = new SoundEffect(this, soundEffectsConfig, Kernel.AudioService);
-            spriteEffect = new SpriteEffect(this, goJesterSprite, goEffectSprite, spriteEffectsConfig);
+            spriteEffect = new SpriteEffect(this, animator, goJesterSprite, goEffectSprite, spriteEffectsConfig, Kernel.PfxService);
             motionBoot = new MotionBoot(this, new MotionConfig(), App.Cache.GameLogic, App.Cache.userControl);
             motionShoot = new MotionShoot(this, new MotionShootConfig(), App.Cache.GameLogic, App.Cache.userControl);
 
             // Listen to Pause State
             Kernel.AppState.IsPausedProperty
                            .Subscribe(OnPauseStateChanged)
-                           .AddTo(this);
+                           .AddTo(this);            
         }
 
         

@@ -1,4 +1,5 @@
-﻿using Assets.Source.Config;
+﻿using Assets.Source.App.ParticleEffects;
+using Assets.Source.Config;
 using System.Linq;
 using UniRx;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace Assets.Source.Behaviours.Jester.Components
 {
     public class SpriteEffect : AbstractComponent<JesterContainer>
     {
+        private Animator animator;
+        private readonly PfxService pfxService;
         private readonly JesterSpriteEffectsConfig config;
 
         // GAme Object for trhe Jester's sprite
@@ -26,9 +29,11 @@ namespace Assets.Source.Behaviours.Jester.Components
         
 
 
-        public SpriteEffect(JesterContainer owner, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config)
+        public SpriteEffect(JesterContainer owner, Animator animator, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config, PfxService pfxService)
             : base(owner, true)
         {
+            this.animator = animator;
+            this.pfxService = pfxService;
             this.config = config;
 
             // Setup Jester Sprite
@@ -55,8 +60,11 @@ namespace Assets.Source.Behaviours.Jester.Components
                                  .AddTo(owner);
 
             // Impact Listeners
-            owner.Collisions.OnGround(OnImpact);
-            owner.Collisions.OnBoost(OnImpact);            
+            owner.Collisions.OnGround(OnGroundHit);
+            owner.Collisions.OnBoost(ModulateMainSprite);
+
+            // Start Idle Animation
+            animator.Play("Anim_Jester_Idle");
         }
 
 
@@ -69,22 +77,31 @@ namespace Assets.Source.Behaviours.Jester.Components
         }
 
 
-        private void OnImpact()
+        private void OnKickHit()
         {
-            if (listenForImpacts)
-            {
-                // Set rotation
-                isRotating = true;
-                currentRotationSpeed = UnityEngine.Random.Range(config.MinRotationSpeed, config.MaxRotationSpeed);
+            // Stop Idle Animation
+            animator.Play("Anim_Jester_None");
 
-                // Switch Sprite
+            jesterSprite.sprite = config.LaunchSprite;
 
-                // Get all sprites that are not the one currently used, and get a random index from that
-                var currentPool = config.ImpactSpritePool.Where(e => !e.Equals(jesterSprite.sprite));
-                int index = Random.Range(0, currentPool.Count());
+            // Play Particle Effect
+            pfxService.PlayAt(config.PfxKick, owner.Slot_KickTouch.position);
+        }
 
-                jesterSprite.sprite = currentPool.ElementAt(index);
-            }
+
+        private void OnGroundHit()
+        {
+            ModulateMainSprite();
+
+            // Play Particle Effect
+            pfxService.PlayAt(config.PfxImpact, owner.Slot_GroundTouch.position);
+        }
+
+
+        private void OnShotHit()
+        {            
+            effectAnimator.Play("Anim_Projectile_Shoot");
+            ModulateMainSprite();
         }
 
 
@@ -96,19 +113,31 @@ namespace Assets.Source.Behaviours.Jester.Components
 
             // Switch Sprite            
             jesterSprite.sprite = config.LandingSprite;
+
+            // Start Idle Animation
+            animator.Play("Anim_Jester_Idle");
         }
 
 
-        private void OnKickHit()
+
+        // Sets a new roattion and switches the sprite to another random one
+        private void ModulateMainSprite()
         {
-            jesterSprite.sprite = config.LaunchSprite;
-        }
+            if (!listenForImpacts) { return; }            
 
+            // Set rotation
+            isRotating = true;
+            currentRotationSpeed = UnityEngine.Random.Range(config.MinRotationSpeed, config.MaxRotationSpeed);
 
-        private void OnShotHit()
-        {            
-            effectAnimator.Play("Anim_Projectile_Shoot");
-            OnImpact();
+            // Switch Sprite
+            // Get all sprites that are not the one currently used, and get a random index from that
+            var currentPool = config.ImpactSpritePool.Where(e => !e.Equals(jesterSprite.sprite));
+            int index = Random.Range(0, currentPool.Count());
+
+            jesterSprite.sprite = currentPool.ElementAt(index);
+
+            // Play Particle Effect
+            pfxService.PlayAt(config.PfxImpact, owner.Slot_GroundTouch.position);
         }
     }
 }

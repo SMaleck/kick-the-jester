@@ -78,7 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3ba0eb4b0ebef4d8a8dbafd3629126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDestructible: 1
   soundEffect: {fileID: 8300000, guid: 59acd8414b154794d87fa49512e36102, type: 3}
+  particleEffect: {fileID: 1690711144469934, guid: 390c38f1c65879944b9105bd7f9fa26e,
+    type: 2}
   Strength: 10
   forceMode: 1
   Direction: {x: 0, y: 1}

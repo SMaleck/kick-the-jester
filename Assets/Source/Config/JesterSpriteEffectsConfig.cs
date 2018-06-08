@@ -9,6 +9,9 @@ namespace Assets.Source.Config
         
         public Sprite[] ImpactSpritePool;
         public Sprite LaunchSprite;
-        public Sprite LandingSprite;        
+        public Sprite LandingSprite;
+
+        public GameObject PfxImpact;
+        public GameObject PfxKick;
     }
 }
