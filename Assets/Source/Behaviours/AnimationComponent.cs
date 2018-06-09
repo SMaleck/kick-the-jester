@@ -15,10 +15,9 @@ namespace Assets.Source.Behaviours
             owner.IsPausedProperty.Subscribe((bool isPaused) => { animator.enabled = !isPaused; }).AddTo(owner);
         }
 
-
-        public void Play(string animationName)
+        public void Play(object animationName)
         {
-            animator.Play(animationName);
+            animator.Play(animationName.ToString());
         }
     }
 }

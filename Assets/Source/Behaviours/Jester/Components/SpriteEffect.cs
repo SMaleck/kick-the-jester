@@ -8,11 +8,13 @@ namespace Assets.Source.Behaviours.Jester.Components
 {
     public class SpriteEffect : AbstractComponent<JesterContainer>
     {
-        private Animator animator;
+        private enum AnimState { None, Idle };
+        private AnimationComponent<AbstractBehaviour> animationComponent;        
+
         private readonly PfxService pfxService;
         private readonly JesterSpriteEffectsConfig config;
 
-        // GAme Object for trhe Jester's sprite
+        // Game Object for the Jester's sprite
         private readonly GameObject goJesterSprite;                
         private SpriteRenderer jesterSprite;
 
@@ -31,10 +33,11 @@ namespace Assets.Source.Behaviours.Jester.Components
 
         public SpriteEffect(JesterContainer owner, Animator animator, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config, PfxService pfxService)
             : base(owner, true)
-        {
-            this.animator = animator;
+        {            
             this.pfxService = pfxService;
             this.config = config;
+
+            animationComponent = new AnimationComponent<AbstractBehaviour>(owner, animator);
 
             // Setup Jester Sprite
             this.goJesterSprite = goJesterSprite;
@@ -62,9 +65,6 @@ namespace Assets.Source.Behaviours.Jester.Components
             // Impact Listeners
             owner.Collisions.OnGround(OnGroundHit);
             owner.Collisions.OnBoost(ModulateMainSprite);
-
-            // Start Idle Animation
-            animator.Play("Anim_Jester_Idle");
         }
 
 
@@ -80,7 +80,7 @@ namespace Assets.Source.Behaviours.Jester.Components
         private void OnKickHit()
         {
             // Stop Idle Animation
-            animator.Play("Anim_Jester_None");
+            animationComponent.Play(AnimState.None.ToString());
 
             jesterSprite.sprite = config.LaunchSprite;
 
@@ -115,7 +115,7 @@ namespace Assets.Source.Behaviours.Jester.Components
             jesterSprite.sprite = config.LandingSprite;
 
             // Start Idle Animation
-            animator.Play("Anim_Jester_Idle");
+            animationComponent.Play(AnimState.Idle.ToString());
         }
 
 
@@ -135,9 +135,6 @@ namespace Assets.Source.Behaviours.Jester.Components
             int index = Random.Range(0, currentPool.Count());
 
             jesterSprite.sprite = currentPool.ElementAt(index);
-
-            // Play Particle Effect
-            pfxService.PlayAt(config.PfxImpact, owner.Slot_GroundTouch.position);
         }
     }
 }

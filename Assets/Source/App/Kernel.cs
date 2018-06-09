@@ -38,7 +38,7 @@ namespace Assets.Source.App
             UserSettingsService = new UserSettingsService();
             AudioService = new AudioService();
             UpgradeService = new UpgradeService(PlayerProfileService);
-            PfxService = new PfxService();
+            PfxService = new PfxService(AppState);
 
             Kernel.Ready.Value = true;
         }

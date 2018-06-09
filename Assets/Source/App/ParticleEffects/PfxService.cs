@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.App.ParticleEffects
@@ -8,11 +9,16 @@ namespace Assets.Source.App.ParticleEffects
 
     public class PfxService
     {
+        private readonly AppState appState;
         private readonly List<ParticleSystem> pool;
 
-        public PfxService()
+
+        public PfxService(AppState appState)
         {
             pool = new List<ParticleSystem>();
+
+            this.appState = appState;
+            appState.IsPausedProperty.Subscribe(OnIsPausedChanged);            
         }
 
 
@@ -56,6 +62,22 @@ namespace Assets.Source.App.ParticleEffects
             pool.Add(go.GetComponent<ParticleSystem>());
 
             return pool.Last();
+        }
+
+
+        private void OnIsPausedChanged(bool isPaused)
+        {
+            foreach(ParticleSystem pfs in pool)
+            {
+                if (pfs.isPlaying && isPaused)
+                {
+                    pfs.Pause(true);
+                }                
+                else if(pfs.isPaused && !isPaused)
+                {
+                    pfs.Play();
+                }
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Assets.Source.Behaviours
         [SerializeField] private AudioClip KickSound;        
         private bool hasKicked = false;
 
+        private enum AnimState { Idle, Kick };
         private AnimationComponent<Knight> animComponent;
 
         private void Awake()
@@ -19,7 +20,7 @@ namespace Assets.Source.Behaviours
             App.Cache.userControl.OnKick(() => {
                 if (!hasKicked && !IsPausedProperty.Value)
                 {
-                    animComponent.Play("Anim_Knight_Kick");
+                    animComponent.Play(AnimState.Kick);
                     hasKicked = true;
                 }                
             });
