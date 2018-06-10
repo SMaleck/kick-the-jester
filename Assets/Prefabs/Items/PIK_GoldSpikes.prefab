@@ -78,7 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0129eb90259e94aa46a284fa1acd5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEffect: {fileID: 8300000, guid: 04f802455729737408d1bd72be93f894, type: 3}
+  isDestructible: 1
+  soundEffect: {fileID: 8300000, guid: 7bbc250a2a3f08e4f8e13e8a32945126, type: 3}
+  particleEffect: {fileID: 0}
   CurrencyAmount: 100
 --- !u!212 &212794270740840680
 SpriteRenderer:

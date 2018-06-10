@@ -1505,11 +1505,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114476412941505352, guid: 332b82f9d50817349aeb6159c7fdc3d8,
-        type: 2}
-      propertyPath: slideTimeSeconds
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 332b82f9d50817349aeb6159c7fdc3d8, type: 2}
   m_IsPrefabParent: 0

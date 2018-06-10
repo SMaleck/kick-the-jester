@@ -79,12 +79,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructible: 1
-  soundEffect: {fileID: 8300000, guid: 59acd8414b154794d87fa49512e36102, type: 3}
+  soundEffect: {fileID: 8300000, guid: 3c5298b3d821d2446a5eacd19a3b19c2, type: 3}
   particleEffect: {fileID: 1690711144469934, guid: 390c38f1c65879944b9105bd7f9fa26e,
     type: 2}
   Strength: 10
   forceMode: 1
-  Direction: {x: 0, y: 1}
+  Direction: {x: 1.5, y: 1}
 --- !u!212 &212794270740840680
 SpriteRenderer:
   m_ObjectHideFlags: 1

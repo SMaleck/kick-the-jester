@@ -1112,9 +1112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 0
-  resetScale: 0
   useSlideTransition: 1
-  slideTimeSeconds: 0.6
+  slideTimeSeconds: 0.1
   slideInFrom: 3
   useBounce: 0
   retryButton: {fileID: 114489631760509838}

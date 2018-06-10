@@ -325,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomize: 1
-  clip: {fileID: 8300000, guid: 74fa72c842cc0274b96bb9c9d622bfe8, type: 3}
+  clip: {fileID: 8300000, guid: bc2bc91ec6dca01449e3b89d2182ded4, type: 3}
 --- !u!114 &114985361404021046
 MonoBehaviour:
   m_ObjectHideFlags: 1

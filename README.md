@@ -19,20 +19,37 @@ Currently you can only start the project from the `Title` scene, because there a
 * [jonashartmann](https://github.com/jonashartmann)
 * [smaleck](https://github.com/SMaleck)
 
+
 ## *Original Assets*
 
 **Backgrounds, Characters & Items**\
 Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
-**Sound Effects**\
-Generated using  [Bfxr](https://www.bfxr.net/)
 
 ## *Unity Asset Store Resources*
 * [UniRx - Reactive Extensions for Unity](https://assetstore.unity.com/packages/tools/unirx-reactive-extensions-for-unity-17276)
 * [Arrow Mobile UI for UGUI](https://assetstore.unity.com/packages/2d/gui/arrow-mobile-ui-for-ugui-64369)
 * [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595)
+* [2D Toon FX : Basic](https://assetstore.unity.com/packages/vfx/particles/2d-toon-fx-basic-116228)
 
-## *Other 3rd Party Resources*
 
-**Music**\
-[Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack) by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)
+## *3rd Party Resources*
+
+**[Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack) by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)**\
+Royalty Free
+
+**"Unbeatable Guild" by [PlayOnLoop.com](https://www.playonloop.com/2016-music-loops/unbeatable-guild/)**\
+Licensed under Creative Commons By Attribution 4.0
+
+**"Journey Begins" by [PlayOnLoop.com](https://www.playonloop.com/2015-music-loops/the-journey-begins/)**\
+Licensed under Creative Commons By Attribution 4.0
+
+**Following Sound Effects by [Noise For Fun](http://www.noiseforfun.com/)**\
+Licensed under Creative Commons By Attribution 4.0
+
+* [Throw 05](http://www.noiseforfun.com/2014-sound-effects/throw-05/)
+* [Bump](http://www.noiseforfun.com/2013-sound-effects/bump/)
+* [Cannon](http://www.noiseforfun.com/2012-sound-effects/cannon/)
+* [Glitter](http://www.noiseforfun.com/2012-sound-effects/glitter/)
+* [Dry Punch](www.noiseforfun.com/2012-sound-effects/dry-punch/)
+* [Fireball](http://www.noiseforfun.com/2013-sound-effects/fireball/)
