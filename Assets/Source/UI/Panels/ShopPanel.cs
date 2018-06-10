@@ -10,7 +10,7 @@ namespace Assets.Source.UI.Panels
     {
         [SerializeField] private GameObject panelConfirmReset;
 
-        [SerializeField] private Button backButton;
+        [SerializeField] private Button closeButton;
         [SerializeField] private Text txtMoney;
         [SerializeField] private Button statResetButton;
 
@@ -42,7 +42,7 @@ namespace Assets.Source.UI.Panels
             // Setup Confirm Panel
             panelConfirmReset.GetComponent<AbstractPanel>().Setup();
 
-            backButton.OnClickAsObservable().Subscribe(_ => Kernel.SceneTransitionService.ToGame());
+            closeButton.OnClickAsObservable().Subscribe(_ => Hide());
 
             Kernel.PlayerProfileService.RP_Currency
                                        .Subscribe(OnCurrencyChange)                                       

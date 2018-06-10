@@ -28,7 +28,7 @@ namespace Assets.Source.UI.Panels
 
         public override void Setup()
         {
-            base.Setup();            
+            base.Setup();
 
             App.Cache.GameLogic.StateProperty
                                .Where(e => e.Equals(GameState.End))
@@ -103,7 +103,7 @@ namespace Assets.Source.UI.Panels
             ltSeq.append(LeanTween.value(this.gameObject, (float value) => { currency.text = Mathf.RoundToInt(value).ToString(); }, totalCurrency - flightCurrency, totalCurrency, 1f));
 
             // Activate Panel            
-            gameObject.SetActive(true);
+            Show();
         }
 
 
@@ -124,7 +124,12 @@ namespace Assets.Source.UI.Panels
 
         private void OnShopClicked()
         {
-            Kernel.SceneTransitionService.ToShop();
+            var shop = owner.Panels.FirstOrDefault(e => e.gameObject.name.Equals("PF_Panel_Shop"));
+
+            if(shop != null)
+            {
+                shop.Show();
+            }
         }
     }
 }

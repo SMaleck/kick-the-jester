@@ -12,6 +12,8 @@ namespace Assets.Source.UI.Panels
 
         public override void Setup()
         {
+            base.Setup();
+
             this.gameObject.SetActive(false);
 
             ResetButton.OnClickAsObservable().Subscribe(_ => 
