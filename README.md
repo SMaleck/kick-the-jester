@@ -35,18 +35,18 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
 ## *3rd Party Resources*
 
-**[Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack) by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)**\
-Royalty Free
+**Music by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)**\
+from [Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack)\
+Licensed under Royalty Free License
+* "Medieval Interlude"
+* "Introduction Medieval"
+* "Mairi Bhan Og"
 
-**"Unbeatable Guild" by [PlayOnLoop.com](https://www.playonloop.com/2016-music-loops/unbeatable-guild/)**\
+**Sound Effects by [Noise For Fun](http://www.noiseforfun.com/)**\
 Licensed under Creative Commons By Attribution 4.0
 
-**"Journey Begins" by [PlayOnLoop.com](https://www.playonloop.com/2015-music-loops/the-journey-begins/)**\
-Licensed under Creative Commons By Attribution 4.0
-
-**Following Sound Effects by [Noise For Fun](http://www.noiseforfun.com/)**\
-Licensed under Creative Commons By Attribution 4.0
-
+* [Throw 03](http://www.noiseforfun.com/2014-sound-effects/throw-03/)
+* [Throw 04](http://www.noiseforfun.com/2014-sound-effects/throw-04/)
 * [Throw 05](http://www.noiseforfun.com/2014-sound-effects/throw-05/)
 * [Bump](http://www.noiseforfun.com/2013-sound-effects/bump/)
 * [Cannon](http://www.noiseforfun.com/2012-sound-effects/cannon/)

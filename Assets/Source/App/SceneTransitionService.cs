@@ -14,6 +14,8 @@ namespace Assets.Source.App
         {
             SceneManager.sceneLoaded += (Scene s, LoadSceneMode lm) => {
                 IsLoadingProperty.Value = false;
+
+                App.Cache.LoadingPanel.FadeIn();
             };
         }
 
@@ -37,15 +39,7 @@ namespace Assets.Source.App
         {         
             nextScene = Constants.SCENE_GAME;
 
-            App.Cache.MainCamera.FadeOut(Execute);
-        }
-
-
-        public void ToShop()
-        {            
-            nextScene = Constants.SCENE_SHOP;
-
-            App.Cache.MainCamera.FadeOut(Execute);
+            App.Cache.LoadingPanel.FadeOut(Execute);
         }
 
         #endregion

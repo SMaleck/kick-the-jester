@@ -2655,6 +2655,8 @@ MonoBehaviour:
   slideTimeSeconds: 0.6
   slideInFrom: 0
   useBounce: 0
+  sfxShow: {fileID: 0}
+  sfxHide: {fileID: 0}
   ResetButton: {fileID: 114165555375319856}
   CancelButton: {fileID: 114986292688179162}
 --- !u!114 &114464764405509406
@@ -3117,10 +3119,13 @@ MonoBehaviour:
   slideTimeSeconds: 0.6
   slideInFrom: 0
   useBounce: 1
+  sfxShow: {fileID: 8300000, guid: eaf5a5ba28a29c94ab2342b57627c127, type: 3}
+  sfxHide: {fileID: 8300000, guid: 8bd415806fca3df46ab1bf65c78b0c78, type: 3}
   panelConfirmReset: {fileID: 1632846789978072}
   closeButton: {fileID: 114288025228193602}
-  txtMoney: {fileID: 114175510457840578}
   statResetButton: {fileID: 114936889960344056}
+  txtMoney: {fileID: 114175510457840578}
+  sfxUpgradeClick: {fileID: 8300000, guid: 7bbc250a2a3f08e4f8e13e8a32945126, type: 3}
   maxVelocityLevel: {fileID: 114155521527947518}
   maxVelocityCost: {fileID: 114894630546887972}
   maxVelocityUp: {fileID: 114154676749553010}

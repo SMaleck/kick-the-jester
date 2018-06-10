@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.App.Upgrade;
+using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +13,12 @@ namespace Assets.Source.UI.Panels
 
         [SerializeField] private GameObject panelConfirmReset;
 
-        [SerializeField] private Button closeButton;
-        [SerializeField] private Text txtMoney;
+        [SerializeField] private Button closeButton;        
         [SerializeField] private Button statResetButton;
+        [SerializeField] private Text txtMoney;        
+        [SerializeField] private AudioClip sfxUpgradeClick;
+
+        [Header("Upgrades")]
 
         // Max Velocity
         [SerializeField] private Text maxVelocityLevel;
@@ -51,25 +55,33 @@ namespace Assets.Source.UI.Panels
                                        .AddTo(this);
 
             // Upgrades
-            maxVelocityUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.MaxVelocityUp()).AddTo(this);
+            maxVelocityUp.OnClickAsObservable()
+                         .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.MaxVelocityUp))
+                         .AddTo(this);
             Kernel.PlayerProfileService.RP_MaxVelocityLevel.SubscribeToText(maxVelocityLevel).AddTo(this);
             Kernel.PlayerProfileService.RP_MaxVelocityLevel
                 .Subscribe(level => UpdateUI(UpgradeTree.MaxVelocityPath.UpgradeCost(level), maxVelocityCost, maxVelocityUp))
                 .AddTo(this);
             
-            kickForceUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.KickForceUp()).AddTo(this);
+            kickForceUp.OnClickAsObservable()
+                       .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.KickForceUp))
+                       .AddTo(this);
             Kernel.PlayerProfileService.RP_KickForceLevel.SubscribeToText(kickForceLevel).AddTo(this);
             Kernel.PlayerProfileService.RP_KickForceLevel
                 .Subscribe(level => UpdateUI(UpgradeTree.KickForcePath.UpgradeCost(level), kickForceCost, kickForceUp))
                 .AddTo(this);
 
-            shootForceUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.ShootForceUp()).AddTo(this);
+            shootForceUp.OnClickAsObservable()
+                        .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.ShootForceUp))
+                        .AddTo(this);
             Kernel.PlayerProfileService.RP_ShootForceLevel.SubscribeToText(shootForceLevel).AddTo(this);
             Kernel.PlayerProfileService.RP_ShootForceLevel
                 .Subscribe(level => UpdateUI(UpgradeTree.ShootForcePath.UpgradeCost(level), shootForceCost, shootForceUp))
                 .AddTo(this);
 
-            shootCountUp.OnClickAsObservable().Subscribe(_ => Kernel.UpgradeService.ShootCountUp()).AddTo(this);
+            shootCountUp.OnClickAsObservable()
+                        .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.ShootCountUp))
+                        .AddTo(this);
             Kernel.PlayerProfileService.RP_ShootCountLevel.SubscribeToText(shootCountLevel).AddTo(this);
             Kernel.PlayerProfileService.RP_ShootCountLevel
                 .Subscribe(level => UpdateUI(UpgradeTree.ShootCountPath.UpgradeCost(level), shootCountCost, shootCountUp))
@@ -79,6 +91,12 @@ namespace Assets.Source.UI.Panels
             statResetButton.OnClickAsObservable().Subscribe(_ => panelConfirmReset.SetActive(true)).AddTo(this);            
         }
 
+
+        private void OnUpgradeButtonClick(NotifyEventHandler toUpgrade)
+        {
+            Kernel.AudioService.PlaySFX(sfxUpgradeClick);
+            toUpgrade();
+        }
 
         private void OnCurrencyChange(int currency)
         {

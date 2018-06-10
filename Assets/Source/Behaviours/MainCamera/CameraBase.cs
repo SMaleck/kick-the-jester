@@ -1,7 +1,4 @@
-﻿using Assets.Source.App;
-using Assets.Source.Behaviours.MainCamera.Components;
-using Assets.Source.Models;
-using UniRx;
+﻿using Assets.Source.Behaviours.MainCamera.Components;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.MainCamera
@@ -11,8 +8,7 @@ namespace Assets.Source.Behaviours.MainCamera
         public Camera UCamera { get; protected set; }
         
         [SerializeField] protected SpriteRenderer screenFaderSprite;
-
-        protected ScreenFader screenFader;
+        
         protected FollowTarget followTarget;
 
 
@@ -47,22 +43,7 @@ namespace Assets.Source.Behaviours.MainCamera
 
         protected virtual void Awake()
         {
-            UCamera = GetComponent<Camera>();
-
-            if (!Kernel.Ready.Value)
-            {
-                Kernel.Ready.Where(e => e).Subscribe(_ => SetupFader()).AddTo(this);
-            }
-            else
-            {
-                SetupFader();
-            }            
-        }
-
-        private void SetupFader()
-        {
-            screenFader = new ScreenFader(this, screenFaderSprite);
-            FadeIn(null);
+            UCamera = GetComponent<Camera>();           
         }
 
 
@@ -77,18 +58,6 @@ namespace Assets.Source.Behaviours.MainCamera
                 }
             }
             catch { }
-        }
-
-
-        public void FadeIn(NotifyEventHandler callback)
-        {
-            screenFader.FadeIn(callback);
-        }
-
-
-        public void FadeOut(NotifyEventHandler callback)
-        {
-            screenFader.FadeOut(callback);
         }
     }
 }

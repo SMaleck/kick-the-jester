@@ -1116,6 +1116,8 @@ MonoBehaviour:
   slideTimeSeconds: 0.1
   slideInFrom: 3
   useBounce: 0
+  sfxShow: {fileID: 8300000, guid: eaf5a5ba28a29c94ab2342b57627c127, type: 3}
+  sfxHide: {fileID: 0}
   retryButton: {fileID: 114489631760509838}
   shopButton: {fileID: 114119458199827662}
   distance: {fileID: 114379476086715022}

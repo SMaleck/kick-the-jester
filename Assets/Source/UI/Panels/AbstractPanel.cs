@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Source.App;
+using UnityEngine;
 
 namespace Assets.Source.UI.Panels
 {
@@ -10,11 +11,15 @@ namespace Assets.Source.UI.Panels
 
         [SerializeField] protected bool startActive = true;
                 
-        [Header("Transition")]
+        [Header("Transition Effect")]
         [SerializeField] protected bool useSlideTransition = false;
         [SerializeField] protected float slideTimeSeconds = 0.6f;
         [SerializeField] protected FadeDirection slideInFrom  = FadeDirection.Top;
         [SerializeField] protected bool useBounce = false;
+
+        [Header("Transition Sounds")]
+        [SerializeField] private AudioClip sfxShow;
+        [SerializeField] private AudioClip sfxHide;
 
         protected Vector3 fadeInTarget;        
 
@@ -40,12 +45,20 @@ namespace Assets.Source.UI.Panels
         public virtual void Show()
         {
             SlideIn();
+            if(sfxShow != null)
+            {
+                Kernel.AudioService.PlaySFX(sfxShow);
+            }
         }
 
 
         public virtual void Hide()
         {
-            SlideOut();            
+            SlideOut();
+            if (sfxHide != null)
+            {
+                Kernel.AudioService.PlaySFX(sfxHide);
+            }
         }
 
 

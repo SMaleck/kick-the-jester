@@ -2,6 +2,7 @@
 using Assets.Source.Behaviours.GameLogic;
 using Assets.Source.Behaviours.Jester;
 using Assets.Source.Behaviours.MainCamera;
+using Assets.Source.UI.Panels;
 using System;
 using UnityEngine;
 
@@ -55,6 +56,20 @@ namespace Assets.Source.App
                     _userControl = GetComponentFrom<UserControl>(Constants.GO_USER_CONTROL);
                 }
                 return _userControl;
+            }
+        }
+
+
+        private static LoadingPanel _loadingPanel;
+        public static LoadingPanel LoadingPanel
+        {
+            get
+            {
+                if (_loadingPanel == null)
+                {
+                    _loadingPanel = GetComponentFrom<LoadingPanel>(Constants.GO_LOADING_SCREEN);
+                }
+                return _loadingPanel;
             }
         }
 

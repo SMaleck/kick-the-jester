@@ -9,8 +9,5 @@ namespace Assets.Source.Behaviours.MainCamera
 
         float Height { get; }
         float Width { get; }
-
-        void FadeIn(NotifyEventHandler callback);
-        void FadeOut(NotifyEventHandler callback);
     }
 }

@@ -2,14 +2,16 @@
 {
     public static class Constants
     {        
+        // GAME OBJECT NAMES
         public const string GO_GAME_LOGIC = "_GameLogic";
-        public const string GO_USER_CONTROL = "_UserControl";        
-        public const string GO_JESTER = "Jester";        
+        public const string GO_JESTER = "Jester";
+        public const string GO_USER_CONTROL = "_UserControl";
+        public const string GO_LOADING_SCREEN = "PF_Canvas_Loading";
 
         // SCENES
-        public const string SCENE_GAME = "Game";
-        public const string SCENE_SHOP = "Shop";
-        
+        public const string SCENE_GAME = "Game";        
+
+        // FLOAT PRECISION FACTORS
         public const int FLOAT_PRECISION_DIGITS = 4;
         public const int FLOAT_PRECISION_FACTOR = 100;
 
