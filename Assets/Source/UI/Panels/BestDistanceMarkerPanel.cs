@@ -8,6 +8,7 @@ namespace Assets.Source.UI.Panels
 {
     public class BestDistanceMarkerPanel : AbstractPanel
     {
+        [Header("Panel Properties")]
         [SerializeField] private Text bestDistanceText;
         private int minMarkerThreshold = 10;        
 

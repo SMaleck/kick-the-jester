@@ -9,6 +9,7 @@ namespace Assets.Source.UI.Panels
 {
     public class HudPanel : AbstractPanel
     {
+        [Header("Panel Properties")]
         [SerializeField] Button PauseButton;
 
         [SerializeField] Text DistanceText;
@@ -46,13 +47,19 @@ namespace Assets.Source.UI.Panels
                             .Subscribe((float value) => { velocityBar.fillAmount = value; })
                             .AddTo(this);
 
-            App.Cache.Jester.AvailableShotsProperty
-                            .Subscribe(OnShotCountChanged)
-                            .AddTo(this);
-
-            // Activate Velocity display only after start
+           
+            // Activate Velocity and Ammo display only after start
             velocityBar.gameObject.SetActive(false);
-            App.Cache.Jester.IsStartedProperty.Where(e => e).Subscribe(_ => { velocityBar.gameObject.SetActive(true); });
+            App.Cache.Jester.IsStartedProperty.Where(e => e).Subscribe(_ => 
+            {
+                velocityBar.gameObject.SetActive(true);
+
+
+                // Subscribe to ammo count
+                App.Cache.Jester.AvailableShotsProperty
+                           .Subscribe(OnShotCountChanged)
+                           .AddTo(this);
+            });
         }
 
 

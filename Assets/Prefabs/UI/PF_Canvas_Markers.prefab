@@ -266,9 +266,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 1
-  resetScale: 1
-  resetPosition: 0
-  localPosition: {x: 0, y: -109, z: 0}
+  useSlideTransition: 0
+  slideTimeSeconds: 0.6
+  slideInFrom: 0
+  useBounce: 0
   bestDistanceText: {fileID: 114076140924209248}
 --- !u!114 &114546340298492408
 MonoBehaviour:

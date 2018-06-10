@@ -437,10 +437,10 @@ GameObject:
   m_Component:
   - component: {fileID: 224418042096087720}
   - component: {fileID: 222792510186315356}
-  - component: {fileID: 223825999347144140}
   - component: {fileID: 114386503974250656}
   - component: {fileID: 114660735150954666}
-  - component: {fileID: 114851113047740996}
+  - component: {fileID: 223825999347144140}
+  - component: {fileID: 114099063823972616}
   m_Layer: 5
   m_Name: PF_Panel_Shop
   m_TagString: Untagged
@@ -1503,6 +1503,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114099063823972616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1305607932266336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &114100093358489342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2635,9 +2651,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 1
-  resetScale: 1
-  resetPosition: 1
-  localPosition: {x: 0, y: 0, z: 0}
+  useSlideTransition: 0
+  slideTimeSeconds: 0.6
+  slideInFrom: 0
+  useBounce: 0
   ResetButton: {fileID: 114165555375319856}
   CancelButton: {fileID: 114986292688179162}
 --- !u!114 &114464764405509406
@@ -3096,9 +3113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 0
-  resetScale: 1
-  resetPosition: 0
-  localPosition: {x: 0, y: 0, z: 0}
+  useSlideTransition: 1
+  slideTimeSeconds: 0.6
+  slideInFrom: 0
+  useBounce: 1
   panelConfirmReset: {fileID: 1632846789978072}
   closeButton: {fileID: 114288025228193602}
   txtMoney: {fileID: 114175510457840578}
@@ -3579,22 +3597,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Tomato Firmness
---- !u!114 &114851113047740996
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1305607932266336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114851704077599502
 MonoBehaviour:
   m_ObjectHideFlags: 1

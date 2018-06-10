@@ -172,7 +172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1423006812103026
 GameObject:
   m_ObjectHideFlags: 1
@@ -988,9 +988,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 0
-  resetScale: 1
-  resetPosition: 1
-  localPosition: {x: 0, y: 0, z: 0}
+  useSlideTransition: 1
+  slideTimeSeconds: 0.1
+  slideInFrom: 0
+  useBounce: 0
   resumeButton: {fileID: 114881825273952188}
   retryButton: {fileID: 114089666526124782}
   SFXMuteToggle: {fileID: 114269122831876114}

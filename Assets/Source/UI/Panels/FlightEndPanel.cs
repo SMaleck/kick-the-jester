@@ -11,7 +11,8 @@ using UnityEngine.UI;
 namespace Assets.Source.UI.Panels
 {
     public class FlightEndPanel : AbstractPanel
-    {               
+    {
+        [Header("Panel Properties")]
         [SerializeField] Button retryButton;
         [SerializeField] Button shopButton;
 

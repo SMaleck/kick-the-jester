@@ -7,6 +7,7 @@ namespace Assets.Source.UI.Panels
 {
     public class ConfirmResetPanel : AbstractPanel
     {
+        [Header("Panel Properties")]
         [SerializeField] private Button ResetButton;
         [SerializeField] private Button CancelButton;
 

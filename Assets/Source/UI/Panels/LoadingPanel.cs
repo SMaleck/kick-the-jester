@@ -6,7 +6,8 @@ using UnityEngine.UI;
 namespace Assets.Source.UI.Panels
 {
     public class LoadingPanel : MonoBehaviour
-    {        
+    {
+        [Header("Panel Properties")]
         [SerializeField] private GameObject Panel;
         [SerializeField] private Image spinnerImage;
 

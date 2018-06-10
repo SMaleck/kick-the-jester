@@ -7,6 +7,7 @@ namespace Assets.Source.UI.Panels
 {
     public class TitleMenuPanel : MonoBehaviour
     {
+        [Header("Panel Properties")]
         [SerializeField] Button startButton;
 
         private void Start()

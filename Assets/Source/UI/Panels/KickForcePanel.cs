@@ -6,6 +6,7 @@ namespace Assets.Source.UI.Panels
 {
     public class KickForcePanel : AbstractPanel
     {
+        [Header("Panel Properties")]
         [SerializeField] private UIProgressBar kickForceSlider;
 
         public override void Setup()

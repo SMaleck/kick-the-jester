@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 222545071217804914}
   - component: {fileID: 223743592343457272}
   - component: {fileID: 114920179174731414}
+  - component: {fileID: 114591384605559164}
   m_Layer: 5
   m_Name: PF_Panel_Hud
   m_TagString: Untagged
@@ -615,6 +616,22 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.UIProgressBar+ChangeEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114591384605559164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321897989718098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &114592784405140606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -782,9 +799,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startActive: 1
-  resetScale: 1
-  resetPosition: 1
-  localPosition: {x: 0, y: 0, z: 0}
+  useSlideTransition: 0
+  slideTimeSeconds: 0.6
+  slideInFrom: 0
+  useBounce: 0
   PauseButton: {fileID: 114013886657874434}
   DistanceText: {fileID: 114183805179765290}
   HeightText: {fileID: 114934816558391102}

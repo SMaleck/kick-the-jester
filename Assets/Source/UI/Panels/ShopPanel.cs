@@ -8,6 +8,8 @@ namespace Assets.Source.UI.Panels
 {
     public class ShopPanel : AbstractPanel
     {
+        [Header("Panel Properties")]
+
         [SerializeField] private GameObject panelConfirmReset;
 
         [SerializeField] private Button closeButton;
@@ -37,7 +39,7 @@ namespace Assets.Source.UI.Panels
 
         public override void Setup()
         {
-            base.Setup();
+            base.Setup();            
 
             // Setup Confirm Panel
             panelConfirmReset.GetComponent<AbstractPanel>().Setup();
@@ -74,7 +76,7 @@ namespace Assets.Source.UI.Panels
                 .AddTo(this);
 
             // Stat Reset
-            statResetButton.OnClickAsObservable().Subscribe(_ => panelConfirmReset.SetActive(true)).AddTo(this);
+            statResetButton.OnClickAsObservable().Subscribe(_ => panelConfirmReset.SetActive(true)).AddTo(this);            
         }
 
 

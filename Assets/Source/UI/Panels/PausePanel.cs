@@ -7,6 +7,7 @@ namespace Assets.Source.UI.Panels
 {
     public class PausePanel : AbstractPanel
     {
+        [Header("Panel Properties")]
         [SerializeField] Button resumeButton;
         [SerializeField] Button retryButton;        
 
@@ -19,7 +20,17 @@ namespace Assets.Source.UI.Panels
 
             // Toggle this panel on/off depending on pause state
             Kernel.AppState.IsPausedProperty
-                           .Subscribe((bool isPaused) => { gameObject.SetActive(isPaused); })
+                           .Subscribe((bool isPaused) => 
+                           {
+                               if (isPaused)
+                               {
+                                   Show();
+                               }
+                               else
+                               {
+                                   Hide();
+                               }
+                           })
                            .AddTo(this);
 
             resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
