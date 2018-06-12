@@ -5,10 +5,7 @@ namespace Assets.Source.Behaviours.MainCamera
 {
     public class CameraBase : AbstractBehaviour, ICamera
     {        
-        public Camera UCamera { get; protected set; }
-        
-        [SerializeField] protected SpriteRenderer screenFaderSprite;
-        
+        public Camera UCamera { get; protected set; }              
         protected FollowTarget followTarget;
 
 

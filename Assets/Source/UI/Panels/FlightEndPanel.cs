@@ -37,7 +37,7 @@ namespace Assets.Source.UI.Panels
                                .AddTo(this);
 
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked()).AddTo(this);
-            shopButton.OnClickAsObservable().Subscribe(_ => OnShopClicked()).AddTo(this);
+            shopButton.OnClickAsObservable().Subscribe(_ => ShowPanelByName("PF_Panel_Shop")).AddTo(this);
             
             App.Cache.Jester.DistanceProperty
                             .Subscribe(x => { distance.text = x.ToMeters() + "m"; })
@@ -120,17 +120,6 @@ namespace Assets.Source.UI.Panels
         private void OnRetryClicked()
         {
             Kernel.SceneTransitionService.ToGame();
-        }
-
-
-        private void OnShopClicked()
-        {
-            var shop = owner.Panels.FirstOrDefault(e => e.gameObject.name.Equals("PF_Panel_Shop"));
-
-            if(shop != null)
-            {
-                shop.Show();
-            }
         }
     }
 }

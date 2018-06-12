@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Source.UI.Panels
@@ -129,6 +130,18 @@ namespace Assets.Source.UI.Panels
                 default:
                     return tween;
             }            
+        }
+
+
+        // Finds a Panel by name and calls Show(), if it exists
+        protected void ShowPanelByName(string name)
+        {
+            var panel = owner.Panels.FirstOrDefault(e => e.gameObject.name.Equals(name));
+
+            if (panel != null)
+            {
+                panel.Show();
+            }
         }
     }
 }

@@ -270,6 +270,8 @@ MonoBehaviour:
   slideTimeSeconds: 0.6
   slideInFrom: 0
   useBounce: 0
+  sfxShow: {fileID: 0}
+  sfxHide: {fileID: 0}
   bestDistanceText: {fileID: 114076140924209248}
 --- !u!114 &114546340298492408
 MonoBehaviour:

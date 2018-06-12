@@ -7,11 +7,19 @@ namespace Assets.Source.UI.Elements
         [SerializeField] float pulseTimeSeconds = 0.5f;        
         [SerializeField] float maxScaleFactor = 1.1f;
 
+        private LTDescr pulseTween;
+
         private void Awake()
         {
-            LeanTween.scale(gameObject.GetComponent<RectTransform>(), gameObject.GetComponent<RectTransform>().localScale * maxScaleFactor, pulseTimeSeconds)
-                     .setEaseInOutCubic()
-                     .setLoopPingPong();            
+            pulseTween = LeanTween.scale(gameObject.GetComponent<RectTransform>(), gameObject.GetComponent<RectTransform>().localScale * maxScaleFactor, pulseTimeSeconds)
+                                  .setEaseInOutCubic()
+                                  .setLoopPingPong();            
+        }
+
+
+        public void Stop()
+        {
+            pulseTween.setLoopCount(0);
         }
     }
 }
