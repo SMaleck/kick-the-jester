@@ -7,6 +7,9 @@ namespace Assets.Source.UI.Panels
     public class CreditsPanel : AbstractPanel
     {
         [Header("Panel Properties")]
+        [SerializeField] private GameObject panelDefault;
+        [SerializeField] private GameObject panelWeb;        
+
         [SerializeField] private Button closeButton;
 
         [SerializeField] private Button smaleckButton;
@@ -29,12 +32,28 @@ namespace Assets.Source.UI.Panels
 
             closeButton.OnClickAsObservable().Subscribe(_ => Hide()).AddTo(this);
 
+
+            // Links do not work in the Web Version
+            #if !UNITY_WEBGL
+
+            panelDefault.SetActive(true);
+            panelWeb.SetActive(false);
             smaleckButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(smaleckkUrl)).AddTo(this);
             jhartmannButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(jhartmannUrl)).AddTo(this);
             jiubeckButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(jiubeckUrl)).AddTo(this);
 
             tristanButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(tristanUrl)).AddTo(this);
             noiseForFunButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(noiseForFunUrl)).AddTo(this);
+            
+            #endif
+
+
+            #if UNITY_WEBGL
+
+            panelDefault.SetActive(false);
+            panelWeb.SetActive(true);
+            
+            #endif
         }
     }
 }

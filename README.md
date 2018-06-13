@@ -12,6 +12,10 @@ A tossing game in Unity.
 ### Starting the Project in Unity
 Currently you can only start the project from the `Title` scene, because there are some critical items loaded, which do not get initialized in other scenes.
 
+## Using FontAwesome in TextMesh Pro
+[Unity Answers How To](https://answers.unity.com/questions/1434980/how-to-add-font-awesome-into-unity-using-textmesh.html)
+For the custom range use 61440-62805
+
 - - - -
 # **Asset Sources & Credits**
 
@@ -28,8 +32,9 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
 ## *Unity Asset Store Resources*
 * [UniRx - Reactive Extensions for Unity](https://assetstore.unity.com/packages/tools/unirx-reactive-extensions-for-unity-17276)
-* [Arrow Mobile UI for UGUI](https://assetstore.unity.com/packages/2d/gui/arrow-mobile-ui-for-ugui-64369)
+* [TextMesh Pro](https://assetstore.unity.com/packages/essentials/beta-projects/textmesh-pro-84126)
 * [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595)
+* [Arrow Mobile UI for UGUI](https://assetstore.unity.com/packages/2d/gui/arrow-mobile-ui-for-ugui-64369)
 * [2D Toon FX : Basic](https://assetstore.unity.com/packages/vfx/particles/2d-toon-fx-basic-116228)
 
 
