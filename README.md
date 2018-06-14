@@ -5,7 +5,7 @@ A tossing game in Unity.
 ## *Getting Started*
 1. Clone the repository and open the project with Unity
 2. From the Unity Editor open any C# source file, so that the `.sln` gets generated correctly
-3. Open the Asset Store in Unity and import all required Assets (see list above)
+3. Open the Asset Store in Unity and import all required Assets ([see list below](#*Unity_Asset_Store_Resources*))
 
 **NOTE:** Paid Unity Asset Store plugins are not part of the repository for obvious reasons. You will have to import them manually.
 
@@ -20,8 +20,8 @@ For the custom range use 61440-62805
 # **Asset Sources & Credits**
 
 ## *Code*
-* [jonashartmann](https://github.com/jonashartmann)
-* [smaleck](https://github.com/SMaleck)
+* [Jonas Hartmann](https://github.com/jonashartmann)
+* [Sebastian Maleck](https://github.com/SMaleck)
 
 
 ## *Original Assets*
