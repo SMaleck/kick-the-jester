@@ -51,6 +51,9 @@ TagManager:
   - name: Top
     uniqueID: 3372332075
     locked: 0
+  - name: ParticleEffect
+    uniqueID: 1114801199
+    locked: 0
   - name: UI
     uniqueID: 709991735
     locked: 0

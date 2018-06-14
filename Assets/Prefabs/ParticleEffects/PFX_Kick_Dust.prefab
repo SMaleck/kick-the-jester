@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198289004890833238}
   - component: {fileID: 199113712011502892}
   m_Layer: 0
-  m_Name: PFX_Kick
+  m_Name: PFX_Kick_Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

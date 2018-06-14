@@ -7,7 +7,10 @@ namespace Assets.Source.Behaviours
 {
     public class Knight : AbstractBehaviour
     {        
-        [SerializeField] private AudioClip KickSound;        
+        [SerializeField] private AudioClip KickSound;
+        [SerializeField] private GameObject pfxKickSwoosh;
+        [SerializeField] private Transform pfxSlotKickSwoosh;
+
         private bool hasKicked = false;
 
         private enum AnimState { Idle, Kick };
@@ -27,8 +30,14 @@ namespace Assets.Source.Behaviours
         }
 
 
-        public void OnKickAnimationEnd()
+        public void PlayKickSwooshEffect()
         {
+            Kernel.PfxService.PlayAt(pfxKickSwoosh, pfxSlotKickSwoosh.position);
+        }
+
+
+        public void OnKickAnimationEnd()
+        {   
             MessageBroker.Default.Publish(JesterEffects.Kick);
             Kernel.AudioService.PlayRandomizedSFX(KickSound);
         }
