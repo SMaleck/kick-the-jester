@@ -10,7 +10,8 @@ A tossing game in Unity.
 **NOTE:** Paid Unity Asset Store plugins are not part of the repository for obvious reasons. You will have to import them manually.
 
 ### Starting the Project in Unity
-Currently you can only start the project from the `Title` scene, because there are some critical items loaded, which do not get initialized in other scenes.
+The Game needs to be started from the `Title` scene, since this initialises the basic layers.
+You can use the hotkey `CTRL + L` from anywhere to start the correct scene.
 
 ## Using FontAwesome in TextMesh Pro
 [Unity Answers How To](https://answers.unity.com/questions/1434980/how-to-add-font-awesome-into-unity-using-textmesh.html)
