@@ -41,6 +41,8 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
 ## *3rd Party Resources*
 
+**Coin Icon by [DontMind8](Credit dontmind8.blogspot.com)
+
 **Music by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)**\
 from [Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack)\
 Licensed under Royalty Free License

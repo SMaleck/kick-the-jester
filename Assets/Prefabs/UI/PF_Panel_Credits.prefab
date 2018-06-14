@@ -713,7 +713,6 @@ GameObject:
   - component: {fileID: 224041668266006650}
   - component: {fileID: 222702978198337268}
   - component: {fileID: 114068814085221640}
-  - component: {fileID: 114443496691516952}
   m_Layer: 5
   m_Name: TextMeshPro Text
   m_TagString: Untagged
@@ -1379,15 +1378,14 @@ MonoBehaviour:
   m_text: CREDITS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2b257fed15a80804181d70b04b6c4c59, type: 2}
-  m_sharedMaterial: {fileID: 21519481850688152, guid: 2b257fed15a80804181d70b04b6c4c59,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 6746785f86388c942990f161672617d5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4285186556
-  m_fontColor: {r: 0.9882353, g: 0.75686276, b: 0.41568628, a: 1}
+    rgba: 4294967292
+  m_fontColor: {r: 0.9882353, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -2228,20 +2226,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114443496691516952
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1748134686118248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.20392157, g: 0.10980392, b: 0.03137255, a: 1}
-  m_EffectDistance: {x: 0, y: -6}
-  m_UseGraphicAlpha: 1
 --- !u!114 &114540552414112428
 MonoBehaviour:
   m_ObjectHideFlags: 1

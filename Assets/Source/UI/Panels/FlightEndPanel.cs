@@ -4,6 +4,7 @@ using Assets.Source.UI.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +23,7 @@ namespace Assets.Source.UI.Panels
 
         [SerializeField] RectTransform currencyContainer;
         [SerializeField] GameObject pfCurrencyItem;
-        [SerializeField] Text currency;
+        [SerializeField] TMP_Text currency;
 
         private double activationDelay = 0.7;
         private float initialBestDistance;

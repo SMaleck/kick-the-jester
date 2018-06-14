@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 
 namespace Assets.Source.UI.Elements
 {
     public class CurrencyItem : MonoBehaviour
     {
-        [SerializeField] private Text labelText;
-        [SerializeField] private Text valueText;
+        [SerializeField] private TMP_Text labelText;
+        [SerializeField] private TMP_Text valueText;
 
         public string Label
         {
