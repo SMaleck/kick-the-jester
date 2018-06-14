@@ -19,7 +19,7 @@ namespace Assets.Source.UI.Elements
 
         public void Stop()
         {
-            pulseTween.setLoopCount(0);
+            pulseTween.pause();
         }
     }
 }
