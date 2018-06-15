@@ -153,7 +153,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224973384705084910}
-  - component: {fileID: 114584766712927458}
   - component: {fileID: 222660744058664314}
   - component: {fileID: 114050346452268838}
   - component: {fileID: 225239663912228198}
@@ -447,7 +446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1316473344194438
 GameObject:
   m_ObjectHideFlags: 1
@@ -2924,34 +2923,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114584766712927458
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1128615794337736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69657661335df8f4dbcf3cd6e8f75593, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WindowId: 2
-  m_CustomWindowId: 1
-  m_StartingState: 0
-  m_EscapeKeyAction: 1
-  m_Transition: 0
-  m_TransitionEasing: 13
-  m_TransitionDuration: 0.1
-  onTransitionBegin:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.UIWindow+TransitionBeginEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onTransitionComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.UIWindow+TransitionCompleteEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114592819081344982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3259,11 +3230,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -4664,10 +4635,10 @@ RectTransform:
   m_Father: {fileID: 224225004001841478}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1229.5, y: -510}
+  m_SizeDelta: {x: 725, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224004800004030634
 RectTransform:
@@ -4945,10 +4916,10 @@ RectTransform:
   m_Father: {fileID: 224225004001841478}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1229.5, y: -150}
+  m_SizeDelta: {x: 725, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224225004001841478
 RectTransform:
@@ -5232,10 +5203,10 @@ RectTransform:
   m_Father: {fileID: 224225004001841478}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 362.5, y: -510}
+  m_SizeDelta: {x: 725, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224408995865138076
 RectTransform:
@@ -5989,10 +5960,10 @@ RectTransform:
   m_Father: {fileID: 224225004001841478}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 362.5, y: -150}
+  m_SizeDelta: {x: 725, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224994617112898132
 RectTransform:

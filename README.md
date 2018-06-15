@@ -1,6 +1,24 @@
 # **Kick The Jester**
 
-A tossing game in Unity.
+That Jester was so boring today. Kick him out as far as you can!
+
+Send him to the outer edges of the kingdom for never coming back!
+You know how. But here, take these. Throw it at him while he flies, so he goes even farther!
+
+--- 
+
+Kick the Jester is an open source tossing game made in Unity. Check it out in Github: https://github.com/SMaleck/kick-the-jester
+
+Made out of passion for creating games for a living.
+
+Brought to you by:
+    sebreck: https://sebreck.newgrounds.com/        (Development & Design)
+    kEoMaster: https://keomaster.newgrounds.com/    (Development & Design)
+    Jiubeck: https://jiubeck.newgrounds.com/        (Art)
+
+Special thanks goes to:
+    Tristan Lohengrin: https://www.tristanlohengrin.fr/     (Music)
+    Noise For Fun: http://www.noiseforfun.com/              (Sound Effects)
 
 ## *Getting Started*
 1. Clone the repository and open the project with Unity
