@@ -21,10 +21,9 @@ GameObject:
   - component: {fileID: 4697469015301456}
   - component: {fileID: 212794270740840680}
   - component: {fileID: 114629072755771498}
-  - component: {fileID: 95521573966595468}
   - component: {fileID: 61718986523045982}
   m_Layer: 11
-  m_Name: PIK_Coin
+  m_Name: PIK_CoinBag
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +58,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.49, y: 1.5}
+    oldSize: {x: 1.5, y: 1.58}
     newSize: {x: 1.49, y: 1.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -68,23 +67,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
---- !u!95 &95521573966595468
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1176274882300718}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f673661b6c7c28a4f9434f9bd392d7ac, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114629072755771498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,7 +81,7 @@ MonoBehaviour:
   isDestructible: 1
   soundEffect: {fileID: 8300000, guid: 7bbc250a2a3f08e4f8e13e8a32945126, type: 3}
   particleEffect: {fileID: 0}
-  CurrencyAmount: 100
+  CurrencyAmount: 200
 --- !u!212 &212794270740840680
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,7 +116,7 @@ SpriteRenderer:
   m_SortingLayerID: -922635221
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ca00c9195b9d35746abc4c0478debae4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b11b5ac6dee43e4eb5dab133f9b0277, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
