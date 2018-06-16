@@ -1,25 +1,18 @@
 # **Kick The Jester**
 
-That Jester was so boring today. Kick him out as far as you can!
+That Jester was especially boring today. Kick him out as far as you can!
 
-Send him to the outer edges of the kingdom for never coming back!
-You know how. But here, take these. Throw it at him while he flies, so he goes even farther!
+Send him to the outer edges of the kingdom, so he never comes back! 
+And if your swift kick is not enough, throw tomatoes at him while he flies, so he flies even further!
 
 --- 
 
-Kick the Jester is an open source tossing game made in Unity. Check it out in Github: https://github.com/SMaleck/kick-the-jester
+Kick the Jester is an open source tossing game made in Unity. 
+Check it out in Github: https://github.com/SMaleck/kick-the-jester
 
 Made out of passion for creating games for a living.
 
-Brought to you by:
-    sebreck: https://sebreck.newgrounds.com/        (Development & Design)
-    kEoMaster: https://keomaster.newgrounds.com/    (Development & Design)
-    Jiubeck: https://jiubeck.newgrounds.com/        (Art)
-
-Special thanks goes to:
-    Tristan Lohengrin: https://www.tristanlohengrin.fr/     (Music)
-    Noise For Fun: http://www.noiseforfun.com/              (Sound Effects)
-
+- - - -
 ## *Getting Started*
 1. Clone the repository and open the project with Unity
 2. From the Unity Editor open any C# source file, so that the `.sln` gets generated correctly
