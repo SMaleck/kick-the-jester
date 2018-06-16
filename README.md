@@ -38,13 +38,12 @@ For the custom range use 61440-62805
 - - - -
 # **Asset Sources & Credits**
 
-## *Code*
+## *Code & Game Design*
 * [Jonas Hartmann](https://github.com/jonashartmann)
 * [Sebastian Maleck](https://github.com/SMaleck)
 
 
-## *Original Assets*
-
+## *Original Visual Assets*
 **Backgrounds, Characters & Items**\
 Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
@@ -59,7 +58,7 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
 ## *3rd Party Resources*
 
-**Coin Icon by [DontMind8](Credit dontmind8.blogspot.com)
+**Coin Icon by [DontMind8](http://dontmind8.blogspot.com)**
 
 **Music by [Tristan Lohengrin](https://www.tristanlohengrin.fr/)**\
 from [Royalty Free Soundtrack](https://tristanlohengrin.bandcamp.com/album/free-soundtrack)\
@@ -77,5 +76,5 @@ Licensed under Creative Commons By Attribution 4.0
 * [Bump](http://www.noiseforfun.com/2013-sound-effects/bump/)
 * [Cannon](http://www.noiseforfun.com/2012-sound-effects/cannon/)
 * [Glitter](http://www.noiseforfun.com/2012-sound-effects/glitter/)
-* [Dry Punch](www.noiseforfun.com/2012-sound-effects/dry-punch/)
+* [Dry Punch](http://www.noiseforfun.com/2012-sound-effects/dry-punch/)
 * [Fireball](http://www.noiseforfun.com/2013-sound-effects/fireball/)

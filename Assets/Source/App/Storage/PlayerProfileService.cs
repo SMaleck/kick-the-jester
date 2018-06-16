@@ -8,10 +8,18 @@ namespace Assets.Source.App.Storage
     {
         private readonly FileDataStorage<PlayerProfile> storage;
         private PlayerProfile lastSavedProfileData;
-        
+
 
         /* -------------------------------------------------------------------------- */
         #region PROFILE DATA
+
+        /* TOGGLES */
+        public BoolReactiveProperty RP_IsFirstStart = new BoolReactiveProperty(true);
+        public bool IsFirstStart
+        {
+            get { return RP_IsFirstStart.Value; }
+            set { RP_IsFirstStart.Value = value; }
+        }
 
         /* UPGRADEABLE PROPERTIES */
         public IntReactiveProperty RP_MaxVelocityLevel = new IntReactiveProperty(0);
@@ -61,8 +69,6 @@ namespace Assets.Source.App.Storage
         #endregion
 
 
-        #region INITIALIZATION
-
         // CONSTRUCTOR --------------------------------------------------------
         public PlayerProfileService(FileDataStorage<PlayerProfile> dataStorage)
             : base()
@@ -81,6 +87,8 @@ namespace Assets.Source.App.Storage
             // Load any persisted data
             lastSavedProfileData = storage.Load();
 
+            RP_IsFirstStart.Value = lastSavedProfileData.IsFirstStart;
+
             RP_MaxVelocityLevel.Value = lastSavedProfileData.MaxVelocityLevel;
             RP_KickForceLevel.Value = lastSavedProfileData.KickForceLevel;
             RP_ShootForceLevel.Value = lastSavedProfileData.ShootForceLevel;
@@ -94,7 +102,8 @@ namespace Assets.Source.App.Storage
         /// Ensures that data is saved to disk as required
         /// </summary>
         private void EnsureProfileDataPersistence()
-        {            
+        {
+            RP_IsFirstStart.Subscribe(_ => Save());
             RP_MaxVelocityLevel.Subscribe(_ => Save());
             RP_KickForceLevel.Subscribe(_ => Save());
             RP_ShootForceLevel.Subscribe(_ => Save());
@@ -104,7 +113,6 @@ namespace Assets.Source.App.Storage
             RP_Currency.Subscribe(_ => Save());
         }
 
-        #endregion
 
         /// <summary>
         /// Persists current profile data to disk.
@@ -116,6 +124,8 @@ namespace Assets.Source.App.Storage
         public override void Save()
         {
             if (!MustSave) { return; }
+
+            lastSavedProfileData.IsFirstStart = RP_IsFirstStart.Value;
 
             lastSavedProfileData.MaxVelocityLevel = RP_MaxVelocityLevel.Value;
             lastSavedProfileData.KickForceLevel = RP_KickForceLevel.Value;
@@ -145,7 +155,8 @@ namespace Assets.Source.App.Storage
         {
             get
             {
-                return RP_MaxVelocityLevel.Value != lastSavedProfileData.MaxVelocityLevel
+                return RP_IsFirstStart.Value != lastSavedProfileData.IsFirstStart
+                    || RP_MaxVelocityLevel.Value != lastSavedProfileData.MaxVelocityLevel
                     || RP_KickForceLevel.Value != lastSavedProfileData.KickForceLevel
                     || RP_ShootForceLevel.Value != lastSavedProfileData.ShootForceLevel
                     || RP_ShootCountLevel.Value != lastSavedProfileData.ShootCountLevel
