@@ -14,6 +14,14 @@ namespace Assets.Source.App.Persistence.Models
         }
 
         [JsonIgnore]
+        public IntReactiveProperty RP_RoundsPlayed = new IntReactiveProperty(0);
+        public int RoundsPlayed
+        {
+            get { return RP_RoundsPlayed.Value; }
+            set { RP_RoundsPlayed.Value = value; }
+        }
+
+        [JsonIgnore]
         public IntReactiveProperty RP_BestDistance = new IntReactiveProperty(0);
         public int BestDistance
         {

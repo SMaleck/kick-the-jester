@@ -23,7 +23,7 @@ namespace Assets.Source.Behaviours.GameLogic.Components
 
             owner.StateProperty
                  .Where(e => e.Equals(GameState.End))
-                 .Subscribe(OnGameStateChange)
+                 .Subscribe(_ => OnGameEnd())
                  .AddTo(owner);
         }
 
@@ -32,9 +32,13 @@ namespace Assets.Source.Behaviours.GameLogic.Components
             currentDistance = distance;
         }
 
-        private void OnGameStateChange(GameState state)
+        private void OnGameEnd()
         {
-            if (state == GameState.End && currentDistance > playerProfile.Stats.BestDistance)
+            // Increment round counter
+            playerProfile.Stats.RoundsPlayed++;
+
+            // Record best distance if achieved
+            if (currentDistance > playerProfile.Stats.BestDistance)
             {
                 playerProfile.Stats.BestDistance = (int)(currentDistance);
             }
