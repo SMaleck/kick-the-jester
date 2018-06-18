@@ -2,9 +2,9 @@
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.App.Storage
+namespace Assets.Source.App.Persistence
 {
-    public class UserSettingsService : AbstractPersistentDataService
+    public class UserSettingsContext : AbstractPersistentDataContext
     {
         private const string MUTE_BGM_KEY = "MuteBGM";
         public BoolReactiveProperty MuteBGMProperty = new BoolReactiveProperty(false);
@@ -31,7 +31,8 @@ namespace Assets.Source.App.Storage
         }
 
 
-        public UserSettingsService()
+        /* ----------------------------------------------------------- */
+        public UserSettingsContext()
             : base()
         {
             if (PlayerPrefs.HasKey(MUTE_BGM_KEY))
@@ -42,13 +43,11 @@ namespace Assets.Source.App.Storage
             if (PlayerPrefs.HasKey(MUTE_SFX_KEY))
             {
                 MuteSFX = Convert.ToBoolean(PlayerPrefs.GetInt(MUTE_SFX_KEY));
-            }
-
-            IsLoadedProperty.Value = true;
+            }            
         }
 
 
-        public override void Save()
+        protected override void Save()
         {
             PlayerPrefs.Save();
         }

@@ -39,9 +39,9 @@ namespace Assets.Source.UI.Panels
                             .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
-            Kernel.PlayerProfileService.RP_BestDistance
-                                       .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
-                                       .AddTo(this);
+            Kernel.PlayerProfile.Stats.RP_BestDistance
+                                      .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
+                                      .AddTo(this);
 
             App.Cache.Jester.RelativeVelocityProperty
                             .Subscribe((float value) => { velocityBar.fillAmount = value; })

@@ -11,7 +11,7 @@ namespace Assets.Source.Config
         public MotionConfig()
         {
             Direction = new Vector3(1, 1, 0);
-            Force = Kernel.PlayerProfileService.KickForce;
+            Force = Kernel.PlayerProfile.KickForce;
         }
     }
 }

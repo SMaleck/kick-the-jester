@@ -19,7 +19,7 @@ namespace Assets.Source.UI.Panels
 
             ResetButton.OnClickAsObservable().Subscribe(_ => 
             {
-                Kernel.PlayerProfileService.ResetStats();
+                Kernel.PlayerProfile.ResetProfile();
                 this.gameObject.SetActive(false);
             }).AddTo(this);
 

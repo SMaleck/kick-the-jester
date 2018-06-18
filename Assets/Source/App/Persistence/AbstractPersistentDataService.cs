@@ -1,13 +1,11 @@
 ﻿using System.Linq;
 using UniRx;
 
-namespace Assets.Source.App.Storage
+namespace Assets.Source.App.Persistence
 {
-    public abstract class AbstractPersistentDataService
+    public abstract class AbstractPersistentDataContext
     {
-        public BoolReactiveProperty IsLoadedProperty = new BoolReactiveProperty(false);
-
-        public AbstractPersistentDataService()
+        public AbstractPersistentDataContext()
         {
             // Save on each Scene Load       
             Kernel.SceneTransitionService.IsLoadingProperty
@@ -18,7 +16,7 @@ namespace Assets.Source.App.Storage
             Observable.OnceApplicationQuit().Subscribe(__ => { Save(); });
         }
 
-
-        public abstract void Save();
+        
+        protected abstract void Save();
     }
 }

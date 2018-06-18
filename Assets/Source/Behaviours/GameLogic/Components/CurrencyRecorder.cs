@@ -1,7 +1,6 @@
 ﻿using Assets.Source.App;
-using Assets.Source.App.Storage;
+using Assets.Source.App.Persistence;
 using Assets.Source.Behaviours.Jester;
-using Assets.Source.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace Assets.Source.Behaviours.GameLogic.Components
 {
     public class CurrencyRecorder : AbstractComponent<GameLogicContainer>
     {        
-        private readonly PlayerProfileService playerProfileService;
+        private readonly PlayerProfileContext playerProfile;
         private readonly JesterContainer jester;
 
         private int collectedCurrency = 0;
@@ -25,10 +24,10 @@ namespace Assets.Source.Behaviours.GameLogic.Components
 
 
         /* -------------------------------------------------------------------------- */
-        public CurrencyRecorder(GameLogicContainer owner, PlayerProfileService playerProfileService, JesterContainer jester) 
+        public CurrencyRecorder(GameLogicContainer owner, PlayerProfileContext playerProfile, JesterContainer jester) 
             : base(owner)
         {            
-            this.playerProfileService = playerProfileService;
+            this.playerProfile = playerProfile;
             this.jester = jester;            
 
             owner.StateProperty
@@ -45,7 +44,7 @@ namespace Assets.Source.Behaviours.GameLogic.Components
 
             foreach(int value in result.Values)
             {
-                playerProfileService.Currency += Math.Abs(value);
+                playerProfile.Stats.Currency += Math.Abs(value);
             }     
         }
 

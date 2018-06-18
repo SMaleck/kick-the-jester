@@ -47,6 +47,7 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 * [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595)
 * [Arrow Mobile UI for UGUI](https://assetstore.unity.com/packages/2d/gui/arrow-mobile-ui-for-ugui-64369)
 * [2D Toon FX : Basic](https://assetstore.unity.com/packages/vfx/particles/2d-toon-fx-basic-116228)
+* [JSON .NET For Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347)
 
 
 ## *3rd Party Resources*

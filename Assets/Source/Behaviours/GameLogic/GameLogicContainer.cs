@@ -22,8 +22,8 @@ namespace Assets.Source.Behaviours.GameLogic
         private void Awake()
         {            
             gameStateMachine = new GameStateMachine(this, StateProperty, Kernel.AppState, App.Cache.userControl, App.Cache.Jester);
-            gameStatsRecorder = new GameStatsRecorder(this, Kernel.PlayerProfileService, App.Cache.Jester);
-            currencyRecorder = new CurrencyRecorder(this, Kernel.PlayerProfileService, App.Cache.Jester);
+            gameStatsRecorder = new GameStatsRecorder(this, Kernel.PlayerProfile, App.Cache.Jester);
+            currencyRecorder = new CurrencyRecorder(this, Kernel.PlayerProfile, App.Cache.Jester);
         }
     }
 }

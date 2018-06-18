@@ -1,6 +1,5 @@
-﻿using Assets.Source.App.Storage;
+﻿using Assets.Source.App.Persistence;
 using Assets.Source.Behaviours.Jester;
-using System;
 using System.Linq;
 using UniRx;
 
@@ -8,15 +7,15 @@ namespace Assets.Source.Behaviours.GameLogic.Components
 {
     public class GameStatsRecorder : AbstractComponent<GameLogicContainer>
     {        
-        private readonly PlayerProfileService playerProfileService;
+        private readonly PlayerProfileContext playerProfile;
         private readonly JesterContainer jester;
 
         private float currentDistance = 0;
 
-        public GameStatsRecorder(GameLogicContainer owner, PlayerProfileService playerProfileService, JesterContainer jester)
+        public GameStatsRecorder(GameLogicContainer owner, PlayerProfileContext playerProfile, JesterContainer jester)
             : base(owner)
         {            
-            this.playerProfileService = playerProfileService;
+            this.playerProfile = playerProfile;
 
             jester.DistanceProperty
                   .Subscribe(RecordDistance)
@@ -35,9 +34,9 @@ namespace Assets.Source.Behaviours.GameLogic.Components
 
         private void OnGameStateChange(GameState state)
         {
-            if (state == GameState.End && currentDistance > playerProfileService.BestDistance)
+            if (state == GameState.End && currentDistance > playerProfile.Stats.BestDistance)
             {
-                playerProfileService.BestDistance = (int)(currentDistance);
+                playerProfile.Stats.BestDistance = (int)(currentDistance);
             }
         }
     }

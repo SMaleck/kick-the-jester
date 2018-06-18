@@ -1,10 +1,12 @@
-﻿using UniRx;
+﻿using Assets.Source.App.Persistence;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.App.Audio
 {  
     public class AudioService
     {
+        private readonly UserSettingsContext userSettings;
         private AudioSourceFactory audioSourceFactory;
 
         public AudioChannel BGMChannel { get; private set; }
@@ -14,22 +16,23 @@ namespace Assets.Source.App.Audio
         private const float DEFAULT_SFX_VOLUME = 0.8f;
 
 
-        public AudioService()
+        public AudioService(UserSettingsContext userSettings)
         {
+            this.userSettings = userSettings;
             audioSourceFactory = new AudioSourceFactory();            
 
-            float BGMVolume = Kernel.UserSettingsService.MuteBGM ? 0 : DEFAULT_BGM_VOLUME;
+            float BGMVolume = userSettings.MuteBGM ? 0 : DEFAULT_BGM_VOLUME;
             BGMChannel = new AudioChannel(audioSourceFactory, DEFAULT_BGM_VOLUME, BGMVolume, true);
 
-            float SFXVolume = Kernel.UserSettingsService.MuteSFX ? 0 : DEFAULT_SFX_VOLUME;
+            float SFXVolume = userSettings.MuteSFX ? 0 : DEFAULT_SFX_VOLUME;
             SFXChannel = new AudioChannel(audioSourceFactory, DEFAULT_SFX_VOLUME, SFXVolume, false);
 
             // Listeners for Player Settings
-            Kernel.UserSettingsService.MuteBGMProperty
-                                      .Subscribe((bool value) => { BGMChannel.IsMuted = value; });
+            userSettings.MuteBGMProperty
+                        .Subscribe((bool value) => { BGMChannel.IsMuted = value; });
 
-            Kernel.UserSettingsService.MuteSFXProperty
-                                      .Subscribe((bool value) => { SFXChannel.IsMuted = value; });
+            userSettings.MuteSFXProperty
+                        .Subscribe((bool value) => { SFXChannel.IsMuted = value; });
         }
 
 

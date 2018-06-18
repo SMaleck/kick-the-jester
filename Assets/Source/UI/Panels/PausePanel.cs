@@ -36,8 +36,8 @@ namespace Assets.Source.UI.Panels
             resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
 
-            BGMMuteToggle.isOn = !Kernel.UserSettingsService.MuteBGM;
-            SFXMuteToggle.isOn = !Kernel.UserSettingsService.MuteSFX;
+            BGMMuteToggle.isOn = !Kernel.UserSettings.MuteBGM;
+            SFXMuteToggle.isOn = !Kernel.UserSettings.MuteSFX;
 
             BGMMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnBGMMuteClicked());
             SFXMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnSFXMuteClicked());                       
@@ -58,13 +58,13 @@ namespace Assets.Source.UI.Panels
 
         private void OnBGMMuteClicked()
         {
-            Kernel.UserSettingsService.MuteBGM = !BGMMuteToggle.isOn;
+            Kernel.UserSettings.MuteBGM = !BGMMuteToggle.isOn;
         }
 
 
         private void OnSFXMuteClicked()
         {
-            Kernel.UserSettingsService.MuteSFX = !SFXMuteToggle.isOn;
+            Kernel.UserSettings.MuteSFX = !SFXMuteToggle.isOn;
         }        
     }
 }

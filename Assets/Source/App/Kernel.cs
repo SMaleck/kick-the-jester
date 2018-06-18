@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App.Audio;
 using Assets.Source.App.ParticleEffects;
-using Assets.Source.App.Storage;
+using Assets.Source.App.Persistence;
+using Assets.Source.App.Persistence.Storage;
 using Assets.Source.App.Upgrade;
 using UniRx;
 using UnityEngine;
@@ -17,9 +18,9 @@ namespace Assets.Source.App
 
         public static AppState AppState { get; private set; }
         public static SceneTransitionService SceneTransitionService { get; private set; }
-        public static AudioService AudioService { get; private set; }
-        public static PlayerProfileService PlayerProfileService { get; private set; }
-        public static UserSettingsService UserSettingsService { get; private set; }
+        public static AudioService AudioService { get; private set; }        
+        public static PlayerProfileContext PlayerProfile{ get; private set; }
+        public static UserSettingsContext UserSettings { get; private set; }
         public static UpgradeService UpgradeService { get; private set; }
         public static PfxService PfxService { get; private set; }
 
@@ -33,11 +34,11 @@ namespace Assets.Source.App
             // Initialisation order is important due to inter-dependencies
             // TODO: Resolve implicit interdependency
             AppState = new AppState();
-            SceneTransitionService = new SceneTransitionService();
-            PlayerProfileService = new PlayerProfileService(new FileDataStorage<PlayerProfile>("profile.save"));
-            UserSettingsService = new UserSettingsService();
-            AudioService = new AudioService();
-            UpgradeService = new UpgradeService(PlayerProfileService);
+            SceneTransitionService = new SceneTransitionService();            
+            PlayerProfile = new PlayerProfileContext(new JsonStorage("profile.save"));
+            UserSettings = new UserSettingsContext();
+            AudioService = new AudioService(UserSettings);
+            UpgradeService = new UpgradeService(PlayerProfile);
             PfxService = new PfxService(AppState);
 
             Kernel.Ready.Value = true;

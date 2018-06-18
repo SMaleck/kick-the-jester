@@ -1,16 +1,13 @@
-﻿using Assets.Source.App.Storage;
-using System;
-using System.Collections.Generic;
-using System.Collections;
+﻿using Assets.Source.App.Persistence;
 using UniRx;
 
 namespace Assets.Source.App.Upgrade
 {
     public class UpgradeService
     {
-        private readonly PlayerProfileService playerProfile;
+        private readonly PlayerProfileContext playerProfile;
 
-        public UpgradeService(PlayerProfileService playerProfile)
+        public UpgradeService(PlayerProfileContext playerProfile)
         {
             this.playerProfile = playerProfile;
         }
@@ -39,12 +36,12 @@ namespace Assets.Source.App.Upgrade
         /// <returns></returns>
         private bool TryDeductCost(int upgradeCost)
         {
-            if (playerProfile.Currency < upgradeCost)
+            if (playerProfile.Stats.Currency < upgradeCost)
             {
                 return false;
             }
 
-            playerProfile.Currency -= upgradeCost;
+            playerProfile.Stats.Currency -= upgradeCost;
             return true;
         }
 
@@ -53,22 +50,22 @@ namespace Assets.Source.App.Upgrade
 
         public void MaxVelocityUp()
         {
-            PurchaseNextLevel(playerProfile.RP_MaxVelocityLevel, UpgradeTree.MaxVelocityPath);                       
+            PurchaseNextLevel(playerProfile.Upgrades.RP_MaxVelocityLevel, UpgradeTree.MaxVelocityPath);                       
         }
 
         public void KickForceUp()
         {
-            PurchaseNextLevel(playerProfile.RP_KickForceLevel, UpgradeTree.KickForcePath);            
+            PurchaseNextLevel(playerProfile.Upgrades.RP_KickForceLevel, UpgradeTree.KickForcePath);            
         }
 
         public void ShootForceUp()
         {
-            PurchaseNextLevel(playerProfile.RP_ShootForceLevel, UpgradeTree.ShootForcePath);
+            PurchaseNextLevel(playerProfile.Upgrades.RP_ShootForceLevel, UpgradeTree.ShootForcePath);
         }
 
         public void ShootCountUp()
         {
-            PurchaseNextLevel(playerProfile.RP_ShootCountLevel, UpgradeTree.ShootCountPath);
+            PurchaseNextLevel(playerProfile.Upgrades.RP_ShootCountLevel, UpgradeTree.ShootCountPath);
         }
 
         #endregion

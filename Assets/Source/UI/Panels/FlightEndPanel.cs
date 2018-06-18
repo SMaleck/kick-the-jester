@@ -44,18 +44,18 @@ namespace Assets.Source.UI.Panels
                             .Subscribe(x => { distance.text = x.ToMeters() + "m"; })
                             .AddTo(this);
 
-            Kernel.PlayerProfileService.RP_BestDistance
-                                       .SubscribeToText(bestDistance, e => string.Format("{0}m", e.ToMeters()))
-                                       .AddTo(this);
+            Kernel.PlayerProfile.Stats.RP_BestDistance
+                                      .SubscribeToText(bestDistance, e => string.Format("{0}m", e.ToMeters()))
+                                      .AddTo(this);
               
-            currency.text = Kernel.PlayerProfileService.Currency.ToString();
+            currency.text = Kernel.PlayerProfile.Stats.Currency.ToString();
 
             // Setup new Best Distance Marker
-            initialBestDistance = Kernel.PlayerProfileService.BestDistance;
+            initialBestDistance = Kernel.PlayerProfile.Stats.BestDistance;
 
-            Kernel.PlayerProfileService.RP_BestDistance
-                                       .Subscribe(e => { newBestLabel.SetActive(e > initialBestDistance); })
-                                       .AddTo(this);
+            Kernel.PlayerProfile.Stats.RP_BestDistance
+                                      .Subscribe(e => { newBestLabel.SetActive(e > initialBestDistance); })
+                                      .AddTo(this);
         }
 
 
@@ -101,7 +101,7 @@ namespace Assets.Source.UI.Panels
 
             // Set tweening for total amount
             float flightCurrency = currencyResults.Values.Sum();
-            int totalCurrency = Kernel.PlayerProfileService.Currency;
+            int totalCurrency = Kernel.PlayerProfile.Stats.Currency;
             ltSeq.append(LeanTween.value(this.gameObject, (float value) => { currency.text = Mathf.RoundToInt(value).ToString(); }, totalCurrency - flightCurrency, totalCurrency, 1f));
 
             // Activate Panel            

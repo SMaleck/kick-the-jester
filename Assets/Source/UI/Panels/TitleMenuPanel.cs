@@ -22,7 +22,12 @@ namespace Assets.Source.UI.Panels
         public override void Setup()
         {
             base.Setup();
+            Kernel.Ready.Where(e => e).Subscribe(_ => LateSetup()).AddTo(this);            
+        }
 
+
+        private void LateSetup()
+        {
             startButton.OnClickAsObservable()
                        .Subscribe(_ => StartGame())
                        .AddTo(this);
@@ -32,7 +37,7 @@ namespace Assets.Source.UI.Panels
                          .AddTo(this);
 
             // Deactivate tutorial button on first start, because we will show it automatically
-            tutorialButton.gameObject.SetActive(!Kernel.PlayerProfileService.IsFirstStart);
+            tutorialButton.gameObject.SetActive(!Kernel.PlayerProfile.Stats.IsFirstStart);
             tutorialButton.OnClickAsObservable()
                          .Subscribe(_ => ShowPanelByName("PF_Panel_Tutorial"))
                          .AddTo(this);
@@ -49,7 +54,7 @@ namespace Assets.Source.UI.Panels
             Kernel.AudioService.PlayBGM(bgmTransition);
 
             // If this is the first start, then show the tutorial
-            if (Kernel.PlayerProfileService.IsFirstStart)
+            if (Kernel.PlayerProfile.Stats.IsFirstStart)
             {
                 ShowPanelByName("PF_Panel_Tutorial");
                 return;
