@@ -3,17 +3,32 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using UniRx;
 
 namespace Assets.Source.App.Persistence.Models
-{
+{    
     public abstract class AbstractPersistentModel
     {
         [JsonIgnore]
         public NotifyEventHandler OnAnyPropertyChanged = delegate { };
 
-        // TODO: Make this generic enough for all properties of type ReactiveProperty<T>
+        
         public AbstractPersistentModel()
+        {
+            SetupOnAnyPropertyChanged();
+        }
+
+        
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            SetupOnAnyPropertyChanged();
+        }
+
+
+        // TODO: Make this generic enough for all properties of type ReactiveProperty<T>
+        private void SetupOnAnyPropertyChanged()
         {
             // Get All Reactive Properties in this class
             IEnumerable<FieldInfo> reactiveInfos = this.GetType()
