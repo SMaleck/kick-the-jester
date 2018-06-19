@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 222401073754155278}
   - component: {fileID: 114449339497671098}
   m_Layer: 5
-  m_Name: TurorialButton
+  m_Name: TutorialButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
