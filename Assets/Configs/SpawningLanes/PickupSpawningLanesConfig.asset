@@ -17,7 +17,7 @@ MonoBehaviour:
     itemPool:
     - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
     - {fileID: 1176274882300718, guid: 49d6610b7f1fe1c4db78d1611e759653, type: 2}
-  SpawnChance: 0.306
+  SpawnChance: 0.434
   SpawnOnTrajectory: 1
   MaxDeviation: 8.21
   MinDistanceBetweenSpawns: 130

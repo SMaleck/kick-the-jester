@@ -13,16 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawningLanes:
   - minHeight: 5
-    maxHeight: 20
+    maxHeight: 40
     itemPool:
     - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
-  - minHeight: 30
+  - minHeight: 50
     maxHeight: 200
     itemPool:
     - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
     - {fileID: 1176274882300718, guid: d1e0974300706e0419b38774e447cf19, type: 2}
-  SpawnChance: 1
+  SpawnChance: 0.85
   SpawnOnTrajectory: 0
   MaxDeviation: 5
-  MinDistanceBetweenSpawns: 49
+  MinDistanceBetweenSpawns: 20
   MinHeight: 0
