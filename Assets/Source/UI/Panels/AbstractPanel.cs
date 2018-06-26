@@ -48,7 +48,7 @@ namespace Assets.Source.UI.Panels
             SlideIn();
             if(sfxShow != null)
             {
-                Kernel.AudioService.PlaySFX(sfxShow);
+                App.Cache.Kernel.AudioService.PlaySFX(sfxShow);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Assets.Source.UI.Panels
             SlideOut();
             if (sfxHide != null)
             {
-                Kernel.AudioService.PlaySFX(sfxHide);
+                App.Cache.Kernel.AudioService.PlaySFX(sfxHide);
             }
         }
 

@@ -12,11 +12,11 @@ namespace Assets.Source.Behaviours.Animation
         {
             if (randomize)
             {
-                Kernel.AudioService.PlayRandomizedSFX(clip);
+                App.Cache.Kernel.AudioService.PlayRandomizedSFX(clip);
             }
             else
             {
-                Kernel.AudioService.PlaySFX(clip);
+                App.Cache.Kernel.AudioService.PlaySFX(clip);
             }            
         }
     }

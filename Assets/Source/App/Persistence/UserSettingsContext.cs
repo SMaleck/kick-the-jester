@@ -32,8 +32,8 @@ namespace Assets.Source.App.Persistence
 
 
         /* ----------------------------------------------------------- */
-        public UserSettingsContext()
-            : base()
+        public UserSettingsContext(SceneTransitionService sceneTransitionService)
+            : base(sceneTransitionService)
         {
             if (PlayerPrefs.HasKey(MUTE_BGM_KEY))
             {

@@ -19,7 +19,7 @@ namespace Assets.Source.UI.Panels
             base.Setup();
 
             // Toggle this panel on/off depending on pause state
-            Kernel.AppState.IsPausedProperty
+            App.Cache.Kernel.AppState.IsPausedProperty
                            .Subscribe((bool isPaused) => 
                            {
                                if (isPaused)
@@ -36,8 +36,8 @@ namespace Assets.Source.UI.Panels
             resumeButton.OnClickAsObservable().Subscribe(_ => OnResumeClicked());
             retryButton.OnClickAsObservable().Subscribe(_ => OnRetryClicked());
 
-            BGMMuteToggle.isOn = !Kernel.UserSettings.MuteBGM;
-            SFXMuteToggle.isOn = !Kernel.UserSettings.MuteSFX;
+            BGMMuteToggle.isOn = !App.Cache.Kernel.UserSettings.MuteBGM;
+            SFXMuteToggle.isOn = !App.Cache.Kernel.UserSettings.MuteSFX;
 
             BGMMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnBGMMuteClicked());
             SFXMuteToggle.OnValueChangedAsObservable().Subscribe(_ => OnSFXMuteClicked());                       
@@ -52,19 +52,19 @@ namespace Assets.Source.UI.Panels
 
         private void OnRetryClicked()
         {
-            Kernel.SceneTransitionService.ToGame();
+            App.Cache.Kernel.SceneTransitionService.ToGame();
         }
 
 
         private void OnBGMMuteClicked()
         {
-            Kernel.UserSettings.MuteBGM = !BGMMuteToggle.isOn;
+            App.Cache.Kernel.UserSettings.MuteBGM = !BGMMuteToggle.isOn;
         }
 
 
         private void OnSFXMuteClicked()
         {
-            Kernel.UserSettings.MuteSFX = !SFXMuteToggle.isOn;
+            App.Cache.Kernel.UserSettings.MuteSFX = !SFXMuteToggle.isOn;
         }        
     }
 }

@@ -106,13 +106,13 @@ namespace Assets.Source.Behaviours.Jester
         private void Awake()
         {
             flightRecorder = new FlightRecorder(this);
-            soundEffect = new SoundEffect(this, soundEffectsConfig, Kernel.AudioService);
-            spriteEffect = new SpriteEffect(this, animator, goJesterSprite, goEffectSprite, spriteEffectsConfig, Kernel.PfxService);
+            soundEffect = new SoundEffect(this, soundEffectsConfig, App.Cache.Kernel.AudioService);
+            spriteEffect = new SpriteEffect(this, animator, goJesterSprite, goEffectSprite, spriteEffectsConfig, App.Cache.Kernel.PfxService);
             motionBoot = new MotionBoot(this, new MotionConfig(), App.Cache.GameLogic, App.Cache.userControl);
             motionShoot = new MotionShoot(this, new MotionShootConfig(), App.Cache.GameLogic, App.Cache.userControl);
 
             // Listen to Pause State
-            Kernel.AppState.IsPausedProperty
+            App.Cache.Kernel.AppState.IsPausedProperty
                            .Subscribe(OnPauseStateChanged)
                            .AddTo(this);            
         }

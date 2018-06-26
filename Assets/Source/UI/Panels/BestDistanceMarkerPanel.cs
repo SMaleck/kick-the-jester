@@ -22,12 +22,12 @@ namespace Assets.Source.UI.Panels
             transform.position = GetBestDistancePosition();
 
             // Bind value to text field
-            Kernel.PlayerProfile.Stats.RP_BestDistance
+            App.Cache.Kernel.PlayerProfile.Stats.RP_BestDistance
                                       .SubscribeToText(bestDistanceText, e => e.ToMetersString())
                                       .AddTo(this);
 
             // Hide Marker if it is very close to the start
-            Kernel.PlayerProfile.Stats.RP_BestDistance
+            App.Cache.Kernel.PlayerProfile.Stats.RP_BestDistance
                                       .Subscribe(e => { gameObject.SetActive(e >= minMarkerThreshold); })
                                       .AddTo(this);
 
@@ -49,7 +49,7 @@ namespace Assets.Source.UI.Panels
 
         private Vector3 GetBestDistancePosition()
         {
-            return new Vector3(Kernel.PlayerProfile.Stats.BestDistance, transform.position.y, transform.position.z);
+            return new Vector3(App.Cache.Kernel.PlayerProfile.Stats.BestDistance, transform.position.y, transform.position.z);
         }
     }
 }

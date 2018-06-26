@@ -10,7 +10,7 @@ namespace Assets.Source.Behaviours
 
         public BoolReactiveProperty IsPausedProperty
         {
-            get { return Kernel.AppState != null ? Kernel.AppState.IsPausedProperty : _isPausedProperty; }            
+            get { return App.Cache.Kernel.AppState != null ? App.Cache.Kernel.AppState.IsPausedProperty : _isPausedProperty; }            
         }
 
         public Transform goTransform

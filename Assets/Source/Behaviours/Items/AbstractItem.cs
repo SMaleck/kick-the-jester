@@ -66,7 +66,7 @@ namespace Assets.Source.Behaviours.Items
         {
             if (soundEffect != null)
             {
-                Kernel.AudioService.PlaySFX(soundEffect);
+                App.Cache.Kernel.AudioService.PlaySFX(soundEffect);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Assets.Source.Behaviours.Items
         {
             if (particleEffect != null)
             {
-                Kernel.PfxService.PlayAt(particleEffect, transform.position);
+                App.Cache.Kernel.PfxService.PlayAt(particleEffect, transform.position);
             }
         }
     }

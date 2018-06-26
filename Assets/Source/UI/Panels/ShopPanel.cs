@@ -50,42 +50,42 @@ namespace Assets.Source.UI.Panels
 
             closeButton.OnClickAsObservable().Subscribe(_ => Hide());
 
-            Kernel.PlayerProfile.Stats.RP_Currency
+            App.Cache.Kernel.PlayerProfile.Stats.RP_Currency
                                       .Subscribe(OnCurrencyChange)                                       
                                       .AddTo(this);
 
             // Upgrades
             maxVelocityUp.OnClickAsObservable()
-                         .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.MaxVelocityUp))
+                         .Subscribe(_ => OnUpgradeButtonClick(App.Cache.Kernel.UpgradeService.MaxVelocityUp))
                          .AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_MaxVelocityLevel
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_MaxVelocityLevel
                                          .SubscribeToText(maxVelocityLevel)
                                          .AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_MaxVelocityLevel
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_MaxVelocityLevel
                                          .Subscribe(level => UpdateUI(UpgradeTree.MaxVelocityPath.UpgradeCost(level), maxVelocityCost, maxVelocityUp))
                                          .AddTo(this);
             
             kickForceUp.OnClickAsObservable()
-                       .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.KickForceUp))
+                       .Subscribe(_ => OnUpgradeButtonClick(App.Cache.Kernel.UpgradeService.KickForceUp))
                        .AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_KickForceLevel.SubscribeToText(kickForceLevel).AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_KickForceLevel
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_KickForceLevel.SubscribeToText(kickForceLevel).AddTo(this);
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_KickForceLevel
                                          .Subscribe(level => UpdateUI(UpgradeTree.KickForcePath.UpgradeCost(level), kickForceCost, kickForceUp))
                                          .AddTo(this);
 
             shootForceUp.OnClickAsObservable()
-                        .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.ShootForceUp))
+                        .Subscribe(_ => OnUpgradeButtonClick(App.Cache.Kernel.UpgradeService.ShootForceUp))
                         .AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_ShootForceLevel.SubscribeToText(shootForceLevel).AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_ShootForceLevel
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_ShootForceLevel.SubscribeToText(shootForceLevel).AddTo(this);
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_ShootForceLevel
                                 .Subscribe(level => UpdateUI(UpgradeTree.ShootForcePath.UpgradeCost(level), shootForceCost, shootForceUp))
                                 .AddTo(this);
 
             shootCountUp.OnClickAsObservable()
-                        .Subscribe(_ => OnUpgradeButtonClick(Kernel.UpgradeService.ShootCountUp))
+                        .Subscribe(_ => OnUpgradeButtonClick(App.Cache.Kernel.UpgradeService.ShootCountUp))
                         .AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_ShootCountLevel.SubscribeToText(shootCountLevel).AddTo(this);
-            Kernel.PlayerProfile.Upgrades.RP_ShootCountLevel
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_ShootCountLevel.SubscribeToText(shootCountLevel).AddTo(this);
+            App.Cache.Kernel.PlayerProfile.Upgrades.RP_ShootCountLevel
                                 .Subscribe(level => UpdateUI(UpgradeTree.ShootCountPath.UpgradeCost(level), shootCountCost, shootCountUp))
                                 .AddTo(this);
 
@@ -96,7 +96,7 @@ namespace Assets.Source.UI.Panels
 
         private void OnUpgradeButtonClick(NotifyEventHandler toUpgrade)
         {
-            Kernel.AudioService.PlaySFX(sfxUpgradeClick);
+            App.Cache.Kernel.AudioService.PlaySFX(sfxUpgradeClick);
             toUpgrade();
         }
 
@@ -118,7 +118,7 @@ namespace Assets.Source.UI.Panels
 
             label.text = cost.ToString();
 
-            ReactiveCommand hasEnoughCurrency = Kernel.PlayerProfile.Stats.RP_Currency.Select(x => x >= cost).ToReactiveCommand();
+            ReactiveCommand hasEnoughCurrency = App.Cache.Kernel.PlayerProfile.Stats.RP_Currency.Select(x => x >= cost).ToReactiveCommand();
             hasEnoughCurrency.BindTo(buy).AddTo(this);
         }
     }

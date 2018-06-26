@@ -34,7 +34,7 @@ namespace Assets.Source.Behaviours
             // Attach this to the camera, so the raycast works correctly
             this.transform.SetParent(App.Cache.MainCamera.UCamera.transform);
 
-            Kernel.AppState.IsPausedProperty
+            App.Cache.Kernel.AppState.IsPausedProperty
                            .Subscribe((bool value) => { kickEnabled = !value; })
                            .AddTo(this);
 

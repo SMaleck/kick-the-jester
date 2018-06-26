@@ -57,8 +57,8 @@ namespace Assets.Source.App.Persistence
         /* ----------------------------------------------------------- */
         private readonly JsonStorage storage;
 
-        public PlayerProfileContext(JsonStorage storage) 
-            : base()
+        public PlayerProfileContext(SceneTransitionService sceneTransitionService, JsonStorage storage) 
+            : base(sceneTransitionService)
         {
             this.storage = storage; 
 

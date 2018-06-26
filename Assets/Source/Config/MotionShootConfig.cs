@@ -10,8 +10,8 @@ namespace Assets.Source.Config
         public MotionShootConfig()
             : base()
         {
-            MaxVelocity = Kernel.PlayerProfile.MaxVelocity;
-            Count = Kernel.PlayerProfile.ShootCount;
+            MaxVelocity = App.Cache.Kernel.PlayerProfile.MaxVelocity;
+            Count = App.Cache.Kernel.PlayerProfile.ShootCount;
         }
     }
 }

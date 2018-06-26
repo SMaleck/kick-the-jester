@@ -1,9 +1,11 @@
 ﻿using Assets.Source.App;
+using Assets.Source.App.Audio;
 using Assets.Source.UI.Elements;
 using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.UI.Panels
 {
@@ -18,14 +20,19 @@ namespace Assets.Source.UI.Panels
         [SerializeField] private AudioClip bgmTransition;
         [SerializeField] private float startDelaySeconds = 1.5f;
 
+        private AudioService audioService;
+        [Inject]
+        public void Init(AudioService audioService)
+        {
+            this.audioService = audioService;
+        }
 
         public override void Setup()
         {
             base.Setup();
-            Kernel.Ready.Where(e => e).Subscribe(_ => LateSetup()).AddTo(this);            
+            App.Cache.Kernel.Ready.Where(e => e).Subscribe(_ => LateSetup()).AddTo(this);            
         }
-
-
+        
         private void LateSetup()
         {
             startButton.OnClickAsObservable()
@@ -37,12 +44,12 @@ namespace Assets.Source.UI.Panels
                          .AddTo(this);
 
             // Deactivate tutorial button on first start, because we will show it automatically
-            tutorialButton.gameObject.SetActive(!Kernel.PlayerProfile.Stats.IsFirstStart);
+            tutorialButton.gameObject.SetActive(!App.Cache.Kernel.PlayerProfile.Stats.IsFirstStart);
             tutorialButton.OnClickAsObservable()
                          .Subscribe(_ => ShowPanelByName("PF_Panel_Tutorial"))
                          .AddTo(this);
 
-            Kernel.AudioService.PlayLoopingBGM(bgmTitle);
+            audioService.PlayLoopingBGM(bgmTitle);
         }
 
 
@@ -51,10 +58,10 @@ namespace Assets.Source.UI.Panels
             startButton.interactable = false;
             startButton.GetComponent<Pulse>().Stop();
 
-            Kernel.AudioService.PlayBGM(bgmTransition);
+            App.Cache.Kernel.AudioService.PlayBGM(bgmTransition);
 
             // If this is the first start, then show the tutorial
-            if (Kernel.PlayerProfile.Stats.IsFirstStart)
+            if (App.Cache.Kernel.PlayerProfile.Stats.IsFirstStart)
             {
                 ShowPanelByName("PF_Panel_Tutorial");
                 return;
@@ -62,7 +69,7 @@ namespace Assets.Source.UI.Panels
 
             // Stat Game after delay
             Observable.Timer(TimeSpan.FromSeconds(startDelaySeconds))
-                      .Subscribe(_ => Kernel.SceneTransitionService.ToGame())
+                      .Subscribe(_ => App.Cache.Kernel.SceneTransitionService.ToGame())
                       .AddTo(this);
         }
     }

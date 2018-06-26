@@ -555,7 +555,9 @@ PlayerSettings:
   webGLUseEmbeddedResources: 0
   webGLUseWasm: 0
   webGLCompressionFormat: 1
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: ZEN_SIGNALS_ADD_UNIRX
+    7: ZEN_SIGNALS_ADD_UNIRX
   platformArchitecture: {}
   scriptingBackend: {}
   incrementalIl2cppBuild: {}

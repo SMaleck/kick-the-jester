@@ -16,6 +16,19 @@ namespace Assets.Source.App
         }
 
 
+        private static Kernel _kernel;
+        public static Kernel Kernel
+        {
+            get
+            {
+                if (_kernel == null)
+                {
+                    _kernel = GetComponentFrom<Kernel>(Constants.GO_KERNEL);
+                }
+                return _kernel;
+            }
+        }
+
         private static GameLogicContainer _gameLogic;
         public static GameLogicContainer GameLogic
         {

@@ -104,10 +104,10 @@ namespace Assets.Source.UI.Panels
         private void Close()
         {
             // Start the Game if this was the first start, because then this was shown automatically
-            if (Kernel.PlayerProfile.Stats.IsFirstStart)
+            if (App.Cache.Kernel.PlayerProfile.Stats.IsFirstStart)
             {
-                Kernel.PlayerProfile.Stats.IsFirstStart = false;
-                Kernel.SceneTransitionService.ToGame();
+                App.Cache.Kernel.PlayerProfile.Stats.IsFirstStart = false;
+                App.Cache.Kernel.SceneTransitionService.ToGame();
                 return;
             }
 

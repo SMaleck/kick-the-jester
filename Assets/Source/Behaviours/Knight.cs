@@ -32,14 +32,14 @@ namespace Assets.Source.Behaviours
 
         public void PlayKickSwooshEffect()
         {
-            Kernel.PfxService.PlayAt(pfxKickSwoosh, pfxSlotKickSwoosh.position);
+            App.Cache.Kernel.PfxService.PlayAt(pfxKickSwoosh, pfxSlotKickSwoosh.position);
         }
 
 
         public void OnKickAnimationEnd()
         {   
             MessageBroker.Default.Publish(JesterEffects.Kick);
-            Kernel.AudioService.PlayRandomizedSFX(KickSound);
+            App.Cache.Kernel.AudioService.PlayRandomizedSFX(KickSound);
         }
     }
 }

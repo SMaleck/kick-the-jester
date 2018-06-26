@@ -14,10 +14,10 @@ namespace Assets.Source.Config
     
         public JesterMovementConfig()
         {
-            MaxVelocity = Kernel.PlayerProfile.MaxVelocity;
-            KickForce = Kernel.PlayerProfile.KickForce;
-            ShootForce = Kernel.PlayerProfile.ShootForce;
-            ShootCount = Kernel.PlayerProfile.ShootCount;            
+            MaxVelocity = App.Cache.Kernel.PlayerProfile.MaxVelocity;
+            KickForce = App.Cache.Kernel.PlayerProfile.KickForce;
+            ShootForce = App.Cache.Kernel.PlayerProfile.ShootForce;
+            ShootCount = App.Cache.Kernel.PlayerProfile.ShootCount;            
         }
     }
 }

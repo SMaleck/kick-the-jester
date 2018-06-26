@@ -39,7 +39,7 @@ namespace Assets.Source.UI.Panels
                             .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
                             .AddTo(this);
 
-            Kernel.PlayerProfile.Stats.RP_BestDistance
+            App.Cache.Kernel.PlayerProfile.Stats.RP_BestDistance
                                       .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
                                       .AddTo(this);
 

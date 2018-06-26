@@ -7,6 +7,7 @@
         public const string GO_JESTER = "Jester";
         public const string GO_USER_CONTROL = "_UserControl";
         public const string GO_LOADING_SCREEN = "PF_Canvas_Loading";
+        public const string GO_KERNEL = "_KERNEL";
 
         // SCENES
         public const string SCENE_GAME = "Game";        

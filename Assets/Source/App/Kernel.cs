@@ -5,6 +5,7 @@ using Assets.Source.App.Persistence.Storage;
 using Assets.Source.App.Upgrade;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.App
 {
@@ -12,36 +13,52 @@ namespace Assets.Source.App
     /// The Kernel initialises all artefacts which do NOT destroy between scene loads.
     /// This is added to the title scene
     /// </summary>
-    public class Kernel : MonoBehaviour
+    public class Kernel : MonoInstaller<AppInstaller>
     {
-        public static BoolReactiveProperty Ready = new BoolReactiveProperty(false);        
+        public BoolReactiveProperty Ready = new BoolReactiveProperty(false);        
 
-        public static AppState AppState { get; private set; }
-        public static SceneTransitionService SceneTransitionService { get; private set; }
-        public static AudioService AudioService { get; private set; }        
-        public static PlayerProfileContext PlayerProfile{ get; private set; }
-        public static UserSettingsContext UserSettings { get; private set; }
-        public static UpgradeService UpgradeService { get; private set; }
-        public static PfxService PfxService { get; private set; }
+        public AppState AppState { get { return Find<AppState>(); } }
+        public SceneTransitionService SceneTransitionService { get { return Find<SceneTransitionService>(); } }
+        public AudioService AudioService { get { return Find<AudioService>(); } }        
+        public PlayerProfileContext PlayerProfile { get { return Find<PlayerProfileContext>(); } }
+        public UserSettingsContext UserSettings { get { return Find<UserSettingsContext>(); } }
+        public UpgradeService UpgradeService { get { return Find<UpgradeService>(); } }
+        public PfxService PfxService { get { return Find<PfxService>(); } }
 
+        private T Find<T>()
+        {
+            return Container.Resolve<T>();
+        }
+
+        public DiContainer MainContainer { get { return Container; } }
 
         private void Awake()
         {
-            Kernel.Ready.Value = false;
+            //App.Cache.Kernel.Ready.Value = false;
 
             DontDestroyOnLoad(gameObject);
+            
+            //App.Cache.Kernel.Ready.Value = true;
+        }
 
-            // Initialisation order is important due to inter-dependencies
-            // TODO: Resolve implicit interdependency
-            AppState = new AppState();
-            SceneTransitionService = new SceneTransitionService();            
-            PlayerProfile = new PlayerProfileContext(new JsonStorage("profile.save"));
-            UserSettings = new UserSettingsContext();
-            AudioService = new AudioService(UserSettings);
-            UpgradeService = new UpgradeService(PlayerProfile);
-            PfxService = new PfxService(AppState);
+        public override void InstallBindings()
+        {
+            Container.BindInstance("MyTest").WhenInjectedInto<Test>();
+            Container.Bind<Test>().AsSingle().NonLazy();
 
-            Kernel.Ready.Value = true;
+            Container.Bind<AppState>().AsSingle();
+            Container.Bind<SceneTransitionService>().AsSingle().NonLazy();
+
+            JsonStorage profileStorage = new JsonStorage("profile.save");
+            Container.BindInstance(profileStorage).WhenInjectedInto<PlayerProfileContext>();
+            Container.Bind<PlayerProfileContext>().AsSingle();
+
+            Container.Bind<UserSettingsContext>().AsSingle();
+            Container.Bind<AudioService>().AsSingle().NonLazy();
+            Container.Bind<UpgradeService>().AsSingle().NonLazy();
+            Container.Bind<PfxService>().AsSingle().NonLazy();
+
+            Ready.Value = true;
         }
     }
 }

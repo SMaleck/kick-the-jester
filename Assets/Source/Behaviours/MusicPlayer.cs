@@ -9,7 +9,7 @@ namespace Assets.Source.Behaviours
 
         private void Start()
         {
-            Kernel.AudioService.PlayLoopingBGM(musicClip);
+            App.Cache.Kernel.AudioService.PlayLoopingBGM(musicClip);
         }
     }
 }
