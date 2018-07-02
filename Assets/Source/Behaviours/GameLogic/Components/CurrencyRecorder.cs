@@ -13,7 +13,7 @@ namespace Assets.Source.Behaviours.GameLogic.Components
     {        
         private readonly PlayerProfileContext playerProfile;
         private readonly JesterContainer jester;
-
+        
         private int collectedCurrency = 0;
 
         private float meterToCurrencyFactor = 0.5f;
@@ -21,6 +21,9 @@ namespace Assets.Source.Behaviours.GameLogic.Components
         {
             get { return Mathf.RoundToInt(jester.Distance.ToMeters() * meterToCurrencyFactor); }
         }
+
+
+        public ReactiveCollection<int> Gains = new ReactiveCollection<int>();
 
 
         /* -------------------------------------------------------------------------- */
@@ -57,6 +60,8 @@ namespace Assets.Source.Behaviours.GameLogic.Components
         {
             if (amount <= 0) { return; }
             collectedCurrency += amount;
+
+            Gains.Add(amount);
         }
 
 

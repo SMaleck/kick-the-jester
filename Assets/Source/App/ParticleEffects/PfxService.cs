@@ -10,11 +10,11 @@ namespace Assets.Source.App.ParticleEffects
     public class PfxService
     {
         private readonly AppState appState;
-        private readonly List<ParticleSystem> pool;
+        private readonly List<ParticleSystem> pool;        
 
 
         public PfxService(AppState appState)
-        {
+        {            
             pool = new List<ParticleSystem>();
 
             this.appState = appState;

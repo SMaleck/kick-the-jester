@@ -1,6 +1,8 @@
 ﻿using Assets.Source.App;
+using Assets.Source.UI.Elements;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,17 +13,22 @@ namespace Assets.Source.UI.Panels
     {
         [Header("Panel Properties")]
         [SerializeField] Button PauseButton;
-
-        [SerializeField] Text DistanceText;
-        [SerializeField] Text HeightText;
-        [SerializeField] Text BestDistanceText;
-
         [SerializeField] UIProgressBar velocityBar;
 
         [SerializeField] GameObject shotCountPanel;
         [SerializeField] GameObject PF_ShotCountIcon;
-
         private List<Image> shotCountIcons = new List<Image>();
+
+        // Money Gain Floating number Display
+        [SerializeField] RectTransform MoneyGainPanel;
+        [SerializeField] GameObject PF_MoneyGainText;
+        private List<FloatingValue> moneyGainSlots = new List<FloatingValue>();
+
+        [Header("Stats Display")]
+        [SerializeField] TMP_Text DistanceText;
+        [SerializeField] TMP_Text HeightText;
+        [SerializeField] TMP_Text BestDistanceText;
+
 
         public override void Setup()
         {
@@ -32,15 +39,15 @@ namespace Assets.Source.UI.Panels
                        .AddTo(this);
             
             App.Cache.Jester.DistanceProperty
-                            .SubscribeToText(DistanceText, e => string.Format("{0}m", e.ToMeters()))
+                            .Subscribe((float value) => { DistanceText.text = string.Format("{0}m", value.ToMeters()); } )
                             .AddTo(this);
 
             App.Cache.Jester.HeightProperty
-                            .SubscribeToText(HeightText, e => string.Format("{0}m", e.ToMeters()))
+                            .Subscribe((float value) => { HeightText.text = string.Format("{0}m", value.ToMeters()); })                            
                             .AddTo(this);
 
             Kernel.PlayerProfile.Stats.RP_BestDistance
-                                      .SubscribeToText(BestDistanceText, e => string.Format("{0}m", e.ToMeters()))
+                                      .Subscribe((int value) => { BestDistanceText.text = string.Format("{0}m", value.ToMeters()); })                                      
                                       .AddTo(this);
 
             App.Cache.Jester.RelativeVelocityProperty
@@ -60,6 +67,32 @@ namespace Assets.Source.UI.Panels
                            .Subscribe(OnShotCountChanged)
                            .AddTo(this);
             });
+
+
+            // Show a floating value each time we gain money
+            App.Cache.GameLogic.currencyRecorder.Gains
+                                                .ObserveAdd()
+                                                .Subscribe((CollectionAddEvent<int> e) => { ShowFloatingCoinAmount(e.Value); })
+                                                .AddTo(this);
+        }
+
+
+        // Shows a floating number over the Jester for coin gains
+        private void ShowFloatingCoinAmount(float gainedAmount)
+        {
+            if(gainedAmount <= 0) { return; }
+
+            FloatingValue fValue = moneyGainSlots.FirstOrDefault(e => !e.IsFloating);
+
+            if(fValue == null)
+            {
+                GameObject go = GameObject.Instantiate(PF_MoneyGainText, MoneyGainPanel, false);
+                moneyGainSlots.Add(go.GetComponent<FloatingValue>());
+
+                fValue = moneyGainSlots.Last();
+            }
+
+            fValue.StartFloating(string.Format("{0} {1}", gainedAmount, Constants.TMP_SPRITE_COIN));
         }
 
 

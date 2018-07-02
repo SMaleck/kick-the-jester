@@ -25,5 +25,9 @@
         public const string TAG_OBSTACLE = "Obstacle";
         public const string TAG_BOOST = "Boost";
         public const string TAG_PICKUP = "Pickup";
+
+
+        /* -------------------- TEXT MESH PRO TAGS */
+        public const string TMP_SPRITE_COIN = "<sprite=0>";
     }
 }
