@@ -42,6 +42,7 @@ namespace Assets.Source.App
             PfxService = new PfxService(AppState);
 
             Kernel.Ready.Value = true;
+            SceneTransitionService.ToTitle();
         }
     }
 }

@@ -6,5 +6,5 @@ PhysicsMaterial2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: PM2D_Bouncy
-  friction: 0.2
+  friction: 0.18
   bounciness: 0.6

@@ -20,7 +20,7 @@ namespace Assets.Source.UI.Panels
             ResetButton.OnClickAsObservable().Subscribe(_ => 
             {
                 Kernel.PlayerProfile.ResetProfile();
-                this.gameObject.SetActive(false);
+                Kernel.SceneTransitionService.ToTitle();                
             }).AddTo(this);
 
             CancelButton.OnClickAsObservable().Subscribe(_ => this.gameObject.SetActive(false)).AddTo(this);            

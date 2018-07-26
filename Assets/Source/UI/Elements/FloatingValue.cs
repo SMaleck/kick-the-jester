@@ -17,7 +17,8 @@ namespace Assets.Source.UI.Elements
         public float StartFontSize = 32;
         public float EndFontSize = 64;
 
-        private float fadeTimeSeconds { get { return FloatTimeSeconds / 2; } }
+        private float fadeDelay { get { return FloatTimeSeconds * 0.9f; } }
+        private float fadeTimeSeconds = 0.5f;
 
 
         public void StartFloating(string textValue)
@@ -33,9 +34,9 @@ namespace Assets.Source.UI.Elements
             LeanTween.value(this.gameObject, (float value) => { Text.fontSize = value; }, StartFontSize, EndFontSize, FloatTimeSeconds)
                      .setOnComplete(_ => { isScaling = false; });
 
-            // Fade out text after half of the scaling time is over
+            // Fade out text after it has floated for a while
             isFading = true;
-            Observable.Timer(TimeSpan.FromSeconds(fadeTimeSeconds))
+            Observable.Timer(TimeSpan.FromSeconds(fadeDelay))
                       .Subscribe(_ => 
                       {
                           LeanTween.value(this.gameObject, (float value) => { Text.alpha = value; }, 1, 0, fadeTimeSeconds)

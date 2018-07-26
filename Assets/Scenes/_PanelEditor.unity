@@ -759,6 +759,11 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114113149086041966, guid: 1b580579cafda3d42b122de0a2899d12,
+        type: 2}
+      propertyPath: m_text
+      value: jonasHartmann \U0000f35d
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b580579cafda3d42b122de0a2899d12, type: 2}
   m_IsPrefabParent: 0
@@ -1273,7 +1278,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!4 &1048014930
 Transform:

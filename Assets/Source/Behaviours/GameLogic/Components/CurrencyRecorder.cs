@@ -39,7 +39,7 @@ namespace Assets.Source.Behaviours.GameLogic.Components
                  .AddTo(owner);
         }
 
-        
+
         // Commits the accumulated money pools to the PlayerProfile
         private void OnEnd(GameState state)
         {

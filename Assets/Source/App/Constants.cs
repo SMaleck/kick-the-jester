@@ -9,6 +9,7 @@
         public const string GO_LOADING_SCREEN = "PF_Canvas_Loading";
 
         // SCENES
+        public const string SCENE_TITLE = "Title";
         public const string SCENE_GAME = "Game";        
 
         // FLOAT PRECISION FACTORS

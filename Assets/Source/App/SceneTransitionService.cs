@@ -35,10 +35,16 @@ namespace Assets.Source.App
         /* ---------------------------------------------------------------------------------------- */
         #region SCENE TRANSITIONS
 
+        public void ToTitle()
+        {
+            nextScene = Constants.SCENE_TITLE;
+            App.Cache.LoadingPanel.FadeOut(Execute);
+        }
+
+
         public void ToGame()
         {         
             nextScene = Constants.SCENE_GAME;
-
             App.Cache.LoadingPanel.FadeOut(Execute);
         }
 
