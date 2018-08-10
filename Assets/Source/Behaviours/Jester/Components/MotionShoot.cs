@@ -35,19 +35,6 @@ namespace Assets.Source.Behaviours.Jester.Components
         }
 
 
-        protected override void LateUpdate()
-        {
-            // Limit Velocity
-            if (owner.goBody.velocity.magnitude > config.MaxVelocity)
-            {
-                owner.goBody.velocity = owner.goBody.velocity.normalized * config.MaxVelocity;
-            }
-
-            // Update Owner's relative velocity
-            owner.RelativeVelocity = owner.goBody.velocity.magnitude.AsRelativeTo1(config.MaxVelocity);
-        }
-
-
         private void Execute()
         {
             if(!isActive || availableShots.Value <= 0) { return; }

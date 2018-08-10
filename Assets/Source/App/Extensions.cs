@@ -1,4 +1,5 @@
 ﻿using System;
+using NUnit.Framework;
 
 namespace Assets.Source.App
 {
@@ -89,6 +90,21 @@ namespace Assets.Source.App
             int result = Math.Abs(val1 - val2);
 
             return (float)result / Constants.FLOAT_PRECISION_FACTOR;
+        }
+
+        public static float Clamp(this float value, float min, float max)
+        {
+            if (value > max)
+            {
+                return max;
+            }
+
+            if (value < min)
+            {
+                return min;
+            }
+
+            return value;
         }
     }
 }

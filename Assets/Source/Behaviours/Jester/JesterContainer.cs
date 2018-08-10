@@ -99,6 +99,7 @@ namespace Assets.Source.Behaviours.Jester
         private SpriteEffect spriteEffect;
         private MotionBoot motionBoot;
         private MotionShoot motionShoot;
+        private VelocityLimiter velocityLimiter;
 
         #endregion        
 
@@ -110,6 +111,7 @@ namespace Assets.Source.Behaviours.Jester
             spriteEffect = new SpriteEffect(this, animator, goJesterSprite, goEffectSprite, spriteEffectsConfig, Kernel.PfxService);
             motionBoot = new MotionBoot(this, new MotionConfig(), App.Cache.GameLogic, App.Cache.userControl);
             motionShoot = new MotionShoot(this, new MotionShootConfig(), App.Cache.GameLogic, App.Cache.userControl);
+            velocityLimiter = new VelocityLimiter(this, Kernel.PlayerProfile.MaxVelocity, Kernel.PlayerProfile.MaxVelocity);
 
             // Listen to Pause State
             Kernel.AppState.IsPausedProperty
