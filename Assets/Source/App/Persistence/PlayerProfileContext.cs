@@ -93,7 +93,7 @@ namespace Assets.Source.App.Persistence
         }
 
 
-        // Saves existing data from the persistent storage
+        // Loads existing data from the persistent storage
         protected PlayerProfile Load()
         {
             return storage.Load<PlayerProfile>();
