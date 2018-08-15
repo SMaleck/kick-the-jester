@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114613973022336322}
   - component: {fileID: 114387695053877632}
   - component: {fileID: 114003808655037042}
+  - component: {fileID: 114564694318148418}
   m_Layer: 5
   m_Name: PF_Canvas_Game
   m_TagString: Untagged
@@ -41,11 +42,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92be2e855ba314b4bb85ac2fabe3f1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefabs:
+  prefabs:
   - {fileID: 1321897989718098, guid: ca4f7a38edd9e104bb5aa944cabc35d4, type: 2}
+  - {fileID: 1411047845587674, guid: f64003a38cd5a784aa49b243bd12dd7a, type: 2}
+  - {fileID: 1813762396755568, guid: 5bf95e9f9cf601542ad86c33c4bd9763, type: 2}
   - {fileID: 1401963056995822, guid: 86089090b2a8c7a40b8d5a92183e4106, type: 2}
   - {fileID: 1532492271772472, guid: 332b82f9d50817349aeb6159c7fdc3d8, type: 2}
-  - {fileID: 1411047845587674, guid: f64003a38cd5a784aa49b243bd12dd7a, type: 2}
   - {fileID: 1305607932266336, guid: 47810b6923fbbcd4ebeddbe1f16006da, type: 2}
 --- !u!114 &114387695053877632
 MonoBehaviour:
@@ -63,6 +65,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114564694318148418
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1805248092654100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 114003808655037042}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!114 &114613973022336322
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -10,15 +10,15 @@ namespace Assets.Source.UI
     public class PanelLoader : MonoBehaviour
     {
         [SerializeField] private List<GameObject> prefabs;
-        private AbstractPanel.Factory _titleMenuPanelFactory;
+        private AbstractPanel.Factory panelFactory;
 
         public Canvas ParentCanvas { get; private set; }
         public List<AbstractPanel> Panels { get; private set; }
 
         [Inject]
-        public void Init(AbstractPanel.Factory titleMenuPanelFactory)
+        public void Init(AbstractPanel.Factory panelFactory)
         {
-            _titleMenuPanelFactory = titleMenuPanelFactory;
+            this.panelFactory = panelFactory;
         }
 
         private void Start()
@@ -35,7 +35,7 @@ namespace Assets.Source.UI
 
         private void CreatePanelFromPrefab(GameObject prefab)
         {
-            AbstractPanel panel = _titleMenuPanelFactory.Create(prefab);
+            AbstractPanel panel = panelFactory.Create(prefab);
             panel.gameObject.transform.SetParent(gameObject.transform, false);
             panel.gameObject.name = prefab.name;
 

@@ -1,8 +1,10 @@
 ﻿using Assets.Source.App;
+using Assets.Source.App.Persistence;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.UI.Panels
 {
@@ -28,7 +30,15 @@ namespace Assets.Source.UI.Panels
 
         private BoolReactiveProperty isOnFirstStep = new BoolReactiveProperty(true);
         private BoolReactiveProperty isOnLastStep = new BoolReactiveProperty(false);
+        private PlayerProfileContext profileContext;
+        private SceneTransitionService sceneTransitionService;
 
+        [Inject]
+        public void Init(PlayerProfileContext profileContext, SceneTransitionService sceneTransitionService)
+        {
+            this.profileContext = profileContext;
+            this.sceneTransitionService = sceneTransitionService;
+        }
 
         public override void Setup()
         {
@@ -104,10 +114,10 @@ namespace Assets.Source.UI.Panels
         private void Close()
         {
             // Start the Game if this was the first start, because then this was shown automatically
-            if (App.Cache.Kernel.PlayerProfile.Stats.IsFirstStart)
+            if (profileContext.Stats.IsFirstStart)
             {
-                App.Cache.Kernel.PlayerProfile.Stats.IsFirstStart = false;
-                App.Cache.Kernel.SceneTransitionService.ToGame();
+                profileContext.Stats.IsFirstStart = false;
+                sceneTransitionService.ToGame();
                 return;
             }
 
