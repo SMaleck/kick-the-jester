@@ -23,7 +23,7 @@ namespace Assets.Source.App
             {
                 if (_kernel == null)
                 {
-                    _kernel = GetComponentFrom<Kernel>(Constants.GO_KERNEL);
+                    _kernel = GetComponentFrom<Kernel>(Constants.GO_KERNEL, true);
                 }
                 return _kernel;
             }
@@ -90,9 +90,13 @@ namespace Assets.Source.App
         /* ------------------------------------------------------------------------------------ */
         #region Utilities
 
-        private static T GetComponentFrom<T>(string gameObjectId)
+        private static T GetComponentFrom<T>(string gameObjectId, bool byTag = false)
         {
-            T component = GameObject.Find(gameObjectId).GetComponent<T>();
+            T component;
+
+            if (byTag) component = GameObject.FindGameObjectWithTag(gameObjectId).GetComponent<T>();
+            else component = GameObject.Find(gameObjectId).GetComponent<T>();
+
             AssertNotNull(component);
 
             return component;

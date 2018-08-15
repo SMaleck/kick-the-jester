@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.UI.Panels
 {
@@ -142,6 +143,10 @@ namespace Assets.Source.UI.Panels
             {
                 panel.Show();
             }
+        }
+
+        public class Factory : PlaceholderFactory<UnityEngine.Object, AbstractPanel>
+        {
         }
     }
 }

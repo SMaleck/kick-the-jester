@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114363050079984940}
   - component: {fileID: 114889864373164754}
   - component: {fileID: 114370127347989140}
+  - component: {fileID: 114643764534311236}
   m_Layer: 5
   m_Name: PF_Canvas_Title
   m_TagString: Untagged
@@ -62,10 +63,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92be2e855ba314b4bb85ac2fabe3f1aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefabs:
+  prefabs:
   - {fileID: 1747658993545180, guid: be247ce5adc0bf141924076d80b57bc4, type: 2}
-  - {fileID: 1066629573416702, guid: 1b580579cafda3d42b122de0a2899d12, type: 2}
   - {fileID: 1011928146794670, guid: 2209f6ef2b7c5f54c8c3000a2eb3139a, type: 2}
+  - {fileID: 1066629573416702, guid: 1b580579cafda3d42b122de0a2899d12, type: 2}
+--- !u!114 &114643764534311236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146667983787826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 114370127347989140}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!114 &114889864373164754
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,4 +1,5 @@
-﻿using Assets.Source.App.Audio;
+﻿using System;
+using Assets.Source.App.Audio;
 using Assets.Source.App.ParticleEffects;
 using Assets.Source.App.Persistence;
 using Assets.Source.App.Persistence.Storage;
@@ -6,6 +7,7 @@ using Assets.Source.App.Upgrade;
 using UniRx;
 using UnityEngine;
 using Zenject;
+using Assets.Source.UI.Panels;
 
 namespace Assets.Source.App
 {
@@ -29,9 +31,7 @@ namespace Assets.Source.App
         {
             return Container.Resolve<T>();
         }
-
-        public DiContainer MainContainer { get { return Container; } }
-
+        
         private void Awake()
         {
             //App.Cache.Kernel.Ready.Value = false;
@@ -43,7 +43,7 @@ namespace Assets.Source.App
 
         public override void InstallBindings()
         {
-            Container.BindInstance("MyTest").WhenInjectedInto<Test>();
+            Container.BindInstance("MyKernelTest").WhenInjectedInto<Test>();
             Container.Bind<Test>().AsSingle().NonLazy();
 
             Container.Bind<AppState>().AsSingle();
@@ -58,7 +58,15 @@ namespace Assets.Source.App
             Container.Bind<UpgradeService>().AsSingle().NonLazy();
             Container.Bind<PfxService>().AsSingle().NonLazy();
 
+            BindFactories();
+
             Ready.Value = true;
+        }
+
+        private void BindFactories()
+        {
+            Container.BindFactory<UnityEngine.Object, AbstractPanel, AbstractPanel.Factory>()
+                .FromFactory<PanelFactory>();
         }
     }
 }

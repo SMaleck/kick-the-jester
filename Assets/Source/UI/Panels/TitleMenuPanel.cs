@@ -20,6 +20,7 @@ namespace Assets.Source.UI.Panels
         [SerializeField] private AudioClip bgmTransition;
         [SerializeField] private float startDelaySeconds = 1.5f;
 
+        // TODO: Find out how to have this installed in the container to enable dependency injection to work
         private AudioService audioService;
         [Inject]
         public void Init(AudioService audioService)
@@ -30,7 +31,7 @@ namespace Assets.Source.UI.Panels
         public override void Setup()
         {
             base.Setup();
-            App.Cache.Kernel.Ready.Where(e => e).Subscribe(_ => LateSetup()).AddTo(this);            
+            LateSetup();
         }
         
         private void LateSetup()

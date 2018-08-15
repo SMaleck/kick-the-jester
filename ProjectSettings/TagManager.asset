@@ -8,6 +8,7 @@ TagManager:
   - Boost
   - Pickup
   - Obstacle
+  - Kernel
   layers:
   - Default
   - TransparentFX
