@@ -4,6 +4,7 @@ using Assets.Source.Models;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.UI.Panels
 {
@@ -39,14 +40,26 @@ namespace Assets.Source.UI.Panels
         [SerializeField] private Text shootCountLevel;
         [SerializeField] private Text shootCountCost;
         [SerializeField] private Button shootCountUp;
+        private Factory panelFactory;
 
+        [Inject]
+        public void Init(AbstractPanel.Factory panelFactory)
+        {
+            this.panelFactory = panelFactory;
+        }
 
         public override void Setup()
         {
-            base.Setup();            
+            base.Setup();
 
-            // Setup Confirm Panel
-            panelConfirmReset.GetComponent<AbstractPanel>().Setup();
+            // Create Confirm Reset Panel
+            AbstractPanel panel = panelFactory.Create(panelConfirmReset);
+            panel.gameObject.transform.SetParent(gameObject.transform, false);
+            panel.gameObject.name = panelConfirmReset.name;
+            panel.Setup();
+
+            // Stat Reset
+            statResetButton.OnClickAsObservable().Subscribe(_ => panel.gameObject.SetActive(true)).AddTo(this);
 
             closeButton.OnClickAsObservable().Subscribe(_ => Hide());
 
@@ -88,9 +101,6 @@ namespace Assets.Source.UI.Panels
             App.Cache.Kernel.PlayerProfile.Upgrades.RP_ShootCountLevel
                                 .Subscribe(level => UpdateUI(UpgradeTree.ShootCountPath.UpgradeCost(level), shootCountCost, shootCountUp))
                                 .AddTo(this);
-
-            // Stat Reset
-            statResetButton.OnClickAsObservable().Subscribe(_ => panelConfirmReset.SetActive(true)).AddTo(this);            
         }
 
 
