@@ -1,0 +1,51 @@
+/* -------------------- RESETS -------------------- */
+
+html, body, div {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, Helvetica, Arial, sans-serif
+}
+
+body {
+  background: #0E0A19;
+  color: #efefef;
+}
+
+a {
+  text-decoration: none;
+  color: #efefef;
+  transition: all 200ms;
+}
+
+/* -------------------- HEADERS -------------------- */
+
+h1, h2, h3 {
+  font-variant: small-caps;
+}
+
+h2 {
+  margin: 0;
+  padding: 8px 0;
+  box-shadow: 0 0 6px rgba(71, 23, 246, 0.5);
+  text-shadow: 1px 1px #A33ACB;
+  text-indent: 15px;
+}
+
+h3 {
+  margin: 0 0 10px 0;
+  font-kerning: 1px;
+  width: 100%;
+  border-bottom: 1px solid;
+}
+
+h4 {
+  font-size: 14px;
+  margin: 15px 0 3px 15px;
+  font-weight: lighter;
+  font-kerning: 1px;
+}
+
+/* -------------------- LAYOUT -------------------- */
+
+@media screen and (max-width: 625px) {}
