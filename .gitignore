@@ -33,7 +33,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-# IGNORE PLUGINS. There are Unity Asset Store Plugins that canot be shared on github
+# IGNORE (PAID) PLUGINS. They are Unity Asset Store Plugins that cannot be shared on github
 /Assets/Arrow Mobile UI for UGUI
 /Assets/Arrow Mobile UI for UGUI.meta
 /Assets/Effect_Pack
@@ -43,5 +43,7 @@ sysinfo.txt
 /Assets/LeanTween
 /Assets/LeanTween.meta
 /Assets/Plugins
-/Assets/TextMesh Pro
-/Assets/TextMesh Pro.meta
+/Assets/TextMesh Pro/Examples & Extras
+/Assets/TextMesh Pro/Examples & Extras.meta
+/Assets/TextMesh Pro/User Guide
+/Assets/TextMesh Pro/User Guide.meta
