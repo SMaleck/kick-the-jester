@@ -42,7 +42,10 @@ sysinfo.txt
 /Assets/JsonDotNet.meta
 /Assets/LeanTween
 /Assets/LeanTween.meta
-/Assets/Plugins
+/Assets/Plugins/LeanTween
+/Assets/Plugins/LeanTween.meta
+/Assets/Plugins/UniRx/Examples
+/Assets/Plugins/UniRx/Examples.meta
 /Assets/TextMesh Pro/Examples & Extras
 /Assets/TextMesh Pro/Examples & Extras.meta
 /Assets/TextMesh Pro/User Guide
