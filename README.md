@@ -16,7 +16,7 @@ Made out of passion for creating games for a living.
 ## *Getting Started*
 1. Clone the repository and open the project with Unity
 2. From the Unity Editor open any C# source file, so that the `.sln` gets generated correctly
-3. Open the Asset Store in Unity and import all required Assets ([see list below](#*Unity_Asset_Store_Resources*))
+3. Open the Asset Store in Unity and import all required Assets ([see list below](#*Paid_Unity_Asset_Store_Resources*))
 
 **NOTE:** Paid Unity Asset Store plugins are not part of the repository for obvious reasons. You will have to import them manually.
 
@@ -43,11 +43,13 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
 ## *Unity Asset Store Resources*
 * [UniRx - Reactive Extensions for Unity](https://assetstore.unity.com/packages/tools/unirx-reactive-extensions-for-unity-17276)
+* [JSON .NET For Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347)
 * [TextMesh Pro](https://assetstore.unity.com/packages/essentials/beta-projects/textmesh-pro-84126)
 * [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595)
+
+## *Paid Unity Asset Store Resources*
 * [Arrow Mobile UI for UGUI](https://assetstore.unity.com/packages/2d/gui/arrow-mobile-ui-for-ugui-64369)
 * [2D Toon FX : Basic](https://assetstore.unity.com/packages/vfx/particles/2d-toon-fx-basic-116228)
-* [JSON .NET For Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347)
 
 
 ## *3rd Party Resources*

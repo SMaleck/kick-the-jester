@@ -38,15 +38,23 @@ sysinfo.txt
 /Assets/Arrow Mobile UI for UGUI.meta
 /Assets/Effect_Pack
 /Assets/Effect_Pack.meta
-/Assets/JsonDotNet
-/Assets/JsonDotNet.meta
 /Assets/LeanTween
 /Assets/LeanTween.meta
 /Assets/Plugins/LeanTween
 /Assets/Plugins/LeanTween.meta
+
+# UniRx Extra Files
 /Assets/Plugins/UniRx/Examples
 /Assets/Plugins/UniRx/Examples.meta
-/Assets/TextMesh Pro/Examples & Extras
-/Assets/TextMesh Pro/Examples & Extras.meta
-/Assets/TextMesh Pro/User Guide
-/Assets/TextMesh Pro/User Guide.meta
+
+# JSONDotNet Extra files
+/Assets/Plugins/JsonDotNet/Documentation
+/Assets/Plugins/JsonDotNet/Documentation.meta
+/Assets/Plugins/JsonDotNet/JsonDotNet201Source.zip
+/Assets/Plugins/JsonDotNet/JsonDotNet201Source.zip.meta
+
+# TMP Extra files
+/Assets/Plugins/TextMesh Pro/Examples & Extras
+/Assets/Plugins/TextMesh Pro/Examples & Extras.meta
+/Assets/Plugins/TextMesh Pro/User Guide
+/Assets/Plugins/TextMesh Pro/User Guide.meta
