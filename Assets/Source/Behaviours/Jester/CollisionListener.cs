@@ -1,5 +1,5 @@
 ﻿using Assets.Source.App;
-using Assets.Source.Models;
+using Assets.Source.Util;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.Jester

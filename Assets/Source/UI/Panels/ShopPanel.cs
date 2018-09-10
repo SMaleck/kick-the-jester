@@ -1,6 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.App.Upgrade;
-using Assets.Source.Models;
+using Assets.Source.Util;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

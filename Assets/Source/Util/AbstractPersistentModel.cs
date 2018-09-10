@@ -1,25 +1,19 @@
-﻿using Assets.Source.Util;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using UniRx;
 
-namespace Assets.Source.App.Persistence.Models
-{    
+namespace Assets.Source.Util
+{
     public abstract class AbstractPersistentModel
-    {
-        [JsonIgnore]
-        public NotifyEventHandler OnAnyPropertyChanged = delegate { };
-
-        
+    {                
         public AbstractPersistentModel()
         {
             SetupOnAnyPropertyChanged();
         }
 
-        
+
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
@@ -32,8 +26,8 @@ namespace Assets.Source.App.Persistence.Models
         {
             // Get All Reactive Properties in this class
             IEnumerable<FieldInfo> reactiveInfos = this.GetType()
-                                                       .GetFields()
-                                                       .Where(e => e.FieldType.Equals(typeof(IntReactiveProperty)));
+                .GetFields()
+                .Where(e => e.FieldType == typeof(IntReactiveProperty));
 
             // Fire event when any property changes
             foreach (var ri in reactiveInfos)
@@ -42,5 +36,7 @@ namespace Assets.Source.App.Persistence.Models
                 react.Subscribe(_ => OnAnyPropertyChanged());
             }
         }
+
+        public abstract void OnAnyPropertyChanged();
     }
 }

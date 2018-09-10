@@ -1,4 +1,4 @@
-﻿using Assets.Source.Models;
+﻿using Assets.Source.Util;
 using UnityEngine;
 
 namespace Assets.Source.Behaviours.MainCamera

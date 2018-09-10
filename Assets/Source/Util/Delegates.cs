@@ -1,4 +1,4 @@
-﻿namespace Assets.Source.Models
+﻿namespace Assets.Source.Util
 {
     public delegate void NotifyEventHandler();    
 }
