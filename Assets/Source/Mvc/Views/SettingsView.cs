@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Source.Mvc
+namespace Assets.Source.Mvc.Views
 {
     public class SettingsView : ClosableView
     {        
