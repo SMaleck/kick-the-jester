@@ -1,4 +1,7 @@
 ﻿using System;
+using Assets.Source.Services;
+using Assets.Source.Mvc.Views;
+using UniRx;
 
 
 namespace Assets.Source.Mvc
@@ -6,13 +9,39 @@ namespace Assets.Source.Mvc
     public class ScreenFadeController : AbstractController
     {
         private readonly ScreenFadeView _view;
+        private SceneTransitionService _sceneTransitionService;
 
-        private readonly float fadeSeconds = 0.6f;
+        private readonly float _fadeSeconds;
 
 
-        public ScreenFadeController(ScreenFadeView view)
+        public ScreenFadeController(ScreenFadeView view, SceneTransitionService sceneTransitionService)
         {
             _view = view;
+            _sceneTransitionService = sceneTransitionService;
+
+            _fadeSeconds = SceneTransitionService.LOADING_GRACE_PERIOD_SECONDS;
+
+            _sceneTransitionService.State
+                .Subscribe(OnTransitionStateChange)
+                .AddTo(Disposer);
+        }
+
+
+        private void OnTransitionStateChange(TransitionState state)
+        {
+            switch (state)
+            {
+                case TransitionState.Before:
+                    ToBlack();
+                    break;
+
+                case TransitionState.After:
+                    ToWhite();
+                    break;
+
+                default:
+                    return;
+            }
         }
 
 
@@ -30,7 +59,7 @@ namespace Assets.Source.Mvc
 
         private void Fade(float from, float to, Action onComplete = null)
         {
-            LTDescr ltd = LeanTween.value(from, to, fadeSeconds)
+            LTDescr ltd = LeanTween.value(from, to, _fadeSeconds)
                                    .setEaseInCubic()
                                    .setOnUpdate((float alpha) => { _view.CurtainAlpha.Value = alpha; });
 

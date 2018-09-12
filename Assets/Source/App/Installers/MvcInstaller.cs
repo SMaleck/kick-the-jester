@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App.Configuration;
 using Assets.Source.Mvc;
+using Assets.Source.Mvc.Views;
 using Zenject;
 
 namespace Assets.Source.App.Installers

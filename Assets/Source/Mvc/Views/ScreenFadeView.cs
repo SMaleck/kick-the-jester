@@ -1,7 +1,7 @@
 ﻿using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.Mvc
+namespace Assets.Source.Mvc.Views
 {
     public class ScreenFadeView : AbstractView
     {
