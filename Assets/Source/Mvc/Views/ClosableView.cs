@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Assets.Source.Util.UI;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,18 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Button _closeButton;
         [SerializeField] private bool _startClosed = true;
 
-        protected override void Start()
+        [Header("Transition")]
+        [SerializeField] private PanelSliderConfig _panelSliderConfig;
+        private PanelSlider _panelSlider;
+
+
+        public override void Initialize()
         {
+            var ownerTransform = this.transform as RectTransform;
+            var containerTransform = GetComponentInParent<Canvas>().transform as RectTransform;
+
+            _panelSlider = new PanelSlider(ownerTransform, containerTransform.rect, _panelSliderConfig);
+
             _closeButton?.OnClickAsObservable()
                 .Subscribe(_ => Close())
                 .AddTo(this);
@@ -19,27 +30,18 @@ namespace Assets.Source.Mvc.Views
             {
                 Close();
             }
-
-            Initialize();
-        }
-
-        public override void Initialize()
-        {
-            _closeButton?.OnClickAsObservable()
-                .Subscribe(_ => Close())
-                .AddTo(this);
         }
 
 
         public virtual void Open()
         {
-            this.gameObject.SetActive(true);
+            _panelSlider.SlideIn();
         }
 
 
         public virtual void Close()
         {
-            this.gameObject.SetActive(false);
+            _panelSlider.SlideOut();
         }
     }
 }

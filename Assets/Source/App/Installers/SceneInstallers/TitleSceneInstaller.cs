@@ -9,6 +9,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
     {        
         [SerializeField] public TitleView TitleView;
         [SerializeField] public SettingsView SettingsView;
+        [SerializeField] public CreditsView CreditsView;
 
         public override void InstallBindings()
         {
