@@ -1,10 +1,9 @@
 ﻿using System;
-using Assets.Source.Services;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Services;
 using UniRx;
 
-
-namespace Assets.Source.Mvc
+namespace Assets.Source.Mvc.Controllers
 {
     public class ScreenFadeController : AbstractController
     {

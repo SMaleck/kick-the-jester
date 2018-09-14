@@ -1,4 +1,4 @@
-﻿using Assets.Source.Mvc;
+﻿using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Views;
 using UnityEngine;
 using Zenject;
@@ -17,7 +17,10 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.Bind<TitleController>().AsSingle().NonLazy();
 
             Container.BindInstance(SettingsView).AsSingle();
-            Container.Bind<SettingsController>().AsSingle().NonLazy();            
+            Container.Bind<SettingsController>().AsSingle().NonLazy();
+
+            Container.BindInstance(CreditsView).AsSingle();
+            Container.Bind<CreditsController>().AsSingle().NonLazy();
         }
     }
 }

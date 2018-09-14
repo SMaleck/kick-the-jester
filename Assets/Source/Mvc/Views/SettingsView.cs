@@ -20,25 +20,26 @@ namespace Assets.Source.Mvc.Views
 
         public override void Initialize()
         {
-            MusicVolume.Subscribe(e => _musicVolumeSlider.value = e)
-                .AddTo(this);
+            // TODO Fix
+            //MusicVolume.Subscribe(e => _musicVolumeSlider.value = e)
+            //    .AddTo(this);
 
-            _musicVolumeSlider.OnValueChangedAsObservable()
-                .Subscribe(e => MusicVolume.Value = e)
-                .AddTo(this);
-
-
-            EffectsVolume.Subscribe(e => _effectsVolumeSlider.value = e)
-                .AddTo(this);
-
-            _effectsVolumeSlider.OnValueChangedAsObservable()
-                .Subscribe(e => EffectsVolume.Value = e)
-                .AddTo(this);
+            //_musicVolumeSlider.OnValueChangedAsObservable()
+            //    .Subscribe(e => MusicVolume.Value = e)
+            //    .AddTo(this);
 
 
-            _restoreDefaultsButton.OnClickAsObservable()
-                .Subscribe(_ => OnRestoreDefaultsClicked())
-                .AddTo(this);
+            //EffectsVolume.Subscribe(e => _effectsVolumeSlider.value = e)
+            //    .AddTo(this);
+
+            //_effectsVolumeSlider.OnValueChangedAsObservable()
+            //    .Subscribe(e => EffectsVolume.Value = e)
+            //    .AddTo(this);
+
+
+            //_restoreDefaultsButton.OnClickAsObservable()
+            //    .Subscribe(_ => OnRestoreDefaultsClicked())
+            //    .AddTo(this);
         }
     }
 }

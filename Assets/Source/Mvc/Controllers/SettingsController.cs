@@ -2,12 +2,12 @@
 using Assets.Source.Services;
 using UniRx;
 
-namespace Assets.Source.Mvc
+namespace Assets.Source.Mvc.Controllers
 {
     public class SettingsController : AbstractController
     {
         private readonly SettingsView _view;
-        private readonly SettingsService _settingsService;        
+        private readonly SettingsService _settingsService;
 
         public SettingsController(SettingsView view, SettingsService settingsService)
         {

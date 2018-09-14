@@ -6,13 +6,14 @@ using UnityEngine.UI;
 namespace Assets.Source.Mvc.Views
 {
     public class ClosableView : AbstractView
-    {        
+    {
+        [Header("Closable Settings")]
         [SerializeField] private Button _closeButton;
         [SerializeField] private bool _startClosed = true;
 
         [Header("Transition")]
         [SerializeField] private PanelSliderConfig _panelSliderConfig;
-        private PanelSlider _panelSlider;
+        private PanelSlider _panelSlider;        
 
 
         public override void Initialize()
@@ -35,12 +36,14 @@ namespace Assets.Source.Mvc.Views
 
         public virtual void Open()
         {
+            MessageBroker.Default.Publish(SlideEvent.Open);
             _panelSlider.SlideIn();
         }
 
 
         public virtual void Close()
         {
+            MessageBroker.Default.Publish(SlideEvent.Close);
             _panelSlider.SlideOut();
         }
     }

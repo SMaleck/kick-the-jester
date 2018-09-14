@@ -105,16 +105,16 @@ GameObject:
   - component: {fileID: 224454318059490986}
   - component: {fileID: 222015064773753182}
   - component: {fileID: 114410960250153160}
-  - component: {fileID: 114925067775373528}
   - component: {fileID: 223956367572037750}
   - component: {fileID: 114577674502470272}
+  - component: {fileID: 114551858834140624}
   m_Layer: 5
   m_Name: PF_CreditsView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1102258325048156
 GameObject:
   m_ObjectHideFlags: 1
@@ -2280,6 +2280,28 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114551858834140624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1066629573416702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab245fefc15e6bc47ab97e84d273f725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _closeButton: {fileID: 114553551337483554}
+  _startClosed: 1
+  _panelSliderConfig:
+    slideInFrom: 0
+    useSlideTransition: 1
+    slideTimeSeconds: 0.5
+    useBounce: 1
+    sfxShow: {fileID: 0}
+    sfxHide: {fileID: 0}
+  panelDefault: {fileID: 1575523193884784}
+  panelWeb: {fileID: 1799585302826398}
 --- !u!114 &114553551337483554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4130,32 +4152,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114925067775373528
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1066629573416702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eba9eb52e0e04640889c6f4dc4fbcee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startActive: 0
-  useSlideTransition: 1
-  slideTimeSeconds: 0.5
-  slideInFrom: 0
-  useBounce: 1
-  sfxShow: {fileID: 8300000, guid: eaf5a5ba28a29c94ab2342b57627c127, type: 3}
-  sfxHide: {fileID: 8300000, guid: 8bd415806fca3df46ab1bf65c78b0c78, type: 3}
-  panelDefault: {fileID: 1575523193884784}
-  panelWeb: {fileID: 1799585302826398}
-  closeButton: {fileID: 114553551337483554}
-  smaleckButton: {fileID: 114409514271745180}
-  jhartmannButton: {fileID: 114034385089213064}
-  jiubeckButton: {fileID: 114005591656475946}
-  tristanButton: {fileID: 114297543368819598}
-  noiseForFunButton: {fileID: 114227325466149748}
 --- !u!114 &114928347716705048
 MonoBehaviour:
   m_ObjectHideFlags: 1
