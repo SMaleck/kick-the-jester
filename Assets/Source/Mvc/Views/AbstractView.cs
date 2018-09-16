@@ -10,6 +10,8 @@ namespace Assets.Source.Mvc.Views
             Initialize();
         }
 
+
+        // ToDo Figure out how to make this get called automatically
         public abstract void Initialize();        
     }
 }
