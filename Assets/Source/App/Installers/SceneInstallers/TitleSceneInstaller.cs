@@ -10,6 +10,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public TitleView TitleView;
         [SerializeField] public SettingsView SettingsView;
         [SerializeField] public CreditsView CreditsView;
+        [SerializeField] public TutorialView TutorialView;
 
         public override void InstallBindings()
         {
@@ -21,6 +22,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInstance(CreditsView).AsSingle();
             Container.Bind<CreditsController>().AsSingle().NonLazy();
+
+            Container.BindInstance(TutorialView).AsSingle();
+            Container.Bind<TutorialController>().AsSingle().NonLazy();
         }
     }
 }
