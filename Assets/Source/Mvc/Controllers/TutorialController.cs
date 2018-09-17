@@ -5,15 +5,18 @@ using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class TutorialController : AbstractController
+    public class TutorialController : ClosableController
     {
         private readonly TutorialView _view;
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly SavegameService _savegameService;
 
         public TutorialController(TutorialView view, SceneTransitionService sceneTransitionService, SavegameService savegameService)
+            : base(view)
         {
             _view = view;
+            _view.Initialize();
+
             _sceneTransitionService = sceneTransitionService;
             _savegameService = savegameService;
 
@@ -22,15 +25,11 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
         }
 
-        public override void Open()
-        {
-            _view.Open();
-        }
 
         public void OnNextClickedOnLastSlide()
         {
             // ToDo handle SaveGame
-            _view.Close();
+            Close();           
         }
     }
 }

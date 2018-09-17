@@ -20,6 +20,8 @@ namespace Assets.Source.Mvc.Controllers
             SceneTransitionService sceneTransitionService, AudioService audioService, SavegameService savegameService)
         {
             _view = view;
+            _view.Initialize();
+
             _settingsController = settingsController;
             _creditsController = creditsController;
             _tutorialController = tutorialController;

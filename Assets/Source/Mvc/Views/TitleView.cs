@@ -18,8 +18,10 @@ namespace Assets.Source.Mvc.Views
         public Action OnCreditsClicked = () => { };
 
 
-        public override void Initialize()
+        public override void Setup()
         {
+            gameObject.SetActive(true);
+
             _startButton.OnClickAsObservable()
                 .Subscribe(_ => OnStartClicked())
                 .AddTo(this);
@@ -34,7 +36,7 @@ namespace Assets.Source.Mvc.Views
 
             _creditsButton.OnClickAsObservable()
                 .Subscribe(_ => OnCreditsClicked())
-                .AddTo(this);
+                .AddTo(this);            
         }
     }
 }

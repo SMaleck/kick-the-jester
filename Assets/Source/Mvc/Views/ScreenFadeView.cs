@@ -10,7 +10,7 @@ namespace Assets.Source.Mvc.Views
 
         public FloatReactiveProperty CurtainAlpha = new FloatReactiveProperty(0);        
 
-        public override void Initialize()
+        public override void Setup()
         {
             CurtainAlpha.Subscribe(e =>
             {

@@ -7,10 +7,9 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private GameObject panelDefault;
         [SerializeField] private GameObject panelWeb;
 
-        public override void Initialize()
+        public override void Setup()
         {
-            base.Initialize();
-
+            base.Setup();
 
             #if !UNITY_WEBGL
 

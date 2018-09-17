@@ -5,13 +5,13 @@ namespace Assets.Source.Mvc.Views
 {
     public abstract class AbstractView : MonoBehaviour, IInitializable
     {        
-        protected virtual void Start()
+        // ToDo Figure out how to make this get called automatically
+        public void Initialize()
         {
-            Initialize();
+            this.gameObject.SetActive(true);
+            Setup();
         }
 
-
-        // ToDo Figure out how to make this get called automatically
-        public abstract void Initialize();        
+        public abstract void Setup();
     }
 }

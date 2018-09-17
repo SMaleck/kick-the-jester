@@ -18,9 +18,9 @@ namespace Assets.Source.Mvc.Views
         public Action OnRestoreDefaultsClicked = () => {};
 
 
-        public override void Initialize()
+        public override void Setup()
         {
-            base.Initialize();
+            base.Setup();
             // TODO Fix
             //MusicVolume.Subscribe(e => _musicVolumeSlider.value = e)
             //    .AddTo(this);

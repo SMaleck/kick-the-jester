@@ -32,9 +32,9 @@ namespace Assets.Source.Mvc.Views
         public ReactiveCommand OnNextClickedOnLastSlide = new ReactiveCommand();
 
 
-        public override void Initialize()
+        public override void Setup()
         {
-            base.Initialize();
+            base.Setup();
 
             ResetSlides();
 

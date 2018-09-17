@@ -16,7 +16,7 @@ namespace Assets.Source.Mvc.Views
         private PanelSlider _panelSlider;
 
 
-        public override void Initialize()
+        public override void Setup()
         {
             var ownerTransform = this.transform as RectTransform;
             var containerTransform = GetComponentInParent<Canvas>().transform as RectTransform;
@@ -29,6 +29,7 @@ namespace Assets.Source.Mvc.Views
 
             if (_startClosed)
             {
+                gameObject.SetActive(false);
                 Close();
             }
         }

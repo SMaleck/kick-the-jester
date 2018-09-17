@@ -4,12 +4,13 @@ using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class SettingsController : AbstractController
+    public class SettingsController : ClosableController
     {
         private readonly SettingsView _view;
         private readonly SettingsService _settingsService;
 
         public SettingsController(SettingsView view, SettingsService settingsService)
+            : base(view)
         {
             _view = view;
             _view.Initialize();

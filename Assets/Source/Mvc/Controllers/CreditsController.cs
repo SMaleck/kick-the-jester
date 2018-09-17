@@ -1,19 +1,16 @@
 ﻿using Assets.Source.Mvc.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class CreditsController : AbstractController
+    public class CreditsController : ClosableController
     {
-        private readonly CreditsView _creditsView;
+        private readonly CreditsView _view;
 
-        public CreditsController(CreditsView creditsView)
+        public CreditsController(CreditsView view)
+            : base(view)
         {
-            _creditsView = creditsView;            
+            _view = view;
+            _view.Initialize();
         }
     }
 }
