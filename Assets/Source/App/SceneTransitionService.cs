@@ -1,5 +1,4 @@
-﻿using Assets.Source.App;
-using UniRx;
+﻿using UniRx;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Source.App

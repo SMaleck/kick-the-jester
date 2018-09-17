@@ -20,6 +20,7 @@ namespace Assets.Source.Mvc.Views
 
         public override void Initialize()
         {
+            base.Initialize();
             // TODO Fix
             //MusicVolume.Subscribe(e => _musicVolumeSlider.value = e)
             //    .AddTo(this);

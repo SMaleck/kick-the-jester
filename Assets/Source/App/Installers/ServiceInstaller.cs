@@ -11,7 +11,7 @@ namespace Assets.Source.App.Installers
         {
             Container.Bind<SettingsService>().AsSingle();
             Container.Bind<SavegameService>().AsSingle();
-            Container.Bind<SceneTransitionService>().AsSingle();
+            Container.Bind<Assets.Source.Services.SceneTransitionService>().AsSingle();
             Container.Bind<AudioService>().AsSingle();
         }
     }

@@ -13,7 +13,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public CreditsController(CreditsView creditsView)
         {
-            _creditsView = creditsView;
+            _creditsView = creditsView;            
         }
     }
 }

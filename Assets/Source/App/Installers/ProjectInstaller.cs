@@ -6,8 +6,8 @@ namespace Assets.Source.App.Installers
     {
         public override void InstallBindings()
         {
-            MvcInstaller.Install(Container);
-            ServiceInstaller.Install(Container);            
+            ServiceInstaller.Install(Container);
+            MvcInstaller.Install(Container);            
         }
     }
 }
