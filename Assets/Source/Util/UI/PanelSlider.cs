@@ -13,7 +13,7 @@ namespace Assets.Source.Util.UI
         private readonly Vector3 _hiddenPosition;
         private Vector3 _shownPosition;        
 
-        private float SlideSeconds => _config.useSlideTransition ? _config.slideTimeSeconds : 0;
+        private float SlideSeconds => _config.slideInFrom.Equals(SlideDirection.Instant) ? 0 : _config.slideTimeSeconds;
 
 
         public PanelSlider(RectTransform owner, Rect container, PanelSliderConfig config)

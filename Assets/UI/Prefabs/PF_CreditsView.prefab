@@ -459,10 +459,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224388499907408764}
-  - component: {fileID: 114275345744130718}
   - component: {fileID: 222957428652665074}
   - component: {fileID: 114255467687718012}
-  - component: {fileID: 225990458429887378}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -1091,7 +1089,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114275345744130718}
+      - m_Target: {fileID: 0}
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
@@ -1651,34 +1649,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114275345744130718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1500804675610698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69657661335df8f4dbcf3cd6e8f75593, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WindowId: 0
-  m_CustomWindowId: 1
-  m_StartingState: 0
-  m_EscapeKeyAction: 1
-  m_Transition: 0
-  m_TransitionEasing: 13
-  m_TransitionDuration: 0.1
-  onTransitionBegin:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.UIWindow+TransitionBeginEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onTransitionComplete:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.UIWindow+TransitionCompleteEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114299124252691418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2464,14 +2434,16 @@ MonoBehaviour:
   _closeButton: {fileID: 114040786593125240}
   _startClosed: 1
   _panelSliderConfig:
-    slideInFrom: 0
-    useSlideTransition: 1
-    slideTimeSeconds: 0.5
+    slideInFrom: 1
     useBounce: 1
-    sfxShow: {fileID: 0}
-    sfxHide: {fileID: 0}
+    slideTimeSeconds: 0.5
   panelDefault: {fileID: 1477484326797860}
   panelWeb: {fileID: 1007224850195074}
+  smaleckButton: {fileID: 114645003397177630}
+  jhartmannButton: {fileID: 114107453600652304}
+  jiubeckButton: {fileID: 114361380106533358}
+  tristanButton: {fileID: 114685710350382884}
+  noiseForFunButton: {fileID: 114386681028182634}
 --- !u!114 &114493679970502124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5311,14 +5283,3 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 85}
   m_Pivot: {x: 0.5, y: 1}
---- !u!225 &225990458429887378
-CanvasGroup:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1500804675610698}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0

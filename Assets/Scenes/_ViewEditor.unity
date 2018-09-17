@@ -1650,42 +1650,17 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114532492879601240, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+    - target: {fileID: 114040786593125240, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114004768561101340, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114532492879601240, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114760949685198558, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114760949685198558, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114963372047861352, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114963372047861352, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114505371233347544, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114505371233347544, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+    - target: {fileID: 114004768561101340, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -1700,32 +1675,22 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114057458031006538, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+    - target: {fileID: 114063075862322806, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114057458031006538, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+    - target: {fileID: 114063075862322806, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114004768561101340, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+    - target: {fileID: 114532492879601240, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114004768561101340, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114363929465072570, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114363929465072570, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+    - target: {fileID: 114532492879601240, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -1740,32 +1705,72 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114971378149601264, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114971378149601264, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114063075862322806, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114063075862322806, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114930453607977206, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114930453607977206, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114963372047861352, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114963372047861352, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114363929465072570, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114363929465072570, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114057458031006538, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114057458031006538, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114760949685198558, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114760949685198558, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505371233347544, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505371233347544, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114971378149601264, guid: 7a1cc1977b6ef37498b500911eccdb3c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114971378149601264, guid: 7a1cc1977b6ef37498b500911eccdb3c,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -1903,11 +1908,8 @@ MonoBehaviour:
   _startClosed: 1
   _panelSliderConfig:
     slideInFrom: 0
-    useSlideTransition: 1
-    slideTimeSeconds: 0.5
     useBounce: 1
-    sfxShow: {fileID: 0}
-    sfxHide: {fileID: 0}
+    slideTimeSeconds: 0.5
   _musicVolumeSlider: {fileID: 0}
   _effectsVolumeSlider: {fileID: 0}
   _restoreDefaultsButton: {fileID: 0}
