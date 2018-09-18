@@ -23,7 +23,7 @@ namespace Assets.Source.Mvc.Views
         private readonly string tristanUrl = "https://www.tristanlohengrin.fr/";
         private readonly string noiseForFunUrl = "http://www.noiseforfun.com/";
 
-        // ToDo Links for Mobile Version
+        
         public override void Setup()
         {
             base.Setup();

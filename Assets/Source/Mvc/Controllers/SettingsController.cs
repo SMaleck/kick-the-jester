@@ -1,4 +1,5 @@
-﻿using Assets.Source.Mvc.Views;
+﻿using Assets.Source.Mvc.Models;
+using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using UniRx;
 
@@ -7,14 +8,16 @@ namespace Assets.Source.Mvc.Controllers
     public class SettingsController : ClosableController
     {
         private readonly SettingsView _view;
+        private readonly TitleModel _model;
         private readonly SettingsService _settingsService;
 
-        public SettingsController(SettingsView view, SettingsService settingsService)
+        public SettingsController(SettingsView view, TitleModel model, SettingsService settingsService)
             : base(view)
         {
             _view = view;
             _view.Initialize();
 
+            _model = model;
             _settingsService = settingsService;            
 
             _settingsService.MusicVolume
@@ -35,6 +38,10 @@ namespace Assets.Source.Mvc.Controllers
 
             _view.OnRestoreDefaultsClicked
                 .Subscribe(_ => _settingsService.RestoreDefaults())
+                .AddTo(Disposer);
+
+            _model.OpenSettings
+                .Subscribe(_ => Open())
                 .AddTo(Disposer);
         }        
         

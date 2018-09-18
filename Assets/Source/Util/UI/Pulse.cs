@@ -1,26 +1,31 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 namespace Assets.Source.Util.UI
-{
-    // TODO Replace with DOTween
+{    
     public class Pulse : MonoBehaviour
     {        
         [SerializeField] float pulseTimeSeconds = 0.5f;        
         [SerializeField] float maxScaleFactor = 1.1f;
 
-        private LTDescr pulseTween;
+        private RectTransform target;
+        private Tweener pulseTween;
 
         private void Awake()
         {
-            pulseTween = LeanTween.scale(gameObject.GetComponent<RectTransform>(), gameObject.GetComponent<RectTransform>().localScale * maxScaleFactor, pulseTimeSeconds)
-                                  .setEaseInOutCubic()
-                                  .setLoopPingPong();            
+            target = GetComponent<RectTransform>();
+
+            if(target == null) { return; }
+
+            pulseTween = target?.DOScale(maxScaleFactor, pulseTimeSeconds)
+                                .SetEase(Ease.InOutCubic)
+                                .SetLoops(-1, LoopType.Yoyo);         
         }
 
 
         public void Stop()
         {
-            pulseTween.pause();
+            pulseTween.Pause();
         }
     }
 }

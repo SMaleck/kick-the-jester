@@ -25,7 +25,7 @@ namespace Assets.Source.Mvc.Views
             base.Setup();
 
             _isMusicMuted.OnValueChangedAsObservable()
-                .Subscribe(value => IsMusicMuted.Value = value)
+                .Subscribe(_ => IsMusicMuted.Value = _isMusicMuted.isOn)
                 .AddTo(this);
 
             //MusicVolume.Subscribe(e => _musicVolumeSlider.value = e)
@@ -37,7 +37,7 @@ namespace Assets.Source.Mvc.Views
 
 
             _isEffectsMuted.OnValueChangedAsObservable()
-                .Subscribe(value => IsEffectsMuted.Value = value)
+                .Subscribe(_ => IsEffectsMuted.Value = _isEffectsMuted.isOn)
                 .AddTo(this);
 
             //EffectsVolume.Subscribe(e => _effectsVolumeSlider.value = e)

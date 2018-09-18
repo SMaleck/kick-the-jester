@@ -353,24 +353,27 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1011928146794670, guid: 5f68ec589ce10154ca35de784f69de15, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 114440436289999300, guid: 5f68ec589ce10154ca35de784f69de15,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1264712746785986, guid: 5f68ec589ce10154ca35de784f69de15, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 114440436289999300, guid: 5f68ec589ce10154ca35de784f69de15,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1850374239294442, guid: 5f68ec589ce10154ca35de784f69de15, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 114145233079998286, guid: 5f68ec589ce10154ca35de784f69de15,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1702502612738278, guid: 5f68ec589ce10154ca35de784f69de15, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 114145233079998286, guid: 5f68ec589ce10154ca35de784f69de15,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 212422261703134400, guid: 5f68ec589ce10154ca35de784f69de15, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f68ec589ce10154ca35de784f69de15, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1106194087

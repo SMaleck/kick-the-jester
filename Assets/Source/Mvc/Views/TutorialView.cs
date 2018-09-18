@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UniRx;
@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{
-    // ToDo Replace LeanTWeen with DOTween
+{    
     public class TutorialView : ClosableView
     {
         [SerializeField] private List<CanvasGroup> _steps;
@@ -17,7 +16,9 @@ namespace Assets.Source.Mvc.Views
         private const float InstructionPulseSeconds = 0.7f;
         private const int FontSizeMin = 48;
         private const int FontSizeMax = 52;
-        private const float FadeTimeSeconds = 0.5f;
+        private const float FadeTimeSeconds = 0.5f;        
+
+        private FloatReactiveProperty fontSize = new FloatReactiveProperty(FontSizeMin);
 
         private int _currentStep = 0;
         private bool IsLastStep => _currentStep >= _steps.Count - 1;
@@ -41,11 +42,13 @@ namespace Assets.Source.Mvc.Views
                 .AddTo(this);
 
             // Animation for instruction text
-            LeanTween.value(this.gameObject,
-                            e => { _instructionText.fontSize = (float)Math.Round((double)e, 1); },
-                            FontSizeMin, FontSizeMax, InstructionPulseSeconds)
-                            .setLoopPingPong()
-                            .setEaseInOutCubic();
+            DOTween.To(() => fontSize.Value, (val) => fontSize.Value = val, FontSizeMax, InstructionPulseSeconds)
+                .SetEase(Ease.InOutCubic)
+                .SetLoops(-1, LoopType.Yoyo);
+
+            fontSize
+                .Subscribe(fontSize => { _instructionText.fontSize = fontSize; })
+                .AddTo(this);
         }
 
 
@@ -90,14 +93,14 @@ namespace Assets.Source.Mvc.Views
         private void FadeInStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
-            LeanTween.value(this.gameObject, (float value) => { _steps[index].alpha = value; }, 0, 1, time);
+            _steps[index].DOFade(1, time);            
         }
 
 
         private void FadeOutStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
-            LeanTween.value(this.gameObject, (float value) => { _steps[index].alpha = value; }, 1, 0, time);
+            _steps[index].DOFade(0, time);            
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Util.UI
 {
+    // TODO Panels don't slide far enough
     public class PanelSlider
     {
         private readonly PanelSliderConfig _config;
