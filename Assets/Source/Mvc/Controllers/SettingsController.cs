@@ -33,7 +33,9 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(e => _settingsService.EffectsVolume.Value = e)
                 .AddTo(Disposer);
 
-            _view.OnRestoreDefaultsClicked = () => { _settingsService.RestoreDefaults(); };
+            _view.OnRestoreDefaultsClicked
+                .Subscribe(_ => _settingsService.RestoreDefaults())
+                .AddTo(Disposer);
         }        
         
 

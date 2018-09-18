@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.UI.Elements
+namespace Assets.Source.Util.UI
 {
+    // TODO Replace with DOTween
     public class Pulse : MonoBehaviour
     {        
         [SerializeField] float pulseTimeSeconds = 0.5f;        

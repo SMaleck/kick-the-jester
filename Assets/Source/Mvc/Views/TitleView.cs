@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Source.Util.UI;
+using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +38,13 @@ namespace Assets.Source.Mvc.Views
             _creditsButton.OnClickAsObservable()
                 .Subscribe(_ => OnCreditsClicked())
                 .AddTo(this);            
+        }
+
+
+        public void StopStartButtonPulse()
+        {
+            _startButton.interactable = false;
+            _startButton.GetComponent<Pulse>().Stop();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Assets.Source.Mvc.Views
 
         [Header("Transition")]
         [SerializeField] private PanelSliderConfig _panelSliderConfig;
+
         private PanelSlider _panelSlider;
 
 

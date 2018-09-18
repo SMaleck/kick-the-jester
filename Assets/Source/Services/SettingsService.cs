@@ -12,8 +12,10 @@ namespace Assets.Source.Services
         private readonly SavegameService _savegameService;
         private readonly DefaultSettingsConfig _defaultSettingsConfig;
 
-
+        public readonly BoolReactiveProperty IsMusicMuted = new BoolReactiveProperty();       
         public readonly FloatReactiveProperty MusicVolume = new FloatReactiveProperty();
+
+        public readonly BoolReactiveProperty IsEffectsMuted = new BoolReactiveProperty();
         public readonly FloatReactiveProperty EffectsVolume = new FloatReactiveProperty();
 
 
@@ -28,7 +30,10 @@ namespace Assets.Source.Services
 
         public void RestoreDefaults()
         {
+            IsMusicMuted.Value = false;
             MusicVolume.Value = _defaultSettingsConfig.MusicVolume;
+
+            IsEffectsMuted.Value = false;
             EffectsVolume.Value = _defaultSettingsConfig.EffectVolume;
         }
     }

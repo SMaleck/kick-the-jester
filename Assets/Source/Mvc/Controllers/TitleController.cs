@@ -1,7 +1,8 @@
-﻿using Assets.Source.App;
+﻿using System;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Services.Audio;
 using Assets.Source.Services.Savegame;
+using UniRx;
 using SceneTransitionService = Assets.Source.Services.SceneTransitionService;
 
 namespace Assets.Source.Mvc.Controllers
@@ -9,36 +10,44 @@ namespace Assets.Source.Mvc.Controllers
     public class TitleController : AbstractController
     {
         private readonly TitleView _view;
-        private readonly SettingsController _settingsController;
-        private readonly CreditsController _creditsController;
-        private readonly TutorialController _tutorialController;
-        private readonly SceneTransitionService _sceneTransitionService;
-        private readonly AudioService _audioService;
+        private readonly TitleModel _model;
+        
+        private readonly SceneTransitionService _sceneTransitionService;        
         private readonly SavegameService _savegameService;
 
-        public TitleController(TitleView view, SettingsController settingsController, CreditsController creditsController, TutorialController tutorialController,
-            SceneTransitionService sceneTransitionService, AudioService audioService, SavegameService savegameService)
+        private const float StartDelaySeconds = 1.5f;
+
+        public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, SavegameService savegameService)
         {
             _view = view;
             _view.Initialize();
 
-            _settingsController = settingsController;
-            _creditsController = creditsController;
-            _tutorialController = tutorialController;
-            _sceneTransitionService = sceneTransitionService;
-            _audioService = audioService;
-            _savegameService = savegameService;
+            _model = model;            
+            _sceneTransitionService = sceneTransitionService;            
+            _savegameService = savegameService;                  
 
-            _view.Initialize();            
+            _view.OnStartClicked = OnStartClicked;
 
-            _view.OnStartClicked = () =>
+            _view.OnSettingsClicked = () => { _model.OpenSettings.Execute(); };
+            _view.OnCreditsClicked = () => { _model.OpenCredits.Execute(); };
+            _view.OnTutorialClicked = () => { _model.OpenTutorial.Execute(); };
+        }
+
+
+        private void OnStartClicked()
+        {
+            //Kernel.AudioService.PlayBGM(bgmTransition);
+
+            if (_model.IsFirstStart.Value)
             {
-                _sceneTransitionService.ToGame();                
-            };
-
-            _view.OnSettingsClicked = () => { _settingsController.Open(); };
-            _view.OnCreditsClicked = () => { _creditsController.Open(); };
-            _view.OnTutorialClicked = () => { _tutorialController.Open(); };            
+                _model.OpenTutorial.Execute();
+                return;
+            }            
+            
+            Observable
+                .Timer(TimeSpan.FromSeconds(StartDelaySeconds))
+                .Subscribe(_ => _sceneTransitionService.ToGame())
+                .AddTo(Disposer);
         }
     }
 }

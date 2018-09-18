@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Mvc.Controllers;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using UnityEngine;
 using Zenject;
@@ -25,6 +26,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInstance(TutorialView).AsSingle();
             Container.Bind<TutorialController>().AsSingle().NonLazy();
+
+            Container.Bind<TitleModel>().AsSingle().NonLazy();
         }
     }
 }
