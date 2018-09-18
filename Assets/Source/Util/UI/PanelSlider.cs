@@ -97,11 +97,11 @@ namespace Assets.Source.Util.UI
             {
                 case SlideDirection.Top:
                 case SlideDirection.Bottom:
-                    return _owner.DOLocalMoveY(_shownPosition.y, slideSeconds);
+                    return _owner.DOLocalMoveY(to.y, slideSeconds);
 
                 case SlideDirection.Left:
                 case SlideDirection.Right:
-                    return _owner.DOLocalMoveX(_shownPosition.x, slideSeconds);
+                    return _owner.DOLocalMoveX(to.x, slideSeconds);
 
                 default:
                     return null;

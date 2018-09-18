@@ -1,6 +1,6 @@
 ﻿using Assets.Source.Mvc.Views;
 
-namespace Assets.Source.Mvc
+namespace Assets.Source.Mvc.Controllers
 {
     public class ClosableController : AbstractController
     {

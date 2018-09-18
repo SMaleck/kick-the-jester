@@ -10,24 +10,17 @@ namespace Assets.Source.Mvc.Views
     // ToDo Replace LeanTWeen with DOTween
     public class TutorialView : ClosableView
     {
-        [SerializeField] private List<CanvasGroup> steps;
-        [SerializeField] private Button nextButton;
-        [SerializeField] private TMP_Text instructionText;
+        [SerializeField] private List<CanvasGroup> _steps;
+        [SerializeField] private Button _nextButton;
+        [SerializeField] private TMP_Text _instructionText;
 
         private const float InstructionPulseSeconds = 0.7f;
         private const int FontSizeMin = 48;
         private const int FontSizeMax = 52;
         private const float FadeTimeSeconds = 0.5f;
 
-        private int currentStep = 0;
-
-        private bool isLastStep
-        {
-            get
-            {
-                return currentStep >= steps.Count - 1;
-            }
-        }
+        private int _currentStep = 0;
+        private bool IsLastStep => _currentStep >= _steps.Count - 1;
 
         public ReactiveCommand OnNextClickedOnLastSlide = new ReactiveCommand();
 
@@ -37,15 +30,19 @@ namespace Assets.Source.Mvc.Views
             base.Setup();
 
             ResetSlides();
+            _steps.ForEach(step =>
+            {
+                step.gameObject.SetActive(true);
+            });
 
-            nextButton
+            _nextButton
                 .OnClickAsObservable()
                 .Subscribe(_ => Next())
                 .AddTo(this);
 
             // Animation for instruction text
             LeanTween.value(this.gameObject,
-                            e => { instructionText.fontSize = (float)Math.Round((double)e, 1); },
+                            e => { _instructionText.fontSize = (float)Math.Round((double)e, 1); },
                             FontSizeMin, FontSizeMax, InstructionPulseSeconds)
                             .setLoopPingPong()
                             .setEaseInOutCubic();
@@ -54,12 +51,12 @@ namespace Assets.Source.Mvc.Views
 
         private void ResetSlides()
         {
-            currentStep = 0;
+            _currentStep = 0;
 
             // Hide all panels, except the first
-            for (int i = 1; i < steps.Count; i++)
+            for (int i = 1; i < _steps.Count; i++)
             {
-                FadeOutStep(i, 0);
+                FadeOutStep(i, 0);                
             }
 
             FadeInStep(0, 0);
@@ -76,31 +73,31 @@ namespace Assets.Source.Mvc.Views
         private void Next()
         {
             // Close if this is the last step
-            if (isLastStep)
+            if (IsLastStep)
             {
                 OnNextClickedOnLastSlide.Execute();
                 return;
             }
 
             // Fade between current and next step
-            FadeInStep(currentStep + 1);
-            FadeOutStep(currentStep);
+            FadeInStep(_currentStep + 1);
+            FadeOutStep(_currentStep);
 
-            currentStep++;
+            _currentStep++;
         }        
 
 
         private void FadeInStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
-            LeanTween.value(this.gameObject, (float value) => { steps[index].alpha = value; }, 0, 1, time);
+            LeanTween.value(this.gameObject, (float value) => { _steps[index].alpha = value; }, 0, 1, time);
         }
 
 
         private void FadeOutStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
-            LeanTween.value(this.gameObject, (float value) => { steps[index].alpha = value; }, 1, 0, time);
+            LeanTween.value(this.gameObject, (float value) => { _steps[index].alpha = value; }, 1, 0, time);
         }
     }
 }

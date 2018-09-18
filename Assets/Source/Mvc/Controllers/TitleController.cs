@@ -29,7 +29,7 @@ namespace Assets.Source.Mvc.Controllers
             _audioService = audioService;
             _savegameService = savegameService;
 
-            _view.Initialize();
+            _view.Initialize();            
 
             _view.OnStartClicked = () =>
             {
