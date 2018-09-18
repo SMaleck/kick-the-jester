@@ -1,12 +1,11 @@
 ﻿using UniRx;
 using UnityEngine;
 
-namespace Assets.Entities
+namespace Assets.Source.Entities
 {
     public class AbstractMonoEntity : MonoBehaviour
     {
-        private BoolReactiveProperty IsPaused = new BoolReactiveProperty(false);
-
         public Transform GoTransform => gameObject.transform;
+        public BoolReactiveProperty IsPaused = new BoolReactiveProperty(false);        
     }
 }

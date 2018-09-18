@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Entities.JesterEntity
+namespace Assets.Source.Entities.Jester
 {
-    public class Jester : AbstractMonoEntity
+    public class JesterEntity : AbstractMonoEntity
     {
         private Rigidbody2D _goBody;
         public Rigidbody2D GoBody

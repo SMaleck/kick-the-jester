@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Entities.KnightEntity
+namespace Assets.Source.Entities.KnightEntity
 {
     public class Knight : AbstractMonoEntity
     {
