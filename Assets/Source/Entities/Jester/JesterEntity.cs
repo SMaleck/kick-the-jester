@@ -21,6 +21,6 @@ namespace Assets.Source.Entities.Jester
 
                 return _goBody;
             }
-        }
+        }        
     }
 }
