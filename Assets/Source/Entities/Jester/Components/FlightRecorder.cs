@@ -1,39 +1,60 @@
 ﻿using Assets.Source.Entities.GenericComponents;
+using Assets.Source.Mvc.Models;
+using Assets.Source.Util;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Jester.Components
 {
     public class FlightRecorder : AbstractPausableComponent<JesterEntity>
     {        
-        private readonly Vector3 origin;        
+        private readonly Vector3 origin;
+        private readonly FlightStatsModel _flightStatsModel;
 
-
-        public FlightRecorder(JesterEntity owner)
+        public FlightRecorder(JesterEntity owner, FlightStatsModel flightStatsModel)
             : base(owner)
         {
             origin = owner.GoTransform.position;
+            _flightStatsModel = flightStatsModel;
 
-            // Set Jester IsStarted when he was kikced
-            //MessageBroker.Default.Receive<JesterEffects>()
-            //                     .Where(e => e.Equals(JesterEffects.Kick))
-            //                     .Subscribe(_ => owner.IsStartedProperty.Value = true)
-            //                     .AddTo(owner);
+            // TODO Unsafe, change to global event from Knight
+            _flightStatsModel.Velocity
+                .Where(_ => !_flightStatsModel.IsStarted.Value && !IsPaused.Value)
+                .Subscribe(OnVelocityChangedAtLaunch)
+                .AddTo(owner);
 
-            //// Listen to velocity, so we can update landed
-            //owner.VelocityProperty.Where(e => e.magnitude.IsNearlyEqual(0) && owner.Height.ToMeters() == 0 && owner.IsStartedProperty.Value)
-            //                      .Subscribe(__ => { owner.IsLandedProperty.Value = true; })
-            //                      .AddTo(owner);
+            _flightStatsModel.Velocity
+                .Where(_ => _flightStatsModel.IsStarted.Value && !IsPaused.Value)
+                .Subscribe(OnVelocityChangedAfterStart)
+                .AddTo(owner);
+
+            Observable.EveryLateUpdate()
+                .Where(_ => !IsPaused.Value)
+                .Subscribe(_ => LateUpdate())
+                .AddTo(owner);
         }
 
 
-        protected override void LateUpdate()
+        private void LateUpdate()
         {
-            //owner.Distance = owner.goTransform.position.x.Difference(origin.x);
-            //owner.Height = owner.goTransform.position.y.Difference(origin.y);
+            _flightStatsModel.Distance.Value = owner.GoTransform.position.x.Difference(origin.x);
+            _flightStatsModel.Height.Value = owner.GoTransform.position.y.Difference(origin.y);
 
-            //owner.Velocity = owner.goBody.velocity;
+            _flightStatsModel.Velocity.Value = owner.GoBody.velocity;
         }
 
-        protected override void OnPause(bool isPaused) { }
+        private void OnVelocityChangedAtLaunch(Vector2 velocity)
+        {
+            bool isMoving = velocity.magnitude > 0;
+            _flightStatsModel.IsStarted.Value = isMoving;
+        }
+
+        private void OnVelocityChangedAfterStart(Vector2 velocity)
+        {
+            bool isOnGround = _flightStatsModel.Height.Value.ToMeters() == 0;
+            bool isStopped = velocity.magnitude.IsNearlyEqual(0);
+
+            _flightStatsModel.IsLanded.Value = isOnGround && isStopped;
+        }
     }
 }
