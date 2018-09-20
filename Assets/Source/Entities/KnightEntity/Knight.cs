@@ -14,10 +14,13 @@ namespace Assets.Source.Entities.KnightEntity
         private UserControlService _userControlService;
 
         [Inject]
-        public void Initialize(UserControlService userControlService)
+        private void Inject(UserControlService userControlService)
         {
             _userControlService = userControlService;
+        }
 
+        public override void Initialize()
+        {
             _userControlService.OnKick
                 .Subscribe(_ => OnKick())
                 .AddTo(this);

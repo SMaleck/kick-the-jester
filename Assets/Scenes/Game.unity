@@ -181,7 +181,7 @@ MonoBehaviour:
   _identifier: 
   _useSceneContext: 0
   _context: {fileID: 1716613018}
-  _bindType: 0
+  _bindType: 2
 --- !u!114 &114788256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,7 +417,7 @@ MonoBehaviour:
   _identifier: 
   _useSceneContext: 0
   _context: {fileID: 1716613018}
-  _bindType: 0
+  _bindType: 2
 --- !u!114 &1682082321
 MonoBehaviour:
   m_ObjectHideFlags: 0

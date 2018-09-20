@@ -15,7 +15,21 @@ namespace Assets.Source.Services
 
         public UserControlService()
         {
-            
+            Observable.EveryUpdate()
+                .Subscribe(_ => OnUpdate());            
+        }
+
+        private void OnUpdate()
+        {            
+            if (Input.GetButtonDown("Kick") || Input.GetMouseButtonDown(0))
+            {                
+                OnKick.Execute();
+            }
+
+            if (Input.GetButtonDown("Pause"))
+            {
+                OnPause.Execute();
+            }
         }
     }
 }

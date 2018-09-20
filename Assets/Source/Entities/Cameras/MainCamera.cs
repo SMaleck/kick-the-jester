@@ -24,20 +24,16 @@ namespace Assets.Source.Entities.Cameras
         {
             _jester = jester;
             _jesterTransform = jester.GoTransform;
-            _origin = transform.position;
+            _origin = transform.position;       
+        }
 
+        public override void Initialize()
+        {
             Observable.EveryUpdate()
                 .Subscribe(_ => OnUpdate())
                 .AddTo(this);
-
-            Debug.Log("CAMERA INJECT METHOD");
         }
 
-        private void Start()
-        {
-            Debug.Log("CAMERA INJECT RAN: " + (_jester != null).ToString());
-
-        }
 
         private void OnUpdate()
         {
