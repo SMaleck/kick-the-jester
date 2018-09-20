@@ -10,7 +10,7 @@ namespace Assets.Source.Entities.Cameras
         [SerializeField] private Camera _camera;
 
 
-        [Inject] private JesterEntity _jester;
+        private JesterEntity _jester;
         private Transform _jesterTransform;
         private Vector3 _origin;
 
@@ -20,7 +20,7 @@ namespace Assets.Source.Entities.Cameras
 
 
         [Inject]
-        public void Inject(JesterEntity jester)
+        private void Inject(JesterEntity jester)
         {
             _jester = jester;
             _jesterTransform = jester.GoTransform;
