@@ -13,6 +13,7 @@ namespace Assets.Source.Mvc.Models
         public ReactiveProperty<Vector2> Velocity = new ReactiveProperty<Vector2>();
       
         public FloatReactiveProperty RelativeKickForce = new FloatReactiveProperty();
+        public FloatReactiveProperty RelativeVelocity = new FloatReactiveProperty();
         public IntReactiveProperty ShotsRemaining = new IntReactiveProperty();
     }
 }

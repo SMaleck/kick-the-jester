@@ -51,7 +51,7 @@ namespace Assets.Source.Util
         /// <param name="value"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public static float AsRelativeTo1(this float value, float max)
+        public static float AsRelativeTo(this float value, float max)
         {
             return (value / max);
         }
@@ -94,21 +94,6 @@ namespace Assets.Source.Util
             int result = Math.Abs(val1 - val2);
 
             return (float)result / Constants.FLOAT_PRECISION_FACTOR;
-        }
-
-        public static float Clamp(this float value, float min, float max)
-        {
-            if (value > max)
-            {
-                return max;
-            }
-
-            if (value < min)
-            {
-                return min;
-            }
-
-            return value;
         }
     }
 }

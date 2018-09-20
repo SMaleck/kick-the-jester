@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Source.Mvc.Models
+﻿namespace Assets.Source.Mvc.Models
 {
     public class PlayerModel
     {
-        public float KickForce;
-        public float ShootForce;
-        public int Shots;
+        // ToDo Remove Defaults
+        public float KickForce = 5;
+        public float ShootForce = 5;
+        public int Shots = 5;
+
+        public float MaxVelocityX;
+        public float MaxVelocityY;
     }
 }

@@ -40,11 +40,13 @@ namespace Assets.Source.Entities.Jester.Components
             kickForceTweener = DOTween
                 .To(() => _flightStatsmodel.RelativeKickForce.Value, (x) => _flightStatsmodel.RelativeKickForce.Value = x, maxForceFactor, forceChangeSeconds)                
                 .SetLoops(-1, LoopType.Yoyo);
+
+            isActive = true;
         }
 
 
         private void OnKick()
-        {            
+        {
             owner.OnKicked.Execute();
 
             Vector3 appliedForce = direction * (_playerModel.KickForce * _flightStatsmodel.RelativeKickForce.Value);

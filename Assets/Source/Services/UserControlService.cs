@@ -19,6 +19,7 @@ namespace Assets.Source.Services
                 .Subscribe(_ => OnUpdate());            
         }
 
+        private int counter = 0;
         private void OnUpdate()
         {            
             if (Input.GetButtonDown("Kick") || Input.GetMouseButtonDown(0))
