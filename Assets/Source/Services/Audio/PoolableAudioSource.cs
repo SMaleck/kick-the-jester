@@ -31,10 +31,19 @@ namespace Assets.Source.Services.Audio
             _audioSource.Play();
         }
 
-
         public void Stop()
         {
             _audioSource.Stop();
+        }
+
+        public void Pause()
+        {
+            _audioSource.Pause();
+        }
+
+        public void Resume()
+        {            
+            _audioSource.UnPause();
         }
     }
 }

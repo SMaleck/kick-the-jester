@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Assets.Source.Services.Audio
 {
+    // ToDo React to On pause
     public class AudioService
     {
         private readonly SettingsService _settingsService;        

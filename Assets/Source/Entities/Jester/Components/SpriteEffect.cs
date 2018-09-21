@@ -16,6 +16,8 @@ namespace Assets.Source.Entities.Jester.Components
 {
     public class SpriteEffect : AbstractPausableComponent<JesterEntity>
     {
+        private enum AnimState { None, Idle };
+
         private readonly JesterSpriteEffectsConfig _config;
         private readonly ParticleService _particleService;
 
@@ -65,10 +67,10 @@ namespace Assets.Source.Entities.Jester.Components
             // Stop Idle Animation
             animationComponent.Play(AnimState.None.ToString());
 
-            jesterSprite.sprite = config.LaunchSprite;
+            owner.BodySprite.sprite = _config.LaunchSprite;
 
             // Play Particle Effect
-            pfxService.PlayAt(config.PfxKick, owner.Slot_KickTouch.position);
+            pfxService.PlayAt(_config.PfxKick, owner.EffectSlotKick.position);
         }
 
 
@@ -90,13 +92,8 @@ namespace Assets.Source.Entities.Jester.Components
         // ---------------------------------------------------
 
 
-        private enum AnimState { None, Idle };
+        
         private AnimationComponent<AbstractBehaviour> animationComponent;
-
-
-        // Game Object for the Jester's sprite
-        private readonly GameObject goJesterSprite;
-        private SpriteRenderer jesterSprite;
 
         // GameObject for the Effects Sprite
         private readonly GameObject goEffectSprite;
