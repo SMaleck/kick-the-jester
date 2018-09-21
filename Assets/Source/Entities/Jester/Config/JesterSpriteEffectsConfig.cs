@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.Source.Config
-{    
+namespace Assets.Source.Entities.Jester.Config
+{
+    [CreateAssetMenu(fileName = "JesterSpriteEffectsConfig", menuName = "KTJ/Config/JesterSpriteEffectsConfig")]
     public class JesterSpriteEffectsConfig : ScriptableObject
     {        
         public float MinRotationSpeed = 1f;

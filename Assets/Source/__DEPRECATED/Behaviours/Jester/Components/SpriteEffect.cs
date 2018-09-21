@@ -1,5 +1,5 @@
 ﻿using Assets.Source.App.ParticleEffects;
-using Assets.Source.Config;
+using Assets.Source.Entities.Jester.Config;
 using System.Linq;
 using UniRx;
 using UnityEngine;

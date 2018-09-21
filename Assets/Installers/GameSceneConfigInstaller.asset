@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8262a0c4d3932b54d90c20e4488e4e39, type: 3}
+  m_Name: GameSceneConfigInstaller
+  m_EditorClassIdentifier: 
+  _jesterSpriteEffectsConfig: {fileID: 11400000, guid: 5312f3049a91c2b41975a32022c3d52a,
+    type: 2}
+  _jesterSoundEffectsConfig: {fileID: 11400000, guid: ab713d5f9f588654ea657164ffeab82f,
+    type: 2}

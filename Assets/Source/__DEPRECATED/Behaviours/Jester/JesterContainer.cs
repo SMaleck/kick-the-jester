@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Behaviours.Jester.Components;
 using Assets.Source.Config;
+using Assets.Source.Entities.Jester.Config;
 using UniRx;
 using UnityEngine;
 

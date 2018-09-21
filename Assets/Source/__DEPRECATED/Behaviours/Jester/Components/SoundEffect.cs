@@ -1,5 +1,5 @@
 ﻿using Assets.Source.App.Audio;
-using Assets.Source.Config;
+using Assets.Source.Entities.Jester.Config;
 
 namespace Assets.Source.Behaviours.Jester.Components
 {
