@@ -10,7 +10,6 @@ using Assets.Source.Entities.Jester.Config;
 using Assets.Source.Services.Particles;
 using UniRx;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Assets.Source.Entities.Jester.Components
 {
@@ -27,12 +26,20 @@ namespace Assets.Source.Entities.Jester.Components
         private float currentRotationSpeed = 0;
         private Vector3 rotationDirection = new Vector3(0, 0, -1);
 
+        private Animator effectAnimator;
+        private AnimationComponent<AbstractBehaviour> animationComponent;
 
-        public SpriteEffect(JesterEntity owner, JesterSpriteEffectsConfig config, ParticleService particleService) 
+        public SpriteEffect(JesterEntity owner, JesterSpriteEffectsConfig config, ParticleService particleService, Animator animator) 
             : base(owner)
         {
             _config = config;
             _particleService = particleService;
+
+            // ToDo Relies on old component
+            //animationComponent = new AnimationComponent<AbstractBehaviour>(owner, animator);
+
+            // ToDo probably not the best solution
+            effectAnimator = owner.GoEffectSprite.GetComponent<Animator>();
 
             Observable.EveryFixedUpdate()
                 .Where(_ => !IsPaused.Value)
@@ -50,6 +57,14 @@ namespace Assets.Source.Entities.Jester.Components
             owner.Collisions.OnGround
                 .Subscribe(_ => OnGround())
                 .AddTo(owner);
+
+            owner.Collisions.OnBoost
+                .Subscribe(_ => OnBoost())
+                .AddTo(owner);
+
+            // ToDo listen to started/landed            
+            //owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
+            //owner.IsLandedProperty.Where(e => e).Subscribe(_ => OnLanded()).AddTo(owner);
         }
 
 
@@ -70,135 +85,55 @@ namespace Assets.Source.Entities.Jester.Components
             owner.BodySprite.sprite = _config.LaunchSprite;
 
             // Play Particle Effect
-            pfxService.PlayAt(_config.PfxKick, owner.EffectSlotKick.position);
+            _particleService.PlayAt(_config.PfxKick, owner.EffectSlotKick.position);
         }
-
-
-        private void OnShot()
-        {
-            ModulateMainSprite();
-
-            // Play Particle Effect
-            pfxService.PlayAt(config.PfxImpact, owner.Slot_GroundTouch.position);
-        }
-
 
         private void OnGround()
         {
-            effectAnimator.Play("Anim_Projectile_Shoot");
-            ModulateMainSprite();
-        }
-
-        // ---------------------------------------------------
-
-
-        
-        private AnimationComponent<AbstractBehaviour> animationComponent;
-
-        // GameObject for the Effects Sprite
-        private readonly GameObject goEffectSprite;
-        private Animator effectAnimator;
-
-
-
-        public SpriteEffect(JesterContainer owner, Animator animator, GameObject goJesterSprite, GameObject goEffectSprite, JesterSpriteEffectsConfig config, PfxService pfxService)
-            : base(owner, true)
-        {
-            this.pfxService = pfxService;
-            this.config = config;
-
-            animationComponent = new AnimationComponent<AbstractBehaviour>(owner, animator);
-
-            // Setup Jester Sprite
-            this.goJesterSprite = goJesterSprite;
-            jesterSprite = this.goJesterSprite.GetComponent<SpriteRenderer>();
-
-            // Setup Effects Sprite
-            this.goEffectSprite = goEffectSprite;
-            this.effectAnimator = this.goEffectSprite.GetComponent<Animator>();
-
-            // Event Listeners
-            owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
-            owner.IsLandedProperty.Where(e => e).Subscribe(_ => OnLanded()).AddTo(owner);
-
-            // Kick & Shot Listeners
-            MessageBroker.Default.Receive<JesterEffects>()
-                                 .Where(e => e.Equals(JesterEffects.Kick))
-                                 .Subscribe(_ => OnKickHit())
-                                 .AddTo(owner);
-
-            MessageBroker.Default.Receive<JesterEffects>()
-                                 .Where(e => e.Equals(JesterEffects.Shot))
-                                 .Subscribe(_ => OnShotHit())
-                                 .AddTo(owner);
-
-            // Impact Listeners
-            owner.Collisions.OnGround(OnGroundHit);
-            owner.Collisions.OnBoost(ModulateMainSprite);
-        }
-
-
-        
-
-
-        private void OnKickHit()
-        {
-            // Stop Idle Animation
-            animationComponent.Play(AnimState.None.ToString());
-
-            jesterSprite.sprite = config.LaunchSprite;
-
-            // Play Particle Effect
-            pfxService.PlayAt(config.PfxKick, owner.Slot_KickTouch.position);
-        }
-
-
-        private void OnGroundHit()
-        {
             ModulateMainSprite();
 
             // Play Particle Effect
-            pfxService.PlayAt(config.PfxImpact, owner.Slot_GroundTouch.position);
+            _particleService.PlayAt(_config.PfxImpact, owner.EffectSlotGround.position);
         }
 
+        private void OnBoost()
+        {
+            ModulateMainSprite();
+        }
 
-        private void OnShotHit()
+        private void OnShot()
         {
             effectAnimator.Play("Anim_Projectile_Shoot");
             ModulateMainSprite();
         }
-
 
         private void OnLanded()
         {
             // Stop rotating and rest
             listenForImpacts = isRotating = false;
-            goJesterSprite.transform.rotation = new Quaternion(0, 0, 0, 0);
+            owner.BodySprite.transform.rotation = new Quaternion(0, 0, 0, 0);
 
             // Switch Sprite            
-            jesterSprite.sprite = config.LandingSprite;
+            owner.BodySprite.sprite = _config.LandingSprite;
 
             // Start Idle Animation
             animationComponent.Play(AnimState.Idle.ToString());
         }
-
-
-
-        // Sets a new roattion and switches the sprite to another random one
+        
         private void ModulateMainSprite()
         {
             if (!listenForImpacts) { return; }
 
             // Set rotation
             isRotating = true;
-            currentRotationSpeed = UnityEngine.Random.Range(config.MinRotationSpeed, config.MaxRotationSpeed);
+            currentRotationSpeed = UnityEngine.Random.Range(_config.MinRotationSpeed, _config.MaxRotationSpeed);
 
             // Switch Sprite
             // Get all sprites that are not the one currently used, and get a random index from that
-            var currentPool = config.ImpactSpritePool.Where(e => !e.Equals(jesterSprite.sprite));
+            var currentPool = _config.ImpactSpritePool.Where(e => !e.Equals(owner.BodySprite.sprite));
             int index = Random.Range(0, currentPool.Count());
 
-            jesterSprite.sprite = currentPool.ElementAt(index);
+            owner.BodySprite.sprite = currentPool.ElementAt(index);
         }
     }
 }
