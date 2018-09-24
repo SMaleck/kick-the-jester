@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Assets.Source.App;
+using Assets.Source.UI.Elements;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Source.App;
-using Assets.Source.UI.Elements;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -15,23 +12,24 @@ namespace Assets.Source.Mvc.Views
     // TODO a lot
     public class HudView : AbstractView
     {
-        [Header("Panel Properties")]
-        [SerializeField] Button PauseButton;
-        [SerializeField] UIProgressBar velocityBar;
-
+        [Header("Flight Stats Display")]
+        [SerializeField] TMP_Text DistanceText;
+        [SerializeField] TMP_Text HeightText;
+        [SerializeField] TMP_Text BestDistanceText;
+        
+        [Header("Tomatoes")]
         [SerializeField] GameObject shotCountPanel;
         [SerializeField] GameObject PF_ShotCountIcon;
         private List<Image> shotCountIcons = new List<Image>();
 
-        // Money Gain Floating number Display
+        [Header("Other")]
+        [SerializeField] Button PauseButton;
+        [SerializeField] UIProgressBar velocityBar;
+
+        [Header("Money Gain Floating Numbers")]
         [SerializeField] RectTransform MoneyGainPanel;
         [SerializeField] GameObject PF_MoneyGainText;
-        private List<FloatingValue> moneyGainSlots = new List<FloatingValue>();
-
-        [Header("Stats Display")]
-        [SerializeField] TMP_Text DistanceText;
-        [SerializeField] TMP_Text HeightText;
-        [SerializeField] TMP_Text BestDistanceText;
+        private List<FloatingValue> moneyGainSlots = new List<FloatingValue>();        
 
         public float Distance
         {
@@ -64,27 +62,18 @@ namespace Assets.Source.Mvc.Views
 
             
             velocityBar.gameObject.SetActive(false);
-
-
-            // Show a floating value each time we gain money
-            App.Cache.GameLogic.currencyRecorder.Gains
-                                                .ObserveAdd()
-                                                .Subscribe((CollectionAddEvent<int> e) => { ShowFloatingCoinAmount(e.Value); })
-                                                .AddTo(this);
+            shotCountPanel.gameObject.SetActive(false);
         }
+       
 
-        public void OnLaunch()
+        public void StartRound()
         {
             velocityBar.gameObject.SetActive(true);
-
-            // ToDo Subscribe to ammo count
-            //App.Cache.Jester.AvailableShotsProperty
-            //    .Subscribe(OnShotCountChanged)
-            //    .AddTo(this);
+            shotCountPanel.gameObject.SetActive(true);
         }
 
-        // Shows a floating number over the Jester for coin gains
-        private void ShowFloatingCoinAmount(float gainedAmount)
+        
+        public void ShowFloatingCoinAmount(float gainedAmount)
         {
             if (gainedAmount <= 0) { return; }
 
@@ -100,7 +89,27 @@ namespace Assets.Source.Mvc.Views
 
             fValue.StartFloating(string.Format("{0} {1}", gainedAmount, Constants.TMP_SPRITE_COIN));
         }
+      
 
+        public void OnShotCountChanged(int count)
+        {
+            int diff = Mathf.Abs(count - shotCountIcons.Count);
+
+            // Add additional Icons, if the count is higher than the current amount
+            if (shotCountIcons.Count < count)
+            {
+                AddShotCountIcons(diff);
+                return;
+            }
+
+            // Reduce opacity if the count is lower
+            var toDeactivate = shotCountIcons.Skip(count).Take(diff);
+
+            foreach (Image img in toDeactivate)
+            {
+                img.color = new Color(1, 1, 1, 0.5f);
+            }
+        }
 
         private void AddShotCountIcons(int countToAdd)
         {
@@ -127,27 +136,6 @@ namespace Assets.Source.Mvc.Views
             foreach (Image img in shotCountIcons)
             {
                 img.color = new Color(1, 1, 1, 1);
-            }
-        }
-
-
-        private void OnShotCountChanged(int count)
-        {
-            int diff = Mathf.Abs(count - shotCountIcons.Count);
-
-            // Add additional Icons, if the count is higher than the current amount
-            if (shotCountIcons.Count < count)
-            {
-                AddShotCountIcons(diff);
-                return;
-            }
-
-            // Reduce opacity if the count is lower
-            var toDeactivate = shotCountIcons.Skip(count).Take(diff);
-
-            foreach (Image img in toDeactivate)
-            {
-                img.color = new Color(1, 1, 1, 0.5f);
             }
         }
     }

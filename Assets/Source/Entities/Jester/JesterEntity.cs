@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Entities.Jester
 {
-    public class JesterEntity : AbstractMonoEntity
+    public class JesterEntity : AbstractPausableMonoEntity
     {
         [SerializeField] public Collisions Collisions;
         [SerializeField] public GameObject GoBodySprite;

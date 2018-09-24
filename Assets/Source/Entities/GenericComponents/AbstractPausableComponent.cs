@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Entities.GenericComponents
 {    
-    public abstract class AbstractPausableComponent<T> : AbstractComponent<T> where T : AbstractMonoEntity
+    public abstract class AbstractPausableComponent<T> : AbstractComponent<T> where T : AbstractPausableMonoEntity
     {        
         protected BoolReactiveProperty IsPaused = new BoolReactiveProperty();
 

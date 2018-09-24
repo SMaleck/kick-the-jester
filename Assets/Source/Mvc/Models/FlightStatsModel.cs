@@ -15,5 +15,9 @@ namespace Assets.Source.Mvc.Models
         public FloatReactiveProperty RelativeKickForce = new FloatReactiveProperty();
         public FloatReactiveProperty RelativeVelocity = new FloatReactiveProperty();
         public IntReactiveProperty ShotsRemaining = new IntReactiveProperty();
+
+        public ReactiveCollection<int> Gains = new ReactiveCollection<int>();
+        public IntReactiveProperty Collected = new IntReactiveProperty();
+        public IntReactiveProperty Earned = new IntReactiveProperty();
     }
 }

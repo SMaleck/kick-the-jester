@@ -327,14 +327,15 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 223776231347943056, guid: 820a8bfdc65976a4daa3d00b1eedec35,
-        type: 2}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 820a8bfdc65976a4daa3d00b1eedec35, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &504463459 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114658634512328238, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+    type: 2}
+  m_PrefabInternal: {fileID: 504463458}
+  m_Script: {fileID: 11500000, guid: c0838255799478f4b910fd3da4bcd166, type: 3}
 --- !u!1 &523546457
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,8 +381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8e0ae4322f63447ab7f0632c7b918b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPaused:
-    value: 0
 --- !u!4 &523546460
 Transform:
   m_ObjectHideFlags: 0
@@ -690,8 +689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b50fb0dbe18e946a2cbac19ad58f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPaused:
-    value: 0
   _camera: {fileID: 736072196}
 --- !u!1 &1716613016
 GameObject:
@@ -721,6 +718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1937c74c470cae045a46905337b3f65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HudView: {fileID: 504463459}
 --- !u!114 &1716613018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,8 +826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3f2458013cbe4ab83a11f428c68c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPaused:
-    value: 0
 --- !u!114 &1888395525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,8 +888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a8d937adfec0345b245b42fe6856ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsPaused:
-    value: 0
   _backgroundMusic: {fileID: 8300000, guid: d5ea12ece4726574ba5c493c75135005, type: 3}
 --- !u!4 &2139901056
 Transform:

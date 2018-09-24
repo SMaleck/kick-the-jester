@@ -1,5 +1,4 @@
-﻿using UniRx;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Assets.Source.Entities
@@ -18,9 +17,7 @@ namespace Assets.Source.Entities
         {
             get { return GoTransform.localPosition; }
             set { GoTransform.localPosition = value; }
-        }
-
-        public BoolReactiveProperty IsPaused = new BoolReactiveProperty(false);
+        }        
 
         // ToDo Figure out how to run this automatically through Zenject
         private void Start()

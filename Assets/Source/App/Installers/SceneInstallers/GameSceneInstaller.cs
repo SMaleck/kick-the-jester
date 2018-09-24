@@ -1,12 +1,18 @@
-﻿using Assets.Source.Entities.Jester.Components;
+﻿using Assets.Source.Entities.GameRound.Components;
+using Assets.Source.Entities.Jester.Components;
+using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
+using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Source.App.Installers.SceneInstallers
 {
     public class GameSceneInstaller : MonoInstaller
     {
+        [SerializeField] public HudView HudView;
+
         public override void InstallBindings()
         {
             #region SERVICES
@@ -18,15 +24,26 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region MVC
 
-
+            Container.BindInstance(HudView).AsSingle();
+            Container.Bind<HudController>().AsSingle().NonLazy();
 
             #endregion
 
 
             #region MODELS
 
+            Container.Bind<GameStateModel>().AsSingle().NonLazy();
             Container.Bind<PlayerModel>().AsSingle().NonLazy();
             Container.Bind<FlightStatsModel>().AsSingle().NonLazy();
+
+            #endregion
+
+
+            #region GAME ROUND
+
+            Container.Bind<GameState>().AsSingle().NonLazy();
+            Container.Bind<CurrencyRecorder>().AsSingle().NonLazy();
+            Container.Bind<RoundStatsRecorder>().AsSingle().NonLazy();
 
             #endregion
 

@@ -7,6 +7,7 @@ using Assets.Source.Entities.GenericComponents;
 
 namespace Assets.Source.Entities.GameRound.Components
 {
+    // ToDo record round count and best distance
     public class RoundStatsRecorder : AbstractComponent<GameRoundEntity>
     {
         public RoundStatsRecorder(GameRoundEntity owner) : base(owner)
