@@ -6,12 +6,16 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
+    // ToDo Disable Button once clicked
+    // ToDo play music for clicked
     public class TitleView : AbstractView
     {
         [SerializeField] public Button _startButton;
         [SerializeField] public Button _settingsButton;
         [SerializeField] public Button _tutorialButton;
         [SerializeField] public Button _creditsButton;
+
+        [SerializeField] public AudioClip _TransitionMusic;
 
         public Action OnStartClicked = () => { };
         public Action OnSettingsClicked = () => { };

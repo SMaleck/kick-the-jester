@@ -6,7 +6,7 @@ using UniRx;
 using SceneTransitionService = Assets.Source.Services.SceneTransitionService;
 
 namespace Assets.Source.Mvc.Controllers
-{
+{    
     public class TitleController : AbstractController
     {
         private readonly TitleView _view;
