@@ -41,10 +41,10 @@ namespace Assets.Source.Entities.Jester.Components
         {
             if (!_isActive || !_isInFlight) { return; }
             
-            owner.OnShot.Execute();
+            Owner.OnShot.Execute();
 
             Vector3 appliedForce = _direction * _playerModel.ShootForce;
-            owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
+            Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
 
             _flightStatsmodel.ShotsRemaining.Value--;
             _isActive = _flightStatsmodel.ShotsRemaining.Value <= 0;

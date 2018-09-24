@@ -35,10 +35,10 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void LateUpdate()
         {
-            _flightStatsModel.Distance.Value = owner.GoTransform.position.x.Difference(origin.x);
-            _flightStatsModel.Height.Value = owner.GoTransform.position.y.Difference(origin.y);
+            _flightStatsModel.Distance.Value = Owner.GoTransform.position.x.Difference(origin.x);
+            _flightStatsModel.Height.Value = Owner.GoTransform.position.y.Difference(origin.y);
 
-            _flightStatsModel.Velocity.Value = owner.GoBody.velocity;
+            _flightStatsModel.Velocity.Value = Owner.GoBody.velocity;
         }
 
         private void OnVelocityChangedAfterStart(Vector2 velocity)
@@ -52,7 +52,7 @@ namespace Assets.Source.Entities.Jester.Components
 
             if (!wasLanded && _flightStatsModel.IsLanded.Value)
             {
-                owner.OnLanded.Execute();
+                Owner.OnLanded.Execute();
             }
         }
     }

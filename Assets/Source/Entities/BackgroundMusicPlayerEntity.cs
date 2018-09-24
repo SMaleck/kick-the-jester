@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Services.Audio;
 using UnityEngine;
+using Zenject;
 
-// ToDo Put in respective scenes
 namespace Assets.Source.Entities
 {
     public class BackgroundMusicPlayerEntity : AbstractMonoEntity
@@ -11,12 +11,16 @@ namespace Assets.Source.Entities
         private AudioService _audioService;
 
 
-        public override void Initialize() { }
+        public override void Initialize()
+        {
+            _audioService.PlayMusic(_backgroundMusic);
+        }
 
+
+        [Inject]
         private void Inject(AudioService audioService)
         {
-            _audioService = audioService;
-            audioService.PlayMusic(_backgroundMusic);
+            _audioService = audioService;            
         }
     }
 }

@@ -60,8 +60,8 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnPause(bool isPaused)
         {
-            owner.BodyAnimator.enabled = !isPaused;
-            owner.ProjectileAnimator.enabled = !isPaused;
+            Owner.BodyAnimator.enabled = !isPaused;
+            Owner.ProjectileAnimator.enabled = !isPaused;
         }
 
 
@@ -69,7 +69,7 @@ namespace Assets.Source.Entities.Jester.Components
         {
             if (!IsPaused.Value && _isRotating)
             {
-                owner.GoBodySprite.transform.Rotate(_rotationDirection * _currentRotationSpeed * Time.deltaTime);
+                Owner.GoBodySprite.transform.Rotate(_rotationDirection * _currentRotationSpeed * Time.deltaTime);
             }
         }
 
@@ -77,11 +77,11 @@ namespace Assets.Source.Entities.Jester.Components
         private void OnKicked()
         {
             // Stop Idle Animation
-            owner.BodyAnimator.Play(AnimState.None.ToString());
-            owner.BodySprite.sprite = _config.LaunchSprite;
+            Owner.BodyAnimator.Play(AnimState.None.ToString());
+            Owner.BodySprite.sprite = _config.LaunchSprite;
 
             // Play Particle Effect
-            _particleService.PlayAt(_config.PfxKick, owner.EffectSlotKick.position);
+            _particleService.PlayAt(_config.PfxKick, Owner.EffectSlotKick.position);
 
             _listenForImpacts = true;
         }
@@ -91,7 +91,7 @@ namespace Assets.Source.Entities.Jester.Components
             ModulateMainSprite();
 
             // Play Particle Effect
-            _particleService.PlayAt(_config.PfxImpact, owner.EffectSlotGround.position);
+            _particleService.PlayAt(_config.PfxImpact, Owner.EffectSlotGround.position);
         }
 
         private void OnBoost()
@@ -101,7 +101,7 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnShot()
         {
-            owner.ProjectileAnimator.Play("Anim_Projectile_Shoot");
+            Owner.ProjectileAnimator.Play("Anim_Projectile_Shoot");
             ModulateMainSprite();
         }
 
@@ -109,13 +109,13 @@ namespace Assets.Source.Entities.Jester.Components
         {
             // Stop rotating and rest
             _listenForImpacts = _isRotating = false;
-            owner.BodySprite.transform.rotation = new Quaternion(0, 0, 0, 0);
+            Owner.BodySprite.transform.rotation = new Quaternion(0, 0, 0, 0);
 
             // Switch Sprite            
-            owner.BodySprite.sprite = _config.LandingSprite;
+            Owner.BodySprite.sprite = _config.LandingSprite;
 
             // Start Idle Animation
-            owner.BodyAnimator.Play(AnimState.Idle.ToString());
+            Owner.BodyAnimator.Play(AnimState.Idle.ToString());
         }
         
         private void ModulateMainSprite()
@@ -128,10 +128,10 @@ namespace Assets.Source.Entities.Jester.Components
 
             // Switch Sprite
             // Get all sprites that are not the one currently used, and get a random index from that
-            var currentPool = _config.ImpactSpritePool.Where(e => !e.Equals(owner.BodySprite.sprite)).ToArray();   
+            var currentPool = _config.ImpactSpritePool.Where(e => !e.Equals(Owner.BodySprite.sprite)).ToArray();   
             int index = Random.Range(0, currentPool.Length);
 
-            owner.BodySprite.sprite = currentPool[index];
+            Owner.BodySprite.sprite = currentPool[index];
         }
     }
 }

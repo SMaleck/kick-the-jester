@@ -3,11 +3,11 @@
     // ToDo Add to owners disposer
     public abstract class AbstractComponent<T> where T : AbstractMonoEntity
     {        
-        protected readonly T owner;        
+        protected readonly T Owner;        
 
         public AbstractComponent(T owner)
         {
-            this.owner = owner;            
+            this.Owner = owner;            
         }
     }
 }

@@ -30,10 +30,10 @@ namespace Assets.Source.Entities.Jester.Components
             _playerModel = playerModel;
             _flightStatsmodel = flightStatsmodel;
 
-            _userControlService.OnKick
-                .Where(_ => isActive && !IsPaused.Value)
+            owner.OnKicked
+                .Where(_ => isActive)
                 .Subscribe(_ => OnKick())
-                .AddTo(owner);
+                .AddTo(owner);            
 
             flightStatsmodel.RelativeKickForce.Value = 0;
 
@@ -46,11 +46,9 @@ namespace Assets.Source.Entities.Jester.Components
 
 
         private void OnKick()
-        {
-            owner.OnKicked.Execute();
-            
+        {           
             Vector3 appliedForce = direction * (_playerModel.KickForce * _flightStatsmodel.RelativeKickForce.Value);
-            owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
+            Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
 
             kickForceTweener.Kill();
             isActive = false;
