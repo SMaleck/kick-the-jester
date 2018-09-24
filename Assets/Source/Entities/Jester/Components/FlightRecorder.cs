@@ -17,10 +17,8 @@ namespace Assets.Source.Entities.Jester.Components
             origin = owner.GoTransform.position;
             _flightStatsModel = flightStatsModel;
 
-            // TODO Unsafe, change to global event from Knight
-            _flightStatsModel.Velocity
-                .Where(_ => !_flightStatsModel.IsStarted.Value && !IsPaused.Value)
-                .Subscribe(OnVelocityChangedAtLaunch)
+            owner.OnKicked
+                .Subscribe(_ => _flightStatsModel.IsStarted.Value = true)
                 .AddTo(owner);
 
             _flightStatsModel.Velocity
@@ -43,18 +41,19 @@ namespace Assets.Source.Entities.Jester.Components
             _flightStatsModel.Velocity.Value = owner.GoBody.velocity;
         }
 
-        private void OnVelocityChangedAtLaunch(Vector2 velocity)
-        {
-            bool isMoving = velocity.magnitude > 0;
-            _flightStatsModel.IsStarted.Value = isMoving;
-        }
-
         private void OnVelocityChangedAfterStart(Vector2 velocity)
         {
+            var wasLanded = _flightStatsModel.IsLanded.Value;
+
             bool isOnGround = _flightStatsModel.Height.Value.ToMeters() == 0;
             bool isStopped = velocity.magnitude.IsNearlyEqual(0);
 
             _flightStatsModel.IsLanded.Value = isOnGround && isStopped;
+
+            if (!wasLanded && _flightStatsModel.IsLanded.Value)
+            {
+                owner.OnLanded.Execute();
+            }
         }
     }
 }

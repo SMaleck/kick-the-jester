@@ -7,7 +7,7 @@
         public float ShootForce = 5;
         public int Shots = 5;
 
-        public float MaxVelocityX;
-        public float MaxVelocityY;
+        public float MaxVelocityX = 15;
+        public float MaxVelocityY = 15;
     }
 }

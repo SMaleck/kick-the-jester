@@ -48,7 +48,7 @@ namespace Assets.Source.Entities.Jester.Components
         private void OnKick()
         {
             owner.OnKicked.Execute();
-
+            
             Vector3 appliedForce = direction * (_playerModel.KickForce * _flightStatsmodel.RelativeKickForce.Value);
             owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
 

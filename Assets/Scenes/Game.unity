@@ -195,6 +195,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsPaused:
     value: 0
+  Collisions: {fileID: 114788261}
+  GoBodySprite: {fileID: 114788260}
+  GoProjectileSprite: {fileID: 114788259}
+  EffectSlotKick: {fileID: 114788258}
+  EffectSlotGround: {fileID: 114788257}
+--- !u!4 &114788257 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4847081068574604, guid: 9212018c90a5e4d4b86eeba3a06bc3f4,
+    type: 2}
+  m_PrefabInternal: {fileID: 114788253}
+--- !u!4 &114788258 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4002393236488336, guid: 9212018c90a5e4d4b86eeba3a06bc3f4,
+    type: 2}
+  m_PrefabInternal: {fileID: 114788253}
+--- !u!1 &114788259 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1225933467104888, guid: 9212018c90a5e4d4b86eeba3a06bc3f4,
+    type: 2}
+  m_PrefabInternal: {fileID: 114788253}
+--- !u!1 &114788260 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1761647027227642, guid: 9212018c90a5e4d4b86eeba3a06bc3f4,
+    type: 2}
+  m_PrefabInternal: {fileID: 114788253}
+--- !u!114 &114788261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 114788254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c671a58e3fb7ce45be6c6ffa2a92042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPaused:
+    value: 0
 --- !u!1 &308807518
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,5 +586,41 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61871854047925088, guid: 52de88aec3d1d0b4ebac5a07223fbec1, type: 2}
+    - {fileID: 114910659536847856, guid: 52de88aec3d1d0b4ebac5a07223fbec1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 52de88aec3d1d0b4ebac5a07223fbec1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1888395523 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1747842578967650, guid: 52de88aec3d1d0b4ebac5a07223fbec1,
+    type: 2}
+  m_PrefabInternal: {fileID: 1888395522}
+--- !u!114 &1888395524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1888395523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37b3f2458013cbe4ab83a11f428c68c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPaused:
+    value: 0
+--- !u!114 &1888395525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1888395523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1888395524}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0

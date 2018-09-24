@@ -33,10 +33,13 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region JESTER COMPONENTS
 
+            // ToDo Find better way of composing the Jester
             Container.Bind<FlightRecorder>().AsSingle().NonLazy();
             Container.Bind<MotionBoot>().AsSingle().NonLazy();
             Container.Bind<MotionShoot>().AsSingle().NonLazy();
             Container.Bind<VelocityLimiter>().AsSingle().NonLazy();
+            Container.Bind<SpriteEffect>().AsSingle().NonLazy();
+            Container.Bind<SoundEffect>().AsSingle().NonLazy();
 
             #endregion
         }

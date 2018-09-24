@@ -1,13 +1,7 @@
 ﻿using Assets.Source.Entities.GenericComponents;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Source.App.ParticleEffects;
-using Assets.Source.Behaviours;
-using Assets.Source.Behaviours.Jester;
 using Assets.Source.Entities.Jester.Config;
 using Assets.Source.Services.Particles;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -18,28 +12,20 @@ namespace Assets.Source.Entities.Jester.Components
         private enum AnimState { None, Idle };
 
         private readonly JesterSpriteEffectsConfig _config;
-        private readonly ParticleService _particleService;
+        private readonly ParticleService _particleService;        
 
-        private bool listenForImpacts;
-        private bool isRotating;
+        private bool _listenForImpacts;
+        private bool _isRotating;
 
-        private float currentRotationSpeed = 0;
-        private Vector3 rotationDirection = new Vector3(0, 0, -1);
+        private float _currentRotationSpeed = 0;
+        private readonly Vector3 _rotationDirection = new Vector3(0, 0, -1);
+                
 
-        private Animator effectAnimator;
-        private AnimationComponent<AbstractBehaviour> animationComponent;
-
-        public SpriteEffect(JesterEntity owner, JesterSpriteEffectsConfig config, ParticleService particleService, Animator animator) 
+        public SpriteEffect(JesterEntity owner, JesterSpriteEffectsConfig config, ParticleService particleService) 
             : base(owner)
         {
             _config = config;
             _particleService = particleService;
-
-            // ToDo Relies on old component
-            //animationComponent = new AnimationComponent<AbstractBehaviour>(owner, animator);
-
-            // ToDo probably not the best solution
-            effectAnimator = owner.GoEffectSprite.GetComponent<Animator>();
 
             Observable.EveryFixedUpdate()
                 .Where(_ => !IsPaused.Value)
@@ -62,17 +48,28 @@ namespace Assets.Source.Entities.Jester.Components
                 .Subscribe(_ => OnBoost())
                 .AddTo(owner);
 
-            // ToDo listen to started/landed            
-            //owner.IsStartedProperty.Where(e => e).Subscribe(_ => { listenForImpacts = true; }).AddTo(owner);
-            //owner.IsLandedProperty.Where(e => e).Subscribe(_ => OnLanded()).AddTo(owner);
+            IsPaused
+                .Subscribe(OnPause)
+                .AddTo(owner);
+            
+            owner.OnLanded
+                .Subscribe(_ => OnLanded())
+                .AddTo(owner);
+        }
+
+
+        private void OnPause(bool isPaused)
+        {
+            owner.BodyAnimator.enabled = !isPaused;
+            owner.ProjectileAnimator.enabled = !isPaused;
         }
 
 
         private void OnUpdate()
         {
-            if (isRotating)
+            if (!IsPaused.Value && _isRotating)
             {
-                owner.GoBodySprite.transform.Rotate(rotationDirection * currentRotationSpeed * Time.deltaTime);
+                owner.GoBodySprite.transform.Rotate(_rotationDirection * _currentRotationSpeed * Time.deltaTime);
             }
         }
 
@@ -80,12 +77,13 @@ namespace Assets.Source.Entities.Jester.Components
         private void OnKicked()
         {
             // Stop Idle Animation
-            animationComponent.Play(AnimState.None.ToString());
-
+            owner.BodyAnimator.Play(AnimState.None.ToString());
             owner.BodySprite.sprite = _config.LaunchSprite;
 
             // Play Particle Effect
             _particleService.PlayAt(_config.PfxKick, owner.EffectSlotKick.position);
+
+            _listenForImpacts = true;
         }
 
         private void OnGround()
@@ -103,37 +101,37 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnShot()
         {
-            effectAnimator.Play("Anim_Projectile_Shoot");
+            owner.ProjectileAnimator.Play("Anim_Projectile_Shoot");
             ModulateMainSprite();
         }
 
         private void OnLanded()
         {
             // Stop rotating and rest
-            listenForImpacts = isRotating = false;
+            _listenForImpacts = _isRotating = false;
             owner.BodySprite.transform.rotation = new Quaternion(0, 0, 0, 0);
 
             // Switch Sprite            
             owner.BodySprite.sprite = _config.LandingSprite;
 
             // Start Idle Animation
-            animationComponent.Play(AnimState.Idle.ToString());
+            owner.BodyAnimator.Play(AnimState.Idle.ToString());
         }
         
         private void ModulateMainSprite()
         {
-            if (!listenForImpacts) { return; }
+            if (!_listenForImpacts) { return; }
 
             // Set rotation
-            isRotating = true;
-            currentRotationSpeed = UnityEngine.Random.Range(_config.MinRotationSpeed, _config.MaxRotationSpeed);
+            _isRotating = true;
+            _currentRotationSpeed = UnityEngine.Random.Range(_config.MinRotationSpeed, _config.MaxRotationSpeed);
 
             // Switch Sprite
             // Get all sprites that are not the one currently used, and get a random index from that
-            var currentPool = _config.ImpactSpritePool.Where(e => !e.Equals(owner.BodySprite.sprite));
-            int index = Random.Range(0, currentPool.Count());
+            var currentPool = _config.ImpactSpritePool.Where(e => !e.Equals(owner.BodySprite.sprite)).ToArray();   
+            int index = Random.Range(0, currentPool.Length);
 
-            owner.BodySprite.sprite = currentPool.ElementAt(index);
+            owner.BodySprite.sprite = currentPool[index];
         }
     }
 }
