@@ -1,5 +1,6 @@
 ﻿namespace Assets.Source.App
 {
+    // ToDo Remove obsolete constants
     public static class Constants
     {        
         // GAME OBJECT NAMES
