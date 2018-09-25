@@ -57,6 +57,10 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe((CollectionAddEvent<int> e) => { _view.ShowFloatingCoinAmount(e.Value); })
                 .AddTo(Disposer);
 
+            _flightStatsModel.RelativeKickForce
+                .Subscribe(value => _view.RelativeKickForce = value)
+                .AddTo(Disposer);
+
             _flightStatsModel.ShotsRemaining
                 .Subscribe(_view.OnShotCountChanged)
                 .AddTo(Disposer);

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Source.Entities.GenericComponents;
+using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours.Parallax
+namespace Assets.Source.Entities.Parallax
 {        
     public class ParallaxLayer : AbstractComponent<Parallaxer>
     {
@@ -29,8 +31,8 @@ namespace Assets.Source.Behaviours.Parallax
         }
 
 
-        public ParallaxLayer(Parallaxer owner, ParallaxLayerConfig config, Transform cameraTransform)
-            : base (owner, false)
+        public ParallaxLayer(Parallaxer owner, ParallaxLayerConfig config, Transform cameraTransform) 
+            : base(owner)
         {
             this.config = config;
             this.cameraTransform = cameraTransform;
@@ -38,6 +40,10 @@ namespace Assets.Source.Behaviours.Parallax
             lastCameraPos = cameraTransform.position;
 
             CreateTiles();
+
+            Observable.EveryLateUpdate()
+                .Subscribe(_ => OnLateUpdate())
+                .AddTo(owner);
         }
 
 
@@ -80,7 +86,7 @@ namespace Assets.Source.Behaviours.Parallax
         }
 
 
-        protected override void LateUpdate()
+        protected void OnLateUpdate()
         {
             // Prallaxing
             MoveTiles();

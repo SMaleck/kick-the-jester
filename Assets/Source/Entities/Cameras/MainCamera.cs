@@ -2,6 +2,7 @@
 using UniRx;
 using UnityEngine;
 using Zenject;
+using DG.Tweening;
 
 namespace Assets.Source.Entities.Cameras
 {
@@ -9,21 +10,20 @@ namespace Assets.Source.Entities.Cameras
     {
         [SerializeField] private Camera _camera;
 
-
-        private JesterEntity _jester;
-        private Transform _jesterTransform;
+        private JesterEntity _jester;        
         private Vector3 _origin;
+                
+        private bool _shouldFollow = true;
+        private const float OffsetX = 3.5f;
+        private const float OvertakeOffsetX = 5.5f;
+        private const float OvertakeSeconds = 0.8f;
 
-        private float offsetX = 3.5f;        
-        private float offsetXOnLanding = 5.5f;
-        private bool increaseOffset = false;
-
+        private const float ShakeSeconds = 0.1f;
 
         [Inject]
         private void Inject(JesterEntity jester)
         {
-            _jester = jester;
-            _jesterTransform = jester.GoTransform;
+            _jester = jester;            
             _origin = transform.position;       
         }
 
@@ -32,28 +32,40 @@ namespace Assets.Source.Entities.Cameras
             Observable.EveryUpdate()
                 .Subscribe(_ => OnUpdate())
                 .AddTo(this);
+
+            _jester.OnLanded
+                .Subscribe(_ => OnLanded())
+                .AddTo(this);
+
+            _jester.Collisions
+                .OnGround
+                .Subscribe(_ => Shake())
+                .AddTo(this);
         }
 
 
         private void OnUpdate()
         {
-            Vector3 targetPos = _jesterTransform.position;
-            Vector3 currentPos = GoTransform.position;
+            if (!_shouldFollow) { return; }
 
-            GoTransform.position = new Vector3(targetPos.x + offsetX, Mathf.Clamp(targetPos.y, _origin.y, float.MaxValue), currentPos.z);
+            Vector3 targetPos = _jester.Position;
+            Vector3 currentPos = Position;
 
-            if (increaseOffset)
-            {
-                offsetX += 3 * Time.deltaTime;
-                increaseOffset = offsetX < offsetXOnLanding;
-            }
+            Position = new Vector3(targetPos.x + OffsetX, Mathf.Clamp(targetPos.y, _origin.y, float.MaxValue), currentPos.z);
         }
 
 
-        // ToDo randomly shake cmaera when jester lands
+        private void OnLanded()
+        {
+            _shouldFollow = false;
+            GoTransform.DOMoveX(_jester.Position.x + OvertakeOffsetX, OvertakeSeconds);
+        }
+
+        
         public void Shake()
         {
-
+            // ToDo only shake when velocity Y is above a threshhold
+            GoTransform.DOShakePosition(ShakeSeconds);
         }
     }
 }

@@ -1,42 +1,51 @@
-﻿using System;
-using Assets.Source.Mvc.Models;
+﻿using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Services.Savegame;
+using Assets.Source.Services.Audio;
+using System;
 using UniRx;
 using SceneTransitionService = Assets.Source.Services.SceneTransitionService;
 
 namespace Assets.Source.Mvc.Controllers
-{    
+{
     public class TitleController : AbstractController
     {
         private readonly TitleView _view;
-        private readonly TitleModel _model;
-        
-        private readonly SceneTransitionService _sceneTransitionService;        
-        private readonly SavegameService _savegameService;
+        private readonly TitleModel _model;        
+        private readonly SceneTransitionService _sceneTransitionService;
+        private readonly AudioService _audioService;        
 
         private const float StartDelaySeconds = 1.5f;
 
-        public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, SavegameService savegameService)
+        public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
         {
             _view = view;
             _view.Initialize();
 
-            _model = model;            
-            _sceneTransitionService = sceneTransitionService;            
-            _savegameService = savegameService;                  
+            _model = model;
+            _audioService = audioService;
+            _sceneTransitionService = sceneTransitionService;                        
 
-            _view.OnStartClicked = OnStartClicked;
+            _view.OnStartClicked
+                .Subscribe(_ => OnStartClicked())
+                .AddTo(Disposer);
 
-            _view.OnSettingsClicked = () => { _model.OpenSettings.Execute(); };
-            _view.OnCreditsClicked = () => { _model.OpenCredits.Execute(); };
-            _view.OnTutorialClicked = () => { _model.OpenTutorial.Execute(); };
+            _view.OnSettingsClicked
+                .Subscribe(_ => _model.OpenSettings.Execute())
+                .AddTo(Disposer);
+
+            _view.OnCreditsClicked
+                .Subscribe(_ => _model.OpenCredits.Execute())
+                .AddTo(Disposer);
+
+            _view.OnTutorialClicked
+                .Subscribe(_ => _model.OpenTutorial.Execute())
+                .AddTo(Disposer);
         }
 
 
         private void OnStartClicked()
         {
-            //Kernel.AudioService.PlayBGM(bgmTransition);
+            _audioService.PlayMusic(_view._TransitionMusic, false);
 
             if (_model.IsFirstStart.Value)
             {

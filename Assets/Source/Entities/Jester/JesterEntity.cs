@@ -32,7 +32,10 @@ namespace Assets.Source.Entities.Jester
 
 
         public override void Initialize()
-        {            
+        {
+            IsPaused.Subscribe(isPaused => { GoBody.simulated = !isPaused; })
+                .AddTo(this);
+
         }
     }
 }

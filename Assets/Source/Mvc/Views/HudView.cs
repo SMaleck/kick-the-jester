@@ -13,42 +13,48 @@ namespace Assets.Source.Mvc.Views
     public class HudView : AbstractView
     {
         [Header("Flight Stats Display")]
-        [SerializeField] TMP_Text DistanceText;
-        [SerializeField] TMP_Text HeightText;
-        [SerializeField] TMP_Text BestDistanceText;
+        [SerializeField] TMP_Text _distanceText;
+        [SerializeField] TMP_Text _heightText;
+        [SerializeField] TMP_Text _bestDistanceText;
         
         [Header("Tomatoes")]
-        [SerializeField] GameObject shotCountPanel;
-        [SerializeField] GameObject PF_ShotCountIcon;
+        [SerializeField] GameObject _shotCountPanel;
+        [SerializeField] GameObject _pfShotCountIcon;
         private List<Image> shotCountIcons = new List<Image>();
+        
+        [Header("Money Gain Floating Numbers")]
+        [SerializeField] RectTransform _moneyGainPanel;
+        [SerializeField] GameObject _pfMoneyGainText;
+        private List<FloatingValue> moneyGainSlots = new List<FloatingValue>();
 
         [Header("Other")]
-        [SerializeField] Button PauseButton;
-        [SerializeField] UIProgressBar velocityBar;
-
-        [Header("Money Gain Floating Numbers")]
-        [SerializeField] RectTransform MoneyGainPanel;
-        [SerializeField] GameObject PF_MoneyGainText;
-        private List<FloatingValue> moneyGainSlots = new List<FloatingValue>();        
+        [SerializeField] Button _pauseButton;
+        [SerializeField] UIProgressBar _velocityBar;
+        [SerializeField] UIProgressBar _kickForceBar;
 
         public float Distance
         {
-            set { DistanceText.text = value.ToMetersString(); }
+            set { _distanceText.text = value.ToMetersString(); }
         }
 
         public float Height
         {
-            set { HeightText.text = value.ToMetersString(); }
+            set { _heightText.text = value.ToMetersString(); }
         }
 
         public float BestDistance
         {
-            set { BestDistanceText.text = value.ToMetersString(); }
+            set { _bestDistanceText.text = value.ToMetersString(); }
         }
 
         public float RelativeVelocity
         {
-            set { velocityBar.fillAmount = value; }
+            set { _velocityBar.fillAmount = value; }
+        }
+
+        public float RelativeKickForce
+        {
+            set { _kickForceBar.fillAmount = value; }
         }
 
         public ReactiveCommand OnPauseButtonClicked = new ReactiveCommand();
@@ -56,20 +62,22 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {            
-            PauseButton.OnClickAsObservable()
+            _pauseButton.OnClickAsObservable()
                        .Subscribe(_ => OnPauseButtonClicked.Execute())
                        .AddTo(this);
 
             
-            velocityBar.gameObject.SetActive(false);
-            shotCountPanel.gameObject.SetActive(false);
+            _velocityBar.gameObject.SetActive(false);
+            _kickForceBar.gameObject.SetActive(true);
+            _shotCountPanel.gameObject.SetActive(false);
         }
        
 
         public void StartRound()
         {
-            velocityBar.gameObject.SetActive(true);
-            shotCountPanel.gameObject.SetActive(true);
+            _velocityBar.gameObject.SetActive(true);
+            _kickForceBar.gameObject.SetActive(false);
+            _shotCountPanel.gameObject.SetActive(true);
         }
 
         
@@ -81,7 +89,7 @@ namespace Assets.Source.Mvc.Views
 
             if (fValue == null)
             {
-                GameObject go = GameObject.Instantiate(PF_MoneyGainText, MoneyGainPanel, false);
+                GameObject go = GameObject.Instantiate(_pfMoneyGainText, _moneyGainPanel, false);
                 moneyGainSlots.Add(go.GetComponent<FloatingValue>());
 
                 fValue = moneyGainSlots.Last();
@@ -117,8 +125,8 @@ namespace Assets.Source.Mvc.Views
 
             for (int i = 0; i < countToAdd; i++)
             {
-                var go = GameObject.Instantiate(PF_ShotCountIcon);
-                go.transform.SetParent(shotCountPanel.transform);
+                var go = GameObject.Instantiate(_pfShotCountIcon);
+                go.transform.SetParent(_shotCountPanel.transform);
 
                 // Get the width if we did not do it yet, because we cannot get it reliably from the prefab
                 if (width <= 0)

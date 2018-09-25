@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours.Parallax
+namespace Assets.Source.Entities.Parallax
 {
     [Serializable]
     public class ParallaxLayerConfig

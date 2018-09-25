@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Assets.Source.Entities.Knight
 {
-    public class KnightEntity : AbstractMonoEntity
+    public class KnightEntity : AbstractPausableMonoEntity
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private AudioClip _kickSound;
@@ -36,6 +36,7 @@ namespace Assets.Source.Entities.Knight
         public override void Initialize()
         {
             _userControlService.OnKick
+                .Where(_ => !IsPaused.Value)
                 .Subscribe(_ => OnKick())
                 .AddTo(this);
         }
