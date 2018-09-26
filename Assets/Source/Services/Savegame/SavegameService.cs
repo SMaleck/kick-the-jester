@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Source.Util.Storage;
 using UniRx;
 
 namespace Assets.Source.Services.Savegame
 {
     public class SavegameService
-    {        
-        private SaveGameModel _saveGameModel;
+    {
+        private readonly JsonStorage _storage;
+        private const string FileName = "ktj_player.sav";
+
+        private SaveGameStorageModel _saveGameModel;
         private CompositeDisposable _disposer;
 
         public FloatReactiveProperty MusicVolume;
@@ -16,8 +20,12 @@ namespace Assets.Source.Services.Savegame
 
         public SavegameService()
         {
+            _storage = new JsonStorage(FileName);
             Load();
-            SetupModelSubscriptions();
+
+            Observable.OnceApplicationQuit()
+                .Subscribe(_ => Save())
+                .AddTo(_disposer);
         }
 
 
@@ -39,17 +47,18 @@ namespace Assets.Source.Services.Savegame
             setter();
             Save();
         }
-
+        
 
         public void Load()
         {
-            _saveGameModel = new SaveGameModel();
+            _saveGameModel = _storage.Load<SaveGameStorageModel>();
+            SetupModelSubscriptions();
         }
 
 
         public void Save()
         {
-            // TODO persist savegame to JSON
+            _storage.Save(_saveGameModel);
         }
     }
 }

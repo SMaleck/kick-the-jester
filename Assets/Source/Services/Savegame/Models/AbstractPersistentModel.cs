@@ -2,13 +2,18 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using UniRx;
 
-namespace Assets.Source.Util
+namespace Assets.Source.Services.Savegame.Models
 {
     public abstract class AbstractPersistentModel
-    {                
-        public AbstractPersistentModel()
+    {
+        [JsonIgnore]
+        public ReactiveCommand OnAnyPropertyChanged = new ReactiveCommand();
+
+
+        protected AbstractPersistentModel()
         {
             SetupOnAnyPropertyChanged();
         }
@@ -33,10 +38,8 @@ namespace Assets.Source.Util
             foreach (var ri in reactiveInfos)
             {
                 var react = ri.GetValue(this) as IntReactiveProperty;
-                react.Subscribe(_ => OnAnyPropertyChanged());
+                react.Subscribe(_ => OnAnyPropertyChanged.Execute());
             }
-        }
-
-        public abstract void OnAnyPropertyChanged();
+        }        
     }
 }

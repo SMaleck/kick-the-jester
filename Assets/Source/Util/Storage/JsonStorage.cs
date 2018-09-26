@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.IO;
+﻿using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Assets.Source.App.Persistence.Storage
+namespace Assets.Source.Util.Storage
 {
     public class JsonStorage
     {
