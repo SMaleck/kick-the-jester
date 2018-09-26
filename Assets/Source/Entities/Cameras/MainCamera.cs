@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Entities.Jester;
+using Assets.Source.Mvc.Models;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -10,21 +11,25 @@ namespace Assets.Source.Entities.Cameras
     {
         [SerializeField] private Camera _camera;
 
-        private JesterEntity _jester;        
+        private JesterEntity _jester;
+        private FlightStatsModel _flighStatsModel;
         private Vector3 _origin;
-                
+
         private bool _shouldFollow = true;
         private const float OffsetX = 3.5f;
         private const float OvertakeOffsetX = 5.5f;
         private const float OvertakeSeconds = 0.8f;
 
+        private bool _isShaking = false;
+        private const float RelativeVelocityThreshold = 0.2f;
         private const float ShakeSeconds = 0.1f;
 
         [Inject]
-        private void Inject(JesterEntity jester)
+        private void Inject(JesterEntity jester, FlightStatsModel flighStatsModel)
         {
-            _jester = jester;            
-            _origin = transform.position;       
+            _jester = jester;
+            _flighStatsModel = flighStatsModel;
+            _origin = transform.position;
         }
 
         public override void Initialize()
@@ -46,14 +51,17 @@ namespace Assets.Source.Entities.Cameras
 
         private void OnUpdate()
         {
-            if (!_shouldFollow) { return; }
+            if (!_shouldFollow || _isShaking) { return; }
 
             Vector3 targetPos = _jester.Position;
-            Vector3 currentPos = Position;
 
-            Position = new Vector3(targetPos.x + OffsetX, Mathf.Clamp(targetPos.y, _origin.y, float.MaxValue), currentPos.z);
+            Position = new Vector3(targetPos.x + OffsetX, GetTargetY(), Position.z);
         }
 
+        private float GetTargetY()
+        {
+            return Mathf.Clamp(_jester.Position.y, _origin.y, float.MaxValue);
+        }
 
         private void OnLanded()
         {
@@ -61,11 +69,23 @@ namespace Assets.Source.Entities.Cameras
             GoTransform.DOMoveX(_jester.Position.x + OvertakeOffsetX, OvertakeSeconds);
         }
 
-        
-        public void Shake()
+
+        private void Shake()
         {
-            // ToDo only shake when velocity Y is above a threshhold
-            GoTransform.DOShakePosition(ShakeSeconds);
+            if (_flighStatsModel.RelativeVelocity.Value <= RelativeVelocityThreshold)
+            {
+                return;
+            }
+
+            _isShaking = true;
+            GoTransform.DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value)
+                .OnComplete(ResetShake);
+        }
+
+        private void ResetShake()
+        {
+            _isShaking = false;
+            Position = new Vector3(Position.x, GetTargetY(), Position.z);
         }
     }
 }
