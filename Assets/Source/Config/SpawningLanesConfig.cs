@@ -1,9 +1,12 @@
-﻿using Assets.Source.Behaviours.Items;
+﻿using System;
+using Assets.Source.Behaviours.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Source.Config
 {
+    [Serializable]
+    [CreateAssetMenu(fileName = "SpawningLanesConfig", menuName = "KTJ/Config/SpawningLanesConfig")]
     public class SpawningLanesConfig : ScriptableObject
     {
         public List<SpawningLane> SpawningLanes = new List<SpawningLane>();

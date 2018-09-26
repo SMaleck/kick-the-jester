@@ -10,6 +10,7 @@ namespace Assets.Source.Entities.Cameras
     public class MainCamera : AbstractMonoEntity
     {
         [SerializeField] private Camera _camera;
+        public Camera Camera => _camera;
 
         private JesterEntity _jester;
         private FlightStatsModel _flighStatsModel;
