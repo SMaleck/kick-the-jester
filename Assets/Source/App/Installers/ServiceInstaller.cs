@@ -15,8 +15,8 @@ namespace Assets.Source.App.Installers
             Container.Bind<SavegameService>().AsSingle();
             Container.Bind<UpgradeService>().AsSingle();
             Container.Bind<Assets.Source.Services.SceneTransitionService>().AsSingle();
-            Container.Bind<AudioService>().AsSingle();
-            Container.Bind<ParticleService>().AsSingle();
+            Container.Bind<AudioService>().AsSingle().NonLazy();
+            Container.Bind<ParticleService>().AsSingle().NonLazy();
         }
     }
 }

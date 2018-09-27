@@ -4,8 +4,8 @@ namespace Assets.Source.Services.Savegame
 {
     public class SaveGameStorageModel
     {
-        public ProfileStorageModel Profile;
-        public UpgradesStorageModel Upgrades;
-        public SettingsStorageModel Settings; 
+        public ProfileStorageModel Profile = new ProfileStorageModel();
+        public UpgradesStorageModel Upgrades = new UpgradesStorageModel();
+        public SettingsStorageModel Settings = new SettingsStorageModel(); 
     }
 }

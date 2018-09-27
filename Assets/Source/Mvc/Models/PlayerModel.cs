@@ -21,6 +21,7 @@ namespace Assets.Source.Mvc.Models
             ShootForce = UpgradeTree.ShootForcePath.ValueAt(upgrades.ShootForceLevel.Value);
             Shots = UpgradeTree.ShootCountPath.ValueAt(upgrades.ShootCountLevel.Value);
             MaxVelocityX = UpgradeTree.MaxVelocityPath.ValueAt(upgrades.MaxVelocityLevel.Value);
+            MaxVelocityY = UpgradeTree.MaxVelocityPath.ValueAt(upgrades.MaxVelocityLevel.Value);
         }
     }
 }

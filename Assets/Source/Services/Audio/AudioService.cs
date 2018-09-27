@@ -21,7 +21,7 @@ namespace Assets.Source.Services.Audio
         {
             _settingsService = settingsService;            
 
-            _musicChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
+            _musicChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory(), 1);
             _effectChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
 
             _settingsService.MusicVolume.Subscribe(volume => UpdateVolume(_musicChannel, volume));

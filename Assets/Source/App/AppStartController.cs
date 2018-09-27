@@ -4,7 +4,7 @@ namespace Assets.Source.App
 {
     public class AppStartController
     {
-        public AppStartController(SceneTransitionService sceneTransitionService)
+        public AppStartController(Assets.Source.Services.SceneTransitionService sceneTransitionService)
         {
             sceneTransitionService.ToTitle();
         }

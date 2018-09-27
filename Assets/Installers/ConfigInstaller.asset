@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23473b7e8c86804a858359ee1636b50, type: 3}
   m_Name: ConfigInstaller
   m_EditorClassIdentifier: 
+  GameConfig: {fileID: 11400000, guid: c09fd6b6d7f681a42a46620edd6bd4dd, type: 2}
   DefaultSettingsConfig: {fileID: 11400000, guid: 19b8e337ecf87a74d9093897ff65891f,
     type: 2}
   ViewPrefabConfig: {fileID: 11400000, guid: d17a0a7abbb18234283550401b7000d1, type: 2}

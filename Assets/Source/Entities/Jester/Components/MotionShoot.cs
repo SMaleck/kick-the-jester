@@ -12,7 +12,7 @@ namespace Assets.Source.Entities.Jester.Components
         private readonly FlightStatsModel _flightStatsmodel;
         private readonly UserControlService _userControlService;
 
-        private bool _isActive;
+        private bool _isActive = true;
         private bool _isInFlight;
         private Vector3 _direction = new Vector3(1.2f, 1, 0);
 
@@ -28,11 +28,14 @@ namespace Assets.Source.Entities.Jester.Components
 
             userControlService.OnKick                
                 .Subscribe(_ => OnKick())
-                .AddTo(owner);                       
+                .AddTo(owner);
 
-            _flightStatsmodel.IsStarted   
-                .CombineLatest(_flightStatsmodel.IsLanded, (started, landed) => started && !landed)
-                .Subscribe(isInFlight => _isInFlight = isInFlight)
+            owner.OnKicked
+                .Subscribe(_ => _isInFlight = true)
+                .AddTo(owner);
+
+            owner.OnLanded
+                .Subscribe(_ => _isInFlight = false)
                 .AddTo(owner);
         }        
 
@@ -47,7 +50,7 @@ namespace Assets.Source.Entities.Jester.Components
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
 
             _flightStatsmodel.ShotsRemaining.Value--;
-            _isActive = _flightStatsmodel.ShotsRemaining.Value <= 0;
+            _isActive = _flightStatsmodel.ShotsRemaining.Value > 0;
         }
     }
 }

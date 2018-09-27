@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Services
@@ -19,7 +14,7 @@ namespace Assets.Source.Services
                 .Subscribe(_ => OnUpdate());            
         }
 
-        private int counter = 0;
+        
         private void OnUpdate()
         {            
             if (Input.GetButtonDown("Kick") || Input.GetMouseButtonDown(0))

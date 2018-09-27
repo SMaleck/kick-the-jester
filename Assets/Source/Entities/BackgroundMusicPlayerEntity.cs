@@ -19,7 +19,7 @@ namespace Assets.Source.Entities
 
         [Inject]
         private void Inject(AudioService audioService)
-        {
+        {            
             _audioService = audioService;            
         }
     }

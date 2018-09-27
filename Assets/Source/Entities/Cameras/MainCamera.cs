@@ -4,6 +4,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 using DG.Tweening;
+using Assets.Source.App.Configuration;
 
 namespace Assets.Source.Entities.Cameras
 {
@@ -12,22 +13,25 @@ namespace Assets.Source.Entities.Cameras
         [SerializeField] private Camera _camera;
         public Camera Camera => _camera;
 
+        private CameraConfig _config;
         private JesterEntity _jester;
         private FlightStatsModel _flighStatsModel;
         private Vector3 _origin;
 
         private bool _shouldFollow = true;
-        private const float OffsetX = 3.5f;
-        private const float OvertakeOffsetX = 5.5f;
-        private const float OvertakeSeconds = 0.8f;
+        private float OffsetX => _config.OffsetX;
+        private float OvertakeOffsetX => _config.OvertakeOffsetX;
+        private float OvertakeSeconds => _config.OvertakeSeconds;
 
         private bool _isShaking = false;
-        private const float RelativeVelocityThreshold = 0.2f;
-        private const float ShakeSeconds = 0.1f;
+        private float RelativeVelocityThreshold => _config.RelativeVelocityThresholdForShake;
+        private float ShakeSeconds => _config.ShakeSeconds;
+
 
         [Inject]
-        private void Inject(JesterEntity jester, FlightStatsModel flighStatsModel)
+        private void Inject(CameraConfig config, JesterEntity jester, FlightStatsModel flighStatsModel)
         {
+            _config = config;
             _jester = jester;
             _flighStatsModel = flighStatsModel;
             _origin = transform.position;
@@ -79,10 +83,12 @@ namespace Assets.Source.Entities.Cameras
             }
 
             _isShaking = true;
-            GoTransform.DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value)
+            GoTransform.DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value, 8)
                 .OnComplete(ResetShake);
         }
 
+
+        // ToDo Smoothly reset shake
         private void ResetShake()
         {
             _isShaking = false;

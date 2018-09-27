@@ -1,23 +1,34 @@
-﻿using Assets.Source.App;
+﻿using Assets.Source.Services.Audio;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Behaviours.Animation
 {
+    // ToDo move namespace
     public class AnimationSound : MonoBehaviour
     {
         [SerializeField] private bool randomize;
         [SerializeField] private AudioClip clip;
 
+        private AudioService _audioService;
+
         public void PlaySound()
         {
             if (randomize)
             {
-                Kernel.AudioService.PlayRandomizedSFX(clip);
+                _audioService.PlayEffectRandomized(clip);
             }
             else
             {
-                Kernel.AudioService.PlaySFX(clip);
+                _audioService.PlayEffect(clip);
             }            
+        }
+
+
+        [Inject]
+        private void Inject(AudioService audioService)
+        {
+            _audioService = audioService;
         }
     }
 }
