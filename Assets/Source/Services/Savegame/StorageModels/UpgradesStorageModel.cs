@@ -1,5 +1,4 @@
-﻿using Assets.Source.Services.Savegame.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using UniRx;
 
 namespace Assets.Source.Services.Savegame.StorageModels

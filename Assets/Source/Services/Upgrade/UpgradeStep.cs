@@ -1,4 +1,4 @@
-﻿namespace Assets.Source.App.Upgrade
+﻿namespace Assets.Source.Services.Upgrade
 {
     public class UpgradeStep<T>
     {

@@ -6,6 +6,6 @@ namespace Assets.Source.Services.Savegame
     {
         public ProfileStorageModel Profile;
         public UpgradesStorageModel Upgrades;
-        public SettingsStorageModel Settings;
+        public SettingsStorageModel Settings; 
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Assets.Source.Services.Savegame.StorageModels;
 using Assets.Source.Util.Storage;
 using UniRx;
 
@@ -11,11 +9,12 @@ namespace Assets.Source.Services.Savegame
         private readonly JsonStorage _storage;
         private const string FileName = "ktj_player.sav";
 
-        private SaveGameStorageModel _saveGameModel;
+        private SaveGameStorageModel _saveGameStorageModel;
         private CompositeDisposable _disposer;
 
-        public FloatReactiveProperty MusicVolume;
-        public FloatReactiveProperty EffectVolume;
+        public ProfileStorageModel Profile => _saveGameStorageModel.Profile;
+        public UpgradesStorageModel Upgrades => _saveGameStorageModel.Upgrades;
+        public SettingsStorageModel Settings => _saveGameStorageModel.Settings;
 
 
         public SavegameService()
@@ -34,31 +33,33 @@ namespace Assets.Source.Services.Savegame
             _disposer?.Dispose();
             _disposer = new CompositeDisposable();
 
-            MusicVolume = new FloatReactiveProperty(_saveGameModel.MusicVolume);
-            MusicVolume.Subscribe(e => _saveGameModel.MusicVolume = e);
+            _saveGameStorageModel.Profile
+                .OnAnyPropertyChanged
+                .Subscribe(_ => Save())
+                .AddTo(_disposer);
 
-            EffectVolume = new FloatReactiveProperty(_saveGameModel.EffectsVolume);
-            EffectVolume.Subscribe(e => SetValue(() => { _saveGameModel.EffectsVolume = e; } ));
-        }
+            _saveGameStorageModel.Upgrades
+                .OnAnyPropertyChanged
+                .Subscribe(_ => Save())
+                .AddTo(_disposer);
 
-
-        private void SetValue(Action setter)
-        {
-            setter();
-            Save();
+            _saveGameStorageModel.Settings
+                .OnAnyPropertyChanged
+                .Subscribe(_ => Save())
+                .AddTo(_disposer);
         }
         
 
         public void Load()
         {
-            _saveGameModel = _storage.Load<SaveGameStorageModel>();
+            _saveGameStorageModel = _storage.Load<SaveGameStorageModel>();
             SetupModelSubscriptions();
         }
 
 
         public void Save()
         {
-            _storage.Save(_saveGameModel);
+            _storage.Save(_saveGameStorageModel);
         }
     }
 }

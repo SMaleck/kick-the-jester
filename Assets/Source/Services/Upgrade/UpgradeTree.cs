@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Source.App.Upgrade
+namespace Assets.Source.Services.Upgrade
 {
     static class UpgradeTree
     {

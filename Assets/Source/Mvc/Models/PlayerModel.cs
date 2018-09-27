@@ -1,13 +1,26 @@
-﻿namespace Assets.Source.Mvc.Models
+﻿using Assets.Source.Services.Savegame;
+using Assets.Source.Services.Upgrade;
+
+namespace Assets.Source.Mvc.Models
 {
     public class PlayerModel
-    {
-        // ToDo Remove Defaults
-        public float KickForce = 5;
-        public float ShootForce = 5;
-        public int Shots = 5;
+    {        
+        public float KickForce;
+        public float ShootForce;
+        public int Shots;
 
-        public float MaxVelocityX = 15;
-        public float MaxVelocityY = 15;
+        public float MaxVelocityX;
+        public float MaxVelocityY;
+
+
+        public PlayerModel(SavegameService savegameService)
+        {
+            var upgrades = savegameService.Upgrades;
+
+            KickForce = UpgradeTree.KickForcePath.ValueAt(upgrades.KickForceLevel.Value);
+            ShootForce = UpgradeTree.ShootForcePath.ValueAt(upgrades.ShootForceLevel.Value);
+            Shots = UpgradeTree.ShootCountPath.ValueAt(upgrades.ShootCountLevel.Value);
+            MaxVelocityX = UpgradeTree.MaxVelocityPath.ValueAt(upgrades.MaxVelocityLevel.Value);
+        }
     }
 }
