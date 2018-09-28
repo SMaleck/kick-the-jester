@@ -17,6 +17,7 @@ namespace Assets.Source.Mvc.Controllers
         private const float StartDelaySeconds = 1.5f;
 
         public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
+            : base(view)
         {
             _view = view;
             _view.Initialize();

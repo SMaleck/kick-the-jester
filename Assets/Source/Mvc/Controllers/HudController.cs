@@ -15,6 +15,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly UserControlService _userControlService;
 
         public HudController(HudView view, FlightStatsModel flightStatsModel, GameStateModel gameStateModel, UserControlService userControlService)
+            : base(view)
         {
             _view = view;
             _view.Initialize();

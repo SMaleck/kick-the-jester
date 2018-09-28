@@ -8,12 +8,13 @@ namespace Assets.Source.Mvc.Controllers
     public class ScreenFadeController : AbstractController
     {
         private readonly ScreenFadeView _view;
-        private SceneTransitionService _sceneTransitionService;
+        private readonly SceneTransitionService _sceneTransitionService;
 
         private readonly float _fadeSeconds;
 
 
         public ScreenFadeController(ScreenFadeView view, SceneTransitionService sceneTransitionService)
+            : base(view)
         {
             _view = view;
             _sceneTransitionService = sceneTransitionService;

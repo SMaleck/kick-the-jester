@@ -12,6 +12,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
     public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] public HudView HudView;
+        [SerializeField] public RoundEndView RoundEndView;
+        [SerializeField] public PauseView PauseView;
+        [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
 
         public override void InstallBindings()
         {
@@ -26,6 +29,15 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInstance(HudView).AsSingle();
             Container.Bind<HudController>().AsSingle().NonLazy();
+
+            Container.BindInstance(RoundEndView).AsSingle();
+            Container.Bind<RoundEndController>().AsSingle().NonLazy();
+
+            Container.BindInstance(PauseView).AsSingle();
+            Container.Bind<PauseController>().AsSingle().NonLazy();
+
+            Container.BindInstance(BestDistanceMarkerView).AsSingle();
+            Container.Bind<BestDistanceMarkerController>().AsSingle().NonLazy();
 
             #endregion
 

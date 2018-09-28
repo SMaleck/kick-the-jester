@@ -4,11 +4,12 @@ namespace Assets.Source.Mvc.Controllers
 {
     public class ClosableController : AbstractController
     {
-        private ClosableView _view;
+        private readonly ClosableView _view;
         
         public ClosableController(ClosableView view)
+            : base(view)
         {
-            _view = view;            
+            _view = view;                          
         }
 
         public virtual void Open()

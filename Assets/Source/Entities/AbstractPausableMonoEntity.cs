@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Mvc.Models;
 using UniRx;
+using Zenject;
 
 namespace Assets.Source.Entities
 {
@@ -7,6 +8,7 @@ namespace Assets.Source.Entities
     {        
         public BoolReactiveProperty IsPaused = new BoolReactiveProperty(false);
 
+        [Inject]
         private void Inject(GameStateModel gameStateModel)
         {
             gameStateModel.IsPaused

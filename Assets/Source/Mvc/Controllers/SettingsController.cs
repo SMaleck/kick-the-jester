@@ -20,22 +20,6 @@ namespace Assets.Source.Mvc.Controllers
             _model = model;
             _settingsService = settingsService;            
 
-            _settingsService.MusicVolume
-                .Subscribe(e => _view.MusicVolume.Value = e)
-                .AddTo(Disposer);
-
-            _view.MusicVolume
-                .Subscribe(e => _settingsService.MusicVolume.Value = e)
-                .AddTo(Disposer);
-
-            _settingsService.EffectsVolume
-                .Subscribe(e => _view.EffectsVolume.Value = e)
-                .AddTo(Disposer);
-
-            _view.EffectsVolume
-                .Subscribe(e => _settingsService.EffectsVolume.Value = e)
-                .AddTo(Disposer);
-
             _view.OnRestoreDefaultsClicked
                 .Subscribe(_ => _settingsService.RestoreDefaults())
                 .AddTo(Disposer);
