@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{
+{    
     public class SettingsView : ClosableView
     {
         [SerializeField] private Toggle _isMusicMuted;               

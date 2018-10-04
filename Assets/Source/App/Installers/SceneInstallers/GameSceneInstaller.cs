@@ -47,6 +47,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.Bind<GameStateModel>().AsSingle().NonLazy();
             Container.Bind<PlayerModel>().AsSingle().NonLazy();
             Container.Bind<FlightStatsModel>().AsSingle().NonLazy();
+            Container.Bind<SettingsModel>().AsSingle().NonLazy();
 
             #endregion
 

@@ -9,19 +9,27 @@ namespace Assets.Source.Mvc.Controllers
     {
         private readonly SettingsView _view;
         private readonly TitleModel _model;
-        private readonly SettingsService _settingsService;
+        private readonly SettingsModel _settingsModel;
 
-        public SettingsController(SettingsView view, TitleModel model, SettingsService settingsService)
+        public SettingsController(SettingsView view, TitleModel model, SettingsModel settingsModel)
             : base(view)
         {
             _view = view;
             _view.Initialize();
 
             _model = model;
-            _settingsService = settingsService;            
+            _settingsModel = settingsModel;
+
+            _view.IsMusicMuted
+                .Subscribe(value => settingsModel.IsMusicMuted.Value = value)
+                .AddTo(Disposer);
+
+            _view.IsEffectsMuted
+                .Subscribe(value => settingsModel.IsEffectsMuted.Value = value)
+                .AddTo(Disposer);
 
             _view.OnRestoreDefaultsClicked
-                .Subscribe(_ => _settingsService.RestoreDefaults())
+                .Subscribe(_ => settingsModel.RestoreDefaults())
                 .AddTo(Disposer);
 
             _model.OpenSettings

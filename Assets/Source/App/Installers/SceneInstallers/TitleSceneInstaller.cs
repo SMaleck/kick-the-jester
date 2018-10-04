@@ -27,7 +27,13 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(TutorialView).AsSingle();
             Container.Bind<TutorialController>().AsSingle().NonLazy();
 
+
+            #region MODELS
+
             Container.Bind<TitleModel>().AsSingle().NonLazy();
+            Container.Bind<SettingsModel>().AsSingle().NonLazy();
+
+            #endregion
         }
     }
 }
