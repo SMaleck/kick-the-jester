@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Util.UI
@@ -15,6 +16,9 @@ namespace Assets.Source.Util.UI
         private Vector3 _shownPosition;        
 
         private float SlideSeconds => _config.slideInFrom.Equals(SlideDirection.Instant) ? 0 : _config.slideTimeSeconds;
+
+        public ReactiveCommand OnOpenCompleted = new ReactiveCommand();
+        public ReactiveCommand OnCloseCompleted = new ReactiveCommand();
 
 
         public PanelSlider(RectTransform owner, Rect container, PanelSliderConfig config)
@@ -65,6 +69,10 @@ namespace Assets.Source.Util.UI
             var time = Math.Max(0, slideSeconds);
 
             Tweener tween = CreateSlideTweener(_shownPosition, time);
+            tween.OnComplete(() =>
+            {                
+                OnOpenCompleted.Execute();
+            });
 
             if (_config.useBounce)
             {
@@ -83,7 +91,11 @@ namespace Assets.Source.Util.UI
             var time = Math.Max(0, slideSeconds);
 
             Tweener tween = CreateSlideTweener(_hiddenPosition, time);
-            tween.OnComplete(() => { _owner.gameObject.SetActive(false); });
+            tween.OnComplete(() =>
+            {
+                _owner.gameObject.SetActive(false);
+                OnCloseCompleted.Execute();
+            });
 
             if (_config.useBounce)
             {                

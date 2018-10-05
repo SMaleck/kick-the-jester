@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.Source.Behaviours
-{
+{    
     public class UserControl : MonoBehaviour, IPointerDownHandler
     {
         // Internal Toggles

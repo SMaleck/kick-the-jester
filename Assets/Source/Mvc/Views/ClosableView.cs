@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
+    // ToDo Slider is not going to screen edge
+    // ToDo Sound Effects for sliding panels
     public class ClosableView : AbstractView
     {
         [Header("Closable Settings")]
@@ -16,6 +18,9 @@ namespace Assets.Source.Mvc.Views
 
         private PanelSlider _panelSlider;
 
+        public ReactiveCommand OnOpenCompleted = new ReactiveCommand();
+        public ReactiveCommand OnCloseCompleted = new ReactiveCommand();
+
 
         public override void Setup()
         {
@@ -23,6 +28,9 @@ namespace Assets.Source.Mvc.Views
             var containerTransform = GetComponentInParent<Canvas>().transform as RectTransform;
 
             _panelSlider = new PanelSlider(ownerTransform, containerTransform.rect, _panelSliderConfig);
+
+            OnOpenCompleted = _panelSlider.OnOpenCompleted;
+            OnCloseCompleted = _panelSlider.OnCloseCompleted;
 
             _closeButton?.OnClickAsObservable()
                 .Subscribe(_ => Close())

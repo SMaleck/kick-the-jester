@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo Integrate with SettingsView
+    // ToDo Integrate with SettingsView    
     public class PauseView : ClosableView
     {
         [SerializeField] private Toggle _isMusicMuted;

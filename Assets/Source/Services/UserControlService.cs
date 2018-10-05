@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace Assets.Source.Services
 {
+    // ToDo PauseView needs to block input
+    // ToDo Kick/Shot is triggered when clicking pause button
     public class UserControlService
     {
         public ReactiveCommand OnKick = new ReactiveCommand();

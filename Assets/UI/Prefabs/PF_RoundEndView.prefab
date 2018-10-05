@@ -813,9 +813,9 @@ MonoBehaviour:
   _closeButton: {fileID: 0}
   _startClosed: 1
   _panelSliderConfig:
-    slideInFrom: 3
+    slideInFrom: 4
     useBounce: 0
-    slideTimeSeconds: 0.5
+    slideTimeSeconds: 0.3
 --- !u!114 &114143499845958592
 MonoBehaviour:
   m_ObjectHideFlags: 1

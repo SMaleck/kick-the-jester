@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using UniRx;
@@ -12,13 +8,17 @@ namespace Assets.Source.Mvc.Controllers
     public class RoundEndController : ClosableController
     {
         private readonly RoundEndView _view;
+        private readonly GameStateModel _gameStateModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
-        public RoundEndController(RoundEndView view, SceneTransitionService sceneTransitionService)
+        public RoundEndController(RoundEndView view, GameStateModel gameStateModel, SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
             _view.Initialize();
+
+            _gameStateModel = gameStateModel;
+            _sceneTransitionService = sceneTransitionService;
 
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
@@ -28,7 +28,9 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => OnShopClicked())
                 .AddTo(Disposer);
 
-            _sceneTransitionService = sceneTransitionService;
+            _gameStateModel.OnRoundEnd
+                .Subscribe(_ => Open())
+                .AddTo(Disposer);            
         }
 
         private void OnRetryClicked()
@@ -36,6 +38,8 @@ namespace Assets.Source.Mvc.Controllers
             _sceneTransitionService.ToGame();
         }
 
+
+        // ToDo Open Shop
         private void OnShopClicked() { }
     }
 }
