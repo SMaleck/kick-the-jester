@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 114379476086715022}
   - component: {fileID: 114894698951498848}
   m_Layer: 5
-  m_Name: Text Distance
+  m_Name: text_distance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 222813874665851524}
   - component: {fileID: 114607207428018710}
   m_Layer: 5
-  m_Name: Button (Shop)
+  m_Name: button_shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 222642632840128026}
   - component: {fileID: 114494750493797276}
   m_Layer: 5
-  m_Name: Button (Reload)
+  m_Name: button_retry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,6 +816,14 @@ MonoBehaviour:
     slideInFrom: 4
     useBounce: 0
     slideTimeSeconds: 0.3
+  _distanceText: {fileID: 114379476086715022}
+  _bestDistanceText: {fileID: 114084668407560662}
+  _newBestLabel: {fileID: 1485401949847142}
+  _currencyContainer: {fileID: 0}
+  _pfCurrencyItem: {fileID: 0}
+  _currencyText: {fileID: 0}
+  _retryButton: {fileID: 114489631760509838}
+  _shopButton: {fileID: 114119458199827662}
 --- !u!114 &114143499845958592
 MonoBehaviour:
   m_ObjectHideFlags: 1

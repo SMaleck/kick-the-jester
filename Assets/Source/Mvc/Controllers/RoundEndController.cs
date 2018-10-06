@@ -5,19 +5,22 @@ using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
+    // ToDo delay opening
     public class RoundEndController : ClosableController
     {
         private readonly RoundEndView _view;
         private readonly GameStateModel _gameStateModel;
+        private readonly FlightStatsModel _flightStatsModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
-        public RoundEndController(RoundEndView view, GameStateModel gameStateModel, SceneTransitionService sceneTransitionService)
+        public RoundEndController(RoundEndView view, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
             _view.Initialize();
 
             _gameStateModel = gameStateModel;
+            _flightStatsModel = flightStatsModel;
             _sceneTransitionService = sceneTransitionService;
 
             _view.OnRetryClicked
@@ -30,7 +33,16 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => Open())
-                .AddTo(Disposer);            
+                .AddTo(Disposer);
+
+            SetupFlightStatsSubscriptions();
+        }
+
+        private void SetupFlightStatsSubscriptions()
+        {
+            _flightStatsModel.Distance
+                .Subscribe(dist => _view.Distance = dist)
+                .AddTo(Disposer);
         }
 
         private void OnRetryClicked()
