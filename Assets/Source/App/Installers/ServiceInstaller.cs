@@ -17,6 +17,7 @@ namespace Assets.Source.App.Installers
             Container.Bind<Assets.Source.Services.SceneTransitionService>().AsSingle();
             Container.Bind<AudioService>().AsSingle().NonLazy();
             Container.Bind<ParticleService>().AsSingle().NonLazy();
+            Container.Bind<ViewAudioEventService>().AsSingle().NonLazy();
         }
     }
 }

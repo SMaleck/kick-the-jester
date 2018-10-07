@@ -31,8 +31,7 @@ namespace Assets.Source.App
 
             DontDestroyOnLoad(gameObject);
 
-            // Initialisation order is important due to inter-dependencies
-            // TODO: Resolve implicit interdependency
+            // Initialisation order is important due to inter-dependencies            
             AppState = new AppState();
             SceneTransitionService = new SceneTransitionService();            
             PlayerProfile = new PlayerProfileContext(new JsonStorage("profile.save"));

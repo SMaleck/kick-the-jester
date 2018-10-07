@@ -1,19 +1,28 @@
 ﻿using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
+using System.Collections.Generic;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
-{
-    // ToDo delay opening
+{   
     public class RoundEndController : ClosableController
     {
         private readonly RoundEndView _view;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly ProfileModel _profileModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
-        public RoundEndController(RoundEndView view, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, SceneTransitionService sceneTransitionService)
+        private readonly int currencyAmountAtStart;
+        private readonly float bestDistanceAtStart;
+
+        public RoundEndController(
+            RoundEndView view,
+            GameStateModel gameStateModel,
+            FlightStatsModel flightStatsModel,
+            ProfileModel profileModel,
+            SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
@@ -21,7 +30,11 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
+            _profileModel = profileModel;
             _sceneTransitionService = sceneTransitionService;
+
+            currencyAmountAtStart = _profileModel.Currency.Value;
+            bestDistanceAtStart = _profileModel.BestDistance.Value;
 
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
@@ -29,19 +42,49 @@ namespace Assets.Source.Mvc.Controllers
 
             _view.OnShopClicked
                 .Subscribe(_ => OnShopClicked())
+                .AddTo(Disposer);            
+            
+            _view.OnOpenCompleted
+                .Subscribe(_ => OnOpenCompleted())
                 .AddTo(Disposer);
 
+
+            SetupModelSubscriptions();
+        }
+
+        private void OnOpenCompleted()
+        {            
+            var results = GetResultsAsDictionary();
+
+            _view.ShowCurrencyResults(results, currencyAmountAtStart);
+        }
+        
+        private IDictionary<string, int> GetResultsAsDictionary()
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+
+            result.Add("from distance", _flightStatsModel.Earned.Value);
+            result.Add("from pickups", _flightStatsModel.Collected.Value);
+
+            return result;
+        }
+
+        private void SetupModelSubscriptions()
+        {
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
 
-            SetupFlightStatsSubscriptions();
-        }
-
-        private void SetupFlightStatsSubscriptions()
-        {
             _flightStatsModel.Distance
                 .Subscribe(dist => _view.Distance = dist)
+                .AddTo(Disposer);
+
+            _profileModel.BestDistance
+                .Subscribe(bestDist =>
+                {
+                    _view.IsNewBestDistance = bestDistanceAtStart < bestDist;
+                    _view.BestDistance = bestDist;
+                })
                 .AddTo(Disposer);
         }
 

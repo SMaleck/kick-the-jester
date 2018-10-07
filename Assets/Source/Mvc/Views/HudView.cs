@@ -8,8 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{
-    // TODO a lot
+{    
     public class HudView : AbstractView
     {
         [Header("Flight Stats Display")]
@@ -80,7 +79,7 @@ namespace Assets.Source.Mvc.Views
             _shotCountPanel.gameObject.SetActive(true);
         }
 
-        
+        // ToDo Rewire floating coin amounts
         public void ShowFloatingCoinAmount(float gainedAmount)
         {
             if (gainedAmount <= 0) { return; }

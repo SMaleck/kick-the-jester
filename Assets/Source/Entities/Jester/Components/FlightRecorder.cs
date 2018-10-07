@@ -10,20 +10,25 @@ namespace Assets.Source.Entities.Jester.Components
     {        
         private readonly Vector3 origin;
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly ProfileModel _profileModel;
 
-        public FlightRecorder(JesterEntity owner, FlightStatsModel flightStatsModel)
+        private bool _canCheckForIsLanded = false;
+        private bool _isLanded = false;
+
+
+        public FlightRecorder(JesterEntity owner, FlightStatsModel flightStatsModel, ProfileModel profileModel)
             : base(owner)
         {
             origin = owner.GoTransform.position;
             _flightStatsModel = flightStatsModel;
+            _profileModel = profileModel;
 
             owner.OnKicked
-                .Subscribe(_ => _flightStatsModel.IsStarted.Value = true)
+                .Subscribe(_ => _canCheckForIsLanded = true)
                 .AddTo(owner);
 
-            _flightStatsModel.Velocity
-                .Where(_ => _flightStatsModel.IsStarted.Value && !IsPaused.Value)
-                .Subscribe(OnVelocityChangedAfterStart)
+            owner.OnLanded
+                .Subscribe(_ => OnLanded())
                 .AddTo(owner);
 
             Observable.EveryLateUpdate()
@@ -39,18 +44,28 @@ namespace Assets.Source.Entities.Jester.Components
             _flightStatsModel.Height.Value = Owner.GoTransform.position.y.Difference(origin.y);
 
             _flightStatsModel.Velocity.Value = Owner.GoBody.velocity;
+
+            CheckIsLanded();
         }
 
-        private void OnVelocityChangedAfterStart(Vector2 velocity)
+        private void OnLanded()
         {
-            var wasLanded = _flightStatsModel.IsLanded.Value;
+            var distance = _flightStatsModel.Distance.Value;
+            var lastBestDistance = _profileModel.BestDistance.Value;
 
-            bool isOnGround = _flightStatsModel.Height.Value.ToMeters() == 0;
-            bool isStopped = velocity.magnitude.IsNearlyEqual(0);
+            _profileModel.BestDistance.Value = Mathf.Max(distance, lastBestDistance);
+        }
 
-            _flightStatsModel.IsLanded.Value = isOnGround && isStopped;
+        private void CheckIsLanded()
+        {
+            if (!_canCheckForIsLanded || _isLanded) { return; }
 
-            if (!wasLanded && _flightStatsModel.IsLanded.Value)
+            bool isOnGround = _flightStatsModel.Height.Value.ToMeters() <= 0;
+            bool isStopped = _flightStatsModel.Velocity.Value.magnitude.IsNearlyEqual(0);
+
+            _isLanded = isOnGround && isStopped;
+
+            if (_isLanded)
             {
                 Owner.OnLanded.Execute();
             }

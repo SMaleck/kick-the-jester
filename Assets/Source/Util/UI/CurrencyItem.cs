@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets.Source.UI.Elements
 {
+    // ToDo Move Namespace
     public class CurrencyItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text labelText;

@@ -1,4 +1,8 @@
-﻿using Assets.Source.Util;
+﻿using Assets.Source.UI.Elements;
+using Assets.Source.Util;
+using DG.Tweening;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -14,9 +18,9 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] GameObject _newBestLabel;
 
         [Header("Currency Results")]
-        [SerializeField] RectTransform _currencyContainer;
-        [SerializeField] GameObject _pfCurrencyItem;
+        [SerializeField] RectTransform _currencyContainer;        
         [SerializeField] TMP_Text _currencyText;
+        [SerializeField] GameObject _pfCurrencyItem;
 
         [Header("Buttons")]
         [SerializeField] Button _retryButton;
@@ -29,6 +33,7 @@ namespace Assets.Source.Mvc.Views
         public float BestDistance { set { _bestDistanceText.text = value.ToMetersString(); } }
         public bool IsNewBestDistance { set { _newBestLabel.SetActive(value); } }
 
+        private const float CurrencyCounterSeconds = 1f;
 
         public override void Setup()
         {
@@ -41,6 +46,73 @@ namespace Assets.Source.Mvc.Views
             _shopButton.OnClickAsObservable()
                 .Subscribe(_ => OnShopClicked.Execute())
                 .AddTo(this);
+
+            _currencyText.text = "";
         }        
+
+
+        public void ShowCurrencyResults(IDictionary<string, int> results, int currencyAmountAtStart)
+        {
+            List<CurrencyItem> currencyItems = new List<CurrencyItem>();
+
+            Rect pfRect = _pfCurrencyItem.GetComponent<RectTransform>().rect;
+
+            // Create currency Items
+            int index = 0;
+            LTSeq ltSeq = LeanTween.sequence();
+
+            foreach (string key in results.Keys)
+            {
+                GameObject go = GameObject.Instantiate(_pfCurrencyItem, _currencyContainer, false);
+
+                currencyItems.Add(go.GetComponent<CurrencyItem>());
+
+                var ci = currencyItems.Last();
+                ci.Label = key;
+                ci.Value = "";
+
+                // Reset randomized rect values
+                ci.GetComponent<RectTransform>().rect.Set(pfRect.x, pfRect.y, pfRect.width, pfRect.height);
+
+                // Space items out vertically
+                Vector3 pos = ci.transform.localPosition;
+                ci.transform.localPosition = new Vector3(pos.x, pos.y + (-65 * index), pos.z);
+
+                index++;
+            }
+
+            // Setup LeanTween sequence
+            var resultSequence = CreateResultsSequence(results, currencyItems, currencyAmountAtStart);
+        }
+
+
+        private Sequence CreateResultsSequence(IDictionary<string, int> results, List<CurrencyItem> items, int currencyAmountAtStart)
+        {
+            var seq = DOTween.Sequence();
+
+            items.ForEach(item => 
+            {
+                seq.Append(CreateResultItemTweener(item, results[item.Label]));
+            });
+
+            seq.Append(CreateTotalResultTweener(results, currencyAmountAtStart));
+
+            return seq;
+        }
+
+
+        private Tweener CreateResultItemTweener(CurrencyItem item, int finalValue)
+        {
+            return DOTween.To(x => item.Value = Mathf.RoundToInt(x).ToString(), 0, finalValue, CurrencyCounterSeconds);
+        }   
+        
+
+        private Tweener CreateTotalResultTweener(IDictionary<string, int> results, int currencyAmountAtStart)
+        {
+            var totalSum = results.Values.Sum() + currencyAmountAtStart;            
+
+            return DOTween.To(x => _currencyText.text = Mathf.RoundToInt(x).ToString(), currencyAmountAtStart, totalSum, CurrencyCounterSeconds);
+        }
     }
 }
+;

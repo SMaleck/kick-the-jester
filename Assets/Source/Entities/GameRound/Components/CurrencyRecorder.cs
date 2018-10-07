@@ -1,7 +1,6 @@
 ﻿using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -9,22 +8,32 @@ namespace Assets.Source.Entities.GameRound.Components
 {
     public class CurrencyRecorder : AbstractComponent<GameRoundEntity>
     {
-        private const float MeterToGoldFactor = 0.5f;        
+        // ToDo add to game config ScriptableObject
+        private const float MeterToGoldFactor = 0.5f;
+
+        private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly ProfileModel _profileModel;
 
 
-        public CurrencyRecorder(GameRoundEntity owner, FlightStatsModel flightStatsModel) : base(owner)
-        {            
+        public CurrencyRecorder(GameRoundEntity owner, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, ProfileModel profileModel) 
+            : base(owner)
+        {
+            _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
-
-            flightStatsModel.Distance
-                .Subscribe(OnDistanceChanged)
+            _profileModel = profileModel;
+            
+            _gameStateModel.OnRoundEnd
+                .Subscribe(_ => OnRoundEnd())
                 .AddTo(owner);
         }
 
-        private void OnDistanceChanged(float distance)
+        private void OnRoundEnd()
         {
+            var distance = _flightStatsModel.Distance.Value;
             _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * MeterToGoldFactor);
+
+
         }
 
         // Adds money to the pickup counter
@@ -34,18 +43,6 @@ namespace Assets.Source.Entities.GameRound.Components
 
             _flightStatsModel.Gains.Add(amount);
             _flightStatsModel.Collected.Value += amount;
-        }
-
-
-        // Returns a complete set of the earned currency for the round
-        public IDictionary<string, int> GetResults()
-        {
-            Dictionary<string, int> result = new Dictionary<string, int>();
-
-            result.Add("from distance", _flightStatsModel.Earned.Value);
-            result.Add("from pickups", _flightStatsModel.Collected.Value);
-
-            return result;
-        }
+        }        
     }
 }

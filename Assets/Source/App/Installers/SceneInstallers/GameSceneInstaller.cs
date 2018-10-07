@@ -44,6 +44,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region MODELS
 
+            Container.Bind<ProfileModel>().AsSingle().NonLazy();
             Container.Bind<GameStateModel>().AsSingle().NonLazy();
             Container.Bind<PlayerModel>().AsSingle().NonLazy();
             Container.Bind<FlightStatsModel>().AsSingle().NonLazy();
