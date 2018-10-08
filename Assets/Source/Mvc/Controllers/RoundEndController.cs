@@ -2,6 +2,7 @@
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using System.Collections.Generic;
+using Assets.Source.Mvc.Models.ViewModels;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -9,6 +10,7 @@ namespace Assets.Source.Mvc.Controllers
     public class RoundEndController : ClosableController
     {
         private readonly RoundEndView _view;
+        private readonly RoundEndModel _roundEndModel;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
         private readonly ProfileModel _profileModel;
@@ -19,6 +21,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public RoundEndController(
             RoundEndView view,
+            RoundEndModel roundEndModel,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             ProfileModel profileModel,
@@ -28,6 +31,7 @@ namespace Assets.Source.Mvc.Controllers
             _view = view;
             _view.Initialize();
 
+            _roundEndModel = roundEndModel;
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
             _profileModel = profileModel;
@@ -93,8 +97,10 @@ namespace Assets.Source.Mvc.Controllers
             _sceneTransitionService.ToGame();
         }
 
-
-        // ToDo Open Shop
-        private void OnShopClicked() { }
+        
+        private void OnShopClicked()
+        {
+            _roundEndModel.OpenShop.Execute();
+        }
     }
 }

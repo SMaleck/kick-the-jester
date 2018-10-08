@@ -3,8 +3,9 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.UI.Elements
+namespace Assets.Source.Util.UI
 {
+    // ToDo Replace LeanTween with DOTween
     public class FloatingValue : MonoBehaviour
     {
         private bool isScaling = false;

@@ -2,6 +2,7 @@
 using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
+using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public RoundEndView RoundEndView;
         [SerializeField] public PauseView PauseView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
+        [SerializeField] public ShopView ShopView;
+        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
 
         public override void InstallBindings()
         {
@@ -39,6 +42,12 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
             Container.Bind<BestDistanceMarkerController>().AsSingle().NonLazy();
 
+            Container.BindInstance(ShopView).AsSingle();
+            Container.Bind<ShopController>().AsSingle().NonLazy();
+
+            Container.BindInstance(ShopConfirmResetView).AsSingle();
+            Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
+
             #endregion
 
 
@@ -49,6 +58,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.Bind<PlayerModel>().AsSingle().NonLazy();
             Container.Bind<FlightStatsModel>().AsSingle().NonLazy();
             Container.Bind<SettingsModel>().AsSingle().NonLazy();
+
+            Container.Bind<RoundEndModel>().AsSingle().NonLazy();
+            Container.Bind<ShopModel>().AsSingle().NonLazy();
 
             #endregion
 

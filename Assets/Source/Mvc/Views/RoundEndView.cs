@@ -1,5 +1,5 @@
-﻿using Assets.Source.UI.Elements;
-using Assets.Source.Util;
+﻿using Assets.Source.Util;
+using Assets.Source.Util.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;

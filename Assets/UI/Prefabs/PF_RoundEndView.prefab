@@ -818,11 +818,10 @@ MonoBehaviour:
     slideTimeSeconds: 0.3
   _distanceText: {fileID: 114379476086715022}
   _bestDistanceText: {fileID: 114084668407560662}
-  _newBestLabel: {fileID: 1485401949847142}
+  _newBestLabel: {fileID: 1909301081751906}
   _currencyContainer: {fileID: 224224377409047256}
   _currencyText: {fileID: 114847911765959794}
-  _pfCurrencyItem: {fileID: 1054179476343664, guid: cfff7cfe3dfedbd40a2604e8bd0ae5ae,
-    type: 2}
+  _pfCurrencyItem: {fileID: 1584248260046724}
   _retryButton: {fileID: 114489631760509838}
   _shopButton: {fileID: 114119458199827662}
 --- !u!114 &114143499845958592

@@ -1,9 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.Source.UI.Elements
-{
-    // ToDo Move Namespace
+namespace Assets.Source.Util.UI
+{    
     public class CurrencyItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text labelText;

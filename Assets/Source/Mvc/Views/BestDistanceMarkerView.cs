@@ -19,7 +19,7 @@ namespace Assets.Source.Mvc.Views
                 .AddTo(this);
         }
 
-        // ToDo Move to bets distance
+        // ToDo Move to best distance
         private void OnBestDistanceChanged(float distance)
         {
             _bestDistanceText.text = distance.ToMetersString();
