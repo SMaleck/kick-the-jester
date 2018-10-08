@@ -2,9 +2,8 @@
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Source.Behaviours.Animation
-{
-    // ToDo move namespace
+namespace Assets.Source.Entities.GenericComponents
+{    
     public class AnimationSound : MonoBehaviour
     {
         [SerializeField] private bool randomize;

@@ -18,7 +18,7 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] GameObject _newBestLabel;
 
         [Header("Currency Results")]
-        [SerializeField] RectTransform _currencyContainer;        
+        [SerializeField] RectTransform _currencyContainer;
         [SerializeField] TMP_Text _currencyText;
         [SerializeField] GameObject _pfCurrencyItem;
 
@@ -48,7 +48,7 @@ namespace Assets.Source.Mvc.Views
                 .AddTo(this);
 
             _currencyText.text = "";
-        }        
+        }
 
 
         public void ShowCurrencyResults(IDictionary<string, int> results, int currencyAmountAtStart)
@@ -59,7 +59,6 @@ namespace Assets.Source.Mvc.Views
 
             // Create currency Items
             int index = 0;
-            LTSeq ltSeq = LeanTween.sequence();
 
             foreach (string key in results.Keys)
             {
@@ -81,7 +80,7 @@ namespace Assets.Source.Mvc.Views
                 index++;
             }
 
-            // Setup LeanTween sequence
+            // Setup sequence
             var resultSequence = CreateResultsSequence(results, currencyItems, currencyAmountAtStart);
         }
 
@@ -90,7 +89,7 @@ namespace Assets.Source.Mvc.Views
         {
             var seq = DOTween.Sequence();
 
-            items.ForEach(item => 
+            items.ForEach(item =>
             {
                 seq.Append(CreateResultItemTweener(item, results[item.Label]));
             });
@@ -104,15 +103,14 @@ namespace Assets.Source.Mvc.Views
         private Tweener CreateResultItemTweener(CurrencyItem item, int finalValue)
         {
             return DOTween.To(x => item.Value = Mathf.RoundToInt(x).ToString(), 0, finalValue, CurrencyCounterSeconds);
-        }   
-        
+        }
+
 
         private Tweener CreateTotalResultTweener(IDictionary<string, int> results, int currencyAmountAtStart)
         {
-            var totalSum = results.Values.Sum() + currencyAmountAtStart;            
+            var totalSum = results.Values.Sum() + currencyAmountAtStart;
 
             return DOTween.To(x => _currencyText.text = Mathf.RoundToInt(x).ToString(), currencyAmountAtStart, totalSum, CurrencyCounterSeconds);
         }
     }
 }
-;

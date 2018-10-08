@@ -8,7 +8,7 @@ namespace Assets.Source.Entities.GameRound.Components
 {
     public class CurrencyRecorder : AbstractComponent<GameRoundEntity>
     {
-        // ToDo add to game config ScriptableObject
+        // ToDo [CONFIG] Move to config SO
         private const float MeterToGoldFactor = 0.5f;
 
         private readonly GameStateModel _gameStateModel;
@@ -33,7 +33,8 @@ namespace Assets.Source.Entities.GameRound.Components
             var distance = _flightStatsModel.Distance.Value;
             _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * MeterToGoldFactor);
 
-
+            var total = _flightStatsModel.Collected.Value + _flightStatsModel.Earned.Value;
+            _profileModel.Currency.Value += total;
         }
 
         // Adds money to the pickup counter

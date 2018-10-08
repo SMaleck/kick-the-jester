@@ -1,6 +1,6 @@
 ﻿using Assets.Source.Util;
+using DG.Tweening;
 using TMPro;
-using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Mvc.Views
@@ -9,20 +9,31 @@ namespace Assets.Source.Mvc.Views
     {
         [SerializeField] private TMP_Text _bestDistanceText;
 
-        public FloatReactiveProperty BestDistance = new FloatReactiveProperty();
-        
+        // ToDo [CONFIG] Move to config SO
+        private const float MoveThresholdDistanceMeters = 5;
+        private const float MoveSeconds = 0.7f;
+        private Vector3 _origin;
+
+        public float BestDistance { set { UpdateBestDistance(value); } }
+
 
         public override void Setup()
         {
-            BestDistance
-                .Subscribe(OnBestDistanceChanged)
-                .AddTo(this);
+            _origin = gameObject.transform.position;
         }
 
-        // ToDo Move to best distance
-        private void OnBestDistanceChanged(float distance)
+        
+        private void UpdateBestDistance(float distance)
         {
             _bestDistanceText.text = distance.ToMetersString();
+
+            if (distance.ToMeters() < MoveThresholdDistanceMeters)
+            {
+                return;
+            }
+
+            gameObject.transform.DOMoveX(_origin.x + distance, MoveSeconds)
+                .SetEase(Ease.OutCubic);
         }
     }
 }

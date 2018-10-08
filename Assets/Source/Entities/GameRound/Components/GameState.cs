@@ -2,21 +2,33 @@
 using Assets.Source.Entities.Jester;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Services;
+using Assets.Source.Services.Audio;
+using Assets.Source.Services.Particles;
 using UniRx;
 
 namespace Assets.Source.Entities.GameRound.Components
 {
     public class GameState : AbstractComponent<GameRoundEntity>
-    {
-        private readonly UserControlService _userControlService;
+    {        
         private readonly JesterEntity _jesterEntity;
+        private readonly UserControlService _userControlService;
+        private readonly AudioService _audioService;
+        private readonly ParticleService _particleService;
 
-        public GameState(GameRoundEntity owner, GameStateModel model, UserControlService userControlService, JesterEntity jesterEntity)
+        public GameState(
+            GameRoundEntity owner, 
+            GameStateModel model,
+            JesterEntity jesterEntity,
+            UserControlService userControlService,             
+            AudioService audioService, 
+            ParticleService particleService)
             : base(owner)
         {
-            _userControlService = userControlService;
             _jesterEntity = jesterEntity;
-
+            _userControlService = userControlService;
+            _audioService = audioService;
+            _particleService = particleService;
+            
             _userControlService.OnPause
                 .Subscribe(_ => model.IsPaused.Value = !model.IsPaused.Value)
                 .AddTo(owner);
@@ -28,6 +40,12 @@ namespace Assets.Source.Entities.GameRound.Components
             _jesterEntity.OnLanded
                 .Subscribe(_ => model.OnRoundEnd.Execute())
                 .AddTo(owner);
+        }
+
+
+        private void OnPauseChanged(bool IsPaused)
+        {
+            // ToDo Pause Audio and ParticleService. NOTE: Unpause on start
         }
     }
 }

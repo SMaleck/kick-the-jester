@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Assets.Source.Services.Audio
 {
     // ToDo React to On pause
+    // ToDo AudioService react to Mute/Unmute
     public class AudioService
     {
         private readonly SettingsService _settingsService;        
@@ -53,6 +54,8 @@ namespace Assets.Source.Services.Audio
         }
 
 
+        #region PLAY INTERFACE
+
         public IStoppable PlayMusic(AudioClip clip, bool loop = true)
         {
             return PlayOn(_musicChannel, clip, loop, false);
@@ -69,5 +72,27 @@ namespace Assets.Source.Services.Audio
         {
             return PlayOn(_effectChannel, clip, loop, true);
         }
+
+        #endregion
+
+
+        #region PAUSE INTERFACE
+
+        public void PauseMusic(bool isPaused)
+        {
+
+        }
+
+        public void PauseEffects(bool isPaused)
+        {
+
+        }
+
+        public void PauseAll(bool isPaused)
+        {
+
+        }
+
+        #endregion
     }
 }

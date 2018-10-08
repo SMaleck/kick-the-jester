@@ -1,7 +1,6 @@
 ﻿using UniRx;
 
-// ToDo Move to correct namespace
-namespace Assets.Source.Mvc.Models
+namespace Assets.Source.Mvc.Models.ViewModels
 {
     public class TitleModel
     {

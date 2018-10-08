@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
+using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using UnityEngine;
 using Zenject;

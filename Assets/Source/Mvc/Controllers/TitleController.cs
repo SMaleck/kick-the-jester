@@ -2,6 +2,7 @@
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services.Audio;
 using System;
+using Assets.Source.Mvc.Models.ViewModels;
 using UniRx;
 using SceneTransitionService = Assets.Source.Services.SceneTransitionService;
 
