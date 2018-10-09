@@ -9,26 +9,20 @@ namespace Assets.Source.Entities.Jester.Components
     public class FlightRecorder : AbstractPausableComponent<JesterEntity>
     {        
         private readonly Vector3 origin;
-        private readonly FlightStatsModel _flightStatsModel;
-        private readonly ProfileModel _profileModel;
+        private readonly FlightStatsModel _flightStatsModel;        
 
         private bool _canCheckForIsLanded = false;
         private bool _isLanded = false;
 
 
-        public FlightRecorder(JesterEntity owner, FlightStatsModel flightStatsModel, ProfileModel profileModel)
+        public FlightRecorder(JesterEntity owner, FlightStatsModel flightStatsModel)
             : base(owner)
         {
             origin = owner.GoTransform.position;
-            _flightStatsModel = flightStatsModel;
-            _profileModel = profileModel;
+            _flightStatsModel = flightStatsModel;            
 
             owner.OnKicked
                 .Subscribe(_ => _canCheckForIsLanded = true)
-                .AddTo(owner);
-
-            owner.OnLanded
-                .Subscribe(_ => OnLanded())
                 .AddTo(owner);
 
             Observable.EveryLateUpdate()
@@ -46,14 +40,6 @@ namespace Assets.Source.Entities.Jester.Components
             _flightStatsModel.Velocity.Value = Owner.GoBody.velocity;
 
             CheckIsLanded();
-        }
-
-        private void OnLanded()
-        {
-            var distance = _flightStatsModel.Distance.Value;
-            var lastBestDistance = _profileModel.BestDistance.Value;
-
-            _profileModel.BestDistance.Value = Mathf.Max(distance, lastBestDistance);
         }
 
         private void CheckIsLanded()
