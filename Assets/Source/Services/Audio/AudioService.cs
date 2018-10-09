@@ -1,11 +1,11 @@
-﻿using Assets.Source.Util.Poolable;
+﻿using System.Linq;
+using Assets.Source.Util.Poolable;
 using UniRx;
 using UnityEngine;
 
 
 namespace Assets.Source.Services.Audio
-{
-    // ToDo React to On pause
+{    
     // ToDo AudioService react to Mute/Unmute
     public class AudioService
     {
@@ -14,6 +14,7 @@ namespace Assets.Source.Services.Audio
         private readonly ResourcePool<PoolableAudioSource> _musicChannel;
         private readonly ResourcePool<PoolableAudioSource> _effectChannel;
 
+        // ToDo [CONFIG] Move to config SO
         private const float MIN_PITCH = 0.65f;
         private const float MAX_PITCH = 1.5f;
 
@@ -53,6 +54,23 @@ namespace Assets.Source.Services.Audio
             return slot;
         }
 
+        public void ResetPausedSlots()
+        {
+            ResetPausedSlots(_musicChannel);
+            ResetPausedSlots(_effectChannel);
+        }
+
+        private void ResetPausedSlots(ResourcePool<PoolableAudioSource> pool)
+        {
+            pool.ForEach(item =>
+            {
+                if (item.IsPaused)
+                {
+                    item.Stop();
+                }
+            });
+        }
+
 
         #region PLAY INTERFACE
 
@@ -80,17 +98,51 @@ namespace Assets.Source.Services.Audio
 
         public void PauseMusic(bool isPaused)
         {
-
+            if (isPaused)
+            {
+                Pause(_musicChannel);
+            }
+            else
+            {
+                Resume(_musicChannel);
+            }
         }
 
         public void PauseEffects(bool isPaused)
         {
-
+            if (isPaused)
+            {
+                Pause(_effectChannel);
+            }
+            else
+            {
+                Resume(_effectChannel);
+            }            
         }
 
         public void PauseAll(bool isPaused)
         {
+            if (isPaused)
+            {
+                Pause(_effectChannel);
+                Pause(_musicChannel);
+            }
+            else
+            {
+                Resume(_effectChannel);
+                Resume(_musicChannel);
+            }
+        }
 
+
+        private void Pause(ResourcePool<PoolableAudioSource> pool)
+        {
+            pool.ForEach(item => { item.Pause(); });
+        }
+
+        private void Resume(ResourcePool<PoolableAudioSource> pool)
+        {
+            pool.ForEach(item => { item.Resume(); });
         }
 
         #endregion

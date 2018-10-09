@@ -28,6 +28,12 @@ namespace Assets.Source.Util.Poolable
         }
 
 
+        public IEnumerable<T> AsEnumerable()
+        {
+            return _pool.AsEnumerable();
+        }
+
+
         public T GetFreeSlot()
         {            
             var slot = _pool.FirstOrDefault(e => UseSingleSlot || e.IsFree);

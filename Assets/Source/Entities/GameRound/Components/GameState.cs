@@ -9,7 +9,8 @@ using UniRx;
 namespace Assets.Source.Entities.GameRound.Components
 {
     public class GameState : AbstractComponent<GameRoundEntity>
-    {        
+    {
+        private readonly GameStateModel _model;
         private readonly JesterEntity _jesterEntity;
         private readonly UserControlService _userControlService;
         private readonly AudioService _audioService;
@@ -24,11 +25,15 @@ namespace Assets.Source.Entities.GameRound.Components
             ParticleService particleService)
             : base(owner)
         {
+            _model = model;
             _jesterEntity = jesterEntity;
             _userControlService = userControlService;
             _audioService = audioService;
             _particleService = particleService;
-            
+
+            _audioService.ResetPausedSlots();
+            _particleService.ResetPausedSlots();
+
             _userControlService.OnPause
                 .Subscribe(_ => model.IsPaused.Value = !model.IsPaused.Value)
                 .AddTo(owner);
@@ -40,12 +45,17 @@ namespace Assets.Source.Entities.GameRound.Components
             _jesterEntity.OnLanded
                 .Subscribe(_ => model.OnRoundEnd.Execute())
                 .AddTo(owner);
+
+            _model.IsPaused
+                .Subscribe(OnPauseChanged)
+                .AddTo(owner);
         }
 
 
         private void OnPauseChanged(bool IsPaused)
         {
-            // ToDo Pause Audio and ParticleService. NOTE: Unpause on start
+            _audioService.PauseEffects(IsPaused);
+            _particleService.PauseAll(IsPaused);
         }
     }
 }

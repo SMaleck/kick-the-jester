@@ -9,6 +9,8 @@ namespace Assets.Source.Services.Particles
         public bool IsFree => !_particleSystem.isPlaying;
         public string Name => _particleSystem.gameObject.name;
 
+        public bool IsPaused { get; private set; }
+
         public Vector3 Position
         {
             get { return _particleSystem.gameObject.transform.position; }
@@ -23,21 +25,29 @@ namespace Assets.Source.Services.Particles
 
         public void Play()
         {
+            IsPaused = false;
             _particleSystem.Play();
         }
 
         public void Stop()
         {
+            IsPaused = false;
             _particleSystem.Stop();
         }
 
         public void Pause()
         {
+            if (IsPaused || !_particleSystem.isPlaying) { return; }
+
+            IsPaused = true;
             _particleSystem.Pause(true);
         }
 
         public void Resume()
         {
+            if (!IsPaused) { return; }
+
+            IsPaused = false;
             _particleSystem.Play();
         }
     }

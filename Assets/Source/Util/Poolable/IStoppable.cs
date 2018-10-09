@@ -2,6 +2,10 @@
 {
     public interface IStoppable
     {
+        bool IsPaused { get; }
+
         void Stop();
+        void Pause();
+        void Resume();
     }
 }
