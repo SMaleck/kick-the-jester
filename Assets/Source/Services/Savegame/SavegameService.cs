@@ -61,5 +61,17 @@ namespace Assets.Source.Services.Savegame
         {
             _storage.Save(_saveGameStorageModel);
         }
+
+
+        public void Reset()
+        {
+            _disposer?.Dispose();
+
+            _saveGameStorageModel.Profile = new ProfileStorageModel();
+            _saveGameStorageModel.Upgrades = new UpgradesStorageModel();
+
+            Save();
+            SetupModelSubscriptions();
+        }
     }
 }
