@@ -79,6 +79,10 @@ namespace Assets.Source.Mvc.Views
             _shootCountUp.OnClickAsObservable()
                 .Subscribe(_ => OnShootCountLevelUp.Execute())
                 .AddTo(this);
+
+            _statResetButton.OnClickAsObservable()
+                .Subscribe(_ => OnResetClicked.Execute())
+                .AddTo(this);            
         }
 
 
