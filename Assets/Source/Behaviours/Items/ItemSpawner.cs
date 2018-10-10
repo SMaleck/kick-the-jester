@@ -1,6 +1,7 @@
 ﻿using UniRx;
 using UnityEngine;
 using Assets.Source.Config;
+using Assets.Source.Entities.Items.Config;
 
 namespace Assets.Source.Behaviours.Items
 {

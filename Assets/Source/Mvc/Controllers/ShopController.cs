@@ -40,7 +40,7 @@ namespace Assets.Source.Mvc.Controllers
 
             SetupOnCLick();
             SetupProfileModel();
-            SetupUpgradesModel();
+            SetupUpgradesModel();            
         }
 
         private void SetupOnCLick()

@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Mvc.Views;
 using Assets.Source.Util;
+using UniRx;
 
 // ToDo Make this inheritance more meaningful, e.g. controller<T>
 namespace Assets.Source.Mvc.Controllers
@@ -10,7 +11,8 @@ namespace Assets.Source.Mvc.Controllers
 
         protected AbstractController(AbstractView view)
         {
-            View = view;            
+            View = view;
+            this.AddTo(view);
         }
     }
 }

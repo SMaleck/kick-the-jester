@@ -9,8 +9,7 @@ namespace Assets.Source.Mvc.Views
 
         // ToDo Figure out how to make this get called automatically
         public void Initialize()
-        {
-            
+        {            
             Setup();
         }
 

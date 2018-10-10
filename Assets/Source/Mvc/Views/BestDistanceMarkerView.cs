@@ -61,7 +61,7 @@ namespace Assets.Source.Mvc.Views
 
         private bool IsAboveThreshold(float distance)
         {
-            return distance.ToMeters() < MoveThresholdDistanceMeters;
+            return distance.ToMeters() > MoveThresholdDistanceMeters;
         }
     }
 }

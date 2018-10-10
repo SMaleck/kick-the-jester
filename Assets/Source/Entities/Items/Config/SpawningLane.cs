@@ -1,8 +1,7 @@
-﻿using Assets.Source.App;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours.Items
+namespace Assets.Source.Entities.Items.Config
 {
     [System.Serializable]
     public class SpawningLane

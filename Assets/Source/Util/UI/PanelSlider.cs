@@ -68,6 +68,11 @@ namespace Assets.Source.Util.UI
 
             var time = Math.Max(0, slideSeconds);
 
+            if (time <= 0)
+            {
+                return;
+            }
+
             Tweener tween = CreateSlideTweener(_shownPosition, time);
             tween.OnComplete(() =>
             {                
@@ -89,6 +94,12 @@ namespace Assets.Source.Util.UI
         public void SlideOut(float slideSeconds)
         {
             var time = Math.Max(0, slideSeconds);
+
+            if (time <= 0)
+            {
+                _owner.gameObject.SetActive(false);
+                return;
+            }
 
             Tweener tween = CreateSlideTweener(_hiddenPosition, time);
             tween.OnComplete(() =>
