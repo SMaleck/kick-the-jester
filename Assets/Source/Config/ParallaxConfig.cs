@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Source.Entities.Parallax;
 using UnityEngine;
 
+// ToDo Move Namespace
 namespace Assets.Source.Config
 {
     [Serializable]

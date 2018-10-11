@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Source.App.Persistence;
-using UniRx;
+﻿using UniRx;
 
 namespace Assets.Source.Services.Upgrade
 {

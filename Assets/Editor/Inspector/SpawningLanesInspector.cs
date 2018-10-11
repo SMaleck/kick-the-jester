@@ -1,10 +1,8 @@
 ﻿using Assets.Source.Config;
-using System.Collections.Generic;
+using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using System;
-using Assets.Source.Behaviours.Items;
-using System.Reflection;
 
 namespace Assets.Editor.Inspector
 {

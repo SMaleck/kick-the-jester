@@ -1,7 +1,6 @@
-﻿using System;
-using Assets.Source.Behaviours.Items;
+﻿using Assets.Source.Entities.Items.Config;
+using System;
 using System.Collections.Generic;
-using Assets.Source.Entities.Items.Config;
 using UnityEngine;
 
 namespace Assets.Source.Config

@@ -1,14 +1,15 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Util;
+using Assets.Source.Util.UI;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Source.Util.UI;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{    
+{
     public class HudView : AbstractView
     {
         [Header("Flight Stats Display")]
