@@ -1,22 +1,22 @@
-﻿using Assets.Source.Behaviours.Jester;
+﻿using Assets.Source.Entities.Jester;
 using UnityEngine;
 
-namespace Assets.Source.Behaviours.Items
+namespace Assets.Source.Entities.Items
 {
-    public class Boost : AbstractItem
+    public class Boost : AbstractItemEntity
     {
         [Range(0.0f, float.MaxValue)]
         public float Strength = 5f;
 
-        public ForceMode forceMode;
+        [SerializeField] public ForceMode forceMode;
         public Vector2 Direction = new Vector2(1, 1);
 
 
-        protected override void Execute(JesterContainer jester)
+        protected override void Execute(JesterEntity jester)
         {            
             Vector2 force = Direction * Strength;
 
-            jester.goBody.AddForce(ApplyForceMode(force, forceMode, jester.goBody.mass));
+            jester.GoBody.AddForce(ApplyForceMode(force, forceMode, jester.GoBody.mass));
         }
 
 
@@ -36,5 +36,7 @@ namespace Assets.Source.Behaviours.Items
 
             return force;
         }
+
+        public override void Initialize() { }
     }
 }

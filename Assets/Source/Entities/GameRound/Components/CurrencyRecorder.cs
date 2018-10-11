@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Assets.Source.Entities.GameRound.Components
 {
+    public class CurrencyGainEvent
+    {
+        public int Amount;
+    }
+
     public class CurrencyRecorder : AbstractComponent<GameRoundEntity>
     {
         // ToDo [CONFIG] Move to config SO
@@ -25,6 +30,10 @@ namespace Assets.Source.Entities.GameRound.Components
             
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => OnRoundEnd())
+                .AddTo(owner);
+
+            MessageBroker.Default.Receive<CurrencyGainEvent>()
+                .Subscribe(gainEvent => AddPickup(gainEvent.Amount))
                 .AddTo(owner);
         }
 
