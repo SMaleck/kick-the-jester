@@ -916,17 +916,11 @@ MonoBehaviour:
     useBounce: 1
     slideTimeSeconds: 0.5
   _isMusicMuted: {fileID: 114074110655786708}
-  _musicVolumeSlider: {fileID: 0}
   _isEffectsMuted: {fileID: 114945756598443534}
-  _effectsVolumeSlider: {fileID: 0}
   _restoreDefaultsButton: {fileID: 114225120621400600}
   IsMusicMuted:
     value: 0
-  MusicVolume:
-    value: 0
   IsEffectsMuted:
-    value: 0
-  EffectsVolume:
     value: 0
 --- !u!114 &114493679970502124
 MonoBehaviour:

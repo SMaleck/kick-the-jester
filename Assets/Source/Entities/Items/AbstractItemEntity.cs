@@ -65,7 +65,9 @@ namespace Assets.Source.Entities.Items
         // Checks whether this gameobject is still visible by the camera
         protected bool IsOutOfCameraBounds()
         {
-            return gameObject.transform.position.x <= App.Cache.MainCamera.UCamera.transform.position.x - (App.Cache.MainCamera.Width / 2f);
+            // ToDo Fix camera visible check
+            return false;
+            //return Position.x <= App.Cache.MainCamera.UCamera.transform.position.x - (App.Cache.MainCamera.Width / 2f);
         }
 
 

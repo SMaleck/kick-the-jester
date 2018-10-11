@@ -1626,7 +1626,6 @@ MonoBehaviour:
     slideTimeSeconds: 0.5
   _statResetButton: {fileID: 114936889960344056}
   _txtMoney: {fileID: 114175510457840578}
-  _panelConfirmReset: {fileID: 0}
   _maxVelocityLevel: {fileID: 114155521527947518}
   _maxVelocityCost: {fileID: 114894630546887972}
   _maxVelocityUp: {fileID: 114154676749553010}

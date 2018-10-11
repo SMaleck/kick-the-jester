@@ -95,8 +95,8 @@ namespace Assets.Source.Entities.Items
 
             // Do not spawn if the jester is above the lane max height and is also moving upwards
             if (!spawningLanesConfig.SpawnOnTrajectory &&
-                App.Cache.Jester.goBody.position.y > spawningLane.MaxHeight &&
-                App.Cache.Jester.goBody.velocity.y > 0)
+                _jesterEntity.Position.y > spawningLane.MaxHeight &&
+                _jesterEntity.GoBody.velocity.y > 0)
             {
                 return false;
             }
@@ -191,8 +191,8 @@ namespace Assets.Source.Entities.Items
 
         private Vector2 GetProjectedPosition()
         {
-            Vector2 jesterVelocity = App.Cache.Jester.goBody.velocity;
-            Vector2 jesterPos = App.Cache.Jester.goTransform.position;
+            Vector2 jesterVelocity = _jesterEntity.GoBody.velocity;
+            Vector2 jesterPos = _jesterEntity.Position;
             Vector2 v2Gravity = Physics.gravity;
 
             // The jester's travel-time from his current position to the Spawners X
