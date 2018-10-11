@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: BoostSpawningLanesConfig
   m_EditorClassIdentifier: 
   SpawningLanes:
-  - minHeight: 5
-    maxHeight: 40
-    itemPool:
+  - MinHeight: 5
+    MaxHeight: 40
+    ItemPool:
     - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
-  - minHeight: 50
-    maxHeight: 200
-    itemPool:
+  - MinHeight: 50
+    MaxHeight: 2000
+    ItemPool:
     - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
     - {fileID: 1176274882300718, guid: d1e0974300706e0419b38774e447cf19, type: 2}
   SpawnChance: 0.85

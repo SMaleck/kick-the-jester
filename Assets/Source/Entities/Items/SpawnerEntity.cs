@@ -8,6 +8,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
+using Logger = Assets.Source.App.Logger;
 
 namespace Assets.Source.Entities.Items
 {
@@ -88,7 +89,7 @@ namespace Assets.Source.Entities.Items
             // Sanity check
             if (spawningLane.ItemPool.Count == 0)
             {
-                Debug.LogWarning("Item Pool is empty! Please verify if everything is correctly setup in the spawners");
+                Logger.Warn("Item Pool is empty! Please verify if everything is correctly setup in the spawners");
                 return false;
             }
 

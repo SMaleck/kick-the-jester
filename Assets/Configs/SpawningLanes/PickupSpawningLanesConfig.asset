@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: PickupSpawningLanesConfig
   m_EditorClassIdentifier: 
   SpawningLanes:
-  - minHeight: 0
-    maxHeight: 0
-    itemPool:
+  - MinHeight: 0
+    MaxHeight: 0
+    ItemPool:
     - {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 2}
     - {fileID: 1176274882300718, guid: 49d6610b7f1fe1c4db78d1611e759653, type: 2}
   SpawnChance: 0.434

@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Name: ObstacleSpawningLanesConfig
   m_EditorClassIdentifier: 
   SpawningLanes:
-  - minHeight: 0
-    maxHeight: 0
-    itemPool:
+  - MinHeight: 0
+    MaxHeight: 0
+    ItemPool:
     - {fileID: 1176274882300718, guid: ce5a6b5ac264f2d4f807bb2bae04d48e, type: 2}
     - {fileID: 1176274882300718, guid: 8088ecc1434d7824abd176bbc88e44f1, type: 2}
     - {fileID: 1176274882300718, guid: 12044bc0e533d7942948a614f072ccce, type: 2}
-    - {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 2}
   SpawnChance: 1
   SpawnOnTrajectory: 0
   MaxDeviation: 0
