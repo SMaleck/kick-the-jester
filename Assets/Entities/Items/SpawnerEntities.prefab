@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4379848659458060}
   m_Layer: 0
-  m_Name: Spawners
+  m_Name: SpawnerEntities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,8 +34,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4194908246203792}
-  - component: {fileID: 114793658618650866}
-  - component: {fileID: 114760904211481006}
+  - component: {fileID: 114497362245453354}
   m_Layer: 0
   m_Name: Spawner_Pickups
   m_TagString: Untagged
@@ -51,8 +50,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4291461676609916}
-  - component: {fileID: 114891765417956850}
-  - component: {fileID: 114840227263316298}
+  - component: {fileID: 114148689952840338}
   m_Layer: 0
   m_Name: Spawner_Obstacle
   m_TagString: Untagged
@@ -68,8 +66,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4572797548812098}
-  - component: {fileID: 114690496479411028}
-  - component: {fileID: 114916461420320876}
+  - component: {fileID: 114576736311242664}
   m_Layer: 0
   m_Name: Spawner_Boost
   m_TagString: Untagged
@@ -132,48 +129,7 @@ Transform:
   m_Father: {fileID: 4379848659458060}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114690496479411028
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1896930385051290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dda3c1d5994ffc74c9625d6c3811fa5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FollowX: 1
-  FollowY: 0
-  KeepRelativeDistance: 1
---- !u!114 &114760904211481006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708135012268066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f8c54ad46ab7646a621cee68418a93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawningLanesConfig: {fileID: 11400000, guid: f450d52475899464db6b7af49d053857,
-    type: 2}
---- !u!114 &114793658618650866
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708135012268066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dda3c1d5994ffc74c9625d6c3811fa5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FollowX: 1
-  FollowY: 0
-  KeepRelativeDistance: 1
---- !u!114 &114840227263316298
+--- !u!114 &114148689952840338
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -181,26 +137,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1807406964177594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f8c54ad46ab7646a621cee68418a93, type: 3}
+  m_Script: {fileID: 11500000, guid: 098548453c3db4e498e0dddd9fc31520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawningLanesConfig: {fileID: 11400000, guid: 812e785e91338a244a862227b9b50878,
     type: 2}
---- !u!114 &114891765417956850
+--- !u!114 &114497362245453354
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1807406964177594}
+  m_GameObject: {fileID: 1708135012268066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dda3c1d5994ffc74c9625d6c3811fa5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 098548453c3db4e498e0dddd9fc31520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowX: 1
-  FollowY: 0
-  KeepRelativeDistance: 1
---- !u!114 &114916461420320876
+  spawningLanesConfig: {fileID: 11400000, guid: f450d52475899464db6b7af49d053857,
+    type: 2}
+--- !u!114 &114576736311242664
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -208,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1896930385051290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5f8c54ad46ab7646a621cee68418a93, type: 3}
+  m_Script: {fileID: 11500000, guid: 098548453c3db4e498e0dddd9fc31520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawningLanesConfig: {fileID: 11400000, guid: 72f1c87af4014de49934dd4e492fa88a,

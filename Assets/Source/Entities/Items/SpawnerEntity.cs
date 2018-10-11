@@ -42,6 +42,10 @@ namespace Assets.Source.Entities.Items
             _flightStatsModel.Distance
                 .Subscribe(AttemptSpawn)
                 .AddTo(this);
+
+            Observable.EveryLateUpdate()
+                .Subscribe(_ => OnLateUpdate())
+                .AddTo(this);
         }
 
         [Inject]
@@ -52,6 +56,15 @@ namespace Assets.Source.Entities.Items
             _audioService = audioService;
             _particleService = particleService;
         }
+
+
+        private void OnLateUpdate()
+        {
+            Vector3 targetPos = _jesterEntity.Position;
+
+            Position = new Vector3(targetPos.x + OffsetX, Position.y, Position.z);
+        }
+
 
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distance)

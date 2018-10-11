@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4697469015301456}
   - component: {fileID: 212794270740840680}
   - component: {fileID: 61526106488938970}
-  - component: {fileID: 114971431162011130}
+  - component: {fileID: 114667507170514054}
   m_Layer: 11
   m_Name: BST_Bomb_Red
   m_TagString: Boost
@@ -67,7 +67,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114971431162011130
+--- !u!114 &114667507170514054
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1176274882300718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c3ba0eb4b0ebef4d8a8dbafd3629126, type: 3}
+  m_Script: {fileID: 11500000, guid: 2736db24285a2674cacad4495e121791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructible: 1

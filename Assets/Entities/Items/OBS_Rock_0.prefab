@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestructible: 0
   soundEffect: {fileID: 0}
+  particleEffect: {fileID: 0}
   StoppingPowerPercent: 1
 --- !u!212 &212794270740840680
 SpriteRenderer:
