@@ -10,8 +10,7 @@ namespace Assets.Source.App.Installers
     public class ServiceInstaller : Installer<ServiceInstaller>
     {
         public override void InstallBindings()
-        {
-            Container.Bind<SettingsService>().AsSingle();
+        {            
             Container.Bind<SavegameService>().AsSingle();
             Container.Bind<UpgradeService>().AsSingle();
             Container.Bind<Assets.Source.Services.SceneTransitionService>().AsSingle();

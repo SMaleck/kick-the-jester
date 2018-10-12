@@ -7,19 +7,19 @@ namespace Assets.Source.Mvc.Models
     {
         public BoolReactiveProperty IsMusicMuted;
         public BoolReactiveProperty IsEffectsMuted;
-        
-        public void RestoreDefaults()
-        {
-            IsMusicMuted.Value = false;
-            IsEffectsMuted.Value = false;
-        }
-
+                
         public SettingsModel(SavegameService savegameService)
         {
             var settings = savegameService.Settings;
 
             IsMusicMuted = settings.IsMusicMuted;
             IsEffectsMuted = settings.IsEffectsMuted;
+        }
+
+        public void RestoreDefaults()
+        {
+            IsMusicMuted.Value = false;
+            IsEffectsMuted.Value = false;
         }
     }
 }

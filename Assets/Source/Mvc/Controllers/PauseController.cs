@@ -16,8 +16,7 @@ namespace Assets.Source.Mvc.Controllers
             : base(view)
         {
             _view = view;
-            _view.Initialize();
-
+            
             _gameStateModel = gameStateModel;
             _settingsModel = settingsModel;
             _sceneTransitionService = sceneTransitionService;
@@ -26,13 +25,8 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(OnPauseChanged)
                 .AddTo(Disposer);
 
-            _view.IsMusicMuted
-                .Subscribe(value => _settingsModel.IsMusicMuted.Value = value)
-                .AddTo(Disposer);
-
-            _view.IsEffectsMuted
-                .Subscribe(value => _settingsModel.IsEffectsMuted.Value = value)
-                .AddTo(Disposer);
+            _view.IsMusicMuted = _settingsModel.IsMusicMuted;
+            _view.IsEffectsMuted = _settingsModel.IsEffectsMuted;
 
             _view.OnCloseCompleted
                 .Subscribe(_ => _gameStateModel.IsPaused.Value = false)
@@ -41,6 +35,8 @@ namespace Assets.Source.Mvc.Controllers
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
                 .AddTo(Disposer);
+
+            _view.Initialize();
         }
 
         private void OnPauseChanged(bool isPaused)

@@ -1,49 +1,33 @@
-﻿using System.Linq;
+﻿using Assets.Source.App.Configuration;
 using Assets.Source.Util.Poolable;
-using UniRx;
 using UnityEngine;
 
 
 namespace Assets.Source.Services.Audio
 {    
-    // ToDo AudioService react to Mute/Unmute
     public class AudioService
     {
-        private readonly SettingsService _settingsService;        
-
+        private readonly AudioConfig _config;
         private readonly ResourcePool<PoolableAudioSource> _musicChannel;
         private readonly ResourcePool<PoolableAudioSource> _effectChannel;
+        
 
-        // ToDo [CONFIG] Move to config SO
-        private const float MIN_PITCH = 0.65f;
-        private const float MAX_PITCH = 1.5f;
-
-
-        public AudioService(SettingsService settingsService)
+        public AudioService(AudioConfig config)
         {
-            _settingsService = settingsService;            
+            _config = config;
 
             _musicChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory(), 1);
             _effectChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
-
-            _settingsService.MusicVolume.Subscribe(volume => UpdateVolume(_musicChannel, volume));
-            _settingsService.EffectsVolume.Subscribe(volume => UpdateVolume(_effectChannel, volume));
         }
 
 
-        private void UpdateVolume(ResourcePool<PoolableAudioSource> channel, float volume)
-        {
-            channel.ForEach(e => e.Volume = volume);
-        }
-
-
-        private IStoppable PlayOn(ResourcePool<PoolableAudioSource> channel, AudioClip clip, bool loop, bool randomizePitch)
+        private PoolableAudioSource PlayOn(ResourcePool<PoolableAudioSource> channel, AudioClip clip, bool loop, bool randomizePitch)
         {
             var slot = channel.GetFreeSlot();
 
             if (randomizePitch)
             {
-                float pitch = UnityEngine.Random.Range(MIN_PITCH, MAX_PITCH);
+                float pitch = UnityEngine.Random.Range(_config.MinPitch, _config.MaxPitch);
                 slot.Play(clip, loop, pitch);
             }
             else
@@ -69,26 +53,28 @@ namespace Assets.Source.Services.Audio
                     item.Stop();
                 }
             });
-        }
+        }        
 
 
         #region PLAY INTERFACE
 
-        public IStoppable PlayMusic(AudioClip clip, bool loop = true)
+        public void PlayMusic(AudioClip clip, bool loop = true)
         {
-            return PlayOn(_musicChannel, clip, loop, false);
+            var audioSource = PlayOn(_musicChannel, clip, loop, false);
+            audioSource.Volume = _musicVolume;
+        }
+
+        public void PlayEffect(AudioClip clip, bool loop = false)
+        {
+            var audioSource = PlayOn(_effectChannel, clip, loop, false);
+            audioSource.Volume = _effectsVolume;
         }
 
 
-        public IStoppable PlayEffect(AudioClip clip, bool loop = false)
+        public void PlayEffectRandomized(AudioClip clip, bool loop = false)
         {
-            return PlayOn(_effectChannel, clip, loop, false);
-        }
-
-
-        public IStoppable PlayEffectRandomized(AudioClip clip, bool loop = false)
-        {
-            return PlayOn(_effectChannel, clip, loop, true);
+            var audioSource = PlayOn(_effectChannel, clip, loop, true);
+            audioSource.Volume = _effectsVolume;
         }
 
         #endregion
@@ -143,6 +129,25 @@ namespace Assets.Source.Services.Audio
         private void Resume(ResourcePool<PoolableAudioSource> pool)
         {
             pool.ForEach(item => { item.Resume(); });
+        }
+
+        #endregion
+
+
+        #region VOLUME INTERFACE
+
+        private float _musicVolume = 1;
+        public void SetMusicVolume(float volume)
+        {
+            _musicVolume = volume;
+            _musicChannel.ForEach(e => e.Volume = volume);
+        }
+
+        private float _effectsVolume = 1;
+        public void SetEffectsVolume(float volume)
+        {
+            _effectsVolume = volume;
+            _effectChannel.ForEach(e => e.Volume = volume);
         }
 
         #endregion

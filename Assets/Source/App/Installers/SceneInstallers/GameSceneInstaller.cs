@@ -3,6 +3,7 @@ using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
+using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using UnityEngine;
@@ -47,6 +48,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInstance(ShopConfirmResetView).AsSingle();
             Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
+
+            Container.Bind<AudioSettingsController>().AsSingle().NonLazy();
 
             #endregion
 

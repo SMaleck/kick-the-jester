@@ -2,16 +2,16 @@
 using TMPro;
 using UniRx;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Assets.Source.Util.UI
-{
-    // ToDo Replace LeanTween with DOTween
+{    
     public class FloatingValue : MonoBehaviour
     {
         private bool isScaling = false;
         private bool isFading = false;
 
-        public bool IsFloating { get { return isScaling || isFading; } }
+        public bool IsFloating { get; private set; }
 
         public TMP_Text Text;
         public float FloatTimeSeconds = 0.8f;
@@ -26,26 +26,21 @@ namespace Assets.Source.Util.UI
         {
             if(IsFloating) { return; }
 
+            IsFloating = true;
+
             // Reset
-            Text.text = textValue;
-            Text.fontSize = StartFontSize;
+            Text.text = textValue;            
             Text.alpha = 1;
 
-            isScaling = true;
-            LeanTween.value(this.gameObject, (float value) => { Text.fontSize = value; }, StartFontSize, EndFontSize, FloatTimeSeconds)
-                     .setOnComplete(_ => { isScaling = false; });
+            DOTween.To(size => Text.fontSize = size, StartFontSize, EndFontSize, FloatTimeSeconds);
 
-            // Fade out text after it has floated for a while
-            isFading = true;
             Observable.Timer(TimeSpan.FromSeconds(fadeDelay))
-                      .Subscribe(_ => 
-                      {
-                          LeanTween.value(this.gameObject, (float value) => { Text.alpha = value; }, 1, 0, fadeTimeSeconds)
-                                   .setEaseInOutCubic()
-                                   .setOnComplete(e => { isFading = false; });
-                      })
-                      .AddTo(this);
-            
+                .Subscribe(_ => 
+                {
+                    DOTween.To(size => Text.alpha = size, 1, 0, fadeTimeSeconds)
+                    .OnComplete(() => { IsFloating = false; });
+                })
+                .AddTo(this);            
         }
     }
 }

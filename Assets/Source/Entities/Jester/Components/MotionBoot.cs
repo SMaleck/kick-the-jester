@@ -2,7 +2,7 @@
 using Assets.Source.Mvc.Models;
 using Assets.Source.Services;
 using DG.Tweening;
-using System.Linq;
+using System;
 using UniRx;
 using UnityEngine;
 
@@ -14,44 +14,49 @@ namespace Assets.Source.Entities.Jester.Components
         private readonly PlayerModel _playerModel;
         private readonly FlightStatsModel _flightStatsmodel;
 
-        private bool isActive = true;         
+        // ToDo [CONFIG] Move to config SO    
         private Vector3 direction = new Vector3(1, 1, 0);
-
         private const float forceChangeSeconds = 1.2f;
-        private const float maxForceFactor = 1f;        
 
+        private const float maxForceFactor = 1f;
+
+        private IDisposable OnKickActionSubscription;
+        private IDisposable OnJesterKickedSubscription;
         private Tweener kickForceTweener;
 
 
         public MotionBoot(JesterEntity owner, PlayerModel playerModel, FlightStatsModel flightStatsmodel, UserControlService userControlService)
             : base(owner)
-        {            
+        {
             _userControlService = userControlService;
             _playerModel = playerModel;
             _flightStatsmodel = flightStatsmodel;
 
-            owner.OnKicked
-                .Where(_ => isActive)
-                .Subscribe(_ => OnKick())
-                .AddTo(owner);            
-
-            flightStatsmodel.RelativeKickForce.Value = 0;
-
             kickForceTweener = DOTween
-                .To(() => _flightStatsmodel.RelativeKickForce.Value, (x) => _flightStatsmodel.RelativeKickForce.Value = x, maxForceFactor, forceChangeSeconds)                
+                .To((x) => _flightStatsmodel.RelativeKickForce.Value = x, 0, maxForceFactor, forceChangeSeconds)
                 .SetLoops(-1, LoopType.Yoyo);
 
-            isActive = true;
+            OnKickActionSubscription = _userControlService.OnKick
+                .Subscribe(_ => OnKickUserAction())
+                .AddTo(owner);
+
+            OnJesterKickedSubscription = owner.OnKicked
+                .Subscribe(_ => OnJesterKicked())
+                .AddTo(owner);
         }
 
+        private void OnKickUserAction()
+        {
+            OnKickActionSubscription?.Dispose();
+            kickForceTweener?.Kill();
+        }
 
-        private void OnKick()
-        {           
+        private void OnJesterKicked()
+        {
+            OnJesterKickedSubscription?.Dispose();
+
             Vector3 appliedForce = direction * (_playerModel.KickForce * _flightStatsmodel.RelativeKickForce.Value);
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
-
-            kickForceTweener.Kill();
-            isActive = false;
         }
     }
 }

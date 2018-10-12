@@ -1,7 +1,6 @@
 ﻿using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Services;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -16,18 +15,11 @@ namespace Assets.Source.Mvc.Controllers
             : base(view)
         {
             _view = view;
-            _view.Initialize();
-
             _model = model;
             _settingsModel = settingsModel;
 
-            _view.IsMusicMuted
-                .Subscribe(value => settingsModel.IsMusicMuted.Value = value)
-                .AddTo(Disposer);
-
-            _view.IsEffectsMuted
-                .Subscribe(value => settingsModel.IsEffectsMuted.Value = value)
-                .AddTo(Disposer);
+            _view.IsMusicMuted = _settingsModel.IsMusicMuted;
+            _view.IsEffectsMuted = _settingsModel.IsEffectsMuted;
 
             _view.OnRestoreDefaultsClicked
                 .Subscribe(_ => settingsModel.RestoreDefaults())
@@ -36,18 +28,9 @@ namespace Assets.Source.Mvc.Controllers
             _model.OpenSettings
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
+
+            
+            _view.Initialize();
         }        
-        
-
-        public override void Open()
-        {
-            _view.Open();
-        }
-
-
-        public override void Close()
-        {
-            _view.Close();
-        }
     }
 }

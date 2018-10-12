@@ -20,17 +20,26 @@ namespace Assets.Source.Mvc.Views
         {
             base.Setup();
 
+            SetSettingsViewState();
+
             _retryButton.OnClickAsObservable()
                 .Subscribe(_ => OnRetryClicked.Execute())
                 .AddTo(this);
 
             _isMusicMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => IsMusicMuted.Value = _isMusicMuted.isOn)
+                .Subscribe(_ => IsMusicMuted.Value = !_isMusicMuted.isOn)
                 .AddTo(this);
 
             _isEffectsMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => IsEffectsMuted.Value = _isEffectsMuted.isOn)
+                .Subscribe(_ => IsEffectsMuted.Value = !_isEffectsMuted.isOn)
                 .AddTo(this);
+        }
+
+
+        private void SetSettingsViewState()
+        {
+            _isMusicMuted.isOn = !IsMusicMuted.Value;
+            _isEffectsMuted.isOn = !IsEffectsMuted.Value;
         }
     }
 }
