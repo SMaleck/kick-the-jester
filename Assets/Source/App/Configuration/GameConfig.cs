@@ -6,7 +6,7 @@ namespace Assets.Source.App.Configuration
     [CreateAssetMenu(fileName = "GameConfig", menuName = "KTJ/Config/GameConfig")]
     public class GameConfig : ScriptableObject
     {
-        public DefaultSettingsConfig DeaultSettings = new DefaultSettingsConfig();
+        public DefaultSettingsConfig DefaultSettingsConfig = new DefaultSettingsConfig();
         public CameraConfig CameraConfig = new CameraConfig();
         public AudioConfig AudioConfig = new AudioConfig();
         public BalancingConfig BalancingConfig = new BalancingConfig();

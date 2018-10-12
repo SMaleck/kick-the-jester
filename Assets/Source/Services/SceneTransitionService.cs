@@ -20,7 +20,7 @@ namespace Assets.Source.Services
         After
     }
 
-
+    // ToDo State is changing in awkward order, check    
     public class SceneTransitionService
     {
         public const float LOADING_GRACE_PERIOD_SECONDS = 0.5f;

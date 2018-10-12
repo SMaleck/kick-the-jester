@@ -11,6 +11,7 @@ namespace Assets.Source.Services.Audio
         public AudioResourceFactory()
         {
             _audioSourceContainer = new GameObject();
+            _audioSourceContainer.name = "AudioSourceContainer";
             Object.DontDestroyOnLoad(_audioSourceContainer);
         }
 

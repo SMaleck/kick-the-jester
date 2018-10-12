@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Assets.Source.App;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
+using DG.Tweening;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -11,12 +12,14 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SceneTransitionService _sceneTransitionService;
 
         private readonly float _fadeSeconds;
-
+        private Tweener fadeTweener;
 
         public ScreenFadeController(ScreenFadeView view, SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
+            _view.Initialize();
+
             _sceneTransitionService = sceneTransitionService;
 
             _fadeSeconds = SceneTransitionService.LOADING_GRACE_PERIOD_SECONDS;
@@ -28,15 +31,17 @@ namespace Assets.Source.Mvc.Controllers
 
 
         private void OnTransitionStateChange(TransitionState state)
-        {
+        {            
             switch (state)
             {
                 case TransitionState.Before:
-                    ToBlack();
+                    Logger.Log($"[FADER] TransitionState: {state} -> Fading to BLACK");                    
+                    Fade(0, 1);
                     break;
 
                 case TransitionState.After:
-                    ToWhite();
+                    Logger.Log($"[FADER] TransitionState: {state} -> Fading to WHITE");
+                    Fade(1, 0);
                     break;
 
                 default:
@@ -45,28 +50,12 @@ namespace Assets.Source.Mvc.Controllers
         }
 
 
-        public void ToBlack(Action onComplete = null)
+        private void Fade(float from, float to)
         {
-            Fade(0, 1, onComplete);
-        }
+            fadeTweener?.Kill();
 
-
-        public void ToWhite(Action onComplete = null)
-        {
-            Fade(1, 0, onComplete);
-        }
-
-
-        private void Fade(float from, float to, Action onComplete = null)
-        {
-            LTDescr ltd = LeanTween.value(from, to, _fadeSeconds)
-                                   .setEaseInCubic()
-                                   .setOnUpdate((float alpha) => { _view.CurtainAlpha.Value = alpha; });
-
-            if (onComplete != null)
-            {
-                ltd.setOnComplete(onComplete);
-            }
+            fadeTweener = DOTween.To(value => _view.CurtainAlpha.Value = value, from, to, _fadeSeconds)
+                .SetEase(Ease.InCubic);
         }
     }
 }

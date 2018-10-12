@@ -9,7 +9,7 @@ namespace Assets.Source.Util.UI
         [SerializeField] private Image _image;
         
         private readonly Vector3 _direction = new Vector3(0, 0, -1);
-        private readonly float speedSeconds = 5f;
+        private readonly float speedSeconds = 0.02f;
 
         private void Start()
         {
