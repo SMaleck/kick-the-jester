@@ -2,12 +2,12 @@
 {
     // ToDo Add to owners disposer
     public abstract class AbstractComponent<T> where T : AbstractMonoEntity
-    {        
-        protected readonly T Owner;        
+    {
+        protected readonly T Owner;
 
-        public AbstractComponent(T owner)
+        protected AbstractComponent(T owner)
         {
-            this.Owner = owner;            
+            this.Owner = owner;
         }
     }
 }

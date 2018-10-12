@@ -1,4 +1,5 @@
-﻿using Assets.Source.Entities.GenericComponents;
+﻿using Assets.Source.App.Configuration;
+using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;
@@ -12,22 +13,27 @@ namespace Assets.Source.Entities.GameRound.Components
     }
 
     public class CurrencyRecorder : AbstractComponent<GameRoundEntity>
-    {
-        // ToDo [CONFIG] Move to config SO
-        private const float MeterToGoldFactor = 0.5f;
-
+    {        
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
         private readonly ProfileModel _profileModel;
+        private readonly BalancingConfig _config;
 
 
-        public CurrencyRecorder(GameRoundEntity owner, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, ProfileModel profileModel) 
+        public CurrencyRecorder(
+            GameRoundEntity owner, 
+            GameStateModel gameStateModel, 
+            FlightStatsModel flightStatsModel, 
+            ProfileModel profileModel, 
+            BalancingConfig config) 
             : base(owner)
         {
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
             _profileModel = profileModel;
-            
+            _config = config;
+
+
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => OnRoundEnd())
                 .AddTo(owner);
@@ -40,7 +46,7 @@ namespace Assets.Source.Entities.GameRound.Components
         private void OnRoundEnd()
         {
             var distance = _flightStatsModel.Distance.Value;
-            _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * MeterToGoldFactor);
+            _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * _config.MeterToGoldFactor);
 
             var total = _flightStatsModel.Collected.Value + _flightStatsModel.Earned.Value;
             _profileModel.Currency.Value += total;

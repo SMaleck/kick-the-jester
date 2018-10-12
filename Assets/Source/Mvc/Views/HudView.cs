@@ -79,8 +79,7 @@ namespace Assets.Source.Mvc.Views
             _kickForceBar.gameObject.SetActive(false);
             _shotCountPanel.gameObject.SetActive(true);
         }
-
-        // ToDo Rewire floating coin amounts
+        
         public void ShowFloatingCoinAmount(float gainedAmount)
         {
             if (gainedAmount <= 0) { return; }
@@ -95,7 +94,7 @@ namespace Assets.Source.Mvc.Views
                 fValue = moneyGainSlots.Last();
             }
 
-            fValue.StartFloating(string.Format("{0} {1}", gainedAmount, Constants.TMP_SPRITE_COIN));
+            fValue.StartFloating($"{gainedAmount} {Constants.TMP_SPRITE_COIN}");
         }
       
 

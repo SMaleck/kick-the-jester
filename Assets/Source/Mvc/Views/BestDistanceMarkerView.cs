@@ -4,8 +4,7 @@ using TMPro;
 using UnityEngine;
 
 namespace Assets.Source.Mvc.Views
-{
-    // ToDo Move to initial Best Distance on Setup, Origin must be based on Jester pos
+{    
     public class BestDistanceMarkerView : AbstractView
     {
         [SerializeField] private TMP_Text _bestDistanceText;

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Source.Entities.Parallax;
 using UnityEngine;
 
-// ToDo Move Namespace
-namespace Assets.Source.Config
+namespace Assets.Source.Entities.Parallax.Config
 {
     [Serializable]
     [CreateAssetMenu(fileName = "ParallaxConfig", menuName = "KTJ/Config/ParallaxConfig")]

@@ -1,4 +1,4 @@
-﻿using Assets.Source.Config;
+﻿using Assets.Source.Entities.Cameras;
 using Assets.Source.Entities.Items.Config;
 using Assets.Source.Entities.Jester;
 using Assets.Source.Mvc.Models;
@@ -20,6 +20,7 @@ namespace Assets.Source.Entities.Items
         private FlightStatsModel _flightStatsModel;
         private AudioService _audioService;
         private ParticleService _particleService;
+        private MainCamera _mainCamera;
 
         private bool _canSpawn = true;
 
@@ -50,12 +51,18 @@ namespace Assets.Source.Entities.Items
         }
 
         [Inject]
-        private void Inject(JesterEntity jesterEntity, FlightStatsModel flightStatsModel, AudioService audioService, ParticleService particleService)
+        private void Inject(
+            JesterEntity jesterEntity, 
+            FlightStatsModel flightStatsModel, 
+            AudioService audioService, 
+            ParticleService particleService, 
+            MainCamera mainCamera)
         {
             _jesterEntity = jesterEntity;
             _flightStatsModel = flightStatsModel;
             _audioService = audioService;
             _particleService = particleService;
+            _mainCamera = mainCamera;
         }
 
 
@@ -130,7 +137,7 @@ namespace Assets.Source.Entities.Items
 
             AbstractItemEntity item = Instantiate(itemPool[index]).GetComponent<AbstractItemEntity>();
             item.Position = GetSpawnPosition(spawningLane);
-            item.Setup(_audioService, _particleService);
+            item.Setup(_audioService, _particleService, _mainCamera);
         }
 
 

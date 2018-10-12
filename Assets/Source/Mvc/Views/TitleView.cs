@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{
-    // ToDo Disable Button once clicked
+{    
     // ToDo play music for clicked
     public class TitleView : AbstractView
     {

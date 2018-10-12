@@ -28,6 +28,35 @@ namespace Assets.Source.Entities.Cameras
         private float ShakeSeconds => _config.ShakeSeconds;
 
 
+        private float _cameraWidth;
+        public float Width
+        {
+            get
+            {
+                if (_cameraWidth <= 0)
+                {                
+                    _cameraWidth = Height * _camera.aspect;
+                }
+
+                return _cameraWidth;
+            }
+        }
+
+        private float _cameraHeight;
+        public float Height
+        {
+            get
+            {
+                if (_cameraHeight <= 0)
+                {
+                    _cameraHeight = 2f * _camera.orthographicSize;
+                }
+
+                return _cameraHeight;
+            }
+        }
+
+
         [Inject]
         private void Inject(CameraConfig config, JesterEntity jester, FlightStatsModel flighStatsModel)
         {

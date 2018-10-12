@@ -1,4 +1,5 @@
-﻿using Assets.Source.Entities.Jester;
+﻿using Assets.Source.Entities.Cameras;
+using Assets.Source.Entities.Jester;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using UniRx;
@@ -12,16 +13,18 @@ namespace Assets.Source.Entities.Items
         [SerializeField] protected AudioClip soundEffect;
         [SerializeField] protected GameObject particleEffect;
         
-        protected AudioService _audioService;
-        protected ParticleService _particleService;
+        protected AudioService AudioService;
+        protected ParticleService ParticleService;
+        protected MainCamera Camera;
 
         protected abstract void Execute(JesterEntity jester);
 
-
-        public virtual void Setup(AudioService audioService, ParticleService particleService)
+        // ToDo Instantiate so that injection can occur
+        public virtual void Setup(AudioService audioService, ParticleService particleService, MainCamera mainCamera)
         {            
-            _audioService = audioService;
-            _particleService = particleService;
+            AudioService = audioService;
+            ParticleService = particleService;
+            Camera = mainCamera;
 
             Observable.EveryLateUpdate()
                 .Subscribe(_ => OnLateUpdate())
@@ -62,12 +65,11 @@ namespace Assets.Source.Entities.Items
         }
 
 
+        // ToDo this Can be extracted into a separate Component
         // Checks whether this gameobject is still visible by the camera
         protected bool IsOutOfCameraBounds()
-        {
-            // ToDo Fix camera visible check
-            return false;
-            //return Position.x <= App.Cache.MainCamera.UCamera.transform.position.x - (App.Cache.MainCamera.Width / 2f);
+        {                        
+            return Position.x <= Camera.Position.x - (Camera.Width / 2f);
         }
 
 
@@ -84,7 +86,7 @@ namespace Assets.Source.Entities.Items
         {
             if (soundEffect != null)
             {
-                _audioService.PlayEffect(soundEffect);
+                AudioService.PlayEffect(soundEffect);
             }
         }
 
@@ -94,7 +96,7 @@ namespace Assets.Source.Entities.Items
         {
             if (particleEffect != null)
             {
-                _particleService.PlayAt(particleEffect, transform.position);
+                ParticleService.PlayAt(particleEffect, transform.position);
             }
         }        
     }

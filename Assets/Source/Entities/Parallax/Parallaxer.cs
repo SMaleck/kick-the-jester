@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Source.Config;
+using Assets.Source.Entities.Parallax.Config;
 using UnityEngine;
 using Zenject;
 

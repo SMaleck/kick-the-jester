@@ -1,9 +1,8 @@
-﻿using Assets.Source.Entities.Items.Config;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Source.Config
+namespace Assets.Source.Entities.Items.Config
 {
     [Serializable]
     [CreateAssetMenu(fileName = "SpawningLanesConfig", menuName = "KTJ/Config/SpawningLanesConfig")]

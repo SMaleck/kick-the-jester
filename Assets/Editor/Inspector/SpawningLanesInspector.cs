@@ -1,6 +1,6 @@
-﻿using Assets.Source.Config;
-using System;
+﻿using System;
 using System.Reflection;
+using Assets.Source.Entities.Items.Config;
 using UnityEditor;
 using UnityEngine;
 
