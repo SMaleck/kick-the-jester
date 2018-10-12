@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03490c169a67b3a48b49afb201579e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScreenFadeViewPrefab: {fileID: 114934261221233044, guid: f538ae8f31754144794341fcd24dd41f,
+    type: 2}
 --- !u!114 &114907510237613744
 MonoBehaviour:
   m_ObjectHideFlags: 1
