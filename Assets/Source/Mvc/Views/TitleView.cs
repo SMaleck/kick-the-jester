@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{    
-    // ToDo play music for clicked
+{
+    // ToDo [IMPORTANT] play music for clicked
     public class TitleView : AbstractView
     {
         [SerializeField] private Button _startButton;

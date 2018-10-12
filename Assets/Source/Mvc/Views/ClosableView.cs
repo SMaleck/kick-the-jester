@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo Slider is not going to screen edge
-    // ToDo Sound Effects for sliding panels
+    // ToDo [IMPORTANT] Slider is not going to screen edge
+    // ToDo [IMPORTANT] Sound Effects for sliding panels
     public class ClosableView : AbstractView
     {
         [Header("Closable Settings")]

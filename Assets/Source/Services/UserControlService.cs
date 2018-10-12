@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Source.Services
 {
-    // ToDo Change UserControlService to be a VC construct on the UI Layer
+    // ToDo [IMPORTANT] Change UserControlService to be a VC construct on the UI Layer
     public class UserControlService
     {
         public ReactiveCommand OnKick = new ReactiveCommand();
