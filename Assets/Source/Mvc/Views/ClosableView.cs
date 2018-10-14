@@ -29,8 +29,8 @@ namespace Assets.Source.Mvc.Views
 
             _panelSlider = new PanelSlider(ownerTransform, containerTransform.rect, _panelSliderConfig);
 
-            OnOpenCompleted = _panelSlider.OnOpenCompleted;
-            OnCloseCompleted = _panelSlider.OnCloseCompleted;
+            _panelSlider.OnOpenCompleted.Subscribe(_ => OnOpenCompleted.Execute());
+            _panelSlider.OnCloseCompleted.Subscribe(_ => OnCloseCompleted.Execute());
 
             _closeButton?.OnClickAsObservable()
                 .Subscribe(_ => Close())
