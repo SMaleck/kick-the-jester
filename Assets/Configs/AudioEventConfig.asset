@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1d93e175e8b68a40aa36497613185ec, type: 3}
-  m_Name: ViewAudioConfig
+  m_Name: AudioEventConfig
   m_EditorClassIdentifier: 
   ViewAudioEventSettings: []
   ButtonAudioEventSettings: []

@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Name: ConfigInstaller
   m_EditorClassIdentifier: 
   GameConfig: {fileID: 11400000, guid: c09fd6b6d7f681a42a46620edd6bd4dd, type: 2}
-  DefaultSettingsConfig: {fileID: 11400000, guid: 19b8e337ecf87a74d9093897ff65891f,
-    type: 2}
-  ViewPrefabConfig: {fileID: 11400000, guid: d17a0a7abbb18234283550401b7000d1, type: 2}
+  AudioEventConfig: {fileID: 11400000, guid: 7fe75980094e6114a9eaf0db91c5281f, type: 2}
