@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo [IMPORTANT] play music for clicked
+    // ToDo [IMPORTANT] Set _TransitionMusic in Editor
     public class TitleView : AbstractView
     {
         [SerializeField] private Button _startButton;
@@ -38,7 +38,7 @@ namespace Assets.Source.Mvc.Views
 
             _creditsButton.OnClickAsObservable()
                 .Subscribe(_ => OnCreditsClicked.Execute())
-                .AddTo(this);            
+                .AddTo(this);
         }
 
         private void OnStartClickedProxy()

@@ -15,10 +15,7 @@ namespace Assets.Source.Entities.Jester.MonoComponents
         public ReactiveCommand OnPickup = new ReactiveCommand();
         public ReactiveCommand OnObstacle = new ReactiveCommand();
 
-        public override void Initialize()
-        {
-            
-        }
+        public override void Initialize() { }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

@@ -1,21 +1,20 @@
-﻿using Assets.Source.Mvc.Models;
+﻿using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Services;
 using Assets.Source.Services.Audio;
 using System;
-using Assets.Source.Mvc.Models.ViewModels;
 using UniRx;
-using SceneTransitionService = Assets.Source.Services.SceneTransitionService;
 
 namespace Assets.Source.Mvc.Controllers
 {
     public class TitleController : AbstractController
     {
         private readonly TitleView _view;
-        private readonly TitleModel _model;        
+        private readonly TitleModel _model;
         private readonly SceneTransitionService _sceneTransitionService;
-        private readonly AudioService _audioService;        
+        private readonly AudioService _audioService;
 
-        private const float StartDelaySeconds = 1.5f;
+        private const float startDelayFactor = 0.8f;
 
         public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
             : base(view)
@@ -25,7 +24,7 @@ namespace Assets.Source.Mvc.Controllers
 
             _model = model;
             _audioService = audioService;
-            _sceneTransitionService = sceneTransitionService;                        
+            _sceneTransitionService = sceneTransitionService;
 
             _view.OnStartClicked
                 .Subscribe(_ => OnStartClicked())
@@ -48,15 +47,18 @@ namespace Assets.Source.Mvc.Controllers
         private void OnStartClicked()
         {
             _audioService.PlayMusic(_view._TransitionMusic, false);
-
+            
             if (_model.IsFirstStart.Value)
             {
                 _model.OpenTutorial.Execute();
                 return;
-            }            
-            
+            }
+
+
+            var startDelaySeconds = _view._TransitionMusic.length * startDelayFactor;
+
             Observable
-                .Timer(TimeSpan.FromSeconds(StartDelaySeconds))
+                .Timer(TimeSpan.FromSeconds(startDelaySeconds))
                 .Subscribe(_ => _sceneTransitionService.ToGame())
                 .AddTo(Disposer);
         }
