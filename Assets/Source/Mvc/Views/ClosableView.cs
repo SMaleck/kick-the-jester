@@ -1,12 +1,12 @@
-﻿using Assets.Source.Util.UI;
+﻿using Assets.Source.Mvc.ServiceControllers;
+using Assets.Source.Util.UI;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo [IMPORTANT] Slider is not going to screen edge
-    // ToDo [IMPORTANT] Sound Effects for sliding panels
+    // ToDo [IMPORTANT] Slider is not going to screen edge    
     public class ClosableView : AbstractView
     {
         [Header("Closable Settings")]
@@ -46,14 +46,14 @@ namespace Assets.Source.Mvc.Views
 
         public virtual void Open()
         {
-            MessageBroker.Default.Publish(SlideEvent.Open);
+            MessageBroker.Default.Publish(ViewAudioEvent.PanelSlideOpen);
             _panelSlider.SlideIn();
         }
 
 
         public virtual void Close()
         {
-            MessageBroker.Default.Publish(SlideEvent.Close);
+            MessageBroker.Default.Publish(ViewAudioEvent.PanelSlideClose);
             _panelSlider.SlideOut();
         }
     }

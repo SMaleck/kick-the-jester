@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{
-    // ToDo [IMPORTANT] Set _TransitionMusic in Editor
+{    
     public class TitleView : AbstractView
     {
         [SerializeField] private Button _startButton;

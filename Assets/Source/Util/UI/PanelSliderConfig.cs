@@ -8,11 +8,11 @@ namespace Assets.Source.Util.UI
 
     [Serializable]
     public class PanelSliderConfig
-    {        
+    {
         public SlideDirection slideInFrom = SlideDirection.Instant;
         public bool useBounce = false;
 
         [Range(0f, 5f)]
-        public float slideTimeSeconds = 0.5f;        
+        public float slideTimeSeconds = 0.5f;
     }
 }

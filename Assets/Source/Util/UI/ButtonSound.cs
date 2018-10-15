@@ -1,28 +1,22 @@
-﻿using UniRx;
+﻿using Assets.Source.Mvc.ServiceControllers;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Util.UI
 {
-    public enum ButtonPressedSoundEvent
+    // ToDo [IMPORTANT] Use this derived button for sound effects
+    public class RichButton : Button
     {
-        None,
-        Default
-    }
+        [SerializeField] private ButtonAudioEvent _audioEventType = ButtonAudioEvent.Default;
 
-    // ToDo Use derived button for sound effects
-    public class ButtonSound : MonoBehaviour
-    {
-        [SerializeField] private ButtonPressedSoundEvent _soundEffect = ButtonPressedSoundEvent.Default;
-        private Button _button;
-
-        private void Awake()
+        protected override void Awake()
         {
-            _button = GetComponent<Button>();
-            
-            _button?.OnClickAsObservable()
-                .Where(_ => !_soundEffect.Equals(ButtonPressedSoundEvent.None))
-                .Subscribe(_ => { MessageBroker.Default.Publish(_soundEffect); })
+            base.Awake();
+
+            this.OnClickAsObservable()
+                .Where(_ => !_audioEventType.Equals(ButtonAudioEvent.None))
+                .Subscribe(_ => { MessageBroker.Default.Publish(_audioEventType); })
                 .AddTo(this);
         }
     }

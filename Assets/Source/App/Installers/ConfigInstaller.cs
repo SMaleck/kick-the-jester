@@ -8,6 +8,7 @@ namespace Assets.Source.App.Installers
     public class ConfigInstaller : ScriptableObjectInstaller<ConfigInstaller>
     {
         [SerializeField] private GameConfig GameConfig;
+        [SerializeField] private AudioEventConfig AudioEventConfig;
 
 
         public override void InstallBindings()
@@ -15,7 +16,9 @@ namespace Assets.Source.App.Installers
             Container.BindInstances(GameConfig.DefaultSettingsConfig);
             Container.BindInstance(GameConfig.CameraConfig);
             Container.BindInstance(GameConfig.AudioConfig);
-            Container.BindInstance(GameConfig.BalancingConfig);            
+            Container.BindInstance(GameConfig.BalancingConfig);
+
+            Container.BindInstance(AudioEventConfig);
         }
     }
 }

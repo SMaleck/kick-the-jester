@@ -14,7 +14,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly AudioService _audioService;
 
-        private const float startDelayFactor = 0.8f;
+        private const float StartDelayFactor = 0.8f;
 
         public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
             : base(view)
@@ -55,7 +55,7 @@ namespace Assets.Source.Mvc.Controllers
             }
 
 
-            var startDelaySeconds = _view._TransitionMusic.length * startDelayFactor;
+            var startDelaySeconds = _view._TransitionMusic.length * StartDelayFactor;
 
             Observable
                 .Timer(TimeSpan.FromSeconds(startDelaySeconds))
