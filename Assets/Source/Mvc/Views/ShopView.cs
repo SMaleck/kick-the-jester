@@ -4,8 +4,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo See Github Issue #92
-    // ToDo [IMPORTANT] Buy buttons stay not interactable
+    // ToDo See Github Issue #92   
     public class ShopView : ClosableView
     {
         [Header("General")]
