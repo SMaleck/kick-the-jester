@@ -8,7 +8,7 @@ namespace Assets.Source.Util.UI
     {
         [SerializeField] public string Url;
 
-        // TODO Fix Inspector with https://answers.unity.com/questions/1304097/subclassing-button-public-variable-wont-show-up-in.html
+        // ToDo Automatically append FA external link icon
         protected override void Awake()
         {
             base.Awake();
