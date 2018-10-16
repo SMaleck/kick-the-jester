@@ -9,9 +9,9 @@ namespace Assets.Editor.Inspector
     {
         public override void OnInspectorGUI()
         {
-            //LinkButton linkButtonTarget = (LinkButton)target;
-            //linkButtonTarget.Url = EditorGUILayout.TextField("Url", "Url");
-            
+            LinkButton targetButton = (LinkButton)target;
+            targetButton.Url = (string)EditorGUILayout.TextField("Url", targetButton.Url);
+
             base.OnInspectorGUI();
         }
     }
