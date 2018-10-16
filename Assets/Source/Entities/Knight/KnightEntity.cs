@@ -1,5 +1,5 @@
 ﻿using Assets.Source.Entities.Jester;
-using Assets.Source.Services;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using UniRx;
@@ -18,24 +18,24 @@ namespace Assets.Source.Entities.Knight
         private JesterEntity _jesterEntity;
         private AudioService _audioService;
         private ParticleService _particleService;
-        private UserControlService _userControlService;
-        
+        private UserInputModel _userInputModel;
+
         private enum AnimState { Idle, Kick };
-        private bool hasKicked = false;
+        private bool _hasKicked = false;
 
 
         [Inject]
-        private void Inject(JesterEntity jesterEntity, AudioService audioService, ParticleService particleService, UserControlService userControlService)
+        private void Inject(JesterEntity jesterEntity, AudioService audioService, ParticleService particleService, UserInputModel userInputModel)
         {
             _jesterEntity = jesterEntity;
             _audioService = audioService;
             _particleService = particleService;
-            _userControlService = userControlService;
+            _userInputModel = userInputModel;
         }
 
         public override void Initialize()
         {
-            _userControlService.OnKick
+            _userInputModel.OnClickedAnywhere
                 .Where(_ => !IsPaused.Value)
                 .Subscribe(_ => OnKick())
                 .AddTo(this);
@@ -43,13 +43,13 @@ namespace Assets.Source.Entities.Knight
 
         private void OnKick()
         {
-            if (hasKicked)
+            if (_hasKicked)
             {
                 return;
             }
 
             _animator.Play(AnimState.Kick.ToString());
-            hasKicked = true;
+            _hasKicked = true;
         }
 
         public void PlayKickSwooshEffect()
@@ -58,7 +58,7 @@ namespace Assets.Source.Entities.Knight
         }
 
         public void OnKickAnimationEnd()
-        {            
+        {
             _audioService.PlayEffectRandomized(_kickSound);
             _jesterEntity.OnKicked.Execute();
         }

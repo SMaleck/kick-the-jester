@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Mvc.Models;
-using Assets.Source.Services;
 using DG.Tweening;
 using System;
 using UniRx;
@@ -9,10 +8,10 @@ using UnityEngine;
 namespace Assets.Source.Entities.Jester.Components
 {
     public class MotionBoot : AbstractPausableComponent<JesterEntity>
-    {
-        private readonly UserControlService _userControlService;
+    {        
         private readonly PlayerModel _playerModel;
         private readonly FlightStatsModel _flightStatsmodel;
+        private readonly UserInputModel _userInputModel;
 
         // ToDo [CONFIG] Move to config SO    
         private Vector3 direction = new Vector3(1, 1, 0);
@@ -25,18 +24,18 @@ namespace Assets.Source.Entities.Jester.Components
         private Tweener kickForceTweener;
 
 
-        public MotionBoot(JesterEntity owner, PlayerModel playerModel, FlightStatsModel flightStatsmodel, UserControlService userControlService)
+        public MotionBoot(JesterEntity owner, PlayerModel playerModel, FlightStatsModel flightStatsmodel, UserInputModel userInputModel)
             : base(owner)
-        {
-            _userControlService = userControlService;
+        {            
             _playerModel = playerModel;
             _flightStatsmodel = flightStatsmodel;
+            _userInputModel = userInputModel;
 
             kickForceTweener = DOTween
                 .To((x) => _flightStatsmodel.RelativeKickForce.Value = x, 0, maxForceFactor, forceChangeSeconds)
                 .SetLoops(-1, LoopType.Yoyo);
 
-            OnKickActionSubscription = _userControlService.OnKick
+            OnKickActionSubscription = _userInputModel.OnClickedAnywhere
                 .Subscribe(_ => OnKickUserAction())
                 .AddTo(owner);
 

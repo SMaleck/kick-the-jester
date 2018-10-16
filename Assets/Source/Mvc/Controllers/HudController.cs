@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Services;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -9,12 +8,12 @@ namespace Assets.Source.Mvc.Controllers
     {
         private readonly HudView _view;
         private readonly GameStateModel _gameStateModel;
-        private readonly FlightStatsModel _flightStatsModel;        
-        private readonly ProfileModel _profileModel;                
-        private readonly UserControlService _userControlService;
+        private readonly FlightStatsModel _flightStatsModel;
+        private readonly ProfileModel _profileModel;
+        private readonly UserInputModel _userInputModel;
 
 
-        public HudController(HudView view, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, ProfileModel profileModel, UserControlService userControlService)
+        public HudController(HudView view, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, ProfileModel profileModel, UserInputModel userInputModel)
             : base(view)
         {
             _view = view;
@@ -22,11 +21,11 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
-            _profileModel = profileModel;            
-            _userControlService = userControlService;
+            _profileModel = profileModel;
+            _userInputModel = userInputModel;
 
             _view.OnPauseButtonClicked
-                .Subscribe(_ => _userControlService.OnPause.Execute())
+                .Subscribe(_ => _userInputModel.OnPause.Execute())
                 .AddTo(Disposer);
 
             SetupGameStateModel();

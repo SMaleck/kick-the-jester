@@ -5,7 +5,6 @@ using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Services;
 using UnityEngine;
 using Zenject;
 
@@ -19,16 +18,10 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
         [SerializeField] public ShopView ShopView;
         [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
+        [SerializeField] public UserInputView UserInputView;
 
         public override void InstallBindings()
         {
-            #region SERVICES
-
-            Container.Bind<UserControlService>().AsSingle();
-
-            #endregion
-
-
             #region MVC
 
             Container.BindInstance(HudView).AsSingle();
@@ -49,6 +42,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(ShopConfirmResetView).AsSingle();
             Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
 
+            Container.BindInstance(UserInputView).AsSingle();
+            Container.Bind<UserInputController>().AsSingle().NonLazy();
+
             Container.Bind<AudioSettingsController>().AsSingle().NonLazy();
 
             #endregion
@@ -60,11 +56,12 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.Bind<PlayerModel>().AsSingle().NonLazy();
             Container.Bind<UpgradesModel>().AsSingle().NonLazy();
             Container.Bind<SettingsModel>().AsSingle().NonLazy();
+            Container.Bind<UserInputModel>().AsSingle().NonLazy();
 
-            Container.Bind<GameStateModel>().AsSingle().NonLazy();            
-            Container.Bind<FlightStatsModel>().AsSingle().NonLazy();            
+            Container.Bind<GameStateModel>().AsSingle().NonLazy();
+            Container.Bind<FlightStatsModel>().AsSingle().NonLazy();
             Container.Bind<RoundEndModel>().AsSingle().NonLazy();
-            Container.Bind<ShopModel>().AsSingle().NonLazy();            
+            Container.Bind<ShopModel>().AsSingle().NonLazy();
 
             #endregion
 

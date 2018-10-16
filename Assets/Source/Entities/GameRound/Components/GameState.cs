@@ -1,7 +1,6 @@
 ﻿using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Entities.Jester;
 using Assets.Source.Mvc.Models;
-using Assets.Source.Services;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using UniRx;
@@ -11,30 +10,30 @@ namespace Assets.Source.Entities.GameRound.Components
     public class GameState : AbstractComponent<GameRoundEntity>
     {
         private readonly GameStateModel _model;
+        private readonly UserInputModel _userInputModel;
         private readonly JesterEntity _jesterEntity;
-        private readonly UserControlService _userControlService;
         private readonly AudioService _audioService;
         private readonly ParticleService _particleService;
 
         public GameState(
-            GameRoundEntity owner, 
+            GameRoundEntity owner,
             GameStateModel model,
+            UserInputModel userInputModel,
             JesterEntity jesterEntity,
-            UserControlService userControlService,             
-            AudioService audioService, 
+            AudioService audioService,
             ParticleService particleService)
             : base(owner)
         {
             _model = model;
+            _userInputModel = userInputModel;
             _jesterEntity = jesterEntity;
-            _userControlService = userControlService;
             _audioService = audioService;
             _particleService = particleService;
 
             _audioService.ResetPausedSlots();
             _particleService.ResetPausedSlots();
 
-            _userControlService.OnPause
+            _userInputModel.OnPause
                 .Subscribe(_ => model.IsPaused.Value = !model.IsPaused.Value)
                 .AddTo(owner);
 

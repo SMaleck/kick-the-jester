@@ -10,23 +10,23 @@ namespace Assets.Source.Entities.Jester.Components
     {
         private readonly PlayerModel _playerModel;
         private readonly FlightStatsModel _flightStatsmodel;
-        private readonly UserControlService _userControlService;
+        private readonly UserInputModel _userInputModel;
 
         private bool _isActive = true;
         private bool _isInFlight;
         private Vector3 _direction = new Vector3(1.2f, 1, 0);
 
 
-        public MotionShoot(JesterEntity owner, PlayerModel playerModel, FlightStatsModel flightStatsmodel, UserControlService userControlService) 
+        public MotionShoot(JesterEntity owner, PlayerModel playerModel, FlightStatsModel flightStatsmodel, UserInputModel userInputModel) 
             : base(owner)
         {
             _playerModel = playerModel;
             _flightStatsmodel = flightStatsmodel;
-            _userControlService = userControlService;
+            _userInputModel = userInputModel;
 
             flightStatsmodel.ShotsRemaining.Value = playerModel.Shots;
 
-            userControlService.OnKick                
+            _userInputModel.OnClickedAnywhere                
                 .Subscribe(_ => OnKick())
                 .AddTo(owner);
 
