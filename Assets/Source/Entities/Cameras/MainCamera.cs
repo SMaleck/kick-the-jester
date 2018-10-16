@@ -116,8 +116,7 @@ namespace Assets.Source.Entities.Cameras
                 .OnComplete(ResetShake);
         }
 
-
-        // ToDo Smoothly reset shake
+        
         private void ResetShake()
         {
             _isShaking = false;

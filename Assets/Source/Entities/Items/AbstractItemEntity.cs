@@ -65,7 +65,7 @@ namespace Assets.Source.Entities.Items
         }
 
 
-        // ToDo this Can be extracted into a separate Component
+        // ToDo Extract OutOfCameraBounds check into separate component
         // Checks whether this gameobject is still visible by the camera
         protected bool IsOutOfCameraBounds()
         {                        

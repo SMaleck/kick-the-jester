@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Assets.Source.Mvc.ServiceControllers;
+using Zenject;
 
 namespace Assets.Source.App.Installers.SceneInstallers
 {
@@ -7,6 +8,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
         public override void InstallBindings()
         {
             Container.Bind<AppStartController>().AsSingle().NonLazy();
-        }        
+        }
     }
 }

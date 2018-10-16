@@ -1,7 +1,6 @@
 ﻿using Assets.Source.Services;
 
-// ToDo Chnage Namespace
-namespace Assets.Source.App
+namespace Assets.Source.Mvc.ServiceControllers
 {
     public class AppStartController
     {

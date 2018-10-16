@@ -8,7 +8,7 @@ namespace Assets.Source.Util.UI
     {
         [SerializeField] public string Url;
 
-        // ToDo Automatically append FA external link icon
+        // ToDo Automatically append external link icon (Not FA, use inline Sprites)
         protected override void Awake()
         {
             base.Awake();
