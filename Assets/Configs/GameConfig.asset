@@ -11,9 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b4e9d0531b6ca48a05a093d3218e10, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  DefaultSettingsConfig:
+    MusicVolume: 1
+    EffectVolume: 0.8
   CameraConfig:
     OffsetX: 3.5
     OvertakeOffsetX: 5.5
     OvertakeSeconds: 0.8
     RelativeVelocityThresholdForShake: 0.5
-    ShakeSeconds: 0.1
+    ShakeSeconds: 0.05
+  AudioConfig:
+    MinPitch: 0.65
+    MaxPitch: 1.5
+  BalancingConfig:
+    MeterToGoldFactor: 0.5

@@ -4,13 +4,14 @@ using UnityEngine;
 
 
 namespace Assets.Source.Services.Audio
-{    
+{
     public class AudioService
     {
         private readonly AudioConfig _config;
         private readonly ResourcePool<PoolableAudioSource> _musicChannel;
         private readonly ResourcePool<PoolableAudioSource> _effectChannel;
-        
+        private readonly ResourcePool<PoolableAudioSource> _uiChannel;
+
 
         public AudioService(AudioConfig config)
         {
@@ -18,6 +19,7 @@ namespace Assets.Source.Services.Audio
 
             _musicChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory(), 1);
             _effectChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
+            _uiChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
         }
 
 
@@ -53,7 +55,7 @@ namespace Assets.Source.Services.Audio
                     item.Stop();
                 }
             });
-        }        
+        }
 
 
         #region PLAY INTERFACE
@@ -70,10 +72,15 @@ namespace Assets.Source.Services.Audio
             audioSource.Volume = _effectsVolume;
         }
 
-
         public void PlayEffectRandomized(AudioClip clip, bool loop = false)
         {
             var audioSource = PlayOn(_effectChannel, clip, loop, true);
+            audioSource.Volume = _effectsVolume;
+        }
+
+        public void PlayUiEffect(AudioClip clip, bool loop = false)
+        {
+            var audioSource = PlayOn(_uiChannel, clip, loop, false);
             audioSource.Volume = _effectsVolume;
         }
 
@@ -103,7 +110,7 @@ namespace Assets.Source.Services.Audio
             else
             {
                 Resume(_effectChannel);
-            }            
+            }
         }
 
         public void PauseAll(bool isPaused)
@@ -148,6 +155,7 @@ namespace Assets.Source.Services.Audio
         {
             _effectsVolume = volume;
             _effectChannel.ForEach(e => e.Volume = volume);
+            _uiChannel.ForEach(e => e.Volume = volume);
         }
 
         #endregion

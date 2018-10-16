@@ -34,13 +34,11 @@ namespace Assets.Source.Mvc.Controllers
         {            
             switch (state)
             {
-                case TransitionState.Before:
-                    Logger.Log($"[FADER] TransitionState: {state} -> Fading to BLACK");                    
+                case TransitionState.Before:                                     
                     Fade(0, 1);
                     break;
 
-                case TransitionState.After:
-                    Logger.Log($"[FADER] TransitionState: {state} -> Fading to WHITE");
+                case TransitionState.After:                    
                     Fade(1, 0);
                     break;
 

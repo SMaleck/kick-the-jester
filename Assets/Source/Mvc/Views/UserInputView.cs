@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,16 +7,19 @@ namespace Assets.Source.Mvc.Views
 {
     public class UserInputView : AbstractView
     {
-        [SerializeField] private Button _screenSpaceButton;
+        [SerializeField] private List<Button> _screenSpaceButtons;
 
         public ReactiveCommand OnClickedAnywhere = new ReactiveCommand();
 
-        // ToDo [IMPORTANT] Setup in UI Layer
+        
         public override void Setup()
-        {            
-            _screenSpaceButton.OnClickAsObservable()
-                .Subscribe(_ => OnClickedAnywhere.Execute())
-                .AddTo(this);
+        {
+            _screenSpaceButtons.ForEach(button => 
+            {
+                button.OnClickAsObservable()
+                    .Subscribe(_ => OnClickedAnywhere.Execute())
+                    .AddTo(this);
+            });
         }
     }
 }

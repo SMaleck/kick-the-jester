@@ -112,7 +112,7 @@ namespace Assets.Source.Entities.Cameras
             }
 
             _isShaking = true;
-            GoTransform.DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value, 8)
+            GoTransform.DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value, 10)
                 .OnComplete(ResetShake);
         }
 

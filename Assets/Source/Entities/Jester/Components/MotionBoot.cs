@@ -10,7 +10,7 @@ namespace Assets.Source.Entities.Jester.Components
     public class MotionBoot : AbstractPausableComponent<JesterEntity>
     {        
         private readonly PlayerModel _playerModel;
-        private readonly FlightStatsModel _flightStatsmodel;
+        private readonly FlightStatsModel _flightStatsmodel;        
         private readonly UserInputModel _userInputModel;
 
         // ToDo [CONFIG] Move to config SO    
@@ -28,13 +28,9 @@ namespace Assets.Source.Entities.Jester.Components
             : base(owner)
         {            
             _playerModel = playerModel;
-            _flightStatsmodel = flightStatsmodel;
+            _flightStatsmodel = flightStatsmodel;            
             _userInputModel = userInputModel;
-
-            kickForceTweener = DOTween
-                .To((x) => _flightStatsmodel.RelativeKickForce.Value = x, 0, maxForceFactor, forceChangeSeconds)
-                .SetLoops(-1, LoopType.Yoyo);
-
+           
             OnKickActionSubscription = _userInputModel.OnClickedAnywhere
                 .Subscribe(_ => OnKickUserAction())
                 .AddTo(owner);
@@ -42,6 +38,23 @@ namespace Assets.Source.Entities.Jester.Components
             OnJesterKickedSubscription = owner.OnKicked
                 .Subscribe(_ => OnJesterKicked())
                 .AddTo(owner);
+
+            kickForceTweener = DOTween
+                .To((x) => _flightStatsmodel.RelativeKickForce.Value = x, 0, maxForceFactor, forceChangeSeconds)
+                .SetLoops(-1, LoopType.Yoyo);
+
+            Owner.IsPaused.Subscribe(isPaused =>
+            {
+                if (isPaused && kickForceTweener.IsPlaying())
+                {
+                    kickForceTweener?.Pause();
+                }
+                else if(!kickForceTweener.IsPlaying())
+                {
+                    kickForceTweener?.Play();
+                }
+            })
+            .AddTo(owner);
         }
 
         private void OnKickUserAction()

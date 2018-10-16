@@ -11,6 +11,10 @@ namespace Assets.Source.Util.UI
     {
         public SlideDirection slideInFrom = SlideDirection.Instant;
         public bool useBounce = false;
+        public bool SoundEffectsEnabled = true;
+
+        [Tooltip("Enables sliding Sound effects when INSTANT Transition mode is selected")]
+        public bool SoundEffectsEnabledOnInstant = false;
 
         [Range(0f, 5f)]
         public float slideTimeSeconds = 0.5f;

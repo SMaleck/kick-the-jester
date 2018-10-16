@@ -14,7 +14,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly AudioService _audioService;
 
-        private const float StartDelayFactor = 0.7f;
+        private const float StartDelayFactor = 0.4f;
 
         public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
             : base(view)

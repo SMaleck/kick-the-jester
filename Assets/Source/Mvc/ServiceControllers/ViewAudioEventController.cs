@@ -3,6 +3,7 @@ using Assets.Source.Services.Audio;
 using Assets.Source.Util;
 using System.Linq;
 using UniRx;
+using UnityEngine;
 
 namespace Assets.Source.Mvc.ServiceControllers
 {
@@ -16,7 +17,7 @@ namespace Assets.Source.Mvc.ServiceControllers
     {
         None,
         Default,
-        Upgrade        
+        Upgrade
     }
 
     public class ViewAudioEventController : AbstractDisposable
@@ -47,7 +48,7 @@ namespace Assets.Source.Mvc.ServiceControllers
                 return;
             }
 
-            _audioService.PlayEffect(audioSetting.AudioClip);
+            Play(audioSetting.AudioClip);
         }
 
         public void ResolveViewAudioEvent(ButtonAudioEvent eventType)
@@ -59,7 +60,12 @@ namespace Assets.Source.Mvc.ServiceControllers
                 return;
             }
 
-            _audioService.PlayEffect(audioSetting.AudioClip);
+            Play(audioSetting.AudioClip);
+        }
+
+        private void Play(AudioClip clip)
+        {
+            _audioService.PlayUiEffect(clip);
         }
     }
 }

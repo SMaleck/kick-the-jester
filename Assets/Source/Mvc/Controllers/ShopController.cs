@@ -38,12 +38,12 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
 
-            SetupOnCLick();
+            SetupOnClick();
             SetupProfileModel();
             SetupUpgradesModel();            
         }
 
-        private void SetupOnCLick()
+        private void SetupOnClick()
         {
             _view.OnResetClicked
                 .Subscribe(_ => _shopModel.OpenConfirmReset.Execute())

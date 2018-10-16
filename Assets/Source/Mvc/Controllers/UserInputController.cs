@@ -36,7 +36,7 @@ namespace Assets.Source.Mvc.Controllers
         {
             var isPaused = _gameStateModel.IsPaused.Value;
 
-            if (!isPaused && (Input.GetButtonDown("Kick") || Input.GetMouseButtonDown(0)))
+            if (!isPaused && Input.GetButtonDown("Kick"))
             {
                 _userInputModel.OnClickedAnywhere.Execute();
             }

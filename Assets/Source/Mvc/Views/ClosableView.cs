@@ -1,5 +1,4 @@
-﻿using Assets.Source.Mvc.ServiceControllers;
-using Assets.Source.Util.UI;
+﻿using Assets.Source.Util.UI;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +10,14 @@ namespace Assets.Source.Mvc.Views
     {
         [Header("Closable Settings")]
         [SerializeField] private Button _closeButton;
-        [SerializeField] private bool _startClosed = true;
+        [SerializeField] private bool _startClosed = true;        
 
         [Header("Transition")]
         [SerializeField] private PanelSliderConfig _panelSliderConfig;
 
         private PanelSlider _panelSlider;
+
+        public bool IsOpen => gameObject.activeSelf;
 
         public ReactiveCommand OnOpenCompleted = new ReactiveCommand();
         public ReactiveCommand OnCloseCompleted = new ReactiveCommand();
@@ -37,24 +38,25 @@ namespace Assets.Source.Mvc.Views
                 .AddTo(this);
 
             if (_startClosed)
+            {                
+                _panelSlider.SetClosed();
+            }
+            else
             {
-                gameObject.SetActive(false);
-                Close();
+                _panelSlider.SetOpen();
             }
         }
 
 
         public virtual void Open()
-        {
-            MessageBroker.Default.Publish(ViewAudioEvent.PanelSlideOpen);
-            _panelSlider.SlideIn();
+        {            
+            _panelSlider.SlideOpen();
         }
 
 
         public virtual void Close()
-        {
-            MessageBroker.Default.Publish(ViewAudioEvent.PanelSlideClose);
-            _panelSlider.SlideOut();
+        {            
+            _panelSlider.SlideClosed();
         }
     }
 }

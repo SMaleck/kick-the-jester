@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Util.UI
-{
-    // ToDo [IMPORTANT] Use this derived button for sound effects
+{    
     public class RichButton : Button
     {
         [SerializeField] public ButtonAudioEvent AudioEventType = ButtonAudioEvent.Default;

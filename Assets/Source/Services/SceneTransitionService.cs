@@ -60,7 +60,10 @@ namespace Assets.Source.Services
                 Logger.Log($"[SceneTransitionService] Transition State changed to [{state}]");
             });
 
-            CurrentScene.Subscribe(scene => Logger.Log($"[SceneTransitionService] Scene changed to [{scene}]"));
+            CurrentScene.Subscribe(scene => 
+            {
+                Logger.Log($"[SceneTransitionService] Scene changed to [{scene}]");
+            });
         }
 
 
@@ -69,11 +72,11 @@ namespace Assets.Source.Services
             Scenes parsed;
             Enum.TryParse<Scenes>(scene.name, out parsed);
             _currentScene.Value = parsed;
-
-            Logger.Log($"[SceneTransitionService] Entering AFTER Grace Period");
+            
             _state.Value = TransitionState.After;
 
             // ToDo Dispose
+            Logger.Log($"[SceneTransitionService] Entering AFTER Grace Period");
             Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
                 .Subscribe(_ =>
                 {
@@ -85,11 +88,12 @@ namespace Assets.Source.Services
 
         private void PrepareLoad(Scenes toLoad)
         {
-            Logger.Log($"[SceneTransitionService] Transition Request to {toLoad}");
-            Logger.Log($"[SceneTransitionService] Entering BEFORE Grace Period");
+            Logger.Log($"[SceneTransitionService] Transition Request to [{toLoad}]");
+            
             _state.Value = TransitionState.Before;
 
             // ToDo Dispose
+            Logger.Log($"[SceneTransitionService] Entering BEFORE Grace Period");
             Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
                 .Subscribe(_ =>
                 {                    

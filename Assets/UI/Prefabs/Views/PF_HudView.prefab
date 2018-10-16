@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 224021857276246716}
   - component: {fileID: 222900665824877272}
   - component: {fileID: 114585119122191126}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 224720454877962728}
   - component: {fileID: 222175016205841352}
   - component: {fileID: 114570715313429540}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Press Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,6 @@ GameObject:
   m_Component:
   - component: {fileID: 224945016880490550}
   - component: {fileID: 223776231347943056}
-  - component: {fileID: 114956239611298188}
   - component: {fileID: 114658634512328238}
   m_Layer: 5
   m_Name: PF_HudView
@@ -376,7 +375,7 @@ GameObject:
   - component: {fileID: 114104813758980166}
   - component: {fileID: 222861549591223578}
   - component: {fileID: 114735648960709344}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Button (Pause)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +407,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224882514747498862}
   - component: {fileID: 222359313878003228}
-  m_Layer: 5
+  - component: {fileID: 223897274207846494}
+  - component: {fileID: 114090186472649548}
+  m_Layer: 12
   m_Name: Pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,6 +480,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114090186472649548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1828656744034232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &114092884615922120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1259,22 +1276,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114956239611298188
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1666453917398958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114959434459918272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1509,6 +1510,26 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!223 &223897274207846494
+Canvas:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1828656744034232}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

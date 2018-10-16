@@ -36,7 +36,7 @@ namespace Assets.Source.Mvc.Controllers
         private void OnResetConfirmed()
         {            
             _savegameService.Reset();
-            _sceneTransitionService.ToGame();
+            _sceneTransitionService.ToTitle();
         }
     }
 }
