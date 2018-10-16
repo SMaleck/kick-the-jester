@@ -11,5 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d93e175e8b68a40aa36497613185ec, type: 3}
   m_Name: AudioEventConfig
   m_EditorClassIdentifier: 
-  ViewAudioEventSettings: []
-  ButtonAudioEventSettings: []
+  ViewAudioEventSettings:
+  - AudioEventType: 0
+    AudioClip: {fileID: 8300000, guid: eaf5a5ba28a29c94ab2342b57627c127, type: 3}
+  - AudioEventType: 1
+    AudioClip: {fileID: 8300000, guid: 8bd415806fca3df46ab1bf65c78b0c78, type: 3}
+  ButtonAudioEventSettings:
+  - AudioEventType: 0
+    AudioClip: {fileID: 0}
+  - AudioEventType: 1
+    AudioClip: {fileID: 0}
+  - AudioEventType: 2
+    AudioClip: {fileID: 8300000, guid: 7bbc250a2a3f08e4f8e13e8a32945126, type: 3}
