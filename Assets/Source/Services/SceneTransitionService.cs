@@ -47,7 +47,7 @@ namespace Assets.Source.Services
             IsLoading = _isLoading.ToReadOnlyReactiveProperty();
 
             SetupSubscriptions();
-            SetupSceneChangedEvent();
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
 
@@ -64,30 +64,29 @@ namespace Assets.Source.Services
         }
 
 
-        private void SetupSceneChangedEvent()
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
-            SceneManager.sceneLoaded += (Scene s, LoadSceneMode lm) =>
-            {
-                Scenes parsed;
-                Enum.TryParse<Scenes>(s.name, out parsed);
-                _currentScene.Value = parsed;
+            Scenes parsed;
+            Enum.TryParse<Scenes>(scene.name, out parsed);
+            _currentScene.Value = parsed;
 
-                _state.Value = TransitionState.After;
+            Logger.Log($"[SceneTransitionService] Entering AFTER Grace Period");
+            _state.Value = TransitionState.After;
 
-                // ToDo Dispose
-                Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
-                    .Subscribe(_ =>
-                    {
-                        _state.Value = TransitionState.None;
-                        Logger.Log($"[SceneTransitionService] Loading Done! Current Scene: {CurrentScene.Value}");
-                    });
-            };
+            // ToDo Dispose
+            Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
+                .Subscribe(_ =>
+                {
+                    _state.Value = TransitionState.None;
+                    Logger.Log($"[SceneTransitionService] Loading Done! Current Scene: {CurrentScene.Value}");
+                });
         }
-        
+                
 
         private void PrepareLoad(Scenes toLoad)
         {
             Logger.Log($"[SceneTransitionService] Transition Request to {toLoad}");
+            Logger.Log($"[SceneTransitionService] Entering BEFORE Grace Period");
             _state.Value = TransitionState.Before;
 
             // ToDo Dispose
