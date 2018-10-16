@@ -25,34 +25,61 @@ namespace Assets.Source.Services
     {
         public const float LOADING_GRACE_PERIOD_SECONDS = 0.5f;
 
-        public Scenes CurrentScene { get; private set; }
-        public ReactiveProperty<TransitionState> State { get; private set; }
+        private readonly ReactiveProperty<Scenes> _currentScene;
+        public ReadOnlyReactiveProperty<Scenes> CurrentScene { get; private set; }
 
-        public BoolReactiveProperty IsLoading =  new BoolReactiveProperty(false);  
+        private readonly ReactiveProperty<TransitionState> _state;
+        public ReadOnlyReactiveProperty<TransitionState> State { get; private set; }
+
+        private readonly BoolReactiveProperty _isLoading;
+        public ReadOnlyReactiveProperty<bool> IsLoading { get; private set; }
 
 
         public SceneTransitionService()
-        {            
-            CurrentScene = Scenes.Init;
-            State = new ReactiveProperty<TransitionState>(TransitionState.None);
+        {           
+            _currentScene = new ReactiveProperty<Scenes>(Scenes.Init);
+            CurrentScene = _currentScene.ToReadOnlyReactiveProperty();
 
-            // ToDo Dispose
-            State.Subscribe(state => { IsLoading.Value = !state.Equals(TransitionState.None); });
+            _state = new ReactiveProperty<TransitionState>(TransitionState.None);
+            State = _state.ToReadOnlyReactiveProperty();
 
+            _isLoading = new BoolReactiveProperty(false);
+            IsLoading = _isLoading.ToReadOnlyReactiveProperty();
+
+            SetupSubscriptions();
+            SetupSceneChangedEvent();
+        }
+
+
+        // ToDo Dispose
+        private void SetupSubscriptions()
+        {
+            State.Subscribe(state =>
+            {
+                _isLoading.Value = !state.Equals(TransitionState.None);
+                Logger.Log($"[SceneTransitionService] Transition State changed to [{state}]");
+            });
+
+            CurrentScene.Subscribe(scene => Logger.Log($"[SceneTransitionService] Scene changed to [{scene}]"));
+        }
+
+
+        private void SetupSceneChangedEvent()
+        {
             SceneManager.sceneLoaded += (Scene s, LoadSceneMode lm) =>
             {
                 Scenes parsed;
                 Enum.TryParse<Scenes>(s.name, out parsed);
-                CurrentScene = parsed;
+                _currentScene.Value = parsed;
 
-                State.Value = TransitionState.After;
+                _state.Value = TransitionState.After;
 
                 // ToDo Dispose
                 Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
-                    .Subscribe(_ => 
+                    .Subscribe(_ =>
                     {
-                        State.Value = TransitionState.None;
-                        Logger.Log("Loading Done! Current Scene: {0}", CurrentScene);                        
+                        _state.Value = TransitionState.None;
+                        Logger.Log($"[SceneTransitionService] Loading Done! Current Scene: {CurrentScene.Value}");
                     });
             };
         }
@@ -60,8 +87,8 @@ namespace Assets.Source.Services
 
         private void PrepareLoad(Scenes toLoad)
         {
-            Logger.Log("Scene Transition Request to {0}", toLoad);
-            State.Value = TransitionState.Before;
+            Logger.Log($"[SceneTransitionService] Transition Request to {toLoad}");
+            _state.Value = TransitionState.Before;
 
             // ToDo Dispose
             Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
@@ -74,8 +101,8 @@ namespace Assets.Source.Services
 
         private void Load(Scenes toLoad)
         {            
-            Logger.Log("Loading Async...");
-            State.Value = TransitionState.Loading;
+            Logger.Log("[SceneTransitionService] Loading Async...");
+            _state.Value = TransitionState.Loading;
 
             SceneManager.LoadSceneAsync(toLoad.ToString());
         }
