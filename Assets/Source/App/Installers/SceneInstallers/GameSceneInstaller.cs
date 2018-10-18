@@ -17,8 +17,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public PauseView PauseView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
         [SerializeField] public ShopView ShopView;
-        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
-        [SerializeField] public UserInputView UserInputView;
+        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;        
 
         public override void InstallBindings()
         {
@@ -41,9 +40,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInstance(ShopConfirmResetView).AsSingle();
             Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
-
-            Container.BindInstance(UserInputView).AsSingle();
-            Container.Bind<UserInputController>().AsSingle().NonLazy();
 
             Container.Bind<AudioSettingsController>().AsSingle().NonLazy();
 

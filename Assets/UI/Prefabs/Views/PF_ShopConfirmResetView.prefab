@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 223668334703135188}
   - component: {fileID: 114496327275336662}
   - component: {fileID: 114890644748519334}
+  - component: {fileID: 114529765840260022}
   m_Layer: 5
   m_Name: PF_ShopConfirmResetView
   m_TagString: Untagged
@@ -735,11 +736,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2d9f84ee1660c4b9a7b8071f08541c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closeButton: {fileID: 114250689210562742}
   _startClosed: 1
+  _closeButton: {fileID: 114250689210562742}
+  _closedPosition: {x: 0, y: 0, z: 0}
   _panelSliderConfig:
     slideInFrom: 0
     useBounce: 0
+    SoundEffectsEnabled: 1
+    SoundEffectsEnabledOnInstant: 0
     slideTimeSeconds: 0.5
   _confirmButton: {fileID: 114331101909881118}
 --- !u!114 &114516901735400804
@@ -755,6 +759,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Horizontal: 1
   m_Veritical: 0
+--- !u!114 &114529765840260022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059571258341352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb219b23cdf4b314f94a27bca3cc8012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114556434212245842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1282,7 +1297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 12}
-  m_SizeDelta: {x: 320, y: 104}
+  m_SizeDelta: {x: 300, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224510422094632982
 RectTransform:
@@ -1319,7 +1334,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 12}
-  m_SizeDelta: {x: 320, y: 104}
+  m_SizeDelta: {x: 300, y: 98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224719234900863162
 RectTransform:
