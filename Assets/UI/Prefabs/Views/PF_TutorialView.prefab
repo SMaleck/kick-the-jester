@@ -494,11 +494,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441f1ba01f8b0724ea52c0af843b3609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closeButton: {fileID: 0}
   _startClosed: 1
+  _closeButton: {fileID: 0}
+  _closedPosition: {x: 1920, y: 0, z: 0}
   _panelSliderConfig:
     slideInFrom: 4
     useBounce: 0
+    SoundEffectsEnabled: 1
+    SoundEffectsEnabledOnInstant: 0
     slideTimeSeconds: 0.5
   _steps:
   - {fileID: 225725955033511890}

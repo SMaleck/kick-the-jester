@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
+    // ToDo [IMPORTANT] since this is a button, it reacts to buttonUp
     public class UserInputView : AbstractView
     {
         [SerializeField] private List<Button> _screenSpaceButtons;

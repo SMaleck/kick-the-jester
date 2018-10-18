@@ -5,52 +5,58 @@ using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Util.UI
-{
-    // ToDo [IMPORTANT] Panels don't slide far enough
+{   
     public class PanelSlider
     {
         private readonly PanelSliderConfig _config;
 
-        private readonly RectTransform _owner;
-        private readonly Rect _container;
-        private readonly Vector3 _hiddenPosition;
-        private Vector3 _shownPosition;
+        private readonly RectTransform _owner;        
+        private readonly Vector3 _shownPosition;
+        private readonly Vector3 _hiddenPosition;        
 
         private float SlideSeconds => _config.slideInFrom.Equals(SlideDirection.Instant) ? 0 : _config.slideTimeSeconds;
 
         public ReactiveCommand OnOpenCompleted = new ReactiveCommand();
         public ReactiveCommand OnCloseCompleted = new ReactiveCommand();
 
-
-        public PanelSlider(RectTransform owner, Rect container, PanelSliderConfig config)
-            : this(owner, container, config, owner.localPosition)
-        { }
-
-        public PanelSlider(RectTransform owner, Rect container, PanelSliderConfig config, Vector3 shownPosition)
+        // ToDo Auto-Setup doesn't work correctly. HiddenPosition is still within bounds
+        protected PanelSlider(RectTransform owner, RectTransform container, PanelSliderConfig config)            
         {
             _config = config;
-            _owner = owner;
-            _container = container;
-            _shownPosition = shownPosition;
-
-            _hiddenPosition = GetHiddenPosition();
+            _owner = owner;            
+            _shownPosition = owner.localPosition;
+            _hiddenPosition = GetHiddenPosition(container);
         }
 
-        private Vector3 GetHiddenPosition()
+        public PanelSlider(RectTransform owner, PanelSliderConfig config, Vector3 shownPosition, Vector3 hiddenPosition)
         {
+            _config = config;
+            _owner = owner;            
+            _shownPosition = shownPosition;
+            _hiddenPosition = hiddenPosition;            
+        }
+
+        private Vector3 GetHiddenPosition(RectTransform container)
+        {
+            // HACK This only works because panels are fullscreen and is NOT general purpose
+            // For some reason the values do not reflect the actual fullscreen width/height but are smaller
+            var yDistance = container.rect.height * 2.2f;
+            var xDistance = container.rect.width * 2.2f;
+
             switch (_config.slideInFrom)
             {
                 case SlideDirection.Top:
-                    return new Vector3(_shownPosition.x, _container.height, _shownPosition.z);
+                    var y = _owner.rect.height;
+                    return new Vector3(_shownPosition.x, _shownPosition.y + yDistance, _shownPosition.z);
 
                 case SlideDirection.Bottom:
-                    return new Vector3(_shownPosition.x, -_container.height, _shownPosition.z);
+                    return new Vector3(_shownPosition.x, _shownPosition.y - yDistance, _shownPosition.z);
 
                 case SlideDirection.Left:
-                    return new Vector3(-_container.width, _shownPosition.y, _shownPosition.z);
+                    return new Vector3(_shownPosition.x - xDistance, _shownPosition.y, _shownPosition.z);
 
                 case SlideDirection.Right:
-                    return new Vector3(_container.width, _shownPosition.y, _shownPosition.z);
+                    return new Vector3(_shownPosition.x + xDistance, _shownPosition.y, _shownPosition.z);
 
                 default:
                     return Vector3.zero;
@@ -93,7 +99,7 @@ namespace Assets.Source.Util.UI
 
             if (_config.useBounce)
             {
-                tweener.SetEase(Ease.OutBounce);
+                tweener.SetEase(easeType);
             }
 
             return tweener;

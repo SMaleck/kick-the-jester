@@ -2431,11 +2431,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab245fefc15e6bc47ab97e84d273f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closeButton: {fileID: 114040786593125240}
   _startClosed: 1
+  _closeButton: {fileID: 114040786593125240}
+  _closedPosition: {x: 0, y: 1080, z: 0}
   _panelSliderConfig:
     slideInFrom: 1
     useBounce: 1
+    SoundEffectsEnabled: 1
+    SoundEffectsEnabledOnInstant: 0
     slideTimeSeconds: 0.5
   panelDefault: {fileID: 1477484326797860}
   panelWeb: {fileID: 1007224850195074}

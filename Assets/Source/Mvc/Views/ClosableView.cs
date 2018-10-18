@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo [IMPORTANT] Slider is not going to screen edge    
     public class ClosableView : AbstractView
     {
         [Header("Closable Settings")]
-        [SerializeField] private Button _closeButton;
-        [SerializeField] private bool _startClosed = true;        
+        [SerializeField] private bool _startClosed = true;
+        [SerializeField] private Button _closeButton;        
+        [SerializeField] private Vector3 _closedPosition;
 
         [Header("Transition")]
         [SerializeField] private PanelSliderConfig _panelSliderConfig;
@@ -18,17 +18,15 @@ namespace Assets.Source.Mvc.Views
         private PanelSlider _panelSlider;
 
         public bool IsOpen => gameObject.activeSelf;
-
         public ReactiveCommand OnOpenCompleted = new ReactiveCommand();
         public ReactiveCommand OnCloseCompleted = new ReactiveCommand();
 
 
         public override void Setup()
         {
-            var ownerTransform = this.transform as RectTransform;
-            var containerTransform = GetComponentInParent<Canvas>().transform as RectTransform;
+            var ownerTransform = this.transform as RectTransform;            
 
-            _panelSlider = new PanelSlider(ownerTransform, containerTransform.rect, _panelSliderConfig);
+            _panelSlider = new PanelSlider(ownerTransform, _panelSliderConfig, ownerTransform.localPosition, _closedPosition);
 
             _panelSlider.OnOpenCompleted.Subscribe(_ => OnOpenCompleted.Execute());
             _panelSlider.OnCloseCompleted.Subscribe(_ => OnCloseCompleted.Execute());
@@ -38,7 +36,7 @@ namespace Assets.Source.Mvc.Views
                 .AddTo(this);
 
             if (_startClosed)
-            {                
+            {
                 _panelSlider.SetClosed();
             }
             else
@@ -49,13 +47,13 @@ namespace Assets.Source.Mvc.Views
 
 
         public virtual void Open()
-        {            
+        {
             _panelSlider.SlideOpen();
         }
 
 
         public virtual void Close()
-        {            
+        {
             _panelSlider.SlideClosed();
         }
     }

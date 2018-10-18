@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
+    // ToDo [IMPORTANT] Add external link icons
     public class CreditsView : ClosableView
     {
         [SerializeField] private GameObject panelDefault;
