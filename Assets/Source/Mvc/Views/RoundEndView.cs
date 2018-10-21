@@ -50,7 +50,7 @@ namespace Assets.Source.Mvc.Views
             _currencyText.text = "";
         }
 
-        // ToDo Improve Sequence, to show item only when it starts counting up
+
         public void ShowCurrencyResults(IDictionary<string, int> results, int currencyAmountAtStart)
         {
             List<CurrencyItem> currencyItems = new List<CurrencyItem>();
@@ -91,7 +91,10 @@ namespace Assets.Source.Mvc.Views
             var seq = DOTween.Sequence();
 
             items.ForEach(item =>
-            {                
+            {
+                item.gameObject.SetActive(false);
+
+                seq.AppendCallback(() => { item.gameObject.SetActive(true); });
                 seq.Append(CreateResultItemTweener(item, results[item.Label]));
             });
 
