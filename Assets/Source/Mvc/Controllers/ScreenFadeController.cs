@@ -1,5 +1,4 @@
-﻿using Assets.Source.App;
-using Assets.Source.Mvc.Views;
+﻿using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using DG.Tweening;
 using UniRx;
@@ -12,7 +11,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SceneTransitionService _sceneTransitionService;
 
         private readonly float _fadeSeconds;
-        private Tweener fadeTweener;
+        private Tweener _fadeTweener;
 
         public ScreenFadeController(ScreenFadeView view, SceneTransitionService sceneTransitionService)
             : base(view)
@@ -31,14 +30,14 @@ namespace Assets.Source.Mvc.Controllers
 
 
         private void OnTransitionStateChange(TransitionState state)
-        {            
+        {
             switch (state)
             {
-                case TransitionState.Before:                                     
+                case TransitionState.Before:
                     Fade(0, 1);
                     break;
 
-                case TransitionState.After:                    
+                case TransitionState.After:
                     Fade(1, 0);
                     break;
 
@@ -50,9 +49,9 @@ namespace Assets.Source.Mvc.Controllers
 
         private void Fade(float from, float to)
         {
-            fadeTweener?.Kill();
+            _fadeTweener?.Kill();
 
-            fadeTweener = DOTween.To(value => _view.CurtainAlpha.Value = value, from, to, _fadeSeconds)
+            _fadeTweener = DOTween.To(value => _view.CurtainAlpha.Value = value, from, to, _fadeSeconds)
                 .SetEase(Ease.InCubic);
         }
     }
