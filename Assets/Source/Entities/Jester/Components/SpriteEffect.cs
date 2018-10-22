@@ -36,17 +36,18 @@ namespace Assets.Source.Entities.Jester.Components
                 .Subscribe(_ => OnKicked())
                 .AddTo(owner);
 
-            owner.OnShot
+            Owner.OnShot
                 .Subscribe(_ => OnShot())
-                .AddTo(owner);
+                .AddTo(Owner);
 
-            owner.Collisions.OnGround
+            Owner.Collisions.OnGround
+                .Where(_ => _listenForImpacts)
                 .Subscribe(_ => OnGround())
-                .AddTo(owner);
+                .AddTo(Owner);
 
-            owner.Collisions.OnBoost
+            Owner.Collisions.OnBoost
                 .Subscribe(_ => OnBoost())
-                .AddTo(owner);
+                .AddTo(Owner);
 
             IsPaused
                 .Subscribe(OnPause)

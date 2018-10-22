@@ -10,13 +10,20 @@ namespace Assets.Source.Entities.Jester.Components
         private readonly JesterSoundEffectsConfig _config;
         private readonly AudioService _audioService;
 
+        private bool _listenForImpacts = false;
+
         public SoundEffect(JesterEntity owner, JesterSoundEffectsConfig config, AudioService audioService)
             : base(owner)
         {
             _config = config;
             _audioService = audioService;
 
+            Owner.OnKicked
+                .Subscribe(_ => _listenForImpacts= true)
+                .AddTo(owner);
+
             owner.Collisions.OnGround
+                .Where(_ => _listenForImpacts)
                 .Subscribe(_ => OnGroundImpact())
                 .AddTo(owner);
         }
