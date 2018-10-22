@@ -17,6 +17,7 @@ namespace Assets.Source.App.Installers
             Container.BindInstance(GameConfig.CameraConfig);
             Container.BindInstance(GameConfig.AudioConfig);
             Container.BindInstance(GameConfig.BalancingConfig);
+            Container.BindInstance(GameConfig.BootConfig);
 
             Container.BindInstance(AudioEventConfig);
         }

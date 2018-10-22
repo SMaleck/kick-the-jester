@@ -18,10 +18,15 @@ MonoBehaviour:
     OffsetX: 3.5
     OvertakeOffsetX: 5.5
     OvertakeSeconds: 0.8
-    RelativeVelocityThresholdForShake: 0.5
+    RelativeVelocityThresholdForShake: 0.85
     ShakeSeconds: 0.05
   AudioConfig:
     MinPitch: 0.65
     MaxPitch: 1.5
   BalancingConfig:
     MeterToGoldFactor: 0.5
+  BootConfig:
+    ForceDirection: {x: 1, y: 1, z: 1}
+    ForceFactorChangeSeconds: 0.5
+    MinForceFactor: 0.01
+    MaxForceFactor: 1

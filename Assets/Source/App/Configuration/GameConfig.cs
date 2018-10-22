@@ -10,6 +10,7 @@ namespace Assets.Source.App.Configuration
         public CameraConfig CameraConfig = new CameraConfig();
         public AudioConfig AudioConfig = new AudioConfig();
         public BalancingConfig BalancingConfig = new BalancingConfig();
+        public BootConfig BootConfig = new BootConfig();
     }
 
     [Serializable]
@@ -47,6 +48,21 @@ namespace Assets.Source.App.Configuration
     public class BalancingConfig
     {
         [Range(0.01f, 5f)]
-        public float MeterToGoldFactor = 0.5f;
+        public float MeterToGoldFactor = 0.5f;        
+    }
+
+    [Serializable]
+    public class BootConfig
+    {
+        public Vector3 ForceDirection = new Vector3(1, 1, 1);
+
+        [Range(0.01f, 2f)]
+        public float ForceFactorChangeSeconds = 0.9f;
+
+        [Range(0f, 5f)]
+        public float MinForceFactor = 0.1f;
+
+        [Range(0f, 5f)]
+        public float MaxForceFactor = 1f;
     }
 }
