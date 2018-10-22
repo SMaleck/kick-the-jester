@@ -90,7 +90,7 @@ MonoBehaviour:
     Repeat: 1
     Speed: 0.9
     Sprite: {fileID: 21300000, guid: 3fc716de6e08758459efda1cca367159, type: 3}
-    Position: {x: 0, y: 61.3, z: 0}
+    Position: {x: 0, y: 50, z: 0}
     Scale: {x: 1, y: 1.5, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -99
@@ -98,7 +98,7 @@ MonoBehaviour:
     Repeat: 1
     Speed: 0.9
     Sprite: {fileID: 21300000, guid: 3fc716de6e08758459efda1cca367159, type: 3}
-    Position: {x: 0, y: 97, z: 0}
+    Position: {x: 0, y: 92, z: 0}
     Scale: {x: 1, y: 1.8, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -99
@@ -106,7 +106,7 @@ MonoBehaviour:
     Repeat: 1
     Speed: 0.9
     Sprite: {fileID: 21300000, guid: 3fc716de6e08758459efda1cca367159, type: 3}
-    Position: {x: 0, y: 142.1, z: 0}
+    Position: {x: 0, y: 137.1, z: 0}
     Scale: {x: 1, y: 2, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -100
