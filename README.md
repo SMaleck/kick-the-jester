@@ -24,9 +24,6 @@ Made out of passion for creating games for a living.
 The Game needs to be started from the `Title` scene, since this initialises the basic layers.
 You can use the hotkey `CTRL + L` from anywhere to start the correct scene.
 
-## Using FontAwesome in TextMesh Pro
-[Unity Answers How To](https://answers.unity.com/questions/1434980/how-to-add-font-awesome-into-unity-using-textmesh.html)
-For the custom range use 61440-62805
 
 - - - -
 # **Asset Sources & Credits**
@@ -42,10 +39,12 @@ Drawn and animated by [Jiubeck](https://jiubeck.deviantart.com/)
 
 
 ## *Unity Asset Store Resources*
+* [Zenject Dependency Injection IOC](https://assetstore.unity.com/packages/tools/integration/zenject-dependency-injection-ioc-17758)
 * [UniRx - Reactive Extensions for Unity](https://assetstore.unity.com/packages/tools/unirx-reactive-extensions-for-unity-17276)
 * [JSON .NET For Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347)
+* [DOTWeen](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676)
 * [TextMesh Pro](https://assetstore.unity.com/packages/essentials/beta-projects/textmesh-pro-84126)
-* [LeanTween](https://assetstore.unity.com/packages/tools/animation/leantween-3595)
+
 
 ## *Paid Unity Asset Store Resources*
 * [Arrow Mobile UI for UGUI](https://assetstore.unity.com/packages/2d/gui/arrow-mobile-ui-for-ugui-64369)
