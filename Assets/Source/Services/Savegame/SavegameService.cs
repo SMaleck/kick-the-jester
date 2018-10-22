@@ -67,8 +67,12 @@ namespace Assets.Source.Services.Savegame
         {
             _disposer?.Dispose();
 
+            var isFirstStart = _saveGameStorageModel.Profile.IsFirstStart.Value;
+
             _saveGameStorageModel.Profile = new ProfileStorageModel();
             _saveGameStorageModel.Upgrades = new UpgradesStorageModel();
+
+            Profile.IsFirstStart.Value = isFirstStart;
 
             Save();
             SetupModelSubscriptions();

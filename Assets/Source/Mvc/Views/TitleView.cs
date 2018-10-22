@@ -12,7 +12,7 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private Button _creditsButton;
 
-        [SerializeField] public AudioClip _TransitionMusic;
+        [SerializeField] public AudioClip TransitionMusic;
 
         public ReactiveCommand OnStartClicked = new ReactiveCommand();
         public ReactiveCommand OnSettingsClicked = new ReactiveCommand();

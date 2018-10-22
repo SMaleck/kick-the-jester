@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Source.Services.Particles
 {
-    // ToDo ResourcePools should be more geenric, so PAUSE interface can be in base class
+    // ToDo ResourcePools should be more generic, so PAUSE interface can be in base class
     public class ParticleService
     {
         private readonly PrefabResourcePool<PoolableParticleSystem> _particleSystems;
@@ -16,7 +16,7 @@ namespace Assets.Source.Services.Particles
 
         public void PlayAt(GameObject pfx, Vector3 position)
         {
-            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfx);
+            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfx);            
 
             slot.Position = position;
             slot.Play();

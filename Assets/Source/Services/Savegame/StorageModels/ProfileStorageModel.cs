@@ -6,7 +6,7 @@ namespace Assets.Source.Services.Savegame.StorageModels
     public class ProfileStorageModel : AbstractPersistentModel
     {
         [JsonIgnore]
-        public BoolReactiveProperty IsFirstStart = new BoolReactiveProperty();
+        public BoolReactiveProperty IsFirstStart = new BoolReactiveProperty(true);
         public bool IsFirstStartData
         {
             get { return IsFirstStart.Value; }
@@ -35,6 +35,6 @@ namespace Assets.Source.Services.Savegame.StorageModels
         {
             get { return RoundsPlayed.Value; }
             set { RoundsPlayed.Value = value; }
-        }       
+        }
     }
 }

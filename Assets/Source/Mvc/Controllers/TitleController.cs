@@ -14,7 +14,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly AudioService _audioService;
 
-        private const float StartDelayFactor = 0.4f;
+        private const float StartDelayFactor = 0.3f;
 
         public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
             : base(view)
@@ -46,7 +46,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void OnStartClicked()
         {
-            _audioService.PlayMusic(_view._TransitionMusic, false);
+            _audioService.PlayMusic(_view.TransitionMusic, false);
             
             if (_model.IsFirstStart.Value)
             {
@@ -55,7 +55,7 @@ namespace Assets.Source.Mvc.Controllers
             }
 
 
-            var startDelaySeconds = _view._TransitionMusic.length * StartDelayFactor;
+            var startDelaySeconds = _view.TransitionMusic.length * StartDelayFactor;
 
             Observable
                 .Timer(TimeSpan.FromSeconds(startDelaySeconds))
