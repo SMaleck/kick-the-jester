@@ -48,7 +48,7 @@ MonoBehaviour:
     SortingOrder: -11
     UseSpeed: 1
     Repeat: 1
-    Speed: 0.65
+    Speed: 0.6
     Sprite: {fileID: 21300000, guid: fb1787dd10fbf8545a3926f517325bec, type: 3}
     Position: {x: 0, y: 15, z: 0}
     Scale: {x: 1, y: 1, z: 1}
@@ -79,8 +79,24 @@ MonoBehaviour:
   - SortingLayer: ParallaxBackground
     SortingOrder: -80
     UseSpeed: 1
-    Repeat: 0
+    Repeat: 1
     Speed: 0.999
+    Sprite: {fileID: 21300000, guid: 4f60b657dd2dde447a24d6b77d4ee09f, type: 3}
+    Position: {x: 0, y: 28, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -80
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.999
+    Sprite: {fileID: 21300000, guid: f6ebe7682c3647d4fb430e98e5858d17, type: 3}
+    Position: {x: 0, y: 28, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -80
+    UseSpeed: 1
+    Repeat: 0
+    Speed: 0.99
     Sprite: {fileID: 21300000, guid: fdee8cc506c03494b8b5c330840f62e8, type: 3}
     Position: {x: 25, y: 19.61, z: 0}
     Scale: {x: 3, y: 3, z: 1}
