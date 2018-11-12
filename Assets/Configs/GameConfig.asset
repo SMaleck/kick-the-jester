@@ -20,6 +20,8 @@ MonoBehaviour:
     OvertakeSeconds: 0.8
     RelativeVelocityThresholdForShake: 0.85
     ShakeSeconds: 0.05
+    FollowMaxY: 230.8
+    JesterOutOfCameraY: 237.5
   AudioConfig:
     MinPitch: 0.65
     MaxPitch: 1.5

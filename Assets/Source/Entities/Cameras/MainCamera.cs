@@ -10,13 +10,14 @@ namespace Assets.Source.Entities.Cameras
 {
     public class MainCamera : AbstractMonoEntity
     {
-        [SerializeField] private Camera _camera;
+        [SerializeField] private Camera _camera;        
+        private float _minFollowY;
+
         public Camera Camera => _camera;
 
         private CameraConfig _config;
         private JesterEntity _jester;
-        private FlightStatsModel _flighStatsModel;
-        private Vector3 _origin;
+        private FlightStatsModel _flighStatsModel;       
 
         private bool _shouldFollow = true;
         private float OffsetX => _config.OffsetX;
@@ -63,7 +64,8 @@ namespace Assets.Source.Entities.Cameras
             _config = config;
             _jester = jester;
             _flighStatsModel = flighStatsModel;
-            _origin = transform.position;
+
+            _minFollowY = Position.y;
         }
 
         public override void Initialize()
@@ -94,7 +96,7 @@ namespace Assets.Source.Entities.Cameras
 
         private float GetTargetY()
         {
-            return Mathf.Clamp(_jester.Position.y, _origin.y, float.MaxValue);
+            return Mathf.Clamp(_jester.Position.y, _minFollowY, _config.FollowMaxY);
         }
 
         private void OnLanded()

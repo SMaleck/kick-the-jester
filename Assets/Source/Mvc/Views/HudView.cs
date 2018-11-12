@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Util;
 using Assets.Source.Util.UI;
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -16,12 +17,12 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] TMP_Text _distanceText;
         [SerializeField] TMP_Text _heightText;
         [SerializeField] TMP_Text _bestDistanceText;
-        
+
         [Header("Tomatoes")]
         [SerializeField] GameObject _shotCountPanel;
         [SerializeField] GameObject _pfShotCountIcon;
         private List<Image> shotCountIcons = new List<Image>();
-        
+
         [Header("Money Gain Floating Numbers")]
         [SerializeField] RectTransform _moneyGainPanel;
         [SerializeField] GameObject _pfMoneyGainText;
@@ -31,6 +32,12 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] Button _pauseButton;
         [SerializeField] UIProgressBar _velocityBar;
         [SerializeField] UIProgressBar _kickForceBar;
+
+        [Header("Out of Camera Indicator")]
+        [SerializeField] RectTransform _outOfCameraIndicator;
+        [SerializeField] float _indicatorAnimStrength = 2;
+        [SerializeField] float _indicatorAnimSpeedSeconds = 0.8f;
+
 
         public float Distance
         {
@@ -57,21 +64,43 @@ namespace Assets.Source.Mvc.Views
             set { _kickForceBar.fillAmount = value; }
         }
 
+        public bool OutOfCameraIndicatorVisible
+        {
+            set { _outOfCameraIndicator.gameObject.SetActive(value); }
+        }
+
         public ReactiveCommand OnPauseButtonClicked = new ReactiveCommand();
 
 
         public override void Setup()
-        {            
+        {
             _pauseButton.OnClickAsObservable()
                        .Subscribe(_ => OnPauseButtonClicked.Execute())
                        .AddTo(this);
 
-            
+
             _velocityBar.gameObject.SetActive(false);
             _kickForceBar.gameObject.SetActive(true);
             _shotCountPanel.gameObject.SetActive(false);
+
+            SetupIndicatorTweener();
         }
-       
+
+        private void SetupIndicatorTweener()
+        {
+            OutOfCameraIndicatorVisible = false;
+
+            var start = _outOfCameraIndicator.anchoredPosition.y;
+            var end = start - _indicatorAnimStrength;
+
+            DOTween.To((value) =>
+                {
+                    _outOfCameraIndicator.anchoredPosition = new Vector2(_outOfCameraIndicator.anchoredPosition.x, value);
+                },
+                start, end, _indicatorAnimSpeedSeconds)
+                .SetEase(Ease.OutBounce)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
 
         public void StartRound()
         {
@@ -79,7 +108,7 @@ namespace Assets.Source.Mvc.Views
             _kickForceBar.gameObject.SetActive(false);
             _shotCountPanel.gameObject.SetActive(true);
         }
-        
+
         public void ShowFloatingCoinAmount(float gainedAmount)
         {
             if (gainedAmount <= 0) { return; }
@@ -96,7 +125,7 @@ namespace Assets.Source.Mvc.Views
 
             fValue.StartFloating($"{gainedAmount} {Constants.TMP_SPRITE_COIN}");
         }
-      
+
 
         public void OnShotCountChanged(int count)
         {

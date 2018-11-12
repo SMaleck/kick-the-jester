@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73345c170ff95aa4daeee1c077832fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _verticalMoonWobble: 0.8
+  _moonWobbleSpeedSeconds: 3
 --- !u!212 &212184640291476580
 SpriteRenderer:
   m_ObjectHideFlags: 1

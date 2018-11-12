@@ -35,6 +35,9 @@ namespace Assets.Source.App.Configuration
 
         [Range(0f, 1f)]
         public float ShakeSeconds = 0.1f;
+
+        public float FollowMaxY;
+        public float JesterOutOfCameraY = 237.5f;
     }
 
     [Serializable]

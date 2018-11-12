@@ -1,4 +1,5 @@
-﻿using Assets.Source.Mvc.Models;
+﻿using Assets.Source.App.Configuration;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using UniRx;
 
@@ -11,9 +12,15 @@ namespace Assets.Source.Mvc.Controllers
         private readonly FlightStatsModel _flightStatsModel;
         private readonly ProfileModel _profileModel;
         private readonly UserInputModel _userInputModel;
+        private readonly CameraConfig _cameraConfig;
 
-
-        public HudController(HudView view, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, ProfileModel profileModel, UserInputModel userInputModel)
+        public HudController(
+            HudView view, 
+            GameStateModel gameStateModel, 
+            FlightStatsModel flightStatsModel, 
+            ProfileModel profileModel, 
+            UserInputModel userInputModel,
+            CameraConfig cameraConfig)
             : base(view)
         {
             _view = view;
@@ -23,6 +30,7 @@ namespace Assets.Source.Mvc.Controllers
             _flightStatsModel = flightStatsModel;
             _profileModel = profileModel;
             _userInputModel = userInputModel;
+            _cameraConfig = cameraConfig;
 
             _view.OnPauseButtonClicked
                 .Subscribe(_ => _userInputModel.OnPause.Execute())
@@ -47,7 +55,7 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _flightStatsModel.Height
-                .Subscribe(value => _view.Height = value)
+                .Subscribe(OnHeightChanged)
                 .AddTo(Disposer);
 
             _flightStatsModel.RelativeVelocity
@@ -66,6 +74,12 @@ namespace Assets.Source.Mvc.Controllers
             _flightStatsModel.ShotsRemaining
                 .Subscribe(_view.OnShotCountChanged)
                 .AddTo(Disposer);
+        }
+
+        private void OnHeightChanged(float height)
+        {
+            _view.Height = height;
+            _view.OutOfCameraIndicatorVisible = height >= _cameraConfig.JesterOutOfCameraY;
         }
 
         private void SetupProfileModel()

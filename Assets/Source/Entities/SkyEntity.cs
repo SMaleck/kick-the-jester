@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Entities.Jester;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -11,6 +12,9 @@ namespace Assets.Source.Entities
         private Vector3 _origin;
         private float xOffset;
 
+        [Range(0f, 10f)]
+        [SerializeField] private float _verticalMoonWobble = 0.8f;
+        [SerializeField] private float _moonWobbleSpeedSeconds = 3;
 
         [Inject]
         private void Inject(JesterEntity jesterEntity)
@@ -26,25 +30,16 @@ namespace Assets.Source.Entities
             Observable.EveryLateUpdate()
                 .Subscribe(_ => OnLateUpdate())
                 .AddTo(this);
+
+            var targetVector = Position + (Vector3.up * _verticalMoonWobble);
+            GoTransform.DOMove(targetVector, _moonWobbleSpeedSeconds)
+                .SetEase(Ease.InOutCubic)
+                .SetLoops(-1, LoopType.Yoyo);
         }
 
         private void OnLateUpdate()
         {
-            if (_jesterEntity.Position.y > _origin.y)
-            {
-                FollowBoth();
-                return;
-            }
-
             FollowHorizontal();
-        }
-
-        private void FollowBoth()
-        {
-            var xPos = _jesterEntity.Position.x + xOffset;
-            var yPos = _jesterEntity.Position.y;
-
-            Position = new Vector3(xPos, yPos, Position.z);
         }
 
         private void FollowHorizontal()
