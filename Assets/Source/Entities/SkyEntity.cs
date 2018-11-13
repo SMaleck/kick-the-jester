@@ -11,6 +11,8 @@ namespace Assets.Source.Entities
         private JesterEntity _jesterEntity;
         private Vector3 _origin;
         private float xOffset;
+        
+        [SerializeField] private Transform _moon;
 
         [Range(0f, 10f)]
         [SerializeField] private float _verticalMoonWobble = 0.8f;
@@ -31,8 +33,8 @@ namespace Assets.Source.Entities
                 .Subscribe(_ => OnLateUpdate())
                 .AddTo(this);
 
-            var targetVector = Position + (Vector3.up * _verticalMoonWobble);
-            GoTransform.DOMove(targetVector, _moonWobbleSpeedSeconds)
+            var targetVector = _moon.localPosition + (Vector3.up * _verticalMoonWobble);
+            _moon.DOLocalMove(targetVector, _moonWobbleSpeedSeconds)
                 .SetEase(Ease.InOutCubic)
                 .SetLoops(-1, LoopType.Yoyo);
         }

@@ -157,7 +157,7 @@ MonoBehaviour:
     Position: {x: 3.68, y: 225.11, z: 0}
     Scale: {x: -1.5, y: 1, z: 1}
   - SortingLayer: ParallaxBackground
-    SortingOrder: -100
+    SortingOrder: -200
     UseSpeed: 0
     Repeat: 1
     Speed: 0
