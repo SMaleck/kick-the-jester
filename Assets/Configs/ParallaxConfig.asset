@@ -125,6 +125,38 @@ MonoBehaviour:
     Position: {x: 0, y: 137.1, z: 0}
     Scale: {x: 1, y: 2, z: 1}
   - SortingLayer: ParallaxBackground
+    SortingOrder: -99
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.95
+    Sprite: {fileID: 21300000, guid: 5d0cee6ce54c0d6479b1ad8bc1f1f22a, type: 3}
+    Position: {x: -5.3, y: 224.3, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -99
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.95
+    Sprite: {fileID: 21300000, guid: 5d0cee6ce54c0d6479b1ad8bc1f1f22a, type: 3}
+    Position: {x: 15.03, y: 224.05, z: 0}
+    Scale: {x: -1.5, y: 1, z: 1}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -99
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.95
+    Sprite: {fileID: 21300000, guid: 948a661a547af3b448de01698c4c7ff5, type: 3}
+    Position: {x: 3.5, y: 226.4, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -99
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.95
+    Sprite: {fileID: 21300000, guid: 948a661a547af3b448de01698c4c7ff5, type: 3}
+    Position: {x: 3.68, y: 225.11, z: 0}
+    Scale: {x: -1.5, y: 1, z: 1}
+  - SortingLayer: ParallaxBackground
     SortingOrder: -100
     UseSpeed: 0
     Repeat: 1
