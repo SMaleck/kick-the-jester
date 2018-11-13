@@ -88,7 +88,7 @@ MonoBehaviour:
     SortingOrder: -79
     UseSpeed: 1
     Repeat: 1
-    Speed: 0.99
+    Speed: 0.999
     Sprite: {fileID: 21300000, guid: f6ebe7682c3647d4fb430e98e5858d17, type: 3}
     Position: {x: 0, y: 18, z: 0}
     Scale: {x: 1, y: 1, z: 1}
@@ -96,10 +96,10 @@ MonoBehaviour:
     SortingOrder: -78
     UseSpeed: 1
     Repeat: 0
-    Speed: 0.99
-    Sprite: {fileID: 21300000, guid: fdee8cc506c03494b8b5c330840f62e8, type: 3}
-    Position: {x: 25, y: 17, z: 0}
-    Scale: {x: 3, y: 3, z: 1}
+    Speed: 0.997
+    Sprite: {fileID: 21300000, guid: a272136a533b9714f94783ddd6148bbd, type: 3}
+    Position: {x: 15, y: 19.1, z: 0}
+    Scale: {x: 2, y: 2, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -99
     UseSpeed: 1
