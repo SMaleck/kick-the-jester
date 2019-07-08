@@ -1,5 +1,6 @@
 using Assets.Source.App.Configuration;
 using Assets.Source.Entities.Jester.Config;
+using Assets.Source.Features.Upgrades.Data;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +13,9 @@ namespace Assets.Source.App.Installers
         [SerializeField] private AudioEventConfig AudioEventConfig;
 
         [Header("Jester Configs")]
-        [SerializeField] private JesterSpriteEffectsConfig JesterSpriteEffectsConfig;
+        [SerializeField] private JesterSpriteEffectsConfig _jesterSpriteEffectsConfig;
         [SerializeField] private JesterSoundEffectsConfig _jesterSoundEffectsConfig;
+        [SerializeField] private UpgradeTreeConfig _upgradeTreeConfig;
 
         public override void InstallBindings()
         {
@@ -25,8 +27,9 @@ namespace Assets.Source.App.Installers
 
             Container.BindInstance(AudioEventConfig);
 
-            Container.BindInstance(JesterSpriteEffectsConfig);
+            Container.BindInstance(_jesterSpriteEffectsConfig);
             Container.BindInstances(_jesterSoundEffectsConfig);
+            Container.BindInstances(_upgradeTreeConfig);
         }
     }
 }
