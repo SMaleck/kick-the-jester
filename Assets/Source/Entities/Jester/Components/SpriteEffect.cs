@@ -12,6 +12,7 @@ namespace Assets.Source.Entities.Jester.Components
         private enum AnimState { None, Idle };
 
         private readonly JesterSpriteEffectsConfig _config;
+        private readonly JesterSpriteConfig _spriteConfig;
         private readonly ParticleService _particleService;        
 
         private bool _listenForImpacts;
@@ -19,12 +20,12 @@ namespace Assets.Source.Entities.Jester.Components
 
         private float _currentRotationSpeed = 0;
         private readonly Vector3 _rotationDirection = new Vector3(0, 0, -1);
-                
 
         public SpriteEffect(JesterEntity owner, JesterSpriteEffectsConfig config, ParticleService particleService) 
             : base(owner)
         {
             _config = config;
+            _spriteConfig = config.GetJesterSpriteConfigForLevel(0);
             _particleService = particleService;
 
             Observable.EveryFixedUpdate()
@@ -79,7 +80,7 @@ namespace Assets.Source.Entities.Jester.Components
         {
             // Stop Idle Animation
             Owner.BodyAnimator.Play(AnimState.None.ToString());
-            Owner.BodySprite.sprite = _config.LaunchSprite;
+            Owner.BodySprite.sprite = _spriteConfig.LaunchSprite;
 
             // Play Particle Effect
             _particleService.PlayAt(_config.PfxKick, Owner.EffectSlotKick.position);
@@ -113,7 +114,7 @@ namespace Assets.Source.Entities.Jester.Components
             Owner.BodySprite.transform.rotation = new Quaternion(0, 0, 0, 0);
 
             // Switch Sprite            
-            Owner.BodySprite.sprite = _config.LandingSprite;
+            Owner.BodySprite.sprite = _spriteConfig.LandingSprite;
 
             // Start Idle Animation
             Owner.BodyAnimator.Play(AnimState.Idle.ToString());
@@ -129,7 +130,7 @@ namespace Assets.Source.Entities.Jester.Components
 
             // Switch Sprite
             // Get all sprites that are not the one currently used, and get a random index from that
-            var currentPool = _config.ImpactSpritePool.Where(e => !e.Equals(Owner.BodySprite.sprite)).ToArray();   
+            var currentPool = _spriteConfig.ImpactSpritePool.Where(e => !e.Equals(Owner.BodySprite.sprite)).ToArray();   
             int index = Random.Range(0, currentPool.Length);
 
             Owner.BodySprite.sprite = currentPool[index];

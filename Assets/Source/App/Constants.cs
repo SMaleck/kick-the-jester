@@ -1,10 +1,8 @@
 ﻿namespace Assets.Source.App
 {
-    // ToDo Can those Constants be made Configurable in a SO?
     public static class Constants
     {        
         // FLOAT PRECISION FACTORS
-        public const int FLOAT_PRECISION_DIGITS = 4;
         public const int FLOAT_PRECISION_FACTOR = 100;
 
         // The Jester is 3x3 units big

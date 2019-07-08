@@ -24,3 +24,14 @@ MonoBehaviour:
   LandingSprite: {fileID: 21300000, guid: 3a71a227f7b419f4788a04b21aeb764c, type: 3}
   PfxImpact: {fileID: 1166912425667426, guid: d9b095cbf14e26d45aa75256c4e90c92, type: 2}
   PfxKick: {fileID: 1166912425667426, guid: 9794e0ff5c1dbe1459ff9c0b6e804045, type: 2}
+  _jesterSpriteConfigs:
+  - JesterLevel: 0
+    ImpactSpritePool:
+    - {fileID: 21300000, guid: b6099169be9208d4c8b671a2d8809455, type: 3}
+    - {fileID: 21300000, guid: 3a49506c19390d64b8736e35738ad624, type: 3}
+    - {fileID: 21300000, guid: 2dfa99d8d83156f4583491b3469eff59, type: 3}
+    - {fileID: 21300000, guid: 1dc7fde2c6701ae4692b765c6aa5b9ac, type: 3}
+    - {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
+    - {fileID: 21300000, guid: dcf8396864cbd4649a7e5899498e4c34, type: 3}
+    LaunchSprite: {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
+    LandingSprite: {fileID: 21300000, guid: 3a71a227f7b419f4788a04b21aeb764c, type: 3}

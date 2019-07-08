@@ -1,4 +1,5 @@
 using Assets.Source.App.Configuration;
+using Assets.Source.Entities.Jester.Config;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,9 @@ namespace Assets.Source.App.Installers
         [SerializeField] private GameConfig GameConfig;
         [SerializeField] private AudioEventConfig AudioEventConfig;
 
+        [Header("Jester Configs")]
+        [SerializeField] private JesterSpriteEffectsConfig JesterSpriteEffectsConfig;
+        [SerializeField] private JesterSoundEffectsConfig _jesterSoundEffectsConfig;
 
         public override void InstallBindings()
         {
@@ -20,6 +24,9 @@ namespace Assets.Source.App.Installers
             Container.BindInstance(GameConfig.BootConfig);
 
             Container.BindInstance(AudioEventConfig);
+
+            Container.BindInstance(JesterSpriteEffectsConfig);
+            Container.BindInstances(_jesterSoundEffectsConfig);
         }
     }
 }
