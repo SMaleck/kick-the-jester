@@ -105,7 +105,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void UpdateMaxVelocityValues()
         {
-            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.VelocityCap);
 
             var level = upgradeModel.Level.Value;
             var isAtMaxLevel = upgradeModel.IsMaxed.Value;
@@ -131,7 +131,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void UpdateShootForceValues()
         {
-            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.ShootForce);
 
             var level = upgradeModel.Level.Value;
             var isAtMaxLevel = upgradeModel.IsMaxed.Value;
@@ -144,7 +144,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void UpdateShootCountValues()
         {
-            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.ProjectileCount);
 
             var level = upgradeModel.Level.Value;
             var isAtMaxLevel = upgradeModel.IsMaxed.Value;
