@@ -3,6 +3,7 @@ using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Mvc.Models;
 using DG.Tweening;
 using System;
+using Assets.Source.Features.PlayerData;
 using UniRx;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ namespace Assets.Source.Entities.Jester.Components
 {
     public class MotionBoot : AbstractPausableComponent<JesterEntity>
     {
-        private readonly PlayerModel _playerModel;
-        private readonly FlightStatsModel _flightStatsmodel;
+        private readonly PlayerAttributesModel _playerAttributesModel;
+        private readonly FlightStatsModel _flightStatsModel;
         private readonly UserInputModel _userInputModel;
         private readonly BootConfig _bootConfig;
 
@@ -22,14 +23,14 @@ namespace Assets.Source.Entities.Jester.Components
 
         public MotionBoot(
             JesterEntity owner,
-            PlayerModel playerModel,
-            FlightStatsModel flightStatsmodel,
+            PlayerAttributesModel playerAttributesModel,
+            FlightStatsModel flightStatsModel,
             UserInputModel userInputModel,
             BootConfig bootConfig)
             : base(owner)
         {
-            _playerModel = playerModel;
-            _flightStatsmodel = flightStatsmodel;
+            _playerAttributesModel = playerAttributesModel;
+            _flightStatsModel = flightStatsModel;
             _userInputModel = userInputModel;
             _bootConfig = bootConfig;
 
@@ -42,7 +43,7 @@ namespace Assets.Source.Entities.Jester.Components
                 .AddTo(owner);
 
             _kickForceTweener = DOTween
-                .To((x) => _flightStatsmodel.RelativeKickForce.Value = x, _bootConfig.MinForceFactor, _bootConfig.MaxForceFactor, _bootConfig.ForceFactorChangeSeconds)
+                .To((x) => _flightStatsModel.RelativeKickForce.Value = x, _bootConfig.MinForceFactor, _bootConfig.MaxForceFactor, _bootConfig.ForceFactorChangeSeconds)
                 .SetLoops(-1, LoopType.Yoyo);
 
             Owner.IsPaused.Subscribe(isPaused =>
@@ -69,7 +70,7 @@ namespace Assets.Source.Entities.Jester.Components
         {
             OnJesterKickedSubscription?.Dispose();
 
-            Vector3 appliedForce = _bootConfig.ForceDirection * (_playerModel.KickForce * _flightStatsmodel.RelativeKickForce.Value);
+            Vector3 appliedForce = _bootConfig.ForceDirection * (_playerAttributesModel.KickForce * _flightStatsModel.RelativeKickForce.Value);
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
         }
     }

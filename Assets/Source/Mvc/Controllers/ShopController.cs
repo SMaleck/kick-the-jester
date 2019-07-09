@@ -1,7 +1,8 @@
-﻿using Assets.Source.Mvc.Models;
+﻿using Assets.Source.Features.Upgrades;
+using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Services.Upgrade;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -13,16 +14,14 @@ namespace Assets.Source.Mvc.Controllers
         private readonly RoundEndModel _roundEndModel;
         private readonly ShopModel _shopModel;
         private readonly ProfileModel _profileModel;
-        private readonly UpgradesModel _upgradesModel;
-        private readonly UpgradeService _upgradeService;
+        private readonly UpgradeController _upgradeController;
 
         public ShopController(
-            ShopView view, 
-            ShopModel shopModel, 
-            RoundEndModel roundEndModel, 
-            ProfileModel profileModel, 
-            UpgradesModel upgradesModel, 
-            UpgradeService upgradeService)
+            ShopView view,
+            ShopModel shopModel,
+            RoundEndModel roundEndModel,
+            ProfileModel profileModel,
+            UpgradeController upgradeController)
             : base(view)
         {
             _view = view;
@@ -31,8 +30,7 @@ namespace Assets.Source.Mvc.Controllers
             _roundEndModel = roundEndModel;
             _shopModel = shopModel;
             _profileModel = profileModel;
-            _upgradesModel = upgradesModel;
-            _upgradeService = upgradeService;
+            _upgradeController = upgradeController;
 
             _roundEndModel.OpenShop
                 .Subscribe(_ => Open())
@@ -40,7 +38,7 @@ namespace Assets.Source.Mvc.Controllers
 
             SetupOnClick();
             SetupProfileModel();
-            SetupUpgradesModel();            
+            SetupUpgradesModel();
         }
 
         private void SetupOnClick()
@@ -50,19 +48,19 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnMaxVelocityLevelUp
-                .Subscribe(_ => _upgradeService.TryUpgrade(_upgradesModel.MaxVelocityLevel, _profileModel.Currency, UpgradeTree.MaxVelocityPath))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.VelocityCap, _profileModel.Currency))
                 .AddTo(Disposer);
 
             _view.OnKickForceLevelUp
-                .Subscribe(_ => _upgradeService.TryUpgrade(_upgradesModel.KickForceLevel, _profileModel.Currency, UpgradeTree.KickForcePath))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.KickForce, _profileModel.Currency))
                 .AddTo(Disposer);
 
             _view.OnShootForceLevelUp
-                .Subscribe(_ => _upgradeService.TryUpgrade(_upgradesModel.ShootForceLevel, _profileModel.Currency, UpgradeTree.ShootForcePath))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.ShootForce, _profileModel.Currency))
                 .AddTo(Disposer);
 
             _view.OnShootCountLevelUp
-                .Subscribe(_ => _upgradeService.TryUpgrade(_upgradesModel.ShootCountLevel, _profileModel.Currency, UpgradeTree.ShootCountPath))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.ProjectileCount, _profileModel.Currency))
                 .AddTo(Disposer);
         }
 
@@ -74,7 +72,7 @@ namespace Assets.Source.Mvc.Controllers
                     _view.Currency = value;
 
                     UpdateMaxVelocityValues();
-                    UpdatKickForceValues();
+                    UpdateKickForceValues();
                     UpdateShootForceValues();
                     UpdateShootCountValues();
                 })
@@ -83,19 +81,23 @@ namespace Assets.Source.Mvc.Controllers
 
         private void SetupUpgradesModel()
         {
-            _upgradesModel.MaxVelocityLevel
+            var velocityCapUpgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.VelocityCap);
+            velocityCapUpgradeModel.Level
                 .Subscribe(_ => UpdateMaxVelocityValues())
                 .AddTo(Disposer);
 
-            _upgradesModel.KickForceLevel
-                .Subscribe(_ => UpdatKickForceValues())
+            var kickForceUpgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+            kickForceUpgradeModel.Level
+                .Subscribe(_ => UpdateKickForceValues())
                 .AddTo(Disposer);
 
-            _upgradesModel.ShootForceLevel
+            var shootForceUpgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.ShootForce);
+            shootForceUpgradeModel.Level
                 .Subscribe(_ => UpdateShootForceValues())
                 .AddTo(Disposer);
 
-            _upgradesModel.ShootCountLevel
+            var projectileCountUpgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.ProjectileCount);
+            projectileCountUpgradeModel.Level
                 .Subscribe(_ => UpdateShootCountValues())
                 .AddTo(Disposer);
         }
@@ -103,48 +105,52 @@ namespace Assets.Source.Mvc.Controllers
 
         private void UpdateMaxVelocityValues()
         {
-            var level = _upgradesModel.MaxVelocityLevel.Value;
-            _view.MaxVelocityLevel = _upgradesModel.MaxVelocityLevel.Value;
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
 
-            var cost = UpgradeTree.MaxVelocityPath.UpgradeCost(level);
-            var isAtMaxLevel = level == UpgradeTree.MaxVelocityPath.MaxLevel;
+            var level = upgradeModel.Level.Value;
+            var isAtMaxLevel = upgradeModel.IsMaxed.Value;
+            var cost = upgradeModel.Cost.Value;
 
+            _view.MaxVelocityLevel = level;
             _view.MaxVelocityCost = cost;
             _view.MaxVelocityCanAfford = !isAtMaxLevel && cost <= _profileModel.Currency.Value;
         }
 
-        private void UpdatKickForceValues()
+        private void UpdateKickForceValues()
         {
-            var level = _upgradesModel.KickForceLevel.Value;
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+
+            var level = upgradeModel.Level.Value;
+            var isAtMaxLevel = upgradeModel.IsMaxed.Value;
+            var cost = upgradeModel.Cost.Value;
+
             _view.KickForceLevel = level;
-
-            var cost = UpgradeTree.KickForcePath.UpgradeCost(level);
-            var isAtMaxLevel = level == UpgradeTree.KickForcePath.MaxLevel;
-
             _view.KickForceCost = cost;
             _view.KickForceCanAfford = !isAtMaxLevel && cost <= _profileModel.Currency.Value;
         }
 
         private void UpdateShootForceValues()
         {
-            var level = _upgradesModel.ShootForceLevel.Value;
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+
+            var level = upgradeModel.Level.Value;
+            var isAtMaxLevel = upgradeModel.IsMaxed.Value;
+            var cost = upgradeModel.Cost.Value;
+
             _view.ShootForceLevel = level;
-
-            var cost = UpgradeTree.ShootForcePath.UpgradeCost(level);
-            var isAtMaxLevel = level == UpgradeTree.ShootForcePath.MaxLevel;
-
             _view.ShootForceCost = cost;
             _view.ShootForceCanAfford = !isAtMaxLevel && cost <= _profileModel.Currency.Value;
         }
 
         private void UpdateShootCountValues()
         {
-            var level = _upgradesModel.ShootCountLevel.Value;
+            var upgradeModel = _upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
+
+            var level = upgradeModel.Level.Value;
+            var isAtMaxLevel = upgradeModel.IsMaxed.Value;
+            var cost = upgradeModel.Cost.Value;
+
             _view.ShootCountLevel = level;
-
-            var cost = UpgradeTree.ShootCountPath.UpgradeCost(level);
-            var isAtMaxLevel = level == UpgradeTree.ShootCountPath.MaxLevel;
-
             _view.ShootCountCost = cost;
             _view.ShootCountCanAfford = !isAtMaxLevel && cost <= _profileModel.Currency.Value;
         }

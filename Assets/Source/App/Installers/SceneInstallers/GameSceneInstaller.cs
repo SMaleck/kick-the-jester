@@ -49,8 +49,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region MODELS
 
             Container.Bind<ProfileModel>().AsSingle().NonLazy();
-            Container.Bind<PlayerModel>().AsSingle().NonLazy();
-            Container.Bind<UpgradesModel>().AsSingle().NonLazy();
             Container.Bind<SettingsModel>().AsSingle().NonLazy();
             Container.Bind<UserInputModel>().AsSingle().NonLazy();
 

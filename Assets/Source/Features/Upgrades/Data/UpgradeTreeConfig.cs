@@ -14,17 +14,14 @@ namespace Assets.Source.Features.Upgrades.Data
             public UpgradePathType PathType;
             public List<UpgradeStep> Steps;
 
-            public int MaxLevel
-            {
-                get { return Steps.Count; }
-            }
+            public int MaxLevel => Steps.Count;
         }
 
         [Serializable]
         public class UpgradeStep
         {
             public int Cost;
-            public double Value;
+            public float Value;
         }
 
         [SerializeField] private List<UpgradePath> _upgradePaths;

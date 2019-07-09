@@ -1,6 +1,6 @@
-﻿using System;
-using Assets.Source.Features.Upgrades.Data;
+﻿using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Util;
+using System;
 using UniRx;
 
 namespace Assets.Source.Features.Upgrades
@@ -11,39 +11,27 @@ namespace Assets.Source.Features.Upgrades
         private readonly UpgradeTreeConfig.UpgradePath _upgradePath;
 
         private readonly ReactiveProperty<int> _level;
-        public IReadOnlyReactiveProperty<int> Level
-        {
-            get { return _level; }
-        }
+        public IReadOnlyReactiveProperty<int> Level => _level;
 
         private readonly ReactiveProperty<int> _cost;
-        public IReadOnlyReactiveProperty<int> Cost
-        {
-            get { return _cost; }
-        }
+        public IReadOnlyReactiveProperty<int> Cost => _cost;
 
-        private readonly ReactiveProperty<double> _value;
-        public IReadOnlyReactiveProperty<double> Value
-        {
-            get { return _value; }
-        }
+        private readonly ReactiveProperty<float> _value;
+        public IReadOnlyReactiveProperty<float> Value => _value;
 
         private readonly ReactiveProperty<bool> _isMaxed;
-        public IReadOnlyReactiveProperty<bool> IsMaxed
-        {
-            get { return _isMaxed; }
-        }
+        public IReadOnlyReactiveProperty<bool> IsMaxed => _isMaxed;
 
         public UpgradeModel(
             UpgradePathType upgradeType,
-            ReactiveProperty<int> level,
-            UpgradeTreeConfig data)
+            UpgradeTreeConfig data,
+            ReactiveProperty<int> level)
         {
             UpgradePathType = upgradeType;
             _level = level;
 
             _cost = new ReactiveProperty<int>().AddTo(Disposer);
-            _value = new ReactiveProperty<double>().AddTo(Disposer);
+            _value = new ReactiveProperty<float>().AddTo(Disposer);
             _isMaxed = new ReactiveProperty<bool>().AddTo(Disposer);
 
             _upgradePath = data.GetUpgradePath(UpgradePathType);
@@ -58,9 +46,11 @@ namespace Assets.Source.Features.Upgrades
 
         private void UpdateUpgradeValues()
         {
-            _cost.Value = _upgradePath.Steps[_level.Value].Cost;
             _value.Value = _upgradePath.Steps[_level.Value].Value;
-            _isMaxed.Value = _level.Value >= _upgradePath.MaxLevel;
+
+            var isMaxed = _level.Value >= _upgradePath.MaxLevel;
+            _isMaxed.Value = isMaxed;
+            _cost.Value = isMaxed ? 0 : _upgradePath.Steps[_level.Value + 1].Cost;
         }
     }
 }

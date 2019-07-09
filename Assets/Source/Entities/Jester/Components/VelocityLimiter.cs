@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Entities.GenericComponents;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;
@@ -8,7 +9,7 @@ namespace Assets.Source.Entities.Jester.Components
 {
     public class VelocityLimiter : AbstractPausableComponent<JesterEntity>
     {
-        private readonly PlayerModel _playerModel;
+        private readonly PlayerAttributesModel _playerAttributesModel;
         private readonly FlightStatsModel _flightStatsModel;
 
         private float velocityX
@@ -22,10 +23,10 @@ namespace Assets.Source.Entities.Jester.Components
         }
 
 
-        public VelocityLimiter(JesterEntity owner, PlayerModel playerModel, FlightStatsModel flightStatsModel) : 
+        public VelocityLimiter(JesterEntity owner, PlayerAttributesModel playerAttributesModel, FlightStatsModel flightStatsModel) : 
             base(owner)
         {
-            _playerModel = playerModel;
+            _playerAttributesModel = playerAttributesModel;
             _flightStatsModel = flightStatsModel;
 
             Observable.EveryLateUpdate()
@@ -36,12 +37,12 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnLateUpdate()
         {
-            float clampedX = Mathf.Clamp(velocityX, 0, _playerModel.MaxVelocityX);
-            float clampedY = Mathf.Clamp(velocityY, - float.MaxValue, _playerModel.MaxVelocityY);
+            float clampedX = Mathf.Clamp(velocityX, 0, _playerAttributesModel.MaxVelocityX);
+            float clampedY = Mathf.Clamp(velocityY, - float.MaxValue, _playerAttributesModel.MaxVelocityY);
 
             Owner.GoBody.velocity = new Vector2(clampedX, clampedY);
 
-            float relativeVelocity = velocityX.AsRelativeTo(_playerModel.MaxVelocityX);
+            float relativeVelocity = velocityX.AsRelativeTo(_playerAttributesModel.MaxVelocityX);
             _flightStatsModel.RelativeVelocity.Value = relativeVelocity;
         }
     }

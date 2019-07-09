@@ -1,4 +1,6 @@
-﻿using Assets.Source.Mvc.Controllers;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Upgrades;
+using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
@@ -27,6 +29,10 @@ namespace Assets.Source.App.Installers
 
             Container.Bind<ScreenFadeView>().FromComponentInNewPrefab(ScreenFadeViewPrefab).AsSingle();
             Container.Bind<ScreenFadeController>().AsSingle().NonLazy();
+
+            Container.BindInterfacesAndSelfTo<UpgradeController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerAttributesModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerAttributesController>().AsSingle().NonLazy();
         }
     }
 }
