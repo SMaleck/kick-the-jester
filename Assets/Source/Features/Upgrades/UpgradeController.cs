@@ -4,12 +4,11 @@ using Assets.Source.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Source.Services.Upgrade;
 using UniRx;
 
 namespace Assets.Source.Features.Upgrades
 {
-    public class UpgradeController
+    public class UpgradeController : AbstractDisposable
     {
         private readonly SavegameService _savegameService;
         private readonly UpgradeTreeConfig _upgradeTreeConfig;
@@ -81,9 +80,10 @@ namespace Assets.Source.Features.Upgrades
         private UpgradeModel CreateUpgradeModel(UpgradePathType upgradePath)
         {
             return new UpgradeModel(
-                upgradePath,
-                _upgradeTreeConfig,
-                GetLevelSavegame(upgradePath));
+                    upgradePath,
+                    _upgradeTreeConfig,
+                    GetLevelSavegame(upgradePath))
+                .AddTo(Disposer);
         }
 
         private ReactiveProperty<int> GetLevelSavegame(UpgradePathType upgradePath)

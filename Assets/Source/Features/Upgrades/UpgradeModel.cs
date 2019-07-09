@@ -35,13 +35,13 @@ namespace Assets.Source.Features.Upgrades
             _isMaxed = new ReactiveProperty<bool>().AddTo(Disposer);
 
             _upgradePath = data.GetUpgradePath(UpgradePathType);
-            UpdateUpgradeValues();
+
+            _level.Subscribe(_ => UpdateUpgradeValues());
         }
 
         public void SetLevel(int level)
         {
             _level.Value = Math.Min(_upgradePath.MaxLevel, level);
-            UpdateUpgradeValues();
         }
 
         private void UpdateUpgradeValues()

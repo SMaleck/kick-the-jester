@@ -1,5 +1,7 @@
 ﻿using Assets.Source.Entities.GameRound.Components;
 using Assets.Source.Entities.Jester.Components;
+using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Upgrades;
 using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
@@ -78,6 +80,15 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.Bind<VelocityLimiter>().AsSingle().NonLazy();
             Container.Bind<SpriteEffect>().AsSingle().NonLazy();
             Container.Bind<SoundEffect>().AsSingle().NonLazy();
+
+            #endregion
+
+
+            #region PLAYER STATE & UPGRADES
+
+            Container.BindInterfacesAndSelfTo<UpgradeController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerAttributesModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerAttributesController>().AsSingle().NonLazy();
 
             #endregion
         }

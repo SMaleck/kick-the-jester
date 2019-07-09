@@ -1,10 +1,11 @@
 ﻿using Assets.Source.Features.Upgrades;
 using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Util;
 using UniRx;
 
 namespace Assets.Source.Features.PlayerData
 {
-    public class PlayerAttributesController
+    public class PlayerAttributesController : AbstractDisposable
     {
         public PlayerAttributesController(
             PlayerAttributesModel playerAttributesModel,
@@ -12,15 +13,18 @@ namespace Assets.Source.Features.PlayerData
         {
             var kickForceUpgrade = upgradeController.GetUpgradeModel(UpgradePathType.KickForce);
             kickForceUpgrade.Value
-                .Subscribe(playerAttributesModel.SetKickForce);
+                .Subscribe(playerAttributesModel.SetKickForce)
+                .AddTo(Disposer);
 
             var shootForceUpgrade = upgradeController.GetUpgradeModel(UpgradePathType.ShootForce);
             shootForceUpgrade.Value
-                .Subscribe(playerAttributesModel.SetShootForce);
+                .Subscribe(playerAttributesModel.SetShootForce)
+                .AddTo(Disposer);
 
             var projectileCountUpgrade = upgradeController.GetUpgradeModel(UpgradePathType.ProjectileCount);
             projectileCountUpgrade.Value
-                .Subscribe(value => playerAttributesModel.SetShots((int)value));
+                .Subscribe(value => playerAttributesModel.SetShots((int)value))
+                .AddTo(Disposer);
 
             var velocityCapUpgrade = upgradeController.GetUpgradeModel(UpgradePathType.VelocityCap);
             velocityCapUpgrade.Value
@@ -28,7 +32,8 @@ namespace Assets.Source.Features.PlayerData
                 {
                     playerAttributesModel.SetMaxVelocityX(value);
                     playerAttributesModel.SetMaxVelocityY(value);
-                });
+                })
+                .AddTo(Disposer);
         }
     }
 }
