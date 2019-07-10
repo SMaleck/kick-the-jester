@@ -1,15 +1,12 @@
-﻿using Assets.Source.Features.Upgrades.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Source.App;
+using Assets.Source.Features.Upgrades.Data;
 
 namespace Assets.Source.Services
 {
     public static class TextService
     {
         private const string MissingText = "#MISSING TEXT#";
+        private const string InlineSpriteCoin = "<sprite=0>";
 
         public static string UpgradeItemTitle(UpgradePathType upgradePathType)
         {
@@ -37,20 +34,35 @@ namespace Assets.Source.Services
             switch (upgradePathType)
             {
                 case UpgradePathType.KickForce:
-                    return "Knight's Boots";
+                    return "Heavier boots mean stronger kicks. The Jester will launch stronger!";
 
                 case UpgradePathType.ShootForce:
-                    return "Tomato Firmness";
+                    return "Firm tomatoes give the Jester that extra kick he needs.";
 
                 case UpgradePathType.ProjectileCount:
-                    return "Tomato Reserves";
+                    return "Increases the amount of tomatoes you can throw in one run.";
 
                 case UpgradePathType.VelocityCap:
-                    return "Aerodynamic Costume";
+                    return "Allows the Jester to reach higher speeds!";
 
                 default:
                     return MissingText;
             }
+        }
+
+        public static string Max()
+        {
+            return "MAX";
+        }
+
+        public static string LevelX(int level)
+        {
+            return $"Level {level}";
+        }
+
+        public static string CurrencyAmount(int amount)
+        {
+            return $"{amount}{InlineSpriteCoin}";
         }
     }
 }

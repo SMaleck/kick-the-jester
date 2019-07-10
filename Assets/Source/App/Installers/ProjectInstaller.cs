@@ -1,5 +1,4 @@
-﻿using Assets.Source.Features.Upgrades;
-using Assets.Source.Mvc.Controllers;
+﻿using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
@@ -7,7 +6,6 @@ using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using Assets.Source.Services.Savegame;
 using Assets.Source.Services.Upgrade;
-using Assets.Source.Util;
 using UnityEngine;
 using Zenject;
 
@@ -28,8 +26,6 @@ namespace Assets.Source.App.Installers
 
             Container.Bind<ScreenFadeView>().FromComponentInNewPrefab(ScreenFadeViewPrefab).AsSingle();
             Container.Bind<ScreenFadeController>().AsSingle().NonLazy();
-
-            Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();
         }
     }
 }

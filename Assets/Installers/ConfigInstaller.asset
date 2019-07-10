@@ -18,3 +18,4 @@ MonoBehaviour:
   _jesterSoundEffectsConfig: {fileID: 11400000, guid: ab713d5f9f588654ea657164ffeab82f,
     type: 2}
   _upgradeTreeConfig: {fileID: 11400000, guid: d2908d5f54e81984ba204dce3c505b4c, type: 2}
+  _viewPrefabConfig: {fileID: 11400000, guid: fcfc7e3636507074083b75106b78933b, type: 2}

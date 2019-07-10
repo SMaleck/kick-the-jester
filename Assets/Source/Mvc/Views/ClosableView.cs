@@ -9,8 +9,10 @@ namespace Assets.Source.Mvc.Views
     {
         [Header("Closable Settings")]
         [SerializeField] private bool _startClosed = true;
-        [SerializeField] private Button _closeButton;        
+        [SerializeField] private Button _closeButton;
         [SerializeField] private Vector3 _closedPosition;
+        [Tooltip("Leave empty to use this gameObject's transform")]
+        [SerializeField] private RectTransform _panelParent;
 
         [Header("Transition")]
         [SerializeField] private PanelSliderConfig _panelSliderConfig;
@@ -24,7 +26,9 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            var ownerTransform = this.transform as RectTransform;            
+            var ownerTransform = _panelParent == null 
+                ? this.transform as RectTransform
+                : _panelParent as RectTransform;
 
             _panelSlider = new PanelSlider(ownerTransform, _panelSliderConfig, ownerTransform.localPosition, _closedPosition);
 

@@ -1,6 +1,7 @@
 using Assets.Source.App.Configuration;
 using Assets.Source.Entities.Jester.Config;
 using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Mvc.Data;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,9 @@ namespace Assets.Source.App.Installers
         [SerializeField] private JesterSoundEffectsConfig _jesterSoundEffectsConfig;
         [SerializeField] private UpgradeTreeConfig _upgradeTreeConfig;
 
+        [Header("View Prefabs")]
+        [SerializeField] private ViewPrefabConfig _viewPrefabConfig;
+
         public override void InstallBindings()
         {
             Container.BindInstances(GameConfig.DefaultSettingsConfig);
@@ -30,6 +34,8 @@ namespace Assets.Source.App.Installers
             Container.BindInstance(_jesterSpriteEffectsConfig);
             Container.BindInstances(_jesterSoundEffectsConfig);
             Container.BindInstances(_upgradeTreeConfig);
+
+            Container.BindInstances(_viewPrefabConfig);
         }
     }
 }

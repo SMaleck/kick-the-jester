@@ -10,7 +10,6 @@ namespace Assets.Source.Mvc.Controllers
     public class RoundEndController : ClosableController
     {
         private readonly RoundEndView _view;
-        private readonly RoundEndModel _roundEndModel;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
         private readonly ProfileModel _profileModel;
@@ -21,7 +20,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public RoundEndController(
             RoundEndView view,
-            RoundEndModel roundEndModel,
+            UpgradeScreenModel upgradeScreenModel,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             ProfileModel profileModel,
@@ -31,7 +30,6 @@ namespace Assets.Source.Mvc.Controllers
             _view = view;
             _view.Initialize();
 
-            _roundEndModel = roundEndModel;
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
             _profileModel = profileModel;
@@ -45,13 +43,12 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnShopClicked
-                .Subscribe(_ => OnShopClicked())
+                .Subscribe(_ => upgradeScreenModel.ExecuteOpenScreen())
                 .AddTo(Disposer);            
             
             _view.OnOpenCompleted
                 .Subscribe(_ => OnOpenCompleted())
                 .AddTo(Disposer);
-
 
             SetupModelSubscriptions();
         }
@@ -95,12 +92,6 @@ namespace Assets.Source.Mvc.Controllers
         private void OnRetryClicked()
         {
             _sceneTransitionService.ToGame();
-        }
-
-        
-        private void OnShopClicked()
-        {
-            _roundEndModel.OpenShop.Execute();
         }
     }
 }

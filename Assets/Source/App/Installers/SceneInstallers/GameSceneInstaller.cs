@@ -7,6 +7,7 @@ using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Util;
 using UnityEngine;
 using Zenject;
 
@@ -19,7 +20,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public PauseView PauseView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
         [SerializeField] public ShopView ShopView;
-        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;        
+        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
+        [SerializeField] public UpgradeScreenView UpgradeScreenView;
 
         public override void InstallBindings()
         {
@@ -89,6 +91,12 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<UpgradeController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<PlayerAttributesModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<PlayerAttributesController>().AsSingle().NonLazy();
+
+            Container.BindInstance(UpgradeScreenView).AsSingle();
+            Container.BindInterfacesAndSelfTo<UpgradeScreenModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<UpgradeScreenController>().AsSingle().NonLazy();
+
+            Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();
 
             #endregion
         }

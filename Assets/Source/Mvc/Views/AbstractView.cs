@@ -5,6 +5,8 @@ namespace Assets.Source.Mvc.Views
 {
     public abstract class AbstractView : MonoBehaviour, IInitializable
     {
+        public Component Disposer => this;
+
         public bool IsActive => gameObject.activeSelf;
 
         // ToDo Figure out how to make this get called automatically

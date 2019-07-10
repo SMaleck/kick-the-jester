@@ -4,6 +4,7 @@ using Assets.Source.Util.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Source.Services;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -123,7 +124,7 @@ namespace Assets.Source.Mvc.Views
                 fValue = moneyGainSlots.Last();
             }
 
-            fValue.StartFloating($"{gainedAmount} {Constants.TMP_SPRITE_COIN}");
+            fValue.StartFloating(TextService.CurrencyAmount((int)gainedAmount));
         }
 
 

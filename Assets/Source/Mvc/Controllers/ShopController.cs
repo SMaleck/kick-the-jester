@@ -48,19 +48,19 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnMaxVelocityLevelUp
-                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.VelocityCap, _profileModel.Currency))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.VelocityCap))
                 .AddTo(Disposer);
 
             _view.OnKickForceLevelUp
-                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.KickForce, _profileModel.Currency))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.KickForce))
                 .AddTo(Disposer);
 
             _view.OnShootForceLevelUp
-                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.ShootForce, _profileModel.Currency))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.ShootForce))
                 .AddTo(Disposer);
 
             _view.OnShootCountLevelUp
-                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.ProjectileCount, _profileModel.Currency))
+                .Subscribe(_ => _upgradeController.TryUpgrade(UpgradePathType.ProjectileCount))
                 .AddTo(Disposer);
         }
 

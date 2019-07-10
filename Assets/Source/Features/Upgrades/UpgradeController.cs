@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Services.Savegame;
 using Assets.Source.Util;
 using System;
@@ -12,17 +13,33 @@ namespace Assets.Source.Features.Upgrades
     {
         private readonly SavegameService _savegameService;
         private readonly UpgradeTreeConfig _upgradeTreeConfig;
+        private readonly ProfileModel _profileModel;
 
         private readonly Dictionary<UpgradePathType, UpgradeModel> _upgradeModels;
 
         public UpgradeController(
             SavegameService savegameService,
-            UpgradeTreeConfig upgradeTreeConfig)
+            UpgradeTreeConfig upgradeTreeConfig,
+            ProfileModel profileModel)
         {
             _savegameService = savegameService;
             _upgradeTreeConfig = upgradeTreeConfig;
+            _profileModel = profileModel;
 
             _upgradeModels = CreateUpgradeModels();
+
+            _upgradeModels.Values
+                .ToList()
+                .ForEach(model =>
+                {
+                    model.Cost
+                        .Subscribe(_ => UpdateCanAfford(model))
+                        .AddTo(Disposer);
+                });
+
+            _profileModel.Currency
+                .Subscribe(_ => UpdateAllCanAfford())
+                .AddTo(Disposer);
         }
 
         public UpgradeModel GetUpgradeModel(UpgradePathType upgradePathType)
@@ -30,7 +47,7 @@ namespace Assets.Source.Features.Upgrades
             return _upgradeModels[upgradePathType];
         }
 
-        public bool TryUpgrade(UpgradePathType upgradePathType, IntReactiveProperty currency)
+        public bool TryUpgrade(UpgradePathType upgradePathType)
         {
             var upgradeModel = GetUpgradeModel(upgradePathType);
 
@@ -40,7 +57,7 @@ namespace Assets.Source.Features.Upgrades
             }
 
             var cost = upgradeModel.Cost.Value;
-            if (!TryDeductCost(currency, cost))
+            if (!TryDeductCost(cost))
             {
                 return false;
             }
@@ -52,14 +69,14 @@ namespace Assets.Source.Features.Upgrades
         }
 
 
-        private bool TryDeductCost(IntReactiveProperty currency, int cost)
+        private bool TryDeductCost(int cost)
         {
-            if (currency.Value < cost)
+            if (_profileModel.Currency.Value < cost)
             {
                 return false;
             }
 
-            currency.Value -= cost;
+            _profileModel.Currency.Value -= cost;
             return true;
         }
 
@@ -107,6 +124,21 @@ namespace Assets.Source.Features.Upgrades
                 default:
                     throw new ArgumentOutOfRangeException(nameof(upgradePath), upgradePath, null);
             }
+        }
+
+        private void UpdateAllCanAfford()
+        {
+            _upgradeModels.Values
+                .ToList()
+                .ForEach(UpdateCanAfford);
+        }
+
+        private void UpdateCanAfford(UpgradeModel model)
+        {
+            var currency = _profileModel.Currency.Value;
+            var cost = model.Cost.Value;
+
+            model.SetCanAfford(currency >= cost);
         }
     }
 }

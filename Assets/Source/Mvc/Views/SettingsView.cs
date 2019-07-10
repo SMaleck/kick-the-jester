@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,11 +17,16 @@ namespace Assets.Source.Mvc.Views
 
         public ReactiveCommand OnRestoreDefaultsClicked = new ReactiveCommand();
 
+        private ReactiveCommand _onResetClicked;
+        public IObservable<Unit> OnResetClicked => _onResetClicked;
+
         public override void Setup()
         {
             base.Setup();
 
             SetSettingsViewState();
+
+            _onResetClicked = new ReactiveCommand().AddTo(Disposer);
 
             _isMusicMuted.OnValueChangedAsObservable()
                 .Subscribe(_ => IsMusicMuted.Value = !_isMusicMuted.isOn)
