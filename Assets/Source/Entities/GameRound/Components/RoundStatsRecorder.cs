@@ -1,7 +1,7 @@
 ﻿using Assets.Source.Entities.GenericComponents;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using UniRx;
-using UnityEngine;
 
 namespace Assets.Source.Entities.GameRound.Components
 {
@@ -9,14 +9,18 @@ namespace Assets.Source.Entities.GameRound.Components
     {
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
-        private readonly ProfileModel _profileModel;
+        private readonly PlayerProfileModel _playerProfileModel;
 
-        public RoundStatsRecorder(GameRoundEntity owner, GameStateModel gameStateModel, FlightStatsModel flightStatsModel, ProfileModel profileModel) 
+        public RoundStatsRecorder(
+            GameRoundEntity owner,
+            GameStateModel gameStateModel,
+            FlightStatsModel flightStatsModel,
+            PlayerProfileModel playerProfileModel)
             : base(owner)
         {
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
-            _profileModel = profileModel;
+            _playerProfileModel = playerProfileModel;
 
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => OnRoundEnd())
@@ -27,12 +31,10 @@ namespace Assets.Source.Entities.GameRound.Components
         {
             // Record BEST DISTANCE
             var distance = _flightStatsModel.Distance.Value;
-            var lastBestDistance = _profileModel.BestDistance.Value;
-
-            _profileModel.BestDistance.Value = Mathf.Max(distance, lastBestDistance);
+            _playerProfileModel.SetBestDistance(distance);
 
             // Record PLAY COUNT
-            _profileModel.RoundsPlayed.Value++;            
+            _playerProfileModel.IncrementRoundsPlayed();
         }
     }
 }

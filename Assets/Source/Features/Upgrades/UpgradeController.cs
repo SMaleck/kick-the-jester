@@ -1,5 +1,5 @@
-﻿using Assets.Source.Features.Upgrades.Data;
-using Assets.Source.Mvc.Models;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Services.Savegame;
 using Assets.Source.Util;
 using System;
@@ -13,18 +13,18 @@ namespace Assets.Source.Features.Upgrades
     {
         private readonly SavegameService _savegameService;
         private readonly UpgradeTreeConfig _upgradeTreeConfig;
-        private readonly ProfileModel _profileModel;
+        private readonly PlayerProfileModel _playerProfileModel;
 
         private readonly Dictionary<UpgradePathType, UpgradeModel> _upgradeModels;
 
         public UpgradeController(
             SavegameService savegameService,
             UpgradeTreeConfig upgradeTreeConfig,
-            ProfileModel profileModel)
+            PlayerProfileModel playerProfileModel)
         {
             _savegameService = savegameService;
             _upgradeTreeConfig = upgradeTreeConfig;
-            _profileModel = profileModel;
+            _playerProfileModel = playerProfileModel;
 
             _upgradeModels = CreateUpgradeModels();
 
@@ -37,7 +37,7 @@ namespace Assets.Source.Features.Upgrades
                         .AddTo(Disposer);
                 });
 
-            _profileModel.Currency
+            _playerProfileModel.CurrencyAmount
                 .Subscribe(_ => UpdateAllCanAfford())
                 .AddTo(Disposer);
         }
@@ -71,12 +71,12 @@ namespace Assets.Source.Features.Upgrades
 
         private bool TryDeductCost(int cost)
         {
-            if (_profileModel.Currency.Value < cost)
+            if (_playerProfileModel.CurrencyAmount.Value < cost)
             {
                 return false;
             }
 
-            _profileModel.Currency.Value -= cost;
+            _playerProfileModel.DeductCurrencyAmount(cost);
             return true;
         }
 
@@ -135,7 +135,7 @@ namespace Assets.Source.Features.Upgrades
 
         private void UpdateCanAfford(UpgradeModel model)
         {
-            var currency = _profileModel.Currency.Value;
+            var currency = _playerProfileModel.CurrencyAmount.Value;
             var cost = model.Cost.Value;
 
             model.SetCanAfford(currency >= cost);

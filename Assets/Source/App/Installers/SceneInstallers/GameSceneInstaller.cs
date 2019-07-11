@@ -39,7 +39,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.Bind<BestDistanceMarkerController>().AsSingle().NonLazy();
 
             Container.BindInstance(ShopConfirmResetView).AsSingle();
-            Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
+            Container.Bind<ResetProfileConfirmationController>().AsSingle().NonLazy();
 
             Container.Bind<AudioSettingsController>().AsSingle().NonLazy();
 
@@ -48,7 +48,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region MODELS
 
-            Container.BindInterfacesAndSelfTo<ProfileModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<UserInputModel>().AsSingle().NonLazy();
 

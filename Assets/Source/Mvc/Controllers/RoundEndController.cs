@@ -1,18 +1,19 @@
-﻿using Assets.Source.Mvc.Models;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Mvc.Models;
+using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using System.Collections.Generic;
-using Assets.Source.Mvc.Models.ViewModels;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
-{   
+{
     public class RoundEndController : ClosableController
     {
         private readonly RoundEndView _view;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
-        private readonly ProfileModel _profileModel;
+        private readonly PlayerProfileModel _playerProfileModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
         private readonly int currencyAmountAtStart;
@@ -23,7 +24,7 @@ namespace Assets.Source.Mvc.Controllers
             OpenPanelModel openPanelModel,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
-            ProfileModel profileModel,
+            PlayerProfileModel playerProfileModel,
             SceneTransitionService sceneTransitionService)
             : base(view)
         {
@@ -32,11 +33,11 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
-            _profileModel = profileModel;
+            _playerProfileModel = playerProfileModel;
             _sceneTransitionService = sceneTransitionService;
 
-            currencyAmountAtStart = _profileModel.Currency.Value;
-            bestDistanceAtStart = _profileModel.BestDistance.Value;
+            currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
+            bestDistanceAtStart = _playerProfileModel.BestDistance.Value;
 
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
@@ -44,8 +45,8 @@ namespace Assets.Source.Mvc.Controllers
 
             _view.OnShopClicked
                 .Subscribe(_ => openPanelModel.OpenUpgrades())
-                .AddTo(Disposer);            
-            
+                .AddTo(Disposer);
+
             _view.OnOpenCompleted
                 .Subscribe(_ => OnOpenCompleted())
                 .AddTo(Disposer);
@@ -54,12 +55,12 @@ namespace Assets.Source.Mvc.Controllers
         }
 
         private void OnOpenCompleted()
-        {            
+        {
             var results = GetResultsAsDictionary();
 
             _view.ShowCurrencyResults(results, currencyAmountAtStart);
         }
-        
+
         private IDictionary<string, int> GetResultsAsDictionary()
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
@@ -80,7 +81,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(dist => _view.Distance = dist)
                 .AddTo(Disposer);
 
-            _profileModel.BestDistance
+            _playerProfileModel.BestDistance
                 .Subscribe(bestDist =>
                 {
                     _view.IsNewBestDistance = bestDistanceAtStart < bestDist;

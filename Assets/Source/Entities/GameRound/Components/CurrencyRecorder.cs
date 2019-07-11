@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App.Configuration;
 using Assets.Source.Entities.GenericComponents;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;
@@ -13,24 +14,24 @@ namespace Assets.Source.Entities.GameRound.Components
     }
 
     public class CurrencyRecorder : AbstractComponent<GameRoundEntity>
-    {        
+    {
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
-        private readonly ProfileModel _profileModel;
+        private readonly PlayerProfileModel _playerProfileModel;
         private readonly BalancingConfig _config;
 
 
         public CurrencyRecorder(
-            GameRoundEntity owner, 
-            GameStateModel gameStateModel, 
-            FlightStatsModel flightStatsModel, 
-            ProfileModel profileModel, 
-            BalancingConfig config) 
+            GameRoundEntity owner,
+            GameStateModel gameStateModel,
+            FlightStatsModel flightStatsModel,
+            PlayerProfileModel playerProfileModel,
+            BalancingConfig config)
             : base(owner)
         {
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
-            _profileModel = profileModel;
+            _playerProfileModel = playerProfileModel;
             _config = config;
 
 
@@ -49,7 +50,7 @@ namespace Assets.Source.Entities.GameRound.Components
             _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * _config.MeterToGoldFactor);
 
             var total = _flightStatsModel.Collected.Value + _flightStatsModel.Earned.Value;
-            _profileModel.Currency.Value += total;
+            _playerProfileModel.AddCurrencyAmount(total);
         }
 
         // Adds money to the pickup counter
@@ -59,6 +60,6 @@ namespace Assets.Source.Entities.GameRound.Components
 
             _flightStatsModel.Gains.Add(amount);
             _flightStatsModel.Collected.Value += amount;
-        }        
+        }
     }
 }

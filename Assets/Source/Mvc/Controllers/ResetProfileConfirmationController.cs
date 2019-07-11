@@ -6,14 +6,14 @@ using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class ShopConfirmResetController : ClosableController
+    public class ResetProfileConfirmationController : ClosableController
     {
         private readonly ShopConfirmResetView _view;
         private readonly SavegameService _savegameService;
         private readonly SceneTransitionService _sceneTransitionService;
         
 
-        public ShopConfirmResetController(
+        public ResetProfileConfirmationController(
             ShopConfirmResetView view,
             OpenPanelModel openPanelModel,
             SavegameService savegameService, 

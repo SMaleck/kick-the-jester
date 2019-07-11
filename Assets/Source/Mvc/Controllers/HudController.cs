@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App.Configuration;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using UniRx;
@@ -10,15 +11,15 @@ namespace Assets.Source.Mvc.Controllers
         private readonly HudView _view;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
-        private readonly ProfileModel _profileModel;
+        private readonly PlayerProfileModel _playerProfileModel;
         private readonly UserInputModel _userInputModel;
         private readonly CameraConfig _cameraConfig;
 
         public HudController(
             HudView view, 
             GameStateModel gameStateModel, 
-            FlightStatsModel flightStatsModel, 
-            ProfileModel profileModel, 
+            FlightStatsModel flightStatsModel,
+            PlayerProfileModel playerProfileModel,
             UserInputModel userInputModel,
             CameraConfig cameraConfig)
             : base(view)
@@ -28,7 +29,7 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
-            _profileModel = profileModel;
+            _playerProfileModel = playerProfileModel;
             _userInputModel = userInputModel;
             _cameraConfig = cameraConfig;
 
@@ -84,7 +85,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void SetupProfileModel()
         {
-            _profileModel.BestDistance
+            _playerProfileModel.BestDistance
                 .Subscribe(bestDist => _view.BestDistance = bestDist)
                 .AddTo(Disposer);
         }
