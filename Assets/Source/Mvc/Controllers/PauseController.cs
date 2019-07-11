@@ -35,7 +35,7 @@ namespace Assets.Source.Mvc.Controllers
             _view.IsEffectsMuted = _settingsModel.IsEffectsMuted;
 
             _view.OnCloseCompleted
-                .Subscribe(_ => _gameStateModel.IsPaused.Value = false)
+                .Subscribe(_ => _gameStateModel.SetIsPaused(false))
                 .AddTo(Disposer);
 
             _view.OnRetryClicked

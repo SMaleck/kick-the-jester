@@ -34,15 +34,15 @@ namespace Assets.Source.Entities.GameRound.Components
             _particleService.ResetPausedSlots();
 
             _userInputModel.OnPause
-                .Subscribe(_ => model.IsPaused.Value = !model.IsPaused.Value)
+                .Subscribe(_ => model.SetIsPaused(!model.IsPaused.Value))
                 .AddTo(owner);
 
             _jesterEntity.OnKicked
-                .Subscribe(_ => model.OnRoundStart.Execute())
+                .Subscribe(_ => model.PublishRoundStart())
                 .AddTo(owner);
 
             _jesterEntity.OnLanded
-                .Subscribe(_ => model.OnRoundEnd.Execute())
+                .Subscribe(_ => model.PublishRoundEnd())
                 .AddTo(owner);
 
             _model.IsPaused
