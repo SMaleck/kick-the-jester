@@ -19,7 +19,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public RoundEndView RoundEndView;
         [SerializeField] public PauseView PauseView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
-        [SerializeField] public ShopView ShopView;
         [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
 
@@ -39,9 +38,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
             Container.Bind<BestDistanceMarkerController>().AsSingle().NonLazy();
 
-            Container.BindInstance(ShopView).AsSingle();
-            Container.Bind<ShopController>().AsSingle().NonLazy();
-
             Container.BindInstance(ShopConfirmResetView).AsSingle();
             Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
 
@@ -52,14 +48,14 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region MODELS
 
-            Container.Bind<ProfileModel>().AsSingle().NonLazy();
-            Container.Bind<SettingsModel>().AsSingle().NonLazy();
-            Container.Bind<UserInputModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ProfileModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<UserInputModel>().AsSingle().NonLazy();
 
-            Container.Bind<GameStateModel>().AsSingle().NonLazy();
-            Container.Bind<FlightStatsModel>().AsSingle().NonLazy();
-            Container.Bind<RoundEndModel>().AsSingle().NonLazy();
-            Container.Bind<ShopModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameStateModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
+            
 
             #endregion
 
@@ -93,7 +89,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<PlayerAttributesController>().AsSingle().NonLazy();
 
             Container.BindInstance(UpgradeScreenView).AsSingle();
-            Container.BindInterfacesAndSelfTo<UpgradeScreenModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<UpgradeScreenController>().AsSingle().NonLazy();
 
             Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();

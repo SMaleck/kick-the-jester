@@ -20,7 +20,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public RoundEndController(
             RoundEndView view,
-            UpgradeScreenModel upgradeScreenModel,
+            OpenPanelModel openPanelModel,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             ProfileModel profileModel,
@@ -43,7 +43,7 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnShopClicked
-                .Subscribe(_ => upgradeScreenModel.ExecuteOpenScreen())
+                .Subscribe(_ => openPanelModel.OpenUpgrades())
                 .AddTo(Disposer);            
             
             _view.OnOpenCompleted

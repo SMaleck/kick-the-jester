@@ -14,28 +14,33 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public SettingsView SettingsView;
         [SerializeField] public CreditsView CreditsView;
         [SerializeField] public TutorialView TutorialView;
+        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
 
         public override void InstallBindings()
         {
             Container.BindInstance(TitleView).AsSingle();
-            Container.Bind<TitleController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TitleController>().AsSingle().NonLazy();
 
             Container.BindInstance(SettingsView).AsSingle();
-            Container.Bind<SettingsController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SettingsController>().AsSingle().NonLazy();
 
             Container.BindInstance(CreditsView).AsSingle();
-            Container.Bind<CreditsController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CreditsController>().AsSingle().NonLazy();
 
             Container.BindInstance(TutorialView).AsSingle();
-            Container.Bind<TutorialController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TutorialController>().AsSingle().NonLazy();
 
-            Container.Bind<AudioSettingsController>().AsSingle().NonLazy();
+            Container.BindInstance(ShopConfirmResetView).AsSingle();
+            Container.Bind<ShopConfirmResetController>().AsSingle().NonLazy();
+
+            Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
 
 
             #region MODELS
 
-            Container.Bind<TitleModel>().AsSingle().NonLazy();
-            Container.Bind<SettingsModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TitleModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
 
             #endregion
         }

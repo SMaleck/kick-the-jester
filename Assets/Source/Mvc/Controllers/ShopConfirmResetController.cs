@@ -9,22 +9,24 @@ namespace Assets.Source.Mvc.Controllers
     public class ShopConfirmResetController : ClosableController
     {
         private readonly ShopConfirmResetView _view;
-        private readonly ShopModel _shopModel;
         private readonly SavegameService _savegameService;
         private readonly SceneTransitionService _sceneTransitionService;
         
 
-        public ShopConfirmResetController(ShopConfirmResetView view, ShopModel shopModel, SavegameService savegameService, SceneTransitionService sceneTransitionService) 
+        public ShopConfirmResetController(
+            ShopConfirmResetView view,
+            OpenPanelModel openPanelModel,
+            SavegameService savegameService, 
+            SceneTransitionService sceneTransitionService) 
             : base(view)
         {
             _view = view;
             _view.Initialize();
 
-            _shopModel = shopModel;
             _savegameService = savegameService;
             _sceneTransitionService = sceneTransitionService;
 
-            _shopModel.OpenConfirmReset
+            openPanelModel.OnOpenResetConfirmation
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
 

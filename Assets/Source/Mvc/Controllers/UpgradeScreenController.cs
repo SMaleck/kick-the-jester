@@ -18,7 +18,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public UpgradeScreenController(
             UpgradeScreenView view,
-            UpgradeScreenModel upgradeScreenModel,
+            OpenPanelModel openPanelModel,
             ViewPrefabConfig viewPrefabConfig,
             UpgradeItemView.Factory upgradeItemViewFactory,
             UpgradeController upgradeController)
@@ -35,7 +35,7 @@ namespace Assets.Source.Mvc.Controllers
                 .ToList()
                 .ForEach(CreateUpgradeItemView);
 
-            upgradeScreenModel.OnOpenScreen
+            openPanelModel.OnOpenUpgrades
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
         }

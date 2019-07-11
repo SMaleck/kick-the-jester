@@ -10,23 +10,23 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Toggle _isMusicMuted;               
         [SerializeField] private Toggle _isEffectsMuted;        
         [SerializeField] private Button _restoreDefaultsButton;
+        [SerializeField] private Button _resetProfileButton;
 
         [HideInInspector]
         public BoolReactiveProperty IsMusicMuted = new BoolReactiveProperty();       
         public BoolReactiveProperty IsEffectsMuted = new BoolReactiveProperty();
 
-        public ReactiveCommand OnRestoreDefaultsClicked = new ReactiveCommand();
+        private readonly ReactiveCommand _onRestoreDefaultsClicked = new ReactiveCommand();
+        public IObservable<Unit> OnRestoreDefaultsClicked => _onRestoreDefaultsClicked;
 
-        private ReactiveCommand _onResetClicked;
-        public IObservable<Unit> OnResetClicked => _onResetClicked;
+        private readonly ReactiveCommand _onResetProfileClicked = new ReactiveCommand();
+        public IObservable<Unit> OnResetProfileClicked => _onResetProfileClicked;
 
         public override void Setup()
         {
             base.Setup();
 
             SetSettingsViewState();
-
-            _onResetClicked = new ReactiveCommand().AddTo(Disposer);
 
             _isMusicMuted.OnValueChangedAsObservable()
                 .Subscribe(_ => IsMusicMuted.Value = !_isMusicMuted.isOn)
@@ -40,7 +40,15 @@ namespace Assets.Source.Mvc.Views
             _restoreDefaultsButton.OnClickAsObservable()
                 .Subscribe(_ =>
                 {
-                    OnRestoreDefaultsClicked.Execute();
+                    _onRestoreDefaultsClicked.Execute();
+                    SetSettingsViewState();
+                })
+                .AddTo(this);
+
+            _resetProfileButton.OnClickAsObservable()
+                .Subscribe(_ =>
+                {
+                    _onResetProfileClicked.Execute();
                     SetSettingsViewState();
                 })
                 .AddTo(this);

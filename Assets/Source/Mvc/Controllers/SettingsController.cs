@@ -10,8 +10,8 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SettingsView _view;
 
         public SettingsController(
-            SettingsView view, 
-            TitleModel titleModel, 
+            SettingsView view,
+            OpenPanelModel openPanelModel,
             SettingsModel settingsModel)
             : base(view)
         {
@@ -24,7 +24,11 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => settingsModel.RestoreDefaults())
                 .AddTo(Disposer);
 
-            titleModel.OpenSettings
+            _view.OnResetProfileClicked
+                .Subscribe(_ => openPanelModel.OpenResetConfirmation())
+                .AddTo(Disposer);
+
+            openPanelModel.OnOpenSettings
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
 

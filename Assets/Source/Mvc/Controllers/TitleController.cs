@@ -10,16 +10,23 @@ namespace Assets.Source.Mvc.Controllers
     public class TitleController : AbstractController
     {
         private readonly TitleView _view;
+        private readonly OpenPanelModel _openPanelModel;
         private readonly TitleModel _model;
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly AudioService _audioService;
 
         private const float StartDelayFactor = 0.3f;
 
-        public TitleController(TitleView view, TitleModel model, SceneTransitionService sceneTransitionService, AudioService audioService)
+        public TitleController(
+            TitleView view,
+            OpenPanelModel openPanelModel,
+            TitleModel model,
+            SceneTransitionService sceneTransitionService,
+            AudioService audioService)
             : base(view)
         {
             _view = view;
+            _openPanelModel = openPanelModel;
             _view.Initialize();
 
             _model = model;
@@ -31,15 +38,15 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnSettingsClicked
-                .Subscribe(_ => _model.OpenSettings.Execute())
+                .Subscribe(_ => openPanelModel.OpenSettings())
                 .AddTo(Disposer);
 
             _view.OnCreditsClicked
-                .Subscribe(_ => _model.OpenCredits.Execute())
+                .Subscribe(_ => openPanelModel.OpenCredits())
                 .AddTo(Disposer);
 
             _view.OnTutorialClicked
-                .Subscribe(_ => _model.OpenTutorial.Execute())
+                .Subscribe(_ => openPanelModel.OpenTutorial())
                 .AddTo(Disposer);
         }
 
@@ -47,10 +54,10 @@ namespace Assets.Source.Mvc.Controllers
         private void OnStartClicked()
         {
             _audioService.PlayMusic(_view.TransitionMusic, false);
-            
+
             if (_model.IsFirstStart.Value)
             {
-                _model.OpenTutorial.Execute();
+                _openPanelModel.OpenTutorial();
                 return;
             }
 

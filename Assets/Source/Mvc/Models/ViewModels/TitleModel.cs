@@ -7,10 +7,6 @@ namespace Assets.Source.Mvc.Models.ViewModels
     {
         public BoolReactiveProperty IsFirstStart;
 
-        public ReactiveCommand OpenSettings = new ReactiveCommand();
-        public ReactiveCommand OpenTutorial = new ReactiveCommand();
-        public ReactiveCommand OpenCredits = new ReactiveCommand();
-
         public TitleModel(SavegameService savegameService)
         {
             var profile = savegameService.Profile;
