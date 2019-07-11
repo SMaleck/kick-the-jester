@@ -31,7 +31,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<TutorialController>().AsSingle().NonLazy();
 
             Container.BindInstance(ShopConfirmResetView).AsSingle();
-            Container.Bind<ResetProfileConfirmationController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ResetProfileConfirmationController>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
 

@@ -27,21 +27,21 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region MVC
 
             Container.BindInstance(HudView).AsSingle();
-            Container.Bind<HudController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<HudController>().AsSingle().NonLazy();
 
             Container.BindInstance(RoundEndView).AsSingle();
-            Container.Bind<RoundEndController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<RoundEndController>().AsSingle().NonLazy();
 
             Container.BindInstance(PauseView).AsSingle();
-            Container.Bind<PauseController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PauseController>().AsSingle().NonLazy();
 
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
-            Container.Bind<BestDistanceMarkerController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BestDistanceMarkerController>().AsSingle().NonLazy();
 
             Container.BindInstance(ShopConfirmResetView).AsSingle();
-            Container.Bind<ResetProfileConfirmationController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ResetProfileConfirmationController>().AsSingle().NonLazy();
 
-            Container.Bind<AudioSettingsController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
 
             #endregion
 
@@ -54,17 +54,16 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<GameStateModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
-            
+            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();            
 
             #endregion
 
 
             #region GAME ROUND
 
-            Container.Bind<GameState>().AsSingle().NonLazy();
-            Container.Bind<CurrencyRecorder>().AsSingle().NonLazy();
-            Container.Bind<RoundStatsRecorder>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameState>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<CurrencyRecorder>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<RoundStatsRecorder>().AsSingle().NonLazy();
 
             #endregion
 
@@ -72,12 +71,12 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region JESTER COMPONENTS
 
             // ToDo Find better way of composing the Jester
-            Container.Bind<FlightRecorder>().AsSingle().NonLazy();
-            Container.Bind<MotionBoot>().AsSingle().NonLazy();
-            Container.Bind<MotionShoot>().AsSingle().NonLazy();
-            Container.Bind<VelocityLimiter>().AsSingle().NonLazy();
-            Container.Bind<SpriteEffect>().AsSingle().NonLazy();
-            Container.Bind<SoundEffect>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FlightRecorder>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MotionBoot>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MotionShoot>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<VelocityLimiter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SpriteEffect>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
 
             #endregion
 
