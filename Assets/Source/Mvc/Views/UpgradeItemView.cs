@@ -23,6 +23,7 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private TextMeshProUGUI _upgradeButtonText;
 
+        // ToDo DISPOSER Bind To
         public Subject<Unit> _onUpgradeButtonClicked;
         public IObservable<Unit> OnUpgradeButtonClicked => _onUpgradeButtonClicked;
 

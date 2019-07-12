@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,15 @@ namespace Assets.Source.Mvc.Views
     {
         [SerializeField] private Button _confirmButton;
 
-        public ReactiveCommand OnResetConfirmClicked = new ReactiveCommand();
+        private readonly ReactiveCommand _onResetConfirmClicked = new ReactiveCommand();
+        public IObservable<Unit> OnResetConfirmClicked => _onResetConfirmClicked;
 
         public override void Setup()
         {
             base.Setup();
 
-            _confirmButton.OnClickAsObservable()
-                .Subscribe(_ => OnResetConfirmClicked.Execute())
-                .AddTo(this);
+            _onResetConfirmClicked.AddTo(Disposer);
+            _onResetConfirmClicked.BindTo(_confirmButton).AddTo(Disposer);
         }
     }
 }

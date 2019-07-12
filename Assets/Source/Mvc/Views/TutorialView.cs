@@ -23,6 +23,7 @@ namespace Assets.Source.Mvc.Views
         private int _currentStep = 0;
         private bool IsLastStep => _currentStep >= _steps.Count - 1;
 
+        // ToDo DISPOSER
         public ReactiveCommand OnNextClickedOnLastSlide = new ReactiveCommand();
 
 

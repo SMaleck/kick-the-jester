@@ -33,10 +33,10 @@ namespace Assets.Source.Mvc.Views
             base.Setup();
 
             _onPlayAgainClicked.AddTo(Disposer);
-            _onPlayAgainClicked.BindTo(_playAgainButton);
+            _onPlayAgainClicked.BindTo(_playAgainButton).AddTo(Disposer);
 
             _onResetClicked.AddTo(Disposer);
-            _onResetClicked.BindTo(_resetProfileButton);
+            _onResetClicked.BindTo(_resetProfileButton).AddTo(Disposer);
 
             _playAgainButtonText.text = TextService.PlayAgainExclamation();
             _resetProfileButtonText.text = TextService.ResetProfile();

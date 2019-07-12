@@ -26,23 +26,21 @@ namespace Assets.Source.Mvc.Views
         {
             base.Setup();
 
-            _isMusicMutedProp.AddTo(this);
-            _isEffectsMutedProp.AddTo(this);
-            _onRetryClicked.AddTo(this);
+            _isMusicMutedProp.AddTo(Disposer);
+            _isEffectsMutedProp.AddTo(Disposer);
 
             SetSettingsViewState();
 
-            _retryButton.OnClickAsObservable()
-                .Subscribe(_ => _onRetryClicked.Execute())
-                .AddTo(this);
+            _onRetryClicked.AddTo(Disposer);
+            _onRetryClicked.BindTo(_retryButton).AddTo(Disposer);
 
             _isMusicMuted.OnValueChangedAsObservable()
                 .Subscribe(_ => _isMusicMutedProp.Value = !_isMusicMuted.isOn)
-                .AddTo(this);
+                .AddTo(Disposer);
 
             _isEffectsMuted.OnValueChangedAsObservable()
                 .Subscribe(_ => _isEffectsMutedProp.Value = !_isEffectsMuted.isOn)
-                .AddTo(this);
+                .AddTo(Disposer);
         }
 
         public void SetIsMusicMuted(bool value)

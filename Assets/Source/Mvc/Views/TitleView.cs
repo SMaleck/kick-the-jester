@@ -14,6 +14,7 @@ namespace Assets.Source.Mvc.Views
 
         [SerializeField] public AudioClip TransitionMusic;
 
+        // ToDo DISPOSER
         public ReactiveCommand OnStartClicked = new ReactiveCommand();
         public ReactiveCommand OnSettingsClicked = new ReactiveCommand();
         public ReactiveCommand OnTutorialClicked = new ReactiveCommand();

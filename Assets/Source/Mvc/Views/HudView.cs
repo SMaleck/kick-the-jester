@@ -1,10 +1,10 @@
-﻿using Assets.Source.App;
+﻿using Assets.Source.Services;
 using Assets.Source.Util;
 using Assets.Source.Util.UI;
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Source.Services;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -70,15 +70,14 @@ namespace Assets.Source.Mvc.Views
             set { _outOfCameraIndicator.gameObject.SetActive(value); }
         }
 
-        public ReactiveCommand OnPauseButtonClicked = new ReactiveCommand();
+        public ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
+        public IObservable<Unit> OnPauseButtonClicked => _onPauseButtonClicked;
 
 
         public override void Setup()
         {
-            _pauseButton.OnClickAsObservable()
-                       .Subscribe(_ => OnPauseButtonClicked.Execute())
-                       .AddTo(this);
-
+            _onPauseButtonClicked.AddTo(Disposer);
+            _onPauseButtonClicked.BindTo(_pauseButton).AddTo(Disposer);
 
             _velocityBar.gameObject.SetActive(false);
             _kickForceBar.gameObject.SetActive(true);
@@ -94,11 +93,13 @@ namespace Assets.Source.Mvc.Views
             var start = _outOfCameraIndicator.anchoredPosition.y;
             var end = start - _indicatorAnimStrength;
 
-            DOTween.To((value) =>
-                {
-                    _outOfCameraIndicator.anchoredPosition = new Vector2(_outOfCameraIndicator.anchoredPosition.x, value);
-                },
-                start, end, _indicatorAnimSpeedSeconds)
+            DOTween.To(
+                    (value) =>
+                    {
+                        _outOfCameraIndicator.anchoredPosition =
+                            new Vector2(_outOfCameraIndicator.anchoredPosition.x, value);
+                    },
+                    start, end, _indicatorAnimSpeedSeconds)
                 .SetEase(Ease.OutBounce)
                 .SetLoops(-1, LoopType.Yoyo);
         }

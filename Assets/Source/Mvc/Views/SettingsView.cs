@@ -32,20 +32,20 @@ namespace Assets.Source.Mvc.Views
         {
             base.Setup();
 
-            _isMusicMutedProp.AddTo(this);
-            _isEffectsMutedProp.AddTo(this);
-            _onRestoreDefaultsClicked.AddTo(this);
-            _onResetProfileClicked.AddTo(this);
+            _isMusicMutedProp.AddTo(Disposer);
+            _isEffectsMutedProp.AddTo(Disposer);
+            _onRestoreDefaultsClicked.AddTo(Disposer);
+            _onResetProfileClicked.AddTo(Disposer);
 
             SetSettingsViewState();
 
             _isMusicMuted.OnValueChangedAsObservable()
                 .Subscribe(_ => _isMusicMutedProp.Value = !_isMusicMuted.isOn)
-                .AddTo(this);
+                .AddTo(Disposer);
 
             _isEffectsMuted.OnValueChangedAsObservable()
                 .Subscribe(_ => _isEffectsMutedProp.Value = !_isEffectsMuted.isOn)
-                .AddTo(this);
+                .AddTo(Disposer);
 
 
             _restoreDefaultsButton.OnClickAsObservable()
@@ -56,7 +56,7 @@ namespace Assets.Source.Mvc.Views
                 })
                 .AddTo(this);
 
-            _onResetProfileClicked.BindTo(_resetProfileButton);
+            _onResetProfileClicked.BindTo(_resetProfileButton).AddTo(Disposer);
             _resetProfileButtonText.text = TextService.ResetProfile();
         }
 
