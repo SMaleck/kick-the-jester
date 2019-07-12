@@ -1039,10 +1039,7 @@ MonoBehaviour:
   _isEffectsMuted: {fileID: 114945756598443534}
   _restoreDefaultsButton: {fileID: 114878943177766376}
   _resetProfileButton: {fileID: 114225120621400600}
-  IsMusicMuted:
-    value: 0
-  IsEffectsMuted:
-    value: 0
+  _resetProfileButtonText: {fileID: 114969247297661962}
 --- !u!114 &114493679970502124
 MonoBehaviour:
   m_ObjectHideFlags: 1

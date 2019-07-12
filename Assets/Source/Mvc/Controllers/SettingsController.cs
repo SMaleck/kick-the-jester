@@ -17,8 +17,16 @@ namespace Assets.Source.Mvc.Controllers
         {
             _view = view;
 
-            _view.IsMusicMuted = settingsModel.IsMusicMuted;
-            _view.IsEffectsMuted = settingsModel.IsEffectsMuted;
+            _view.SetIsMusicMuted(settingsModel.IsMusicMuted.Value);
+            _view.SetIsEffectsMuted(settingsModel.IsEffectsMuted.Value);
+
+            _view.IsMusicMutedProp
+                .Subscribe(settingsModel.SetIsMusicMuted)
+                .AddTo(Disposer);
+
+            _view.IsEffectsMutedProp
+                .Subscribe(settingsModel.SetIsEffectsMuted)
+                .AddTo(Disposer);
 
             _view.OnRestoreDefaultsClicked
                 .Subscribe(_ => settingsModel.RestoreDefaults())

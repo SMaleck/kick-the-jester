@@ -1,20 +1,34 @@
-﻿using UniRx;
+﻿using Assets.Source.Util;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Mvc.Models
 {
-    public class FlightStatsModel
+    public class FlightStatsModel : AbstractDisposable
     {
-        public FloatReactiveProperty Distance = new FloatReactiveProperty();
-        public FloatReactiveProperty Height = new FloatReactiveProperty();
-        public ReactiveProperty<Vector2> Velocity = new ReactiveProperty<Vector2>();
+        public FloatReactiveProperty Distance;
+        public FloatReactiveProperty Height;
+        public ReactiveProperty<Vector2> Velocity;
       
-        public FloatReactiveProperty RelativeKickForce = new FloatReactiveProperty();
-        public FloatReactiveProperty RelativeVelocity = new FloatReactiveProperty();
-        public IntReactiveProperty ShotsRemaining = new IntReactiveProperty();
+        public FloatReactiveProperty RelativeKickForce;
+        public FloatReactiveProperty RelativeVelocity;
+        public IntReactiveProperty ShotsRemaining;
 
-        public ReactiveCollection<int> Gains = new ReactiveCollection<int>();
-        public IntReactiveProperty Collected = new IntReactiveProperty();
-        public IntReactiveProperty Earned = new IntReactiveProperty();
+        public ReactiveCollection<int> Gains;
+        public IntReactiveProperty Collected;
+        public IntReactiveProperty Earned;
+
+        public FlightStatsModel()
+        {
+            Distance = new FloatReactiveProperty().AddTo(Disposer);
+            Height = new FloatReactiveProperty().AddTo(Disposer);
+            Velocity = new ReactiveProperty<Vector2>().AddTo(Disposer);
+            RelativeKickForce = new FloatReactiveProperty().AddTo(Disposer);
+            RelativeVelocity = new FloatReactiveProperty().AddTo(Disposer);
+            ShotsRemaining = new IntReactiveProperty().AddTo(Disposer);
+            Gains = new ReactiveCollection<int>().AddTo(Disposer);
+            Collected = new IntReactiveProperty().AddTo(Disposer);
+            Earned = new IntReactiveProperty().AddTo(Disposer);
+        }
     }
 }

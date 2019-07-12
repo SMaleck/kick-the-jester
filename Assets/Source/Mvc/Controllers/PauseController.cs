@@ -5,7 +5,7 @@ using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    class PauseController : ClosableController
+    public class PauseController : ClosableController
     {
         private readonly PauseView _view;
         private readonly GameStateModel _gameStateModel;
@@ -13,7 +13,12 @@ namespace Assets.Source.Mvc.Controllers
         private readonly UserInputModel _userInputModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
-        public PauseController(PauseView view, GameStateModel gameStateModel, SettingsModel settingsModel, UserInputModel userInputModel, SceneTransitionService sceneTransitionService)
+        public PauseController(
+            PauseView view, 
+            GameStateModel gameStateModel, 
+            SettingsModel settingsModel, 
+            UserInputModel userInputModel, 
+            SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
@@ -31,8 +36,16 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => OnUserInputPause())
                 .AddTo(Disposer);
 
-            _view.IsMusicMuted = _settingsModel.IsMusicMuted;
-            _view.IsEffectsMuted = _settingsModel.IsEffectsMuted;
+            _view.SetIsMusicMuted(_settingsModel.IsMusicMuted.Value);
+            _view.SetIsEffectsMuted(_settingsModel.IsEffectsMuted.Value);
+
+            _view.IsMusicMutedProp
+                .Subscribe(_settingsModel.SetIsMusicMuted)
+                .AddTo(Disposer);
+
+            _view.IsEffectsMutedProp
+                .Subscribe(_settingsModel.SetIsEffectsMuted)
+                .AddTo(Disposer);
 
             _view.OnCloseCompleted
                 .Subscribe(_ => _gameStateModel.SetIsPaused(false))

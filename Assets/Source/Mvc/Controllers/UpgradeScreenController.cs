@@ -5,6 +5,8 @@ using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Util;
 using System.Linq;
+using Assets.Source.Features.PlayerData;
+using Assets.Source.Services;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -21,7 +23,9 @@ namespace Assets.Source.Mvc.Controllers
             OpenPanelModel openPanelModel,
             ViewPrefabConfig viewPrefabConfig,
             UpgradeItemView.Factory upgradeItemViewFactory,
-            UpgradeController upgradeController)
+            UpgradeController upgradeController,
+            PlayerProfileModel playerProfileModel,
+            SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _upgradeScreenView = view;
@@ -37,6 +41,18 @@ namespace Assets.Source.Mvc.Controllers
 
             openPanelModel.OnOpenUpgrades
                 .Subscribe(_ => Open())
+                .AddTo(Disposer);
+
+            view.OnPlayAgainClicked
+                .Subscribe(_ => sceneTransitionService.ToGame())
+                .AddTo(Disposer);
+
+            view.OnResetClicked
+                .Subscribe(_ => openPanelModel.OpenResetConfirmation())
+                .AddTo(Disposer);
+
+            playerProfileModel.CurrencyAmount
+                .Subscribe(view.SetCurrencyAmount)
                 .AddTo(Disposer);
         }
 

@@ -1,6 +1,7 @@
 ﻿using Assets.Source.Util;
 using Assets.Source.Util.UI;
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -26,8 +27,11 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] Button _retryButton;
         [SerializeField] Button _shopButton;
 
-        public ReactiveCommand OnRetryClicked = new ReactiveCommand();
-        public ReactiveCommand OnShopClicked = new ReactiveCommand();
+        private readonly ReactiveCommand _onRetryClicked = new ReactiveCommand();
+        public IObservable<Unit> OnRetryClicked => _onRetryClicked;
+
+        private readonly ReactiveCommand _onUpgradesClicked = new ReactiveCommand();
+        public IObservable<Unit> OnUpgradesClicked => _onUpgradesClicked;
 
         public float Distance { set { _distanceText.text = value.ToMetersString(); } }
         public float BestDistance { set { _bestDistanceText.text = value.ToMetersString(); } }
@@ -39,15 +43,13 @@ namespace Assets.Source.Mvc.Views
         {
             base.Setup();
 
-            _retryButton.OnClickAsObservable()
-                .Subscribe(_ => OnRetryClicked.Execute())
-                .AddTo(this);
+            _onRetryClicked.AddTo(Disposer);
+            _onRetryClicked.BindTo(_retryButton).AddTo(Disposer);
 
-            _shopButton.OnClickAsObservable()
-                .Subscribe(_ => OnShopClicked.Execute())
-                .AddTo(this);
+            _onUpgradesClicked.AddTo(Disposer);
+            _onUpgradesClicked.BindTo(_shopButton).AddTo(Disposer);
 
-            _currencyText.text = "";
+            _currencyText.text = string.Empty;
         }
 
 

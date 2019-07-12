@@ -31,7 +31,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1131199266434600
 GameObject:
   m_ObjectHideFlags: 1
@@ -739,6 +739,7 @@ MonoBehaviour:
   _startClosed: 1
   _closeButton: {fileID: 114250689210562742}
   _closedPosition: {x: 0, y: 0, z: 0}
+  _panelParent: {fileID: 0}
   _panelSliderConfig:
     slideInFrom: 0
     useBounce: 0
@@ -1143,7 +1144,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 92
+  m_SortingOrder: 110
   m_TargetDisplay: 0
 --- !u!224 &224080143552011318
 RectTransform:

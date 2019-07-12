@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Util.UI;
+using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,24 +21,41 @@ namespace Assets.Source.Mvc.Views
         private PanelSlider _panelSlider;
 
         public bool IsOpen => gameObject.activeSelf;
-        public ReactiveCommand OnOpenCompleted = new ReactiveCommand();
-        public ReactiveCommand OnCloseCompleted = new ReactiveCommand();
+
+        private readonly ReactiveCommand _onOpenCompleted = new ReactiveCommand();
+        public IObservable<Unit> OnOpenCompleted => _onOpenCompleted;
+
+        private readonly ReactiveCommand _onCloseCompleted = new ReactiveCommand();
+        public IObservable<Unit> OnCloseCompleted => _onCloseCompleted;
 
 
         public override void Setup()
         {
-            var ownerTransform = _panelParent == null 
+            _onOpenCompleted.AddTo(Disposer);
+            _onCloseCompleted.AddTo(Disposer);
+
+            var ownerTransform = _panelParent == null
                 ? this.transform as RectTransform
                 : _panelParent as RectTransform;
 
-            _panelSlider = new PanelSlider(ownerTransform, _panelSliderConfig, ownerTransform.localPosition, _closedPosition);
+            _panelSlider = new PanelSlider(
+                    ownerTransform,
+                    _panelSliderConfig,
+                    ownerTransform.localPosition,
+                    _closedPosition)
+                .AddTo(Disposer);
 
-            _panelSlider.OnOpenCompleted.Subscribe(_ => OnOpenCompleted.Execute());
-            _panelSlider.OnCloseCompleted.Subscribe(_ => OnCloseCompleted.Execute());
+            _panelSlider.OnOpenCompleted
+                .Subscribe(_ => _onOpenCompleted.Execute())
+                .AddTo(Disposer);
+
+            _panelSlider.OnCloseCompleted
+                .Subscribe(_ => _onCloseCompleted.Execute())
+                .AddTo(Disposer);
 
             _closeButton?.OnClickAsObservable()
                 .Subscribe(_ => Close())
-                .AddTo(this);
+                .AddTo(Disposer);
 
             if (_startClosed)
             {

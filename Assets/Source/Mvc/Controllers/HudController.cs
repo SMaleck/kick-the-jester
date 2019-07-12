@@ -34,7 +34,7 @@ namespace Assets.Source.Mvc.Controllers
             _cameraConfig = cameraConfig;
 
             _view.OnPauseButtonClicked
-                .Subscribe(_ => _userInputModel.OnPause.Execute())
+                .Subscribe(_ => _userInputModel.PublishOnPause())
                 .AddTo(Disposer);
 
             SetupGameStateModel();

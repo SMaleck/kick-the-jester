@@ -31,12 +31,12 @@ namespace Assets.Source.Entities
 
             if (!isPaused && Input.GetButtonDown("Kick"))
             {
-                _userInputModel.OnClickedAnywhere.Execute();
+                _userInputModel.PublishOnClickedAnywhere();
             }
 
             if (Input.GetButtonDown("Pause"))
             {
-                _userInputModel.OnPause.Execute();
+                _userInputModel.PublishOnPause();
             }
         }
 
@@ -49,7 +49,7 @@ namespace Assets.Source.Entities
                 case 0:
                     if (!_gameStateModel.IsPaused.Value)
                     {
-                        _userInputModel.OnClickedAnywhere.Execute();
+                        _userInputModel.PublishOnClickedAnywhere();
                     }
                     break;
 

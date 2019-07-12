@@ -43,7 +43,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => OnRetryClicked())
                 .AddTo(Disposer);
 
-            _view.OnShopClicked
+            _view.OnUpgradesClicked
                 .Subscribe(_ => openPanelModel.OpenUpgrades())
                 .AddTo(Disposer);
 

@@ -1,25 +1,36 @@
 ﻿using Assets.Source.Services.Savegame;
+using Assets.Source.Services.Savegame.StorageModels;
+using Assets.Source.Util;
 using UniRx;
 
 namespace Assets.Source.Mvc.Models
 {
-    public class SettingsModel
+    public class SettingsModel : AbstractDisposable
     {
-        public BoolReactiveProperty IsMusicMuted;
-        public BoolReactiveProperty IsEffectsMuted;
-                
+        private readonly SettingsStorageModel _settingsStorageModel;
+
+        public IReadOnlyReactiveProperty<bool> IsMusicMuted => _settingsStorageModel.IsMusicMuted;
+        public IReadOnlyReactiveProperty<bool> IsEffectsMuted => _settingsStorageModel.IsEffectsMuted;
+
         public SettingsModel(SavegameService savegameService)
         {
-            var settings = savegameService.Settings;
+            _settingsStorageModel = savegameService.Settings;
+        }
 
-            IsMusicMuted = settings.IsMusicMuted;
-            IsEffectsMuted = settings.IsEffectsMuted;
+        public void SetIsMusicMuted(bool value)
+        {
+            _settingsStorageModel.IsMusicMuted.Value = value;
+        }
+
+        public void SetIsEffectsMuted(bool value)
+        {
+            _settingsStorageModel.IsEffectsMuted.Value = value;
         }
 
         public void RestoreDefaults()
         {
-            IsMusicMuted.Value = false;
-            IsEffectsMuted.Value = false;
+            SetIsMusicMuted(false);
+            SetIsEffectsMuted(false);
         }
     }
 }

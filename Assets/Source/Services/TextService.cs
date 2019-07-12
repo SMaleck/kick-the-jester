@@ -64,5 +64,20 @@ namespace Assets.Source.Services
         {
             return $"{amount}{InlineSpriteCoin}";
         }
+
+        public static string PlayAgainExclamation()
+        {
+            return "Play Again!";
+        }
+
+        public static string PlayExclamation()
+        {
+            return "Play!";
+        }
+
+        public static string ResetProfile()
+        {
+            return "Reset Profile";
+        }
     }
 }

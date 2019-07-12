@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,36 +11,54 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Toggle _isMusicMuted;
         [SerializeField] private Toggle _isEffectsMuted;                
         [SerializeField] private Button _retryButton;
+        
 
-        [HideInInspector]
-        public BoolReactiveProperty IsMusicMuted = new BoolReactiveProperty();
-        public BoolReactiveProperty IsEffectsMuted = new BoolReactiveProperty();                
-        public ReactiveCommand OnRetryClicked = new ReactiveCommand();
+        private readonly ReactiveProperty<bool> _isMusicMutedProp = new ReactiveProperty<bool>();
+        public IReadOnlyReactiveProperty<bool> IsMusicMutedProp => _isMusicMutedProp;
+
+        private readonly ReactiveProperty<bool> _isEffectsMutedProp = new ReactiveProperty<bool>();
+        public IReadOnlyReactiveProperty<bool> IsEffectsMutedProp => _isEffectsMutedProp;
+
+        private readonly ReactiveCommand _onRetryClicked = new ReactiveCommand();
+        public IObservable<Unit> OnRetryClicked => _onRetryClicked;
 
         public override void Setup()
         {
             base.Setup();
 
+            _isMusicMutedProp.AddTo(this);
+            _isEffectsMutedProp.AddTo(this);
+            _onRetryClicked.AddTo(this);
+
             SetSettingsViewState();
 
             _retryButton.OnClickAsObservable()
-                .Subscribe(_ => OnRetryClicked.Execute())
+                .Subscribe(_ => _onRetryClicked.Execute())
                 .AddTo(this);
 
             _isMusicMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => IsMusicMuted.Value = !_isMusicMuted.isOn)
+                .Subscribe(_ => _isMusicMutedProp.Value = !_isMusicMuted.isOn)
                 .AddTo(this);
 
             _isEffectsMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => IsEffectsMuted.Value = !_isEffectsMuted.isOn)
+                .Subscribe(_ => _isEffectsMutedProp.Value = !_isEffectsMuted.isOn)
                 .AddTo(this);
         }
 
+        public void SetIsMusicMuted(bool value)
+        {
+            _isMusicMutedProp.Value = value;
+        }
+
+        public void SetIsEffectsMuted(bool value)
+        {
+            _isEffectsMutedProp.Value = value;
+        }
 
         private void SetSettingsViewState()
         {
-            _isMusicMuted.isOn = !IsMusicMuted.Value;
-            _isEffectsMuted.isOn = !IsEffectsMuted.Value;
+            _isMusicMuted.isOn = !_isMusicMutedProp.Value;
+            _isEffectsMuted.isOn = !_isEffectsMutedProp.Value;
         }
     }
 }
