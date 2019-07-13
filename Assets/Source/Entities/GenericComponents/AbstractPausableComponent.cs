@@ -11,7 +11,7 @@ namespace Assets.Source.Entities.GenericComponents
         {
             owner.IsPaused
                 .Subscribe(value => IsPaused.Value = value)
-                .AddTo(owner);
+                .AddTo(Disposer);
         }
     }
 }

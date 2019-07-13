@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Source.Entities.GenericComponents;
+using System.Collections.Generic;
 using System.Linq;
-using Assets.Source.Entities.GenericComponents;
 using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Parallax
-{        
+{
     public class ParallaxLayer : AbstractComponent<Parallaxer>
     {
         private readonly ParallaxLayerConfig config;
@@ -31,7 +31,7 @@ namespace Assets.Source.Entities.Parallax
         }
 
 
-        public ParallaxLayer(Parallaxer owner, ParallaxLayerConfig config, Transform cameraTransform) 
+        public ParallaxLayer(Parallaxer owner, ParallaxLayerConfig config, Transform cameraTransform)
             : base(owner)
         {
             this.config = config;
@@ -43,7 +43,7 @@ namespace Assets.Source.Entities.Parallax
 
             Observable.EveryLateUpdate()
                 .Subscribe(_ => OnLateUpdate())
-                .AddTo(owner);
+                .AddTo(Disposer);
         }
 
 
@@ -64,7 +64,7 @@ namespace Assets.Source.Entities.Parallax
 
                 rightTileIndex = 1;
                 leftTileIndex = 2;
-            }            
+            }
         }
 
 
@@ -93,7 +93,7 @@ namespace Assets.Source.Entities.Parallax
             lastCameraPos = cameraTransform.position;
 
             // Switch tiles for infinite background
-            SwitchTiles();            
+            SwitchTiles();
         }
 
 
@@ -109,7 +109,7 @@ namespace Assets.Source.Entities.Parallax
             }
         }
 
-        
+
         // Switches the Tiles so that the Camera always sees the middle one, i.e. inifnite scrolling
         private void SwitchTiles()
         {
@@ -169,9 +169,9 @@ namespace Assets.Source.Entities.Parallax
 
             if (rightTileIndex < 0)
             {
-                rightTileIndex = Tiles.Count -1;
+                rightTileIndex = Tiles.Count - 1;
             }
         }
 
-    }    
+    }
 }

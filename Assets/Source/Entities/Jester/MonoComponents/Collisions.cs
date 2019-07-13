@@ -1,4 +1,6 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Jester.MonoComponents
@@ -10,31 +12,59 @@ namespace Assets.Source.Entities.Jester.MonoComponents
         private const string TAG_BOOST = "Boost";
         private const string TAG_PICKUP = "Pickup";
 
-        public ReactiveCommand OnGround = new ReactiveCommand();
-        public ReactiveCommand OnBoost = new ReactiveCommand();
-        public ReactiveCommand OnPickup = new ReactiveCommand();
-        public ReactiveCommand OnObstacle = new ReactiveCommand();
+        [SerializeField] private Collider2D _groundCollisionProbe;
+        [SerializeField] private Collider2D _radialCollisionProbe;
 
-        public override void Initialize() { }
+        private Subject<Unit> _onGround = new Subject<Unit>();
+        public IObservable<Unit> OnGround => _onGround;
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private Subject<Unit> _onBoost = new Subject<Unit>();
+        public IObservable<Unit> OnBoost => _onBoost;
+
+        private Subject<Unit> _onPickup = new Subject<Unit>();
+        public IObservable<Unit> OnPickup => _onPickup;
+
+        private Subject<Unit> _onObstacle = new Subject<Unit>();
+        public IObservable<Unit> OnObstacle => _onObstacle;
+
+        public override void Initialize()
         {
-            switch (collision.gameObject.tag)
-            {
-                case TAG_GROUND:
-                    OnGround.Execute();
-                    break;
+            _onGround.AddTo(Disposer);
+            _onBoost.AddTo(Disposer);
+            _onPickup.AddTo(Disposer);
+            _onObstacle.AddTo(Disposer);
 
+            _groundCollisionProbe.OnTriggerEnter2DAsObservable()
+                .Subscribe(OnGroundCollisionProbeEntered)
+                .AddTo(Disposer);
+
+            _radialCollisionProbe.OnTriggerEnter2DAsObservable()
+                .Subscribe(OnRadialCollisionProbeEntered)
+                .AddTo(Disposer);
+        }
+
+        private void OnGroundCollisionProbeEntered(Collider2D collider)
+        {
+            if (collider.gameObject.tag == TAG_GROUND)
+            {
+                _onGround.OnNext(Unit.Default);
+            }
+        }
+
+        private void OnRadialCollisionProbeEntered(Collider2D collider)
+        {
+            switch (collider.gameObject.tag)
+            {
                 case TAG_OBSTACLE:
-                    OnObstacle.Execute();
+                    _onObstacle.OnNext(Unit.Default);
                     break;
 
                 case TAG_BOOST:
-                    OnBoost.Execute();
+                    _onBoost.OnNext(Unit.Default);
                     break;
 
                 case TAG_PICKUP:
-                    OnPickup.Execute();
+                    _onPickup.OnNext(Unit.Default);
                     break;
             }
         }

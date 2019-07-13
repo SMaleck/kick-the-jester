@@ -37,11 +37,11 @@ namespace Assets.Source.Entities.GameRound.Components
 
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => OnRoundEnd())
-                .AddTo(owner);
+                .AddTo(Disposer);
 
             MessageBroker.Default.Receive<CurrencyGainEvent>()
                 .Subscribe(gainEvent => AddPickup(gainEvent.Amount))
-                .AddTo(owner);
+                .AddTo(Disposer);
         }
 
         private void OnRoundEnd()

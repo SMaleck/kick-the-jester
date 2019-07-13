@@ -35,19 +35,19 @@ namespace Assets.Source.Entities.GameRound.Components
 
             _userInputModel.OnPause
                 .Subscribe(_ => model.SetIsPaused(!model.IsPaused.Value))
-                .AddTo(owner);
+                .AddTo(Disposer);
 
             _jesterEntity.OnKicked
                 .Subscribe(_ => model.PublishRoundStart())
-                .AddTo(owner);
+                .AddTo(Disposer);
 
             _jesterEntity.OnLanded
                 .Subscribe(_ => model.PublishRoundEnd())
-                .AddTo(owner);
+                .AddTo(Disposer);
 
             _model.IsPaused
                 .Subscribe(OnPauseChanged)
-                .AddTo(owner);
+                .AddTo(Disposer);
         }
 
 
