@@ -1,9 +1,9 @@
 ﻿using Assets.Source.App.Configuration;
 using Assets.Source.Entities.GenericComponents;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using DG.Tweening;
 using System;
-using Assets.Source.Features.PlayerData;
 using UniRx;
 using UnityEngine;
 
@@ -70,7 +70,8 @@ namespace Assets.Source.Entities.Jester.Components
         {
             OnJesterKickedSubscription?.Dispose();
 
-            Vector3 appliedForce = _bootConfig.ForceDirection * (_playerAttributesModel.KickForce * _flightStatsModel.RelativeKickForce.Value);
+            var kickForce = _playerAttributesModel.KickForce.Value;
+            Vector3 appliedForce = _bootConfig.ForceDirection * (kickForce * _flightStatsModel.RelativeKickForce.Value);
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
         }
     }

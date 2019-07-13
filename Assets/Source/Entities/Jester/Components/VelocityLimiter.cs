@@ -37,12 +37,12 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnLateUpdate()
         {
-            float clampedX = Mathf.Clamp(velocityX, 0, _playerAttributesModel.MaxVelocityX);
-            float clampedY = Mathf.Clamp(velocityY, - float.MaxValue, _playerAttributesModel.MaxVelocityY);
+            float clampedX = Mathf.Clamp(velocityX, 0, _playerAttributesModel.MaxVelocityX.Value);
+            float clampedY = Mathf.Clamp(velocityY, - float.MaxValue, _playerAttributesModel.MaxVelocityY.Value);
 
             Owner.GoBody.velocity = new Vector2(clampedX, clampedY);
 
-            float relativeVelocity = velocityX.AsRelativeTo(_playerAttributesModel.MaxVelocityX);
+            float relativeVelocity = velocityX.AsRelativeTo(_playerAttributesModel.MaxVelocityX.Value);
             _flightStatsModel.RelativeVelocity.Value = relativeVelocity;
         }
     }

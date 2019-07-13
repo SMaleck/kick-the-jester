@@ -6,6 +6,7 @@ namespace Assets.Source.Entities
     public abstract class AbstractMonoEntity : MonoBehaviour, IInitializable
     {
         public Transform GoTransform => gameObject.transform;
+        public MonoBehaviour Disposer => this;
 
         public Vector3 Position
         {

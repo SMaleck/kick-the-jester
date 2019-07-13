@@ -32,7 +32,7 @@ namespace Assets.Source.Services.Particles
         public void Stop()
         {
             IsPaused = false;
-            _particleSystem.Stop();
+            _particleSystem.Stop();           
         }
 
         public void Pause()

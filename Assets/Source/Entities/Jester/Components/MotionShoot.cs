@@ -28,7 +28,9 @@ namespace Assets.Source.Entities.Jester.Components
             _flightStatsModel = flightStatsModel;
             _userInputModel = userInputModel;
 
-            flightStatsModel.ShotsRemaining.Value = _playerAttributesModel.Shots;
+            _playerAttributesModel.ProjectileCount
+                .Subscribe(flightStatsModel.SetRemainingShotsIfHigher)
+                .AddTo(Disposer);            
 
             _userInputModel.OnClickedAnywhere
                 .Subscribe(_ => OnKick())
@@ -50,7 +52,7 @@ namespace Assets.Source.Entities.Jester.Components
 
             Owner.OnShot.Execute();
 
-            Vector3 appliedForce = _direction * _playerAttributesModel.ShootForce;
+            Vector3 appliedForce = _direction * _playerAttributesModel.ShootForce.Value;
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
 
             _flightStatsModel.ShotsRemaining.Value--;

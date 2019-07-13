@@ -66,21 +66,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<RoundStatsRecorder>().AsSingle().NonLazy();
 
             #endregion
-
-
-            #region JESTER COMPONENTS
-
-            // ToDo Find better way of composing the Jester
-            Container.BindInterfacesAndSelfTo<FlightRecorder>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<MotionBoot>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<MotionShoot>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<VelocityLimiter>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<SpriteEffect>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
-
-            #endregion
-
-
+            
             #region PLAYER STATE & UPGRADES
 
             Container.BindInterfacesAndSelfTo<UpgradeController>().AsSingle().NonLazy();
@@ -91,6 +77,18 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<UpgradeScreenController>().AsSingle().NonLazy();
 
             Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();
+
+            #endregion
+
+            #region JESTER COMPONENTS
+
+            // ToDo Find better way of composing the Jester
+            Container.BindInterfacesAndSelfTo<FlightRecorder>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MotionBoot>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<MotionShoot>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<VelocityLimiter>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SpriteEffect>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
 
             #endregion
         }

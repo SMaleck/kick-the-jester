@@ -30,5 +30,13 @@ namespace Assets.Source.Mvc.Models
             Collected = new IntReactiveProperty().AddTo(Disposer);
             Earned = new IntReactiveProperty().AddTo(Disposer);
         }
+
+        public void SetRemainingShotsIfHigher(int amount)
+        {
+            if(amount >= ShotsRemaining.Value)
+            {
+                ShotsRemaining.Value = amount;
+            }
+        }
     }
 }
