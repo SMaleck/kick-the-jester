@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Entities.GameRound.Components;
 using Assets.Source.Entities.Jester.Components;
+using Assets.Source.Features.Cheats;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Upgrades;
 using Assets.Source.Mvc.Controllers;
@@ -89,6 +90,11 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<VelocityLimiter>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SpriteEffect>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
+
+            #endregion
+            #region CHEATS
+
+            Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
 
             #endregion
         }
