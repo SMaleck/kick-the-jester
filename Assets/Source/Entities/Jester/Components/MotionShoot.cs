@@ -1,4 +1,5 @@
-﻿using Assets.Source.Entities.GenericComponents;
+﻿using Assets.Source.App.Configuration;
+using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using UniRx;
@@ -8,31 +9,30 @@ namespace Assets.Source.Entities.Jester.Components
 {
     public class MotionShoot : AbstractPausableComponent<JesterEntity>
     {
+        private readonly ShootConfig _shootConfig;
         private readonly PlayerAttributesModel _playerAttributesModel;
         private readonly FlightStatsModel _flightStatsModel;
-        private readonly UserInputModel _userInputModel;
 
-        private bool _isActive = true;
         private bool _isInFlight;
-        private Vector3 _direction = new Vector3(1.2f, 1, 0);
-
+        private bool _hasProjectiles => _flightStatsModel.ShotsRemaining.Value > 0;
 
         public MotionShoot(
             JesterEntity owner,
+            ShootConfig shootConfig,
             PlayerAttributesModel playerAttributesModel,
             FlightStatsModel flightStatsModel,
             UserInputModel userInputModel)
             : base(owner)
         {
+            _shootConfig = shootConfig;
             _playerAttributesModel = playerAttributesModel;
             _flightStatsModel = flightStatsModel;
-            _userInputModel = userInputModel;
 
             _playerAttributesModel.ProjectileCount
                 .Subscribe(flightStatsModel.SetRemainingShotsIfHigher)
                 .AddTo(Disposer);            
 
-            _userInputModel.OnClickedAnywhere
+            userInputModel.OnClickedAnywhere
                 .Subscribe(_ => OnKick())
                 .AddTo(owner);
 
@@ -48,15 +48,30 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnKick()
         {
-            if (!_isActive || !_isInFlight) { return; }
+            if (!_hasProjectiles || !_isInFlight) { return; }
 
             Owner.OnShot.Execute();
-
+            AdjustVerticalVelocity();
             Vector3 appliedForce = _direction * _playerAttributesModel.ShootForce.Value;
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
-
+            
             _flightStatsModel.ShotsRemaining.Value--;
-            _isActive = _flightStatsModel.ShotsRemaining.Value > 0;
+        }
+
+        private void AdjustVerticalVelocity()
+        {
+            var currentVelocity = Owner.GoBody.velocity;
+
+            if (currentVelocity.y > 0)
+            {
+                return;
+                
+            }
+
+            Debug.LogWarning($"Reducing Velocity {currentVelocity.y}");
+
+            var adjustedVerticalVelocity = currentVelocity.y * _shootConfig.VerticalVelocityReductionFactor;
+            Owner.GoBody.velocity = new Vector2(currentVelocity.x, adjustedVerticalVelocity);
         }
     }
 }

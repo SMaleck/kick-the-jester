@@ -11,30 +11,27 @@ namespace Assets.Source.App.Configuration
         public AudioConfig AudioConfig = new AudioConfig();
         public BalancingConfig BalancingConfig = new BalancingConfig();
         public BootConfig BootConfig = new BootConfig();
+        public ShootConfig ShootConfig;
     }
 
     [Serializable]
     public class DefaultSettingsConfig
     {
-        [Range(0f, 1f)]
-        public float MusicVolume = 1.0f;
+        [Range(0f, 1f)] public float MusicVolume = 1.0f;
 
-        [Range(0f, 1f)]
-        public float EffectVolume = 0.8f;
+        [Range(0f, 1f)] public float EffectVolume = 0.8f;
     }
 
     [Serializable]
     public class CameraConfig
-    {        
+    {
         public float OffsetX = 3.5f;
         public float OvertakeOffsetX = 5.5f;
         public float OvertakeSeconds = 0.8f;
 
-        [Range(0f, 1f)]
-        public float RelativeVelocityThresholdForShake = 0.5f;
+        [Range(0f, 1f)] public float RelativeVelocityThresholdForShake = 0.5f;
 
-        [Range(0f, 1f)]
-        public float ShakeSeconds = 0.1f;
+        [Range(0f, 1f)] public float ShakeSeconds = 0.1f;
 
         public float FollowMaxY;
         public float JesterOutOfCameraY = 237.5f;
@@ -50,8 +47,7 @@ namespace Assets.Source.App.Configuration
     [Serializable]
     public class BalancingConfig
     {
-        [Range(0.01f, 5f)]
-        public float MeterToGoldFactor = 0.5f;        
+        [Range(0.01f, 5f)] public float MeterToGoldFactor = 0.5f;
     }
 
     [Serializable]
@@ -59,13 +55,20 @@ namespace Assets.Source.App.Configuration
     {
         public Vector3 ForceDirection = new Vector3(1, 1, 1);
 
-        [Range(0.01f, 2f)]
-        public float ForceFactorChangeSeconds = 0.9f;
+        [Range(0.01f, 2f)] public float ForceFactorChangeSeconds = 0.9f;
 
-        [Range(0f, 5f)]
-        public float MinForceFactor = 0.1f;
+        [Range(0f, 5f)] public float MinForceFactor = 0.1f;
 
-        [Range(0f, 5f)]
-        public float MaxForceFactor = 1f;
+        [Range(0f, 5f)] public float MaxForceFactor = 1f;
+    }
+
+    [Serializable]
+    public class ShootConfig
+    {
+        [SerializeField] private Vector3 _forceDirection;
+        public Vector3 ForceDirection => _forceDirection;
+
+        [Range(0, 0.99f)] [SerializeField] private float _verticalVelocityReductionFactor;
+        public float VerticalVelocityReductionFactor => _verticalVelocityReductionFactor;
     }
 }

@@ -32,3 +32,6 @@ MonoBehaviour:
     ForceFactorChangeSeconds: 0.5
     MinForceFactor: 0.01
     MaxForceFactor: 1
+  ShootConfig:
+    _forceDirection: {x: 1.5, y: 1, z: 0}
+    _verticalVelocityReductionFactor: 0.25

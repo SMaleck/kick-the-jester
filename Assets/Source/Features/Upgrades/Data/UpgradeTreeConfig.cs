@@ -14,7 +14,7 @@ namespace Assets.Source.Features.Upgrades.Data
             public UpgradePathType PathType;
             public List<UpgradeStep> Steps;
 
-            public int MaxLevel => Steps.Count;
+            public int MaxLevel => Steps.Count - 1;
         }
 
         [Serializable]
