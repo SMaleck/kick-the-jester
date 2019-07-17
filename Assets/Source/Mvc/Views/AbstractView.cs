@@ -3,6 +3,7 @@ using Zenject;
 
 namespace Assets.Source.Mvc.Views
 {
+    // ToDo Should this inherit from AbstractMonoBehaviour instead?
     public abstract class AbstractView : MonoBehaviour, IInitializable
     {
         public Component Disposer => this;

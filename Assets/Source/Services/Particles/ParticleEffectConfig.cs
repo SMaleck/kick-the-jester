@@ -15,17 +15,17 @@ namespace Assets.Source.Services.Particles
             [SerializeField] private ParticleEffectType _particleEffectType;
             public ParticleEffectType ParticleEffectType => _particleEffectType;
 
-            [SerializeField] private ParticleSystem _particleSystemPrefab;
-            public ParticleSystem ParticleSystemPrefab => _particleSystemPrefab;
+            [SerializeField] private ParticlePoolItem _particlePoolItemPrefab;
+            public ParticlePoolItem ParticlePoolItemPrefab => _particlePoolItemPrefab;
         }
 
         [SerializeField] private List<ParticleEffectConfigItem> _particleEffectConfigItems;
 
-        public ParticleSystem GetParticleEffectPrefab(ParticleEffectType particleEffectType)
+        public ParticlePoolItem GetParticleEffectPrefab(ParticleEffectType particleEffectType)
         {
             return _particleEffectConfigItems
                 .First(item => item.ParticleEffectType == particleEffectType)
-                .ParticleSystemPrefab;
+                .ParticlePoolItemPrefab;
         }
     }
 }

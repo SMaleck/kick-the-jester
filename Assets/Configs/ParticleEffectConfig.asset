@@ -13,14 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _particleEffectConfigItems:
   - _particleEffectType: 1
-    _particleSystemPrefab: {fileID: 198265956612895856, guid: 390c38f1c65879944b9105bd7f9fa26e,
+    _particlePoolItemPrefab: {fileID: 114069724136344226, guid: 29cfc7a617f609442bc2239a2c8ac81d,
       type: 2}
   - _particleEffectType: 2
-    _particleSystemPrefab: {fileID: 198901833945247236, guid: 6590a1ba98ef11b48add3c38147c9fbc,
+    _particlePoolItemPrefab: {fileID: 114360339586753878, guid: c0f64473d48d490489b66ae7ec5d8c7c,
       type: 2}
   - _particleEffectType: 3
-    _particleSystemPrefab: {fileID: 198289004890833238, guid: 9794e0ff5c1dbe1459ff9c0b6e804045,
+    _particlePoolItemPrefab: {fileID: 114674033217191064, guid: 0ac60960e72a390489cc9f9edd29c32e,
       type: 2}
   - _particleEffectType: 4
-    _particleSystemPrefab: {fileID: 198289004890833238, guid: d9b095cbf14e26d45aa75256c4e90c92,
+    _particlePoolItemPrefab: {fileID: 114332070250017574, guid: 47dbbc1948e5e324b9236029dd05dea1,
       type: 2}

@@ -2,17 +2,18 @@
 using UnityEngine;
 
 namespace Assets.Source.Services.Particles
-{
-    // ToDo ResourcePools should be more generic, so PAUSE interface can be in base class
+{    
     public class ParticleService
     {
         private readonly ParticleEffectConfig _particleEffectConfig;
-        private readonly PrefabResourcePool<PoolableParticleSystem> _particleSystems;
+        private readonly MonoObjectPool<ParticlePoolItem> _particlePool;
 
-        public ParticleService(ParticleEffectConfig particleEffectConfig)
+        public ParticleService(
+            ParticleEffectConfig particleEffectConfig,
+            ParticlePoolItem.Factory particlePoolItemFactory)
         {
             _particleEffectConfig = particleEffectConfig;
-            _particleSystems = new PrefabResourcePool<PoolableParticleSystem>(new ParticleFactory());
+            _particlePool = new MonoObjectPool<ParticlePoolItem>(particlePoolItemFactory);
         }
 
         public void PlayEffectAt(ParticleEffectType particleEffectType, Vector3 position)
@@ -23,25 +24,17 @@ namespace Assets.Source.Services.Particles
             }
 
             var pfxPrefab = _particleEffectConfig.GetParticleEffectPrefab(particleEffectType);
-            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfxPrefab.gameObject);
+            var particlePoolItem = _particlePool.GetItem(
+                item => item.ParticleEffectType == particleEffectType,
+                pfxPrefab);
 
-            slot.Position = position;
-            slot.Play();
-        }
-
-
-        public void PlayAt(GameObject pfx, Vector3 position)
-        {
-            var pfxX = _particleEffectConfig.GetParticleEffectPrefab(ParticleEffectType.BombExplosion).gameObject;
-            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfxX);            
-
-            slot.Position = position;
-            slot.Play();
+            particlePoolItem.Position = position;
+            particlePoolItem.Play();
         }
 
         public void ResetPausedSlots()
         {
-            _particleSystems.ForEach(item =>
+            _particlePool.ForEach(item =>
             {
                 if (item.IsPaused)
                 {
@@ -50,29 +43,18 @@ namespace Assets.Source.Services.Particles
             });
         }
 
-
         #region PAUSE INTERFACE
 
         public void PauseAll(bool isPaused)
         {
             if (isPaused)
             {
-                Pause(_particleSystems);                
+                _particlePool.ForEach(item => { item.Pause(); });
             }
             else
             {
-                Resume(_particleSystems);                
+                _particlePool.ForEach(item => { item.Resume(); });
             }
-        }
-
-        private void Pause(PrefabResourcePool<PoolableParticleSystem> pool)
-        {
-            pool.ForEach(item => { item.Pause(); });
-        }
-
-        private void Resume(PrefabResourcePool<PoolableParticleSystem> pool)
-        {
-            pool.ForEach(item => { item.Resume(); });
         }
 
         #endregion

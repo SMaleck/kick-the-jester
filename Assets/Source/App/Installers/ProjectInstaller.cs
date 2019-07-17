@@ -6,6 +6,7 @@ using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using Assets.Source.Services.Savegame;
 using Assets.Source.Services.Upgrade;
+using Assets.Source.Util;
 using UnityEngine;
 using Zenject;
 
@@ -21,11 +22,13 @@ namespace Assets.Source.App.Installers
             Container.BindInterfacesAndSelfTo<UpgradeService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AudioService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<ParticleService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<ViewAudioEventController>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<ScreenFadeView>().FromComponentInNewPrefab(ScreenFadeViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<ScreenFadeController>().AsSingle().NonLazy();
+
+            Container.BindPrefabFactory<ParticlePoolItem, ParticlePoolItem.Factory>();
+            Container.BindInterfacesAndSelfTo<ParticleService>().AsSingle().NonLazy();           
         }
     }
 }
