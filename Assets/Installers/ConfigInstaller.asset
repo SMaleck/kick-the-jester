@@ -19,3 +19,5 @@ MonoBehaviour:
     type: 2}
   _upgradeTreeConfig: {fileID: 11400000, guid: d2908d5f54e81984ba204dce3c505b4c, type: 2}
   _viewPrefabConfig: {fileID: 11400000, guid: fcfc7e3636507074083b75106b78933b, type: 2}
+  _particleEffectConfig: {fileID: 11400000, guid: d7e0e9c8019038346a129debf52f31f1,
+    type: 2}

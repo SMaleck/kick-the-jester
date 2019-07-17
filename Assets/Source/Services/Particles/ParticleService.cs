@@ -6,17 +6,34 @@ namespace Assets.Source.Services.Particles
     // ToDo ResourcePools should be more generic, so PAUSE interface can be in base class
     public class ParticleService
     {
+        private readonly ParticleEffectConfig _particleEffectConfig;
         private readonly PrefabResourcePool<PoolableParticleSystem> _particleSystems;
 
-        public ParticleService()
+        public ParticleService(ParticleEffectConfig particleEffectConfig)
         {
+            _particleEffectConfig = particleEffectConfig;
             _particleSystems = new PrefabResourcePool<PoolableParticleSystem>(new ParticleFactory());
+        }
+
+        public void PlayEffectAt(ParticleEffectType particleEffectType, Vector3 position)
+        {
+            if (particleEffectType == ParticleEffectType.None)
+            {
+                return;
+            }
+
+            var pfxPrefab = _particleEffectConfig.GetParticleEffectPrefab(particleEffectType);
+            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfxPrefab.gameObject);
+
+            slot.Position = position;
+            slot.Play();
         }
 
 
         public void PlayAt(GameObject pfx, Vector3 position)
         {
-            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfx);            
+            var pfxX = _particleEffectConfig.GetParticleEffectPrefab(ParticleEffectType.BombExplosion).gameObject;
+            PoolableParticleSystem slot = _particleSystems.GetFreeSlotFor(pfxX);            
 
             slot.Position = position;
             slot.Play();

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Source.App.Configuration
 {
-    [CreateAssetMenu(fileName = "GameConfig", menuName = "KTJ/Config/GameConfig")]
+    [CreateAssetMenu(fileName = "GameConfig", menuName = Constants.PROJECT_MENU_ROOT + "/GameConfig")]
     public class GameConfig : ScriptableObject
     {
         public DefaultSettingsConfig DefaultSettingsConfig = new DefaultSettingsConfig();

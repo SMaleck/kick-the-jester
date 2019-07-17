@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Source.App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,14 +15,11 @@ namespace Assets.Source.Entities.Jester.Config
         public Sprite LandingSprite;
     }
 
-    [CreateAssetMenu(fileName = "JesterSpriteEffectsConfig", menuName = "KTJ/Config/JesterSpriteEffectsConfig")]
+    [CreateAssetMenu(fileName = "JesterSpriteEffectsConfig", menuName = Constants.PROJECT_MENU_ROOT + "/JesterSpriteEffectsConfig")]
     public class JesterSpriteEffectsConfig : ScriptableObject
-    {        
+    {
         public float MinRotationSpeed = 1f;
         public float MaxRotationSpeed = 100f;
-
-        public GameObject PfxImpact;
-        public GameObject PfxKick;
 
         [SerializeField] private List<JesterSpriteConfig> _jesterSpriteConfigs;
 

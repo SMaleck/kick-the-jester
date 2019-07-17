@@ -1,7 +1,9 @@
 ﻿namespace Assets.Source.App
 {
     public static class Constants
-    {        
+    {
+        public const string PROJECT_MENU_ROOT = "KTJ";
+
         // FLOAT PRECISION FACTORS
         public const int FLOAT_PRECISION_FACTOR = 100;
 

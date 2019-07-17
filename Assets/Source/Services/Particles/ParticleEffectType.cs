@@ -5,6 +5,7 @@
         None,
         BombExplosion,
         KnightKick,
+        KnightKickDust,
         GroundImpactDustCloud
     }
 }

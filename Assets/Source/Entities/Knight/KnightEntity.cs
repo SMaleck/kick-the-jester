@@ -12,7 +12,6 @@ namespace Assets.Source.Entities.Knight
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private AudioClip _kickSound;
-        [SerializeField] private GameObject _pfxKickSwoosh;
         [SerializeField] private Transform _pfxSlotKickSwoosh;
 
         private JesterEntity _jesterEntity;
@@ -54,7 +53,7 @@ namespace Assets.Source.Entities.Knight
 
         public void PlayKickSwooshEffect()
         {
-            _particleService.PlayAt(_pfxKickSwoosh, _pfxSlotKickSwoosh.position);
+            _particleService.PlayEffectAt(ParticleEffectType.KnightKick, _pfxSlotKickSwoosh.position);
         }
 
         public void OnKickAnimationEnd()

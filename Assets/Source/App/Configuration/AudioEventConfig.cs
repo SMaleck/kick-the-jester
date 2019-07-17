@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Source.App.Configuration
 {
-    [CreateAssetMenu(fileName = "ViewAudioConfig", menuName = "KTJ/Config/ViewAudioConfig")]
+    [CreateAssetMenu(fileName = "ViewAudioConfig", menuName = Constants.PROJECT_MENU_ROOT + "/ViewAudioConfig")]
     public class AudioEventConfig : ScriptableObject
     {
         public List<ViewAudioEventSetting> ViewAudioEventSettings;

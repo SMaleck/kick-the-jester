@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Source.App;
 using UnityEngine;
 
 namespace Assets.Source.Entities.Items.Config
 {
     [Serializable]
-    [CreateAssetMenu(fileName = "SpawningLanesConfig", menuName = "KTJ/Config/SpawningLanesConfig")]
+    [CreateAssetMenu(fileName = "SpawningLanesConfig", menuName = Constants.PROJECT_MENU_ROOT + "/SpawningLanesConfig")]
     public class SpawningLanesConfig : ScriptableObject
     {
         public List<SpawningLane> SpawningLanes = new List<SpawningLane>();

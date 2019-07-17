@@ -83,7 +83,7 @@ namespace Assets.Source.Entities.Jester.Components
             Owner.BodySprite.sprite = _spriteConfig.LaunchSprite;
 
             // Play Particle Effect
-            _particleService.PlayAt(_config.PfxKick, Owner.EffectSlotKick.position);
+            _particleService.PlayEffectAt(ParticleEffectType.KnightKickDust, Owner.EffectSlotKick.position);
 
             _listenForImpacts = true;
         }
@@ -93,7 +93,7 @@ namespace Assets.Source.Entities.Jester.Components
             ModulateMainSprite();
 
             // Play Particle Effect
-            _particleService.PlayAt(_config.PfxImpact, Owner.EffectSlotGround.position);
+            _particleService.PlayEffectAt(ParticleEffectType.GroundImpactDustCloud, Owner.EffectSlotGround.position);
         }
 
         private void OnBoost()

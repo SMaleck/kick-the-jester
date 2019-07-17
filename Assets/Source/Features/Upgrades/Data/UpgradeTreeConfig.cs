@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Assets.Source.App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Assets.Source.Features.Upgrades.Data
 {
-    [CreateAssetMenu(fileName = "UpgradeTreeConfig", menuName = "KTJ/Config/UpgradeTreeConfig")]
+    [CreateAssetMenu(fileName = "UpgradeTreeConfig", menuName = Constants.PROJECT_MENU_ROOT + "/UpgradeTreeConfig")]
     public class UpgradeTreeConfig : ScriptableObject
     {
         [Serializable]

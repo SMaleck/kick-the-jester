@@ -11,8 +11,8 @@ namespace Assets.Source.Entities.Items
     {
         [SerializeField] protected bool isDestructible = true;
         [SerializeField] protected AudioClip soundEffect;
-        [SerializeField] protected GameObject particleEffect;
-        
+        [SerializeField] protected ParticleEffectType _particleEffectType;
+
         protected AudioService AudioService;
         protected ParticleService ParticleService;
         protected MainCamera Camera;
@@ -94,10 +94,7 @@ namespace Assets.Source.Entities.Items
         // Attempts to play the attached Particle Effect
         protected void TryPlayParticleEffect()
         {
-            if (particleEffect != null)
-            {
-                ParticleService.PlayAt(particleEffect, transform.position);
-            }
+            ParticleService.PlayEffectAt(_particleEffectType, transform.position);
         }        
     }
 }
