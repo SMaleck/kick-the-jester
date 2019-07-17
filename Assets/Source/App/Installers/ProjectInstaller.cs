@@ -17,15 +17,15 @@ namespace Assets.Source.App.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<SavegameService>().AsSingle();
-            Container.Bind<UpgradeService>().AsSingle();
-            Container.Bind<SceneTransitionService>().AsSingle();
-            Container.Bind<AudioService>().AsSingle().NonLazy();
-            Container.Bind<ParticleService>().AsSingle().NonLazy();
-            Container.Bind<ViewAudioEventController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SavegameService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UpgradeService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SceneTransitionService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AudioService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ParticleService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ViewAudioEventController>().AsSingle().NonLazy();
 
-            Container.Bind<ScreenFadeView>().FromComponentInNewPrefab(ScreenFadeViewPrefab).AsSingle();
-            Container.Bind<ScreenFadeController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<ScreenFadeView>().FromComponentInNewPrefab(ScreenFadeViewPrefab).AsSingle();
+            Container.BindInterfacesAndSelfTo<ScreenFadeController>().AsSingle().NonLazy();
         }
     }
 }

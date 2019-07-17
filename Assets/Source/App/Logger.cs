@@ -1,36 +1,44 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Assets.Source.App
 {
     public static class Logger
     {
-        private static string BuildMessage(object payload = null, params object[] args)
+        private static string BuildMessage(object payload = null, string sourceFilePath = "")
         {
-            string message = payload?.ToString() ?? "";
+            var message = payload?.ToString() ?? string.Empty;
+            var className = sourceFilePath
+                .Split(Path.DirectorySeparatorChar)
+                .LastOrDefault()
+                ?.Replace(".cs", "");
 
-            if (args != null && args.Length >= 0)
-            {
-                message = string.Format(message, args);
-            }
-
-            return message;
+            return $"[{className}] {message}";
         }
 
 #if UNITY_EDITOR       
 
-        public static void Log(object payload = null, params object[] args)
+        public static void Log(
+            object payload = null,
+            [CallerFilePath] string sourceFilePath = "")
         {
-            Debug.Log(BuildMessage(payload, args));
+            Debug.Log(BuildMessage(payload, sourceFilePath));
         }
 
-        public static void Warn(object payload = null, params object[] args)
-        {            
-            Debug.LogWarning(BuildMessage(payload, args));
+        public static void Warn(
+            object payload = null,
+            [CallerFilePath] string sourceFilePath = "")
+        {
+            Debug.LogWarning(BuildMessage(payload, sourceFilePath));
         }
 
-        public static void Error(object payload = null, params object[] args)
-        {            
-            Debug.LogError(BuildMessage(payload, args));
+        public static void Error(
+            object payload = null,
+            [CallerFilePath] string sourceFilePath = "")
+        {
+            Debug.LogError(BuildMessage(payload, sourceFilePath));
         }
 
 #endif
@@ -38,9 +46,9 @@ namespace Assets.Source.App
 
 #if !UNITY_EDITOR
         
-        public static void Log(object payload = null, object[] args = null) { }
-        public static void Warn(object payload = null, object[] args = null) { }
-        public static void Error(object payload = null, object[] args = null) { }
+        public static void Log(object payload = null, [CallerFilePath] string sourceFilePath = "") { }
+        public static void Warn(object payload = null, [CallerFilePath] string sourceFilePath = "") { }
+        public static void Error(object payload = null, [CallerFilePath] string sourceFilePath = "") { }
 
 #endif
     }

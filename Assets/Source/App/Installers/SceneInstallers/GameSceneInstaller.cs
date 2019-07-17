@@ -45,8 +45,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
 
             #endregion
-
-
+            
             #region MODELS
 
             Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
@@ -58,8 +57,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();            
 
             #endregion
-
-
+            
             #region GAME ROUND
 
             Container.BindInterfacesAndSelfTo<GameState>().AsSingle().NonLazy();
@@ -92,11 +90,15 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
 
             #endregion
+            
             #region CHEATS
 
             Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
 
             #endregion
+
+            Container.BindExecutionOrder<SceneStartController>(999);
+            Container.BindInterfacesAndSelfTo<SceneStartController>().AsSingle().NonLazy();
         }
     }
 }

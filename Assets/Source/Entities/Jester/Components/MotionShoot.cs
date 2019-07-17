@@ -52,7 +52,7 @@ namespace Assets.Source.Entities.Jester.Components
 
             Owner.OnShot.Execute();
             AdjustVerticalVelocity();
-            Vector3 appliedForce = _direction * _playerAttributesModel.ShootForce.Value;
+            Vector3 appliedForce = _shootConfig.ForceDirection * _playerAttributesModel.ShootForce.Value;
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
             
             _flightStatsModel.ShotsRemaining.Value--;

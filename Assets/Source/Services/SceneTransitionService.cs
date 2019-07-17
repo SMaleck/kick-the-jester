@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App;
+using Assets.Source.Util;
 using System;
 using UniRx;
 using UnityEngine.SceneManagement;
@@ -12,58 +13,47 @@ namespace Assets.Source.Services
         Game
     }
 
-    public enum TransitionState
-    {
-        None,
-        Before,
-        Loading,
-        After
-    }
-
-    // ToDo [IMPORTANT] State is changing in awkward order, check    
-    public class SceneTransitionService
+    public class SceneTransitionService : AbstractDisposable
     {
         public const float LOADING_GRACE_PERIOD_SECONDS = 0.5f;
 
         private readonly ReactiveProperty<Scenes> _currentScene;
-        public ReadOnlyReactiveProperty<Scenes> CurrentScene { get; private set; }
+        public IReadOnlyReactiveProperty<Scenes> CurrentScene => _currentScene;
 
-        private readonly ReactiveProperty<TransitionState> _state;
-        public ReadOnlyReactiveProperty<TransitionState> State { get; private set; }
+        private readonly Subject<Unit> _onSceneLoadStarted;
+        public IObservable<Unit> OnSceneLoadStarted => _onSceneLoadStarted;
 
-        private readonly BoolReactiveProperty _isLoading;
-        public ReadOnlyReactiveProperty<bool> IsLoading { get; private set; }
-
+        private readonly Subject<Unit> _onSceneInitComplete;
+        public IObservable<Unit> OnSceneInitComplete => _onSceneInitComplete;
 
         public SceneTransitionService()
-        {           
-            _currentScene = new ReactiveProperty<Scenes>(Scenes.Init);
-            CurrentScene = _currentScene.ToReadOnlyReactiveProperty();
+        {
+            _currentScene = new ReactiveProperty<Scenes>(Scenes.Init).AddTo(Disposer);
 
-            _state = new ReactiveProperty<TransitionState>(TransitionState.None);
-            State = _state.ToReadOnlyReactiveProperty();
-
-            _isLoading = new BoolReactiveProperty(false);
-            IsLoading = _isLoading.ToReadOnlyReactiveProperty();
+            _onSceneLoadStarted = new Subject<Unit>().AddTo(Disposer);
+            _onSceneInitComplete = new Subject<Unit>().AddTo(Disposer);
 
             SetupSubscriptions();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
+        private void PublishOnSceneLoadStarted()
+        {
+            _onSceneLoadStarted.OnNext(Unit.Default);
+        }
 
-        // ToDo Dispose
+        public void PublishOnSceneInitComplete()
+        {
+            _onSceneInitComplete.OnNext(Unit.Default);
+        }
+
         private void SetupSubscriptions()
         {
-            State.Subscribe(state =>
-            {
-                _isLoading.Value = !state.Equals(TransitionState.None);
-                Logger.Log($"[SceneTransitionService] Transition State changed to [{state}]");
-            });
-
-            CurrentScene.Subscribe(scene => 
-            {
-                Logger.Log($"[SceneTransitionService] Scene changed to [{scene}]");
-            });
+            CurrentScene.Subscribe(scene =>
+                {
+                    Logger.Log($"Scene changed to [{scene}]");
+                })
+                .AddTo(Disposer);
         }
 
 
@@ -72,54 +62,42 @@ namespace Assets.Source.Services
             Scenes parsed;
             Enum.TryParse<Scenes>(scene.name, out parsed);
             _currentScene.Value = parsed;
-            
-            _state.Value = TransitionState.After;
 
             // ToDo Dispose
-            Logger.Log($"[SceneTransitionService] Entering AFTER Grace Period");
+            Logger.Log($"Entering AFTER Grace Period");
             Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
                 .Subscribe(_ =>
                 {
-                    _state.Value = TransitionState.None;
-                    Logger.Log($"[SceneTransitionService] Loading Done! Current Scene: {CurrentScene.Value}");
-                });
+                    Logger.Log($"Loading Done! Current Scene: {CurrentScene.Value}");
+                })
+                .AddTo(Disposer);
         }
-                
 
-        private void PrepareLoad(Scenes toLoad)
+
+        private void LoadDelayed(Scenes toLoad)
         {
-            Logger.Log($"[SceneTransitionService] Transition Request to [{toLoad}]");
-            
-            _state.Value = TransitionState.Before;
+            Logger.Log($"Transition Request to [{toLoad}]");
 
-            // ToDo Dispose
-            Logger.Log($"[SceneTransitionService] Entering BEFORE Grace Period");
+            PublishOnSceneLoadStarted();
+
+            Logger.Log($"Entering BEFORE Grace Period");
             Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
                 .Subscribe(_ =>
-                {                    
-                    Load(toLoad);                    
-                });            
+                {
+                    SceneManager.LoadSceneAsync(toLoad.ToString());
+                })
+                .AddTo(Disposer);
         }
-
-
-        private void Load(Scenes toLoad)
-        {            
-            Logger.Log("[SceneTransitionService] Loading Async...");
-            _state.Value = TransitionState.Loading;
-
-            SceneManager.LoadSceneAsync(toLoad.ToString());
-        }
-
 
         public void ToTitle()
         {
-            PrepareLoad(Scenes.Title);                    
+            LoadDelayed(Scenes.Title);
         }
 
 
         public void ToGame()
         {
-            PrepareLoad(Scenes.Game);
+            LoadDelayed(Scenes.Game);
         }
     }
 }

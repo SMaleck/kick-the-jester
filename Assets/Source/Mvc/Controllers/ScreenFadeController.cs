@@ -20,30 +20,15 @@ namespace Assets.Source.Mvc.Controllers
             _view.Initialize();
 
             _sceneTransitionService = sceneTransitionService;
-
             _fadeSeconds = SceneTransitionService.LOADING_GRACE_PERIOD_SECONDS;
 
-            _sceneTransitionService.State
-                .Subscribe(OnTransitionStateChange)
+            _sceneTransitionService.OnSceneLoadStarted
+                .Subscribe(_ => Fade(0, 1))
                 .AddTo(Disposer);
-        }
 
-
-        private void OnTransitionStateChange(TransitionState state)
-        {
-            switch (state)
-            {
-                case TransitionState.Before:
-                    Fade(0, 1);
-                    break;
-
-                case TransitionState.After:
-                    Fade(1, 0);
-                    break;
-
-                default:
-                    return;
-            }
+            _sceneTransitionService.OnSceneInitComplete
+                .Subscribe(_ => Fade(1, 0))
+                .AddTo(Disposer);
         }
 
 

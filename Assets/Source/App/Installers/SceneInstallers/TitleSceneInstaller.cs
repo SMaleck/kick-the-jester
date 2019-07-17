@@ -35,7 +35,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
 
-
             #region MODELS
 
             Container.BindInterfacesAndSelfTo<TitleModel>().AsSingle().NonLazy();
@@ -43,6 +42,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
 
             #endregion
+
+            Container.BindExecutionOrder<SceneStartController>(999);
+            Container.BindInterfacesAndSelfTo<SceneStartController>().AsSingle().NonLazy();
         }
     }
 }
