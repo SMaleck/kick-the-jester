@@ -106,7 +106,7 @@ MonoBehaviour:
     Repeat: 1
     Speed: 0.9
     Sprite: {fileID: 21300000, guid: 3fc716de6e08758459efda1cca367159, type: 3}
-    Position: {x: 0, y: 50, z: 0}
+    Position: {x: 0, y: 55, z: 0}
     Scale: {x: 1, y: 1.5, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -99
@@ -114,7 +114,7 @@ MonoBehaviour:
     Repeat: 1
     Speed: 0.9
     Sprite: {fileID: 21300000, guid: 3fc716de6e08758459efda1cca367159, type: 3}
-    Position: {x: 0, y: 92, z: 0}
+    Position: {x: 0, y: 97, z: 0}
     Scale: {x: 1, y: 1.8, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -99
@@ -122,8 +122,24 @@ MonoBehaviour:
     Repeat: 1
     Speed: 0.9
     Sprite: {fileID: 21300000, guid: 3fc716de6e08758459efda1cca367159, type: 3}
-    Position: {x: 0, y: 137.1, z: 0}
+    Position: {x: 0, y: 142.1, z: 0}
     Scale: {x: 1, y: 2, z: 1}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -99
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.9
+    Sprite: {fileID: 21300000, guid: 948a661a547af3b448de01698c4c7ff5, type: 3}
+    Position: {x: 0, y: 201.4, z: 0}
+    Scale: {x: 3, y: 3, z: 3}
+  - SortingLayer: ParallaxBackground
+    SortingOrder: -99
+    UseSpeed: 1
+    Repeat: 1
+    Speed: 0.9
+    Sprite: {fileID: 21300000, guid: 5d0cee6ce54c0d6479b1ad8bc1f1f22a, type: 3}
+    Position: {x: 0, y: 215, z: 0}
+    Scale: {x: 2, y: 2, z: 1}
   - SortingLayer: ParallaxBackground
     SortingOrder: -99
     UseSpeed: 1
