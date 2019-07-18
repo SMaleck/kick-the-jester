@@ -6,14 +6,14 @@ namespace Assets.Source.Entities
 {
     public class BackgroundMusicPlayerEntity : AbstractMonoEntity
     {
-        [SerializeField] AudioClip _backgroundMusic;
+        [SerializeField] AudioClipType _backgroundMusicType;
 
         private AudioService _audioService;
 
 
         public override void Initialize()
         {
-            _audioService.PlayMusic(_backgroundMusic);
+            _audioService.PlayMusic(_backgroundMusicType);
         }
 
 

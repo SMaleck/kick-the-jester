@@ -19,14 +19,16 @@ namespace Assets.Source.App.Installers
         {
             Container.BindInterfacesAndSelfTo<SavegameService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AudioService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<ViewAudioEventController>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<ScreenFadeView>().FromComponentInNewPrefab(ScreenFadeViewPrefab).AsSingle();
             Container.BindInterfacesAndSelfTo<ScreenFadeController>().AsSingle().NonLazy();
 
             Container.BindPrefabFactory<ParticlePoolItem, ParticlePoolItem.Factory>();
-            Container.BindInterfacesAndSelfTo<ParticleService>().AsSingle().NonLazy();           
+            Container.BindInterfacesAndSelfTo<ParticleService>().AsSingle().NonLazy();
+
+            Container.BindPrefabFactory<AudioPoolItem, AudioPoolItem.Factory>();
+            Container.BindInterfacesAndSelfTo<AudioService>().AsSingle().NonLazy();
         }
     }
 }

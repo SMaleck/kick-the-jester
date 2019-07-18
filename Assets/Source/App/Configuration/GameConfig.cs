@@ -8,7 +8,6 @@ namespace Assets.Source.App.Configuration
     {
         public DefaultSettingsConfig DefaultSettingsConfig = new DefaultSettingsConfig();
         public CameraConfig CameraConfig = new CameraConfig();
-        public AudioConfig AudioConfig = new AudioConfig();
         public BalancingConfig BalancingConfig = new BalancingConfig();
         public BootConfig BootConfig = new BootConfig();
         public ShootConfig ShootConfig;
@@ -35,13 +34,6 @@ namespace Assets.Source.App.Configuration
 
         public float FollowMaxY;
         public float JesterOutOfCameraY = 237.5f;
-    }
-
-    [Serializable]
-    public class AudioConfig
-    {
-        public float MinPitch = 0.65f;
-        public float MaxPitch = 1.5f;
     }
 
     [Serializable]

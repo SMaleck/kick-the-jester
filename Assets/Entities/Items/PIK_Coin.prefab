@@ -98,7 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestructible: 1
   soundEffect: {fileID: 8300000, guid: 7bbc250a2a3f08e4f8e13e8a32945126, type: 3}
-  particleEffect: {fileID: 0}
+  _audioClipType: 6
+  _particleEffectType: 0
   CurrencyAmount: 100
 --- !u!212 &212794270740840680
 SpriteRenderer:

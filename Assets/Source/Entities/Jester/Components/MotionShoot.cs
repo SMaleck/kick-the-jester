@@ -65,10 +65,7 @@ namespace Assets.Source.Entities.Jester.Components
             if (currentVelocity.y > 0)
             {
                 return;
-                
             }
-
-            Debug.LogWarning($"Reducing Velocity {currentVelocity.y}");
 
             var adjustedVerticalVelocity = currentVelocity.y * _shootConfig.VerticalVelocityReductionFactor;
             Owner.GoBody.velocity = new Vector2(currentVelocity.x, adjustedVerticalVelocity);

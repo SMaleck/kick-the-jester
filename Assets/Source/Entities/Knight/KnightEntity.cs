@@ -12,6 +12,7 @@ namespace Assets.Source.Entities.Knight
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private AudioClip _kickSound;
+        [SerializeField] private AudioClipType _kickAudioClipType;
         [SerializeField] private Transform _pfxSlotKickSwoosh;
 
         private JesterEntity _jesterEntity;
@@ -58,7 +59,7 @@ namespace Assets.Source.Entities.Knight
 
         public void OnKickAnimationEnd()
         {
-            _audioService.PlayEffectRandomized(_kickSound);
+            _audioService.PlayEffectRandomized(_kickAudioClipType);
             _jesterEntity.OnKicked.Execute();
         }
     }

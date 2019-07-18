@@ -21,3 +21,4 @@ MonoBehaviour:
   _viewPrefabConfig: {fileID: 11400000, guid: fcfc7e3636507074083b75106b78933b, type: 2}
   _particleEffectConfig: {fileID: 11400000, guid: d7e0e9c8019038346a129debf52f31f1,
     type: 2}
+  _audioConfig: {fileID: 11400000, guid: daf4bfdcf72710f45a4219abfae3deb6, type: 2}

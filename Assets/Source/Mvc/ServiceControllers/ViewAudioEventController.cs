@@ -1,34 +1,16 @@
-﻿using Assets.Source.App.Configuration;
-using Assets.Source.Services.Audio;
+﻿using Assets.Source.Services.Audio;
 using Assets.Source.Util;
-using System.Linq;
 using UniRx;
-using UnityEngine;
 
 namespace Assets.Source.Mvc.ServiceControllers
 {
-    public enum ViewAudioEvent
-    {
-        PanelSlideOpen,
-        PanelSlideClose
-    }
-
-    public enum ButtonAudioEvent
-    {
-        None,
-        Default,
-        Upgrade
-    }
-
     public class ViewAudioEventController : AbstractDisposable
     {
         private readonly AudioService _audioService;
-        private readonly AudioEventConfig _config;
 
-        public ViewAudioEventController(AudioService audioService, AudioEventConfig config)
+        public ViewAudioEventController(AudioService audioService)
         {
             _audioService = audioService;
-            _config = config;
 
             MessageBroker.Default.Receive<ViewAudioEvent>()
                 .Subscribe(ResolveViewAudioEvent)
@@ -39,33 +21,14 @@ namespace Assets.Source.Mvc.ServiceControllers
                 .AddTo(Disposer);
         }
 
-        public void ResolveViewAudioEvent(ViewAudioEvent eventType)
+        private void ResolveViewAudioEvent(ViewAudioEvent eventType)
         {
-            var audioSetting = _config.ViewAudioEventSettings.FirstOrDefault(e => e.AudioEventType.Equals(eventType));
-
-            if (audioSetting?.AudioClip == null)
-            {
-                return;
-            }
-
-            Play(audioSetting.AudioClip);
+            _audioService.PlayUiEffect(eventType.ToAudioClipType());
         }
 
-        public void ResolveViewAudioEvent(ButtonAudioEvent eventType)
+        private void ResolveViewAudioEvent(ButtonAudioEvent eventType)
         {
-            var audioSetting = _config.ButtonAudioEventSettings.FirstOrDefault(e => e.AudioEventType.Equals(eventType));
-
-            if (audioSetting?.AudioClip == null)
-            {
-                return;
-            }
-
-            Play(audioSetting.AudioClip);
-        }
-
-        private void Play(AudioClip clip)
-        {
-            _audioService.PlayUiEffect(clip);
+            _audioService.PlayUiEffect(eventType.ToAudioClipType());
         }
     }
 }

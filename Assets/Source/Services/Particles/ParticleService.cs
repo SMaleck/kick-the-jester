@@ -1,4 +1,4 @@
-﻿using Assets.Source.Util.Poolable;
+﻿using Assets.Source.Util.MonoObjectPooling;
 using UnityEngine;
 
 namespace Assets.Source.Services.Particles
@@ -25,8 +25,8 @@ namespace Assets.Source.Services.Particles
 
             var pfxPrefab = _particleEffectConfig.GetParticleEffectPrefab(particleEffectType);
             var particlePoolItem = _particlePool.GetItem(
-                item => item.ParticleEffectType == particleEffectType,
-                pfxPrefab);
+                pfxPrefab,
+                item => item.ParticleEffectType == particleEffectType);
 
             particlePoolItem.Position = position;
             particlePoolItem.Play();

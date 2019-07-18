@@ -11,6 +11,7 @@ namespace Assets.Source.Entities.Items
     {
         [SerializeField] protected bool isDestructible = true;
         [SerializeField] protected AudioClip soundEffect;
+        [SerializeField] protected AudioClipType _audioClipType;
         [SerializeField] protected ParticleEffectType _particleEffectType;
 
         protected AudioService AudioService;
@@ -86,7 +87,7 @@ namespace Assets.Source.Entities.Items
         {
             if (soundEffect != null)
             {
-                AudioService.PlayEffect(soundEffect);
+                AudioService.PlayEffect(_audioClipType);
             }
         }
 

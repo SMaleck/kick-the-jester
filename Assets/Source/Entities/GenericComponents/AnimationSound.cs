@@ -8,6 +8,7 @@ namespace Assets.Source.Entities.GenericComponents
     {
         [SerializeField] private bool randomize;
         [SerializeField] private AudioClip clip;
+        [SerializeField] private AudioClipType _audioClipType;
 
         private AudioService _audioService;
 
@@ -15,11 +16,11 @@ namespace Assets.Source.Entities.GenericComponents
         {
             if (randomize)
             {
-                _audioService.PlayEffectRandomized(clip);
+                _audioService.PlayEffectRandomized(_audioClipType);
             }
             else
             {
-                _audioService.PlayEffect(clip);
+                _audioService.PlayEffect(_audioClipType);
             }            
         }
 

@@ -1,52 +1,58 @@
-﻿using Assets.Source.App.Configuration;
-using Assets.Source.Util.Poolable;
-using UnityEngine;
-
+﻿using Assets.Source.Util.MonoObjectPooling;
 
 namespace Assets.Source.Services.Audio
 {
     public class AudioService
     {
-        private readonly AudioConfig _config;
-        private readonly ResourcePool<PoolableAudioSource> _musicChannel;
-        private readonly ResourcePool<PoolableAudioSource> _effectChannel;
-        private readonly ResourcePool<PoolableAudioSource> _uiChannel;
+        private readonly AudioConfig _audioConfig;
 
+        private readonly MonoObjectPool<AudioPoolItem> _musicChannel;
+        private readonly MonoObjectPool<AudioPoolItem> _effectChannel;
+        private readonly MonoObjectPool<AudioPoolItem> _uiChannel;
 
-        public AudioService(AudioConfig config)
+        public AudioService(
+            AudioConfig config,
+            AudioPoolItem.Factory audioPoolItemFactory)
         {
-            _config = config;
+            _audioConfig = config;
 
-            _musicChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory(), 1);
-            _effectChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
-            _uiChannel = new ResourcePool<PoolableAudioSource>(new AudioResourceFactory());
+            _musicChannel = new MonoObjectPool<AudioPoolItem>(audioPoolItemFactory, 1);
+            _effectChannel = new MonoObjectPool<AudioPoolItem>(audioPoolItemFactory);
+            _uiChannel = new MonoObjectPool<AudioPoolItem>(audioPoolItemFactory);
         }
 
 
-        private PoolableAudioSource PlayOn(ResourcePool<PoolableAudioSource> channel, AudioClip clip, bool loop, bool randomizePitch)
+        private void PlayOn(MonoObjectPool<AudioPoolItem> channel, AudioClipType audioClipType, float volume, bool loop, bool randomizePitch)
         {
-            var slot = channel.GetFreeSlot();
+            if (audioClipType.IsNone())
+            {
+                return;
+            }
+
+            var audioClip = _audioConfig.GetAudioClip(audioClipType);
+            var audioPoolItem = channel.GetItem(_audioConfig.AudioSourcePrefab);
 
             if (randomizePitch)
             {
-                float pitch = UnityEngine.Random.Range(_config.MinPitch, _config.MaxPitch);
-                slot.Play(clip, loop, pitch);
+                float pitch = UnityEngine.Random.Range(_audioConfig.MinPitch, _audioConfig.MaxPitch);
+                audioPoolItem.Play(audioClip, loop, pitch);
             }
             else
             {
-                slot.Play(clip, loop);
+                audioPoolItem.Play(audioClip, loop);
             }
 
-            return slot;
+            audioPoolItem.Volume = volume;
         }
 
         public void ResetPausedSlots()
         {
             ResetPausedSlots(_musicChannel);
             ResetPausedSlots(_effectChannel);
+            ResetPausedSlots(_uiChannel);
         }
 
-        private void ResetPausedSlots(ResourcePool<PoolableAudioSource> pool)
+        private void ResetPausedSlots(MonoObjectPool<AudioPoolItem> pool)
         {
             pool.ForEach(item =>
             {
@@ -60,46 +66,30 @@ namespace Assets.Source.Services.Audio
 
         #region PLAY INTERFACE
 
-        public void PlayMusic(AudioClip clip, bool loop = true)
+        public void PlayMusic(AudioClipType audioClipType, bool loop = true)
         {
-            var audioSource = PlayOn(_musicChannel, clip, loop, false);
-            audioSource.Volume = _musicVolume;
+            PlayOn(_musicChannel, audioClipType, _musicVolume, loop, false);
         }
 
-        public void PlayEffect(AudioClip clip, bool loop = false)
+        public void PlayEffect(AudioClipType audioClipType, bool loop = false)
         {
-            var audioSource = PlayOn(_effectChannel, clip, loop, false);
-            audioSource.Volume = _effectsVolume;
+            PlayOn(_effectChannel, audioClipType, _effectsVolume, loop, false);
         }
 
-        public void PlayEffectRandomized(AudioClip clip, bool loop = false)
+        public void PlayEffectRandomized(AudioClipType audioClipType, bool loop = false)
         {
-            var audioSource = PlayOn(_effectChannel, clip, loop, true);
-            audioSource.Volume = _effectsVolume;
+            PlayOn(_effectChannel, audioClipType, _effectsVolume, loop, true);
         }
 
-        public void PlayUiEffect(AudioClip clip, bool loop = false)
+        public void PlayUiEffect(AudioClipType audioClipType, bool loop = false)
         {
-            var audioSource = PlayOn(_uiChannel, clip, loop, false);
-            audioSource.Volume = _effectsVolume;
+            PlayOn(_uiChannel, audioClipType, _effectsVolume, loop, false);
         }
 
         #endregion
 
 
         #region PAUSE INTERFACE
-
-        public void PauseMusic(bool isPaused)
-        {
-            if (isPaused)
-            {
-                Pause(_musicChannel);
-            }
-            else
-            {
-                Resume(_musicChannel);
-            }
-        }
 
         public void PauseEffects(bool isPaused)
         {
@@ -113,27 +103,13 @@ namespace Assets.Source.Services.Audio
             }
         }
 
-        public void PauseAll(bool isPaused)
-        {
-            if (isPaused)
-            {
-                Pause(_effectChannel);
-                Pause(_musicChannel);
-            }
-            else
-            {
-                Resume(_effectChannel);
-                Resume(_musicChannel);
-            }
-        }
 
-
-        private void Pause(ResourcePool<PoolableAudioSource> pool)
+        private void Pause(MonoObjectPool<AudioPoolItem> pool)
         {
             pool.ForEach(item => { item.Pause(); });
         }
 
-        private void Resume(ResourcePool<PoolableAudioSource> pool)
+        private void Resume(MonoObjectPool<AudioPoolItem> pool)
         {
             pool.ForEach(item => { item.Resume(); });
         }

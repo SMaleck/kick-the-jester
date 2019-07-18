@@ -1,5 +1,5 @@
 ﻿using Assets.Source.Util;
-using Assets.Source.Util.Poolable;
+using Assets.Source.Util.MonoObjectPooling;
 using UnityEngine;
 using Zenject;
 

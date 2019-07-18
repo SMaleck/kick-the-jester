@@ -103,8 +103,7 @@ MonoBehaviour:
     value: 0
   _animator: {fileID: 95758085994034928}
   _kickSound: {fileID: 8300000, guid: e4cff933521164d41a4b1af604f88ffc, type: 3}
-  _pfxKickSwoosh: {fileID: 1283934414243064, guid: 6590a1ba98ef11b48add3c38147c9fbc,
-    type: 2}
+  _kickAudioClipType: 9
   _pfxSlotKickSwoosh: {fileID: 4933654026755300}
 --- !u!212 &212980046322260550
 SpriteRenderer:

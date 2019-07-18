@@ -1,10 +1,10 @@
-﻿using Assets.Source.Mvc.ServiceControllers;
+﻿using Assets.Source.Services.Audio;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Util.UI
-{    
+{
     public class RichButton : Button
     {
         [SerializeField] public ButtonAudioEvent AudioEventType = ButtonAudioEvent.Default;

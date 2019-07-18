@@ -53,7 +53,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void OnStartClicked()
         {
-            _audioService.PlayMusic(_view.TransitionMusic, false);
+            _audioService.PlayMusic(AudioClipType.Music_Transition, false);
 
             if (_model.IsFirstStart.Value)
             {

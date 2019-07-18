@@ -12,6 +12,7 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private Button _creditsButton;
 
+        // ToDo Try to get rid of this
         [SerializeField] public AudioClip TransitionMusic;
 
         // ToDo DISPOSER

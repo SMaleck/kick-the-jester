@@ -1,11 +1,15 @@
-﻿using Assets.Source.Util.Poolable;
+﻿using Assets.Source.Util;
+using Assets.Source.Util.MonoObjectPooling;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Services.Audio
 {
-    public class PoolableAudioSource : IPoolableResource, IStoppable
+    public class AudioPoolItem : AbstractMonoBehaviour, IPoolItem
     {
-        private readonly AudioSource _audioSource;
+        public class Factory : PlaceholderFactory<UnityEngine.Object, AudioPoolItem> { }
+
+        [SerializeField] private AudioSource _audioSource;
 
         public bool IsPaused { get; private set; }
         public bool IsFree => !_audioSource.isPlaying;
@@ -15,13 +19,6 @@ namespace Assets.Source.Services.Audio
             get { return _audioSource.volume; }
             set { _audioSource.volume = value; }
         }
-
-
-        public PoolableAudioSource(AudioSource audioSource)
-        {
-            _audioSource = audioSource;
-        }
-
 
         public void Play(AudioClip clip, bool loop = false, float pitch = 1)
         {

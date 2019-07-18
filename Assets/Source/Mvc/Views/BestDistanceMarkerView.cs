@@ -9,7 +9,6 @@ namespace Assets.Source.Mvc.Views
     {
         [SerializeField] private TMP_Text _bestDistanceText;
 
-        // ToDo [CONFIG] Move to config SO
         private const float MoveThresholdDistanceMeters = 5;
         private const float MoveSeconds = 0.7f;
         private Vector3 _selfOrigin;
