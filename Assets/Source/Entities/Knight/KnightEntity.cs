@@ -11,7 +11,6 @@ namespace Assets.Source.Entities.Knight
     public class KnightEntity : AbstractPausableMonoEntity
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private AudioClip _kickSound;
         [SerializeField] private AudioClipType _kickAudioClipType;
         [SerializeField] private Transform _pfxSlotKickSwoosh;
 

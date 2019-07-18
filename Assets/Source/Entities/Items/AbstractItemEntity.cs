@@ -10,7 +10,6 @@ namespace Assets.Source.Entities.Items
     public abstract class AbstractItemEntity : AbstractMonoEntity
     {
         [SerializeField] protected bool isDestructible = true;
-        [SerializeField] protected AudioClip soundEffect;
         [SerializeField] protected AudioClipType _audioClipType;
         [SerializeField] protected ParticleEffectType _particleEffectType;
 
@@ -85,10 +84,7 @@ namespace Assets.Source.Entities.Items
         // Attempts to play the attached AudioSource
         protected void TryPlaySound()
         {
-            if (soundEffect != null)
-            {
-                AudioService.PlayEffect(_audioClipType);
-            }
+            AudioService.PlayEffect(_audioClipType);
         }
 
 

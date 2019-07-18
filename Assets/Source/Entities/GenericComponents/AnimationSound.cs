@@ -7,7 +7,6 @@ namespace Assets.Source.Entities.GenericComponents
     public class AnimationSound : MonoBehaviour
     {
         [SerializeField] private bool randomize;
-        [SerializeField] private AudioClip clip;
         [SerializeField] private AudioClipType _audioClipType;
 
         private AudioService _audioService;
