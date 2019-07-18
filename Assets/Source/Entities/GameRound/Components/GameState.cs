@@ -31,7 +31,7 @@ namespace Assets.Source.Entities.GameRound.Components
             _particleService = particleService;
 
             _audioService.ResetPausedSlots();
-            _particleService.ResetPausedSlots();
+            _particleService.ResetAll();
 
             _userInputModel.OnPause
                 .Subscribe(_ => model.SetIsPaused(!model.IsPaused.Value))

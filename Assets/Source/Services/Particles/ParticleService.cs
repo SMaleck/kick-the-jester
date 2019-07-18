@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Util.MonoObjectPooling;
+using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Services.Particles
@@ -29,17 +30,16 @@ namespace Assets.Source.Services.Particles
                 item => item.ParticleEffectType == particleEffectType);
 
             particlePoolItem.Position = position;
+
+            // ToDo Call play only on next frame
             particlePoolItem.Play();
         }
 
-        public void ResetPausedSlots()
+        public void ResetAll()
         {
             _particlePool.ForEach(item =>
             {
-                if (item.IsPaused)
-                {
-                    item.Stop();
-                }
+                item.Stop();
             });
         }
 
