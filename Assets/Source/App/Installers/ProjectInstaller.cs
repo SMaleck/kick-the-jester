@@ -5,7 +5,6 @@ using Assets.Source.Services;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using Assets.Source.Services.Savegame;
-using Assets.Source.Services.Upgrade;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +17,6 @@ namespace Assets.Source.App.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<SavegameService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<UpgradeService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AudioService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<ParticleService>().AsSingle().NonLazy();
