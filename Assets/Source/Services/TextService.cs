@@ -1,5 +1,7 @@
-﻿using Assets.Source.App;
+﻿using System;
+using Assets.Source.App;
 using Assets.Source.Features.Upgrades.Data;
+using UnityEngine;
 
 namespace Assets.Source.Services
 {
@@ -7,6 +9,7 @@ namespace Assets.Source.Services
     {
         private const string MissingText = "#MISSING TEXT#";
         private const string InlineSpriteCoin = "<sprite=0>";
+        private const string InlineSpriteExternalLink = "<sprite=1>";
 
         public static string UpgradeItemTitle(UpgradePathType upgradePathType)
         {
@@ -50,6 +53,21 @@ namespace Assets.Source.Services
             }
         }
 
+        internal static string ResetProfileDescription()
+        {
+            return "Are you sure?\n\nThis will reset all your upgrades, ingame-money and records.";
+        }
+
+        internal static string ResetProfileWarning()
+        {
+            return "This cannot be undone!";
+        }
+
+        internal static string Cancel()
+        {
+            return "Cancel";
+        }
+
         public static string Max()
         {
             return "MAX";
@@ -60,9 +78,34 @@ namespace Assets.Source.Services
             return $"Level {level}";
         }
 
+        internal static string HowToPlay()
+        {
+            return "How to Play";
+        }
+
+        internal static string Credits()
+        {
+            return "Credits";
+        }
+
+        internal static string DistanceReached()
+        {
+            return "Distance Reached";
+        }
+
+        internal static string NewBest()
+        {
+            return "New Best!";
+        }
+
         public static string CurrencyAmount(int amount)
         {
             return $"{amount}{InlineSpriteCoin}";
+        }
+
+        public static string CurrencyAmount(float amount)
+        {
+            return CurrencyAmount(Mathf.RoundToInt(amount));
         }
 
         public static string PlayAgainExclamation()
@@ -75,9 +118,34 @@ namespace Assets.Source.Services
             return "Play!";
         }
 
+        public static string RestoreDefaults()
+        {
+            return "Restore Defaults";
+        }
+
         public static string ResetProfile()
         {
             return "Reset Profile";
+        }
+
+        internal static string Settings()
+        {
+            return "Settings";
+        }
+
+        internal static string SoundSettings()
+        {
+            return "Sound Settings";
+        }
+
+        internal static string SoundEffects()
+        {
+            return "Sound Effects";
+        }
+
+        internal static string Music()
+        {
+            return "Music";
         }
     }
 }

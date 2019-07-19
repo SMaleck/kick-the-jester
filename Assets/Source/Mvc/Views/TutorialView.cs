@@ -26,6 +26,8 @@ namespace Assets.Source.Mvc.Views
         // ToDo DISPOSER
         public ReactiveCommand OnNextClickedOnLastSlide = new ReactiveCommand();
 
+        // ToDo Use TextService 
+        // ToDo Pulsate TapAnywhere Text
 
         public override void Setup()
         {

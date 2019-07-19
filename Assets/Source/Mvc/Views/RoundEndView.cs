@@ -1,4 +1,5 @@
-﻿using Assets.Source.Util;
+﻿using Assets.Source.Services;
+using Assets.Source.Util;
 using Assets.Source.Util.UI;
 using DG.Tweening;
 using System;
@@ -13,14 +14,17 @@ namespace Assets.Source.Mvc.Views
 {
     public class RoundEndView : ClosableView
     {
+        [Header("Labels")]
+        [SerializeField] TextMeshProUGUI _distanceReachedText;
+        [SerializeField] TextMeshProUGUI _newBestText;
+
         [Header("Distance Results")]
-        [SerializeField] Text _distanceText;
-        [SerializeField] Text _bestDistanceText;
-        [SerializeField] GameObject _newBestLabel;
+        [SerializeField] TextMeshProUGUI _distanceText;
+        [SerializeField] TextMeshProUGUI _bestDistanceText;
 
         [Header("Currency Results")]
         [SerializeField] RectTransform _currencyContainer;
-        [SerializeField] TMP_Text _currencyText;
+        [SerializeField] TextMeshProUGUI _currencyText;
         [SerializeField] GameObject _pfCurrencyItem;
 
         [Header("Buttons")]
@@ -35,7 +39,7 @@ namespace Assets.Source.Mvc.Views
 
         public float Distance { set { _distanceText.text = value.ToMetersString(); } }
         public float BestDistance { set { _bestDistanceText.text = value.ToMetersString(); } }
-        public bool IsNewBestDistance { set { _newBestLabel.SetActive(value); } }
+        public bool IsNewBestDistance { set { _newBestText.gameObject.SetActive(value); } }
 
         private const float CurrencyCounterSeconds = 1f;
 
@@ -50,8 +54,15 @@ namespace Assets.Source.Mvc.Views
             _onUpgradesClicked.BindTo(_shopButton).AddTo(Disposer);
 
             _currencyText.text = string.Empty;
+
+            UpdateTexts();
         }
 
+        private void UpdateTexts()
+        {
+            _distanceReachedText.text = TextService.DistanceReached();
+            _newBestText.text = TextService.NewBest();
+        }
 
         public void ShowCurrencyResults(IDictionary<string, int> results, int currencyAmountAtStart)
         {
@@ -87,7 +98,6 @@ namespace Assets.Source.Mvc.Views
             var resultSequence = CreateResultsSequence(results, currencyItems, currencyAmountAtStart);
         }
 
-
         private Sequence CreateResultsSequence(IDictionary<string, int> results, List<CurrencyItem> items, int currencyAmountAtStart)
         {
             var seq = DOTween.Sequence();
@@ -105,18 +115,24 @@ namespace Assets.Source.Mvc.Views
             return seq;
         }
 
-
         private Tweener CreateResultItemTweener(CurrencyItem item, int finalValue)
         {
-            return DOTween.To(x => item.Value = Mathf.RoundToInt(x).ToString(), 0, finalValue, CurrencyCounterSeconds);
+            return DOTween.To(
+                x => item.Value = TextService.CurrencyAmount(x), 
+                0, 
+                finalValue, 
+                CurrencyCounterSeconds);
         }
-
 
         private Tweener CreateTotalResultTweener(IDictionary<string, int> results, int currencyAmountAtStart)
         {
             var totalSum = results.Values.Sum() + currencyAmountAtStart;
 
-            return DOTween.To(x => _currencyText.text = Mathf.RoundToInt(x).ToString(), currencyAmountAtStart, totalSum, CurrencyCounterSeconds);
+            return DOTween.To(
+                x => _currencyText.text = TextService.CurrencyAmount(x),
+                currencyAmountAtStart,
+                totalSum,
+                CurrencyCounterSeconds);
         }
     }
 }

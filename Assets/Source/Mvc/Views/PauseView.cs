@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Source.Services;
+using System;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +10,19 @@ namespace Assets.Source.Mvc.Views
     // ToDo Integrate with SettingsView    
     public class PauseView : ClosableView
     {
-        [SerializeField] private Toggle _isMusicMuted;
-        [SerializeField] private Toggle _isEffectsMuted;                
+        [Header("Labels")]
+        [SerializeField] private TextMeshProUGUI _titleText;
+        [SerializeField] private TextMeshProUGUI _soundSettingsTitleText;
+
+        [Header("Sound Settings")]
+        [SerializeField] private Toggle _isMusicMutedToggle;
+        [SerializeField] private TextMeshProUGUI _isMusicMutedText;
+
+        [SerializeField] private Toggle _isEffectsMutedToggle;
+        [SerializeField] private TextMeshProUGUI _isEffectsMutedText;
+
+        [Header("Buttons")]
         [SerializeField] private Button _retryButton;
-        
 
         private readonly ReactiveProperty<bool> _isMusicMutedProp = new ReactiveProperty<bool>();
         public IReadOnlyReactiveProperty<bool> IsMusicMutedProp => _isMusicMutedProp;
@@ -34,13 +45,23 @@ namespace Assets.Source.Mvc.Views
             _onRetryClicked.AddTo(Disposer);
             _onRetryClicked.BindTo(_retryButton).AddTo(Disposer);
 
-            _isMusicMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => _isMusicMutedProp.Value = !_isMusicMuted.isOn)
+            _isMusicMutedToggle.OnValueChangedAsObservable()
+                .Subscribe(_ => _isMusicMutedProp.Value = !_isMusicMutedToggle.isOn)
                 .AddTo(Disposer);
 
-            _isEffectsMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => _isEffectsMutedProp.Value = !_isEffectsMuted.isOn)
+            _isEffectsMutedToggle.OnValueChangedAsObservable()
+                .Subscribe(_ => _isEffectsMutedProp.Value = !_isEffectsMutedToggle.isOn)
                 .AddTo(Disposer);
+
+            UpdateTexts();
+        }
+
+        private void UpdateTexts()
+        {
+            _titleText.text = TextService.Settings();
+            _soundSettingsTitleText.text = TextService.SoundSettings();
+            _isMusicMutedText.text = TextService.Music();
+            _isEffectsMutedText.text = TextService.SoundEffects();
         }
 
         public void SetIsMusicMuted(bool value)
@@ -55,8 +76,8 @@ namespace Assets.Source.Mvc.Views
 
         private void SetSettingsViewState()
         {
-            _isMusicMuted.isOn = !_isMusicMutedProp.Value;
-            _isEffectsMuted.isOn = !_isEffectsMutedProp.Value;
+            _isMusicMutedToggle.isOn = !_isMusicMutedProp.Value;
+            _isEffectsMutedToggle.isOn = !_isEffectsMutedProp.Value;
         }
     }
 }

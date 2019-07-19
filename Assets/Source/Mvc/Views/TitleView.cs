@@ -1,16 +1,22 @@
-﻿using Assets.Source.Util.UI;
+﻿using Assets.Source.Services;
+using Assets.Source.Util.UI;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{    
+{
     public class TitleView : AbstractView
     {
         [SerializeField] private Button _startButton;
+        [SerializeField] private TextMeshProUGUI _startButtonText;
+
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _tutorialButton;
+        [SerializeField] private TextMeshProUGUI _tutorialButtonText;
         [SerializeField] private Button _creditsButton;
+        [SerializeField] private TextMeshProUGUI _creditsButtonText;
 
         // ToDo Try to get rid of this
         [SerializeField] public AudioClip TransitionMusic;
@@ -40,6 +46,15 @@ namespace Assets.Source.Mvc.Views
             _creditsButton.OnClickAsObservable()
                 .Subscribe(_ => OnCreditsClicked.Execute())
                 .AddTo(this);
+
+            UpdateTexts();
+        }
+
+        private void UpdateTexts()
+        {
+            _startButtonText.text = TextService.PlayExclamation();
+            _tutorialButtonText.text = TextService.HowToPlay();
+            _creditsButtonText.text = TextService.Credits();
         }
 
         private void OnStartClickedProxy()
