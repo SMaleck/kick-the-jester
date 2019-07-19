@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Util.MonoObjectPooling;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 
@@ -30,8 +31,17 @@ namespace Assets.Source.Services.Particles
                 item => item.ParticleEffectType == particleEffectType);
 
             particlePoolItem.Position = position;
+            particlePoolItem.QueueForPlay();
+            MainThreadDispatcher.StartCoroutine(PlayNextFrame(particlePoolItem));            
+        }
 
-            // ToDo Call play only on next frame
+        // Calling Play only on the next frame after updating the position,
+        // to issue where the particle system was not yet drawn in camera view 
+        // and thus Play() was ignored
+        private IEnumerator PlayNextFrame(ParticlePoolItem particlePoolItem)
+        {
+            yield return new WaitForEndOfFrame();
+
             particlePoolItem.Play();
         }
 

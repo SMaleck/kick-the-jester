@@ -15,11 +15,18 @@ namespace Assets.Source.Services.Particles
         public ParticleEffectType ParticleEffectType => _particleEffectType;
 
         public bool IsPaused { get; private set; }
-        public bool IsFree => !_particleSystem.isPlaying;
+        public bool IsQueued { get; private set; }
+        public bool IsFree => !IsQueued && !_particleSystem.isPlaying;
+
+        public void QueueForPlay()
+        {
+            IsQueued = true;
+        }
 
         public void Play()
         {
             IsPaused = false;
+            IsQueued = false;
             _particleSystem.Play();
         }
 
