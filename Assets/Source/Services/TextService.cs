@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Source.App;
 using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Util;
 using UnityEngine;
 
 namespace Assets.Source.Services
@@ -146,6 +147,36 @@ namespace Assets.Source.Services
         internal static string Music()
         {
             return "Music";
+        }
+
+        public static string CreditsCodeHeader()
+        {
+            return "Code & Game Design";
+        }
+
+        public static string CreditsArtHeader()
+        {
+            return "Art & Animation";
+        }
+
+        public static string CreditsMusicHeader()
+        {
+            return "Music";
+        }
+
+        public static string CreditsSoundEffectsHeader()
+        {
+            return "Sound Effects";
+        }
+
+        public static string BestDistance()
+        {
+            return "Best Distance";
+        }
+
+        public static string MetersAmount(float amount)
+        {
+            return $"{amount.ToMeters()}m";
         }
     }
 }

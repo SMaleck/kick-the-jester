@@ -19,17 +19,7 @@ namespace Assets.Source.Util
             return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
         }
 
-        public static int ToMeters(this int value)
-        {
-            return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
-        }
-
         public static string ToMetersString(this float value)
-        {
-            return $"{value.ToMeters()}m";
-        }
-
-        public static string ToMetersString(this int value)
         {
             return $"{value.ToMeters()}m";
         }
