@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UniRx;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{    
+{
     public class TutorialView : ClosableView
     {
         [SerializeField] private List<CanvasGroup> _steps;
@@ -16,22 +17,23 @@ namespace Assets.Source.Mvc.Views
         private const float InstructionPulseSeconds = 0.7f;
         private const int FontSizeMin = 48;
         private const int FontSizeMax = 52;
-        private const float FadeTimeSeconds = 0.5f;        
+        private const float FadeTimeSeconds = 0.5f;
 
         private FloatReactiveProperty fontSize = new FloatReactiveProperty(FontSizeMin);
 
         private int _currentStep = 0;
         private bool IsLastStep => _currentStep >= _steps.Count - 1;
 
-        // ToDo DISPOSER
-        public ReactiveCommand OnNextClickedOnLastSlide = new ReactiveCommand();
+        private readonly ReactiveCommand _onNextClickedOnLastSlide = new ReactiveCommand();
+        public IObservable<Unit> OnNextClickedOnLastSlide => _onNextClickedOnLastSlide;
 
         // ToDo Use TextService 
-        // ToDo Pulsate TapAnywhere Text
 
         public override void Setup()
         {
             base.Setup();
+
+            _onNextClickedOnLastSlide.AddTo(Disposer);
 
             ResetSlides();
             _steps.ForEach(step =>
@@ -44,6 +46,7 @@ namespace Assets.Source.Mvc.Views
                 .Subscribe(_ => Next())
                 .AddTo(this);
 
+            // ToDo Fix Pulsate TapAnywhere Text
             // Animation for instruction text
             DOTween.To(() => fontSize.Value, (val) => fontSize.Value = val, FontSizeMax, InstructionPulseSeconds)
                 .SetEase(Ease.InOutCubic)
@@ -62,7 +65,7 @@ namespace Assets.Source.Mvc.Views
             // Hide all panels, except the first
             for (int i = 1; i < _steps.Count; i++)
             {
-                FadeOutStep(i, 0);                
+                FadeOutStep(i, 0);
             }
 
             FadeInStep(0, 0);
@@ -81,7 +84,7 @@ namespace Assets.Source.Mvc.Views
             // Close if this is the last step
             if (IsLastStep)
             {
-                OnNextClickedOnLastSlide.Execute();
+                _onNextClickedOnLastSlide.Execute();
                 return;
             }
 
@@ -90,20 +93,20 @@ namespace Assets.Source.Mvc.Views
             FadeOutStep(_currentStep);
 
             _currentStep++;
-        }        
+        }
 
 
         private void FadeInStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
-            _steps[index].DOFade(1, time);            
+            _steps[index].DOFade(1, time);
         }
 
 
         private void FadeOutStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
-            _steps[index].DOFade(0, time);            
+            _steps[index].DOFade(0, time);
         }
     }
 }

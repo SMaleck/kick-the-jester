@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Services;
 using Assets.Source.Util.UI;
+using System;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -21,31 +22,38 @@ namespace Assets.Source.Mvc.Views
         // ToDo Try to get rid of this
         [SerializeField] public AudioClip TransitionMusic;
 
-        // ToDo DISPOSER
-        public ReactiveCommand OnStartClicked = new ReactiveCommand();
-        public ReactiveCommand OnSettingsClicked = new ReactiveCommand();
-        public ReactiveCommand OnTutorialClicked = new ReactiveCommand();
-        public ReactiveCommand OnCreditsClicked = new ReactiveCommand();
+        private readonly ReactiveCommand _onStartClicked = new ReactiveCommand();
+        public IObservable<Unit> OnStartClicked => _onStartClicked;
+
+        private readonly ReactiveCommand _onSettingsClicked = new ReactiveCommand();
+        public IObservable<Unit> OnSettingsClicked => _onSettingsClicked;
+
+        private readonly ReactiveCommand _onTutorialClicked = new ReactiveCommand();
+        public IObservable<Unit> OnTutorialClicked => _onTutorialClicked;
+
+        private readonly ReactiveCommand _onCreditsClicked = new ReactiveCommand();
+        public IObservable<Unit> OnCreditsClicked => _onCreditsClicked;
 
         public override void Setup()
         {
+            _onTutorialClicked.AddTo(Disposer);
+            _onCreditsClicked.AddTo(Disposer);
+
             gameObject.SetActive(true);
 
+            _onStartClicked.AddTo(Disposer);
             _startButton.OnClickAsObservable()
                 .Subscribe(_ => OnStartClickedProxy())
                 .AddTo(this);
 
-            _settingsButton.OnClickAsObservable()
-                .Subscribe(_ => OnSettingsClicked.Execute())
-                .AddTo(this);
+            _onSettingsClicked.AddTo(Disposer);
+            _onSettingsClicked.BindTo(_settingsButton).AddTo(Disposer);
 
-            _tutorialButton.OnClickAsObservable()
-                .Subscribe(_ => OnTutorialClicked.Execute())
-                .AddTo(this);
+            _onTutorialClicked.AddTo(Disposer);
+            _onTutorialClicked.BindTo(_tutorialButton).AddTo(Disposer);
 
-            _creditsButton.OnClickAsObservable()
-                .Subscribe(_ => OnCreditsClicked.Execute())
-                .AddTo(this);
+            _onCreditsClicked.AddTo(Disposer);
+            _onCreditsClicked.BindTo(_creditsButton).AddTo(Disposer);
 
             UpdateTexts();
         }
@@ -62,7 +70,7 @@ namespace Assets.Source.Mvc.Views
             _startButton.interactable = false;
             _startButton.GetComponent<Pulse>().Stop();
 
-            OnStartClicked.Execute();
+            _onStartClicked.Execute();
         }
     }
 }

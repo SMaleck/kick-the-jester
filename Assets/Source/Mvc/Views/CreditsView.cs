@@ -1,4 +1,7 @@
-﻿using UniRx;
+﻿using System.Collections.Generic;
+using Assets.Source.Services;
+using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,15 +9,28 @@ namespace Assets.Source.Mvc.Views
 {   
     public class CreditsView : ClosableView
     {
-        [SerializeField] private GameObject panelDefault;
-        [SerializeField] private GameObject panelWeb;
+        [Header("Panal Content")]
+        [SerializeField] private TextMeshProUGUI _panelTitleText;
+        [SerializeField] private List<GameObject> _defaultItems;
+        [SerializeField] private List<GameObject> _webItems;
 
+        [Header("Code Section")]
+        [SerializeField] private TextMeshProUGUI _codeSectionHeader;
         [SerializeField] private Button smaleckButton;
         [SerializeField] private Button jhartmannButton;
+
+        [Header("Art Section")]
+        [SerializeField] private TextMeshProUGUI _artSectionHeader;
         [SerializeField] private Button jiubeckButton;
 
+        [Header("Music Section")]
+        [SerializeField] private TextMeshProUGUI _musicSectionHeader;
         [SerializeField] private Button tristanButton;
+
+        [Header("Sound Effects Section")]
+        [SerializeField] private TextMeshProUGUI _soundEffectsSectionHeader;
         [SerializeField] private Button noiseForFunButton;
+
 
         private readonly string smaleckkUrl = "https://github.com/SMaleck";
         private readonly string jhartmannUrl = "https://github.com/jonashartmann";
@@ -39,10 +55,19 @@ namespace Assets.Source.Mvc.Views
             #endif
         }
 
+        private void UpdateTexts()
+        {
+            _panelTitleText.text = TextService.Credits();
+            _codeSectionHeader.text = TextService.CreditsCodeHeader();
+            _artSectionHeader.text = TextService.CreditsArtHeader();
+            _musicSectionHeader.text = TextService.CreditsMusicHeader();
+            _soundEffectsSectionHeader.text = TextService.CreditsSoundEffectsHeader();
+        }
+
         private void SetupDefaultView()
         {
-            panelDefault.SetActive(true);
-            panelWeb.SetActive(false);
+            SetAllIsActive(_defaultItems, true);
+            SetAllIsActive(_webItems, false);
 
             smaleckButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(smaleckkUrl)).AddTo(this);
             jhartmannButton.OnClickAsObservable().Subscribe(_ => Application.OpenURL(jhartmannUrl)).AddTo(this);
@@ -54,8 +79,13 @@ namespace Assets.Source.Mvc.Views
 
         private void SetupWebView()
         {
-            panelDefault.SetActive(false);
-            panelWeb.SetActive(true);
+            SetAllIsActive(_defaultItems, false);
+            SetAllIsActive(_webItems, true);
+        }
+
+        private void SetAllIsActive(List<GameObject> items, bool isActive)
+        {
+            items.ForEach(item => item.SetActive(isActive));
         }
     }
 }

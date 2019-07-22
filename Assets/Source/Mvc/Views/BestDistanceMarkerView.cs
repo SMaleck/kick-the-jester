@@ -1,4 +1,5 @@
-﻿using Assets.Source.Util;
+﻿using Assets.Source.Services;
+using Assets.Source.Util;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Assets.Source.Mvc.Views
 {    
     public class BestDistanceMarkerView : AbstractView
     {
+        [SerializeField] private TMP_Text _bestDistanceLabelText;
         [SerializeField] private TMP_Text _bestDistanceText;
 
         private const float MoveThresholdDistanceMeters = 5;
@@ -19,18 +21,23 @@ namespace Assets.Source.Mvc.Views
         public override void Setup()
         {
             _selfOrigin = gameObject.transform.position;
+            UpdateTexts();
         }
 
+        private void UpdateTexts()
+        {
+            _bestDistanceLabelText.text = TextService.BestDistance();
+        }
 
         public void UpdateBestDistance(float distance)
         {
-            _bestDistanceText.text = distance.ToMetersString();
+            _bestDistanceText.text = TextService.MetersAmount(distance);
             SlideToBestDistance(distance);
         }
 
         public void UpdateBestDistanceInstant(float distance)
         {
-            _bestDistanceText.text = distance.ToMetersString();
+            _bestDistanceText.text = TextService.MetersAmount(distance);
             SlideToBestDistance(distance, true);
         }
 
