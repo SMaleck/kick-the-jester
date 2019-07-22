@@ -24,11 +24,13 @@ namespace Assets.Source.Util
             return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
         }
 
+        // ToDo Move to TextService
         public static string ToMetersString(this float value)
         {
             return $"{value.ToMeters()}m";
         }
 
+        // ToDo Move to TextService
         public static string ToMetersString(this int value)
         {
             return $"{value.ToMeters()}m";

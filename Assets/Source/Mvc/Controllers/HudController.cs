@@ -55,6 +55,10 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(value => _view.Distance = value)
                 .AddTo(Disposer);
 
+            _flightStatsModel.Collected
+                .Subscribe(_view.SetCollectedCurrencyAmount)
+                .AddTo(Disposer);
+
             _flightStatsModel.Height
                 .Subscribe(OnHeightChanged)
                 .AddTo(Disposer);
@@ -87,6 +91,10 @@ namespace Assets.Source.Mvc.Controllers
         {
             _playerProfileModel.BestDistance
                 .Subscribe(bestDist => _view.BestDistance = bestDist)
+                .AddTo(Disposer);
+
+            _playerProfileModel.CurrencyAmount
+                .Subscribe(_view.SetCurrencyAmount)
                 .AddTo(Disposer);
         }
     }

@@ -15,9 +15,12 @@ namespace Assets.Source.Mvc.Views
     public class HudView : AbstractView
     {
         [Header("Flight Stats Display")]
-        [SerializeField] TMP_Text _distanceText;
-        [SerializeField] TMP_Text _heightText;
-        [SerializeField] TMP_Text _bestDistanceText;
+        [SerializeField] TextMeshProUGUI _currencyAmountText;
+        [SerializeField] TextMeshProUGUI _collectedCurrencyAmountText;
+        [SerializeField] TextMeshProUGUI _distanceText;
+        [SerializeField] TextMeshProUGUI _bestDistanceLabelText;
+        [SerializeField] TextMeshProUGUI _bestDistanceText;
+        [SerializeField] TextMeshProUGUI _heightText;
 
         [Header("Tomatoes")]
         [SerializeField] GameObject _shotCountPanel;
@@ -39,7 +42,7 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] float _indicatorAnimStrength = 2;
         [SerializeField] float _indicatorAnimSpeedSeconds = 0.8f;
 
-
+        // ToDo change to setter methods
         public float Distance
         {
             set { _distanceText.text = value.ToMetersString(); }
@@ -84,6 +87,22 @@ namespace Assets.Source.Mvc.Views
             _shotCountPanel.gameObject.SetActive(false);
 
             SetupIndicatorTweener();
+            UpdateTexts();
+        }
+
+        public void SetCurrencyAmount(int amount)
+        {
+            _currencyAmountText.text = TextService.CurrencyAmount(amount);
+        }
+
+        public void SetCollectedCurrencyAmount(int amount)
+        {
+            _collectedCurrencyAmountText.text = TextService.CurrencyAmount(amount);
+        }
+
+        private void UpdateTexts()
+        {
+            _bestDistanceLabelText.text = TextService.BestLabel();
         }
 
         private void SetupIndicatorTweener()

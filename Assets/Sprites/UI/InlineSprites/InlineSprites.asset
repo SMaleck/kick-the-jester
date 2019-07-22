@@ -21,9 +21,9 @@ MonoBehaviour:
     y: 76
     width: 52
     height: 52
-    xOffset: 0
+    xOffset: 7
     yOffset: 45
-    xAdvance: 52
+    xAdvance: 64
     scale: 1
     name: InlineSprites_0
     hashCode: 1334409980
@@ -35,9 +35,9 @@ MonoBehaviour:
     y: 76
     width: 52
     height: 52
-    xOffset: 0
+    xOffset: 7
     yOffset: 45
-    xAdvance: 52
+    xAdvance: 64
     scale: 1
     name: InlineSprites_1
     hashCode: 1334409981

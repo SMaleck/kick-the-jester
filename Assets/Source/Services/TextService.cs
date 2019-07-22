@@ -103,6 +103,11 @@ namespace Assets.Source.Services
             return $"{amount}{InlineSpriteCoin}";
         }
 
+        internal static string BestLabel()
+        {
+            return "Best:";
+        }
+
         public static string CurrencyAmount(float amount)
         {
             return CurrencyAmount(Mathf.RoundToInt(amount));
