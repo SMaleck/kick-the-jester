@@ -130,6 +130,7 @@ namespace Assets.Source.Mvc.Views
             _shotCountPanel.gameObject.SetActive(true);
         }
 
+        // ToDo TMP Clean this mess up
         public void ShowFloatingCoinAmount(float gainedAmount)
         {
             if (gainedAmount <= 0) { return; }

@@ -9,7 +9,7 @@ using Zenject;
 namespace Assets.Source.App.Installers.SceneInstallers
 {
     public class TitleSceneInstaller : MonoInstaller
-    {        
+    {
         [SerializeField] public TitleView TitleView;
         [SerializeField] public SettingsView SettingsView;
         [SerializeField] public CreditsView CreditsView;

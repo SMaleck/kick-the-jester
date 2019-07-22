@@ -64,6 +64,7 @@ namespace Assets.Source.Mvc.Views
             _newBestText.text = TextService.NewBest();
         }
 
+        // ToDo TMP Clean this mess up
         public void ShowCurrencyResults(IDictionary<string, int> results, int currencyAmountAtStart)
         {
             List<CurrencyItem> currencyItems = new List<CurrencyItem>();
