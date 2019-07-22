@@ -23,36 +23,39 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private TextMeshProUGUI _upgradeButtonText;
 
-        // ToDo DISPOSER Bind To
-        public Subject<Unit> _onUpgradeButtonClicked;
+        [Header("Path Maxed")]
+        [SerializeField] private GameObject _regularParent;
+        [SerializeField] private GameObject _maxedParent;
+
+        public readonly ReactiveCommand _onUpgradeButtonClicked = new ReactiveCommand();
         public IObservable<Unit> OnUpgradeButtonClicked => _onUpgradeButtonClicked;
 
-        private UpgradePathType _upgradePathType;
-        private bool _isMaxed;
+        private UpgradeTreeConfig _upgradeTreeConfig;
+
+        [Inject]
+        private void Inject(UpgradeTreeConfig upgradeTreeConfig)
+        {
+            _upgradeTreeConfig = upgradeTreeConfig;
+        }
 
         public override void Setup()
         {
-            _onUpgradeButtonClicked = new Subject<Unit>();
+            _onUpgradeButtonClicked.AddTo(Disposer);
+            _onUpgradeButtonClicked.BindTo(_upgradeButton).AddTo(Disposer);
 
-            _upgradeButton.OnClickAsObservable()
-                .Subscribe(_ => _onUpgradeButtonClicked.OnNext(Unit.Default))
-                .AddTo(Disposer);
+            _upgradeButtonText.text = TextService.Max();
         }
 
         public void SetUpdateUpgradePathType(UpgradePathType upgradePathType)
         {
-            _upgradePathType = upgradePathType;
-
+            _upgradeItemIcon.sprite = _upgradeTreeConfig.GetUpgradeIcon(upgradePathType);
             _titleText.text = TextService.UpgradeItemTitle(upgradePathType);
             _descriptionText.text = TextService.UpgradeItemDescription(upgradePathType);
         }
 
         public void SetCost(int cost)
         {
-            // 0 means MaxLevel was reached
-            _upgradeButtonText.text = _isMaxed
-                ? TextService.Max()
-                : TextService.CurrencyAmount(cost);
+            _upgradeButtonText.text = TextService.CurrencyAmount(cost);
         }
 
         public void SetLevel(int level)
@@ -67,11 +70,8 @@ namespace Assets.Source.Mvc.Views
 
         public void SetIsMaxed(bool isMaxed)
         {
-            _isMaxed = isMaxed;
-            if (_isMaxed)
-            {
-                _upgradeButtonText.text = TextService.Max();
-            }
+            _regularParent.SetActive(!isMaxed);
+            _maxedParent.SetActive(isMaxed);
         }
     }
 }

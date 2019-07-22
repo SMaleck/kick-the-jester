@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradePaths:
   - PathType: 0
+    UpgradeIcon: {fileID: 21300000, guid: e83b458f7a3bfb94dbf5379073f24542, type: 3}
     Steps:
     - Cost: 0
       Value: 13
@@ -29,6 +30,7 @@ MonoBehaviour:
     - Cost: 15000
       Value: 80
   - PathType: 1
+    UpgradeIcon: {fileID: 21300000, guid: 775f5767ea3e17c4c9972e0b65e96bad, type: 3}
     Steps:
     - Cost: 0
       Value: 8
@@ -41,6 +43,7 @@ MonoBehaviour:
     - Cost: 3000
       Value: 28
   - PathType: 2
+    UpgradeIcon: {fileID: 21300000, guid: eb85686bee04a8c4a9c4b4733c0cd7b3, type: 3}
     Steps:
     - Cost: 0
       Value: 3
@@ -57,6 +60,7 @@ MonoBehaviour:
     - Cost: 10000
       Value: 9
   - PathType: 3
+    UpgradeIcon: {fileID: 21300000, guid: 7844e1de8f753244ab898601b6f32d42, type: 3}
     Steps:
     - Cost: 0
       Value: 30

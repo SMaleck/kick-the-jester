@@ -13,6 +13,7 @@ namespace Assets.Source.Features.Upgrades.Data
         public class UpgradePath
         {
             public UpgradePathType PathType;
+            public Sprite UpgradeIcon;
             public List<UpgradeStep> Steps;
 
             public int MaxLevel => Steps.Count - 1;
@@ -30,6 +31,11 @@ namespace Assets.Source.Features.Upgrades.Data
         public UpgradePath GetUpgradePath(UpgradePathType pathType)
         {
             return _upgradePaths.First(e => e.PathType == pathType);
+        }
+
+        public Sprite GetUpgradeIcon(UpgradePathType pathType)
+        {
+            return _upgradePaths.First(e => e.PathType == pathType).UpgradeIcon;
         }
     }
 }
