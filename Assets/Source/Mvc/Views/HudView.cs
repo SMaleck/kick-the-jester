@@ -169,6 +169,7 @@ namespace Assets.Source.Mvc.Views
                     .Create(_viewPrefabConfig.PickupFeedbackViewPrefab);
 
                 freeSlot.transform.SetParent(_pickupFeedbackParent, false);
+                freeSlot.Initialize();
             }
 
             return freeSlot;

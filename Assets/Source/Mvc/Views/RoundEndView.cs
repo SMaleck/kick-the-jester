@@ -92,6 +92,8 @@ namespace Assets.Source.Mvc.Views
                     _currencyGainsLayoutParent,
                     false);
 
+                roundEarningsItemView.Initialize();
+
                 // Hide Element, and activate it when it's turn comes
                 roundEarningsItemView.SetActive(false);
                 currencyGainsSequence.AppendCallback(() =>

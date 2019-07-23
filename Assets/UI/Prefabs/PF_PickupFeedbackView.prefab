@@ -75,14 +75,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _labelText: {fileID: 114836064462606544}
   _canvasGroup: {fileID: 225768242289383790}
-  _punchScale: {x: 1.5, y: 1.5, z: 1.5}
+  _punchScale: {x: 1.01, y: 1.01, z: 1.01}
   _punchScaleDuration: 0.5
-  _punchScaleVibration: 1
-  _punchPosition: {x: 30, y: 30, z: 30}
+  _punchScaleVibration: 5
+  _punchPosition: {x: 0, y: 20, z: 0}
   _punchPositionDuration: 0.5
-  _punchPositionVibration: 1
-  _fadeDelaySeconds: 2
-  _fadeSeconds: 1
+  _punchPositionVibration: 5
+  _fadeDelaySeconds: 0.5
+  _fadeSeconds: 0.5
 --- !u!114 &114548998478884288
 MonoBehaviour:
   m_ObjectHideFlags: 1
