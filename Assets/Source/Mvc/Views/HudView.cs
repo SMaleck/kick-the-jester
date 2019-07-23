@@ -1,4 +1,6 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Mvc.Data;
+using Assets.Source.Mvc.Views.PartialViews;
+using Assets.Source.Services;
 using Assets.Source.Util;
 using Assets.Source.Util.UI;
 using DG.Tweening;
@@ -9,6 +11,7 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.Mvc.Views
 {
@@ -28,9 +31,7 @@ namespace Assets.Source.Mvc.Views
         private List<Image> shotCountIcons = new List<Image>();
 
         [Header("Money Gain Floating Numbers")]
-        [SerializeField] RectTransform _moneyGainPanel;
-        [SerializeField] GameObject _pfMoneyGainText;
-        private List<FloatingValue> moneyGainSlots = new List<FloatingValue>();
+        [SerializeField] RectTransform _pickupFeedbackParent;        
 
         [Header("Other")]
         [SerializeField] Button _pauseButton;
@@ -73,12 +74,27 @@ namespace Assets.Source.Mvc.Views
             set { _outOfCameraIndicator.gameObject.SetActive(value); }
         }
 
-        public ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
+        private ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
         public IObservable<Unit> OnPauseButtonClicked => _onPauseButtonClicked;
 
+        private ViewPrefabConfig _viewPrefabConfig;
+        private PickupFeedbackView.Factory _pickupFeedbackViewFactory;
+
+        private List<PickupFeedbackView> _pickupFeedbackViews;
+
+        [Inject]
+        private void Inject(
+            ViewPrefabConfig viewPrefabConfig,
+            PickupFeedbackView.Factory pickupFeedbackViewFactory)
+        {
+            _viewPrefabConfig = viewPrefabConfig;
+            _pickupFeedbackViewFactory = pickupFeedbackViewFactory;
+        }
 
         public override void Setup()
         {
+            _pickupFeedbackViews = new List<PickupFeedbackView>();
+
             _onPauseButtonClicked.AddTo(Disposer);
             _onPauseButtonClicked.BindTo(_pauseButton).AddTo(Disposer);
 
@@ -105,6 +121,7 @@ namespace Assets.Source.Mvc.Views
             _bestDistanceLabelText.text = TextService.BestLabel();
         }
 
+        // ToDo Improve this Tween
         private void SetupIndicatorTweener()
         {
             OutOfCameraIndicatorVisible = false;
@@ -129,25 +146,33 @@ namespace Assets.Source.Mvc.Views
             _kickForceBar.gameObject.SetActive(false);
             _shotCountPanel.gameObject.SetActive(true);
         }
-
-        // ToDo TMP Clean this mess up
-        public void ShowFloatingCoinAmount(float gainedAmount)
+        
+        public void ShowFloatingCoinAmount(int gainedAmount)
         {
-            if (gainedAmount <= 0) { return; }
-
-            FloatingValue fValue = moneyGainSlots.FirstOrDefault(e => !e.IsFloating);
-
-            if (fValue == null)
+            if (gainedAmount <= 0)
             {
-                GameObject go = GameObject.Instantiate(_pfMoneyGainText, _moneyGainPanel, false);
-                moneyGainSlots.Add(go.GetComponent<FloatingValue>());
-
-                fValue = moneyGainSlots.Last();
+                return;
             }
 
-            fValue.StartFloating(TextService.CurrencyAmount((int)gainedAmount));
+            var freeSlot = GetFreePickupFeedbackSlot();
+            freeSlot.SetCurrencyAmountWithAnimation(gainedAmount);
         }
 
+        private PickupFeedbackView GetFreePickupFeedbackSlot()
+        {
+            var freeSlot = _pickupFeedbackViews
+                .FirstOrDefault(view => !view.IsPlaying);
+
+            if(freeSlot == null)
+            {
+                freeSlot = _pickupFeedbackViewFactory
+                    .Create(_viewPrefabConfig.PickupFeedbackViewPrefab);
+
+                freeSlot.transform.SetParent(_pickupFeedbackParent, false);
+            }
+
+            return freeSlot;
+        }
 
         public void OnShotCountChanged(int count)
         {

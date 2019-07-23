@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 224554739232759092}
   - component: {fileID: 222795970307717584}
   m_Layer: 5
-  m_Name: MoneyGainPanel
+  m_Name: empty_pickup_feedback_parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1630,9 +1630,7 @@ MonoBehaviour:
   _shotCountPanel: {fileID: 1005109560993716}
   _pfShotCountIcon: {fileID: 1762519497992498, guid: d233d22ddaac2af4c83e35395605dc71,
     type: 2}
-  _moneyGainPanel: {fileID: 224554739232759092}
-  _pfMoneyGainText: {fileID: 1199815524605762, guid: c0a944bb734ca6741bb09261192daed3,
-    type: 2}
+  _pickupFeedbackParent: {fileID: 224554739232759092}
   _pauseButton: {fileID: 114104813758980166}
   _velocityBar: {fileID: 114979943616120338}
   _kickForceBar: {fileID: 114438511090543054}

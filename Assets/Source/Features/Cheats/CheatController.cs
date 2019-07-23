@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using System;
 using UniRx;
@@ -14,11 +15,18 @@ namespace Assets.Source.Features.Cheats
         private const string SlowTimeKey = "t";
         private const float SlowTimeScale = 0.5f;
 
-        private readonly PlayerProfileModel _playerProfileModel;
+        private const string AddPickupKey = "e";
+        private const int AddPickupAmount = 150;
 
-        public CheatController(PlayerProfileModel playerProfileModel)
+        private readonly PlayerProfileModel _playerProfileModel;
+        private readonly FlightStatsModel _flightStatsModel;
+
+        public CheatController(
+            PlayerProfileModel playerProfileModel,
+            FlightStatsModel flightStatsModel)
         {
             _playerProfileModel = playerProfileModel;
+            _flightStatsModel = flightStatsModel;
 
             Observable.EveryUpdate()
                 .Subscribe(_ => CheckAllCheatKeys())
@@ -29,6 +37,7 @@ namespace Assets.Source.Features.Cheats
         {
             CheckOnInput(GiveMuchMoneyKey, GiveMuchMoney);
             CheckOnInput(SlowTimeKey, SlowTime);
+            CheckOnInput(AddPickupKey, AddPickup);
         }
 
         private void CheckOnInput(string keyCode, Action action)
@@ -47,6 +56,11 @@ namespace Assets.Source.Features.Cheats
         private void SlowTime()
         {
             Time.timeScale = Time.timeScale < 1 ? 1 : SlowTimeScale;
+        }
+
+        private void AddPickup()
+        {
+            _flightStatsModel.Gains.Add(AddPickupAmount);
         }
     }
 }

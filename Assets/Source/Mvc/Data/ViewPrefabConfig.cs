@@ -36,7 +36,10 @@ namespace Assets.Source.Mvc.Data
 
         [SerializeField] private CurrencyGainItemView _currencyGainItemViewPrefab;
         public CurrencyGainItemView CurrencyGainItemViewPrefab => _currencyGainItemViewPrefab;
-        
+
+        [SerializeField] private PickupFeedbackView _pickupFeedbackViewPrefab;
+        public PickupFeedbackView PickupFeedbackViewPrefab => _pickupFeedbackViewPrefab;
+
         [Header("Upgrades")]
         [SerializeField] private UpgradeScreenView _upgradeScreenViewPrefab;
         public UpgradeScreenView UpgradeScreenViewPrefab => _upgradeScreenViewPrefab;

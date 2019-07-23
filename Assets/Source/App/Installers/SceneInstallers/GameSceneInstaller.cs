@@ -29,6 +29,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region MVC
 
             Container.BindInstance(HudView).AsSingle();
+            Container.BindPrefabFactory<PickupFeedbackView, PickupFeedbackView.Factory>();
             Container.BindInterfacesAndSelfTo<HudController>().AsSingle().NonLazy();
 
             Container.BindPrefabFactory<CurrencyGainItemView, CurrencyGainItemView.Factory>();
