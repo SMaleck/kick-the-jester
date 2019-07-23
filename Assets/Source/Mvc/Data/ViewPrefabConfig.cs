@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Mvc.Views.PartialViews;
 using UnityEngine;
 
 namespace Assets.Source.Mvc.Data
@@ -33,7 +34,9 @@ namespace Assets.Source.Mvc.Data
         [SerializeField] private BestDistanceMarkerView _bestDistanceMarkerViewPrefab;
         public BestDistanceMarkerView BestDistanceMarkerViewPrefab => _bestDistanceMarkerViewPrefab;
 
-
+        [SerializeField] private CurrencyGainItemView _currencyGainItemViewPrefab;
+        public CurrencyGainItemView CurrencyGainItemViewPrefab => _currencyGainItemViewPrefab;
+        
         [Header("Upgrades")]
         [SerializeField] private UpgradeScreenView _upgradeScreenViewPrefab;
         public UpgradeScreenView UpgradeScreenViewPrefab => _upgradeScreenViewPrefab;

@@ -4,6 +4,7 @@ using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using System.Collections.Generic;
+using Assets.Source.Mvc.Models.Enum;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -61,12 +62,12 @@ namespace Assets.Source.Mvc.Controllers
             _view.ShowCurrencyResults(results, currencyAmountAtStart);
         }
 
-        private IDictionary<string, int> GetResultsAsDictionary()
+        private IDictionary<CurrencyGainType, int> GetResultsAsDictionary()
         {
-            Dictionary<string, int> result = new Dictionary<string, int>();
+            Dictionary<CurrencyGainType, int> result = new Dictionary<CurrencyGainType, int>();
 
-            result.Add("from distance", _flightStatsModel.Earned.Value);
-            result.Add("from pickups", _flightStatsModel.Collected.Value);
+            result.Add(CurrencyGainType.Distance, _flightStatsModel.Earned.Value);
+            result.Add(CurrencyGainType.Pickup, _flightStatsModel.Collected.Value);
 
             return result;
         }

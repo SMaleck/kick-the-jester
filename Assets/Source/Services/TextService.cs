@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Source.App;
 using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Mvc.Models.Enum;
 using Assets.Source.Util;
 using UnityEngine;
 
@@ -182,6 +183,21 @@ namespace Assets.Source.Services
         public static string MetersAmount(float amount)
         {
             return $"{amount.ToMeters()}m";
+        }
+
+        public static string FromCurrencyGainType(CurrencyGainType currencyGainType)
+        {
+            switch(currencyGainType)
+            {
+                case CurrencyGainType.Distance:
+                    return "from distance";
+
+                case CurrencyGainType.Pickup:
+                    return "from pickups";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(currencyGainType), currencyGainType, null);
+            }
         }
     }
 }

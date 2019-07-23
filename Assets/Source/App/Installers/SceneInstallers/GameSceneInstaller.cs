@@ -8,6 +8,7 @@ using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Mvc.Views.PartialViews;
 using Assets.Source.Util;
 using UnityEngine;
 using Zenject;
@@ -30,6 +31,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(HudView).AsSingle();
             Container.BindInterfacesAndSelfTo<HudController>().AsSingle().NonLazy();
 
+            Container.BindPrefabFactory<CurrencyGainItemView, CurrencyGainItemView.Factory>();
             Container.BindInstance(RoundEndView).AsSingle();
             Container.BindInterfacesAndSelfTo<RoundEndController>().AsSingle().NonLazy();
 
@@ -45,7 +47,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
 
             #endregion
-            
+
             #region MODELS
 
             Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
@@ -54,10 +56,10 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<GameStateModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();            
+            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
 
             #endregion
-            
+
             #region GAME ROUND
 
             Container.BindInterfacesAndSelfTo<GameState>().AsSingle().NonLazy();
@@ -65,7 +67,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<RoundStatsRecorder>().AsSingle().NonLazy();
 
             #endregion
-            
+
             #region PLAYER STATE & UPGRADES
 
             Container.BindInterfacesAndSelfTo<UpgradeController>().AsSingle().NonLazy();
@@ -90,7 +92,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
 
             #endregion
-            
+
             #region CHEATS
 
             Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();

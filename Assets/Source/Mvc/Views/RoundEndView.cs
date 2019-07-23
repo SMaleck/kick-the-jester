@@ -1,6 +1,8 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Mvc.Data;
+using Assets.Source.Mvc.Models.Enum;
+using Assets.Source.Mvc.Views.PartialViews;
+using Assets.Source.Services;
 using Assets.Source.Util;
-using Assets.Source.Util.UI;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.Mvc.Views
 {
@@ -23,9 +26,8 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] TextMeshProUGUI _bestDistanceText;
 
         [Header("Currency Results")]
-        [SerializeField] RectTransform _currencyContainer;
+        [SerializeField] RectTransform _currencyGainsLayoutParent;
         [SerializeField] TextMeshProUGUI _currencyText;
-        [SerializeField] GameObject _pfCurrencyItem;
 
         [Header("Buttons")]
         [SerializeField] Button _retryButton;
@@ -42,6 +44,18 @@ namespace Assets.Source.Mvc.Views
         public bool IsNewBestDistance { set { _newBestText.gameObject.SetActive(value); } }
 
         private const float CurrencyCounterSeconds = 1f;
+
+        private ViewPrefabConfig _viewPrefabConfig;
+        private CurrencyGainItemView.Factory _roundEarningsItemViewFactory;
+
+        [Inject]
+        private void Inject(
+            ViewPrefabConfig viewPrefabConfig,
+            CurrencyGainItemView.Factory roundEarningsItemViewFactory)
+        {
+            _viewPrefabConfig = viewPrefabConfig;
+            _roundEarningsItemViewFactory = roundEarningsItemViewFactory;
+        }
 
         public override void Setup()
         {
@@ -64,74 +78,51 @@ namespace Assets.Source.Mvc.Views
             _newBestText.text = TextService.NewBest();
         }
 
-        // ToDo TMP Clean this mess up
-        public void ShowCurrencyResults(IDictionary<string, int> results, int currencyAmountAtStart)
+        public void ShowCurrencyResults(IDictionary<CurrencyGainType, int> currencyGains, int initialCurrencyAmount)
         {
-            List<CurrencyItem> currencyItems = new List<CurrencyItem>();
+            var currencyGainsSequence = DOTween.Sequence()
+                .Pause();
 
-            Rect pfRect = _pfCurrencyItem.GetComponent<RectTransform>().rect;
-
-            // Create currency Items
-            int index = 0;
-
-            foreach (string key in results.Keys)
+            foreach (var currencyGainType in currencyGains.Keys)
             {
-                GameObject go = GameObject.Instantiate(_pfCurrencyItem, _currencyContainer, false);
-                go.SetActive(true);
+                var roundEarningsItemView = _roundEarningsItemViewFactory.Create(
+                    _viewPrefabConfig.CurrencyGainItemViewPrefab);
 
-                currencyItems.Add(go.GetComponent<CurrencyItem>());
+                roundEarningsItemView.transform.SetParent(
+                    _currencyGainsLayoutParent,
+                    false);
 
-                var ci = currencyItems.Last();
-                ci.Label = key;
-                ci.Value = "";
+                // Hide Element, and activate it when it's turn comes
+                roundEarningsItemView.SetActive(false);
+                currencyGainsSequence.AppendCallback(() =>
+                {
+                    roundEarningsItemView.SetActive(true);
+                });
 
-                // Reset randomized rect values
-                ci.GetComponent<RectTransform>().rect.Set(pfRect.x, pfRect.y, pfRect.width, pfRect.height);
+                // Then comes the Counting tween
+                var tween = roundEarningsItemView.SetupValueCountingTween(
+                    currencyGainType,
+                    currencyGains[currencyGainType],
+                    CurrencyCounterSeconds);
 
-                // Space items out vertically
-                Vector3 pos = ci.transform.localPosition;
-                ci.transform.localPosition = new Vector3(pos.x, pos.y + (-65 * index), pos.z);
-
-                index++;
+                currencyGainsSequence.Append(tween);
             }
 
-            // Setup sequence
-            var resultSequence = CreateResultsSequence(results, currencyItems, currencyAmountAtStart);
+            // At the end the total result tween
+            _currencyText.text = TextService.CurrencyAmount(initialCurrencyAmount);
+            var totalResultTween = CreateTotalResultTween(currencyGains, initialCurrencyAmount);
+            currencyGainsSequence.Append(totalResultTween);
+
+            currencyGainsSequence.Play();
         }
 
-        private Sequence CreateResultsSequence(IDictionary<string, int> results, List<CurrencyItem> items, int currencyAmountAtStart)
+        private Tween CreateTotalResultTween(IDictionary<CurrencyGainType, int> currencyGains, int initialCurrencyAmount)
         {
-            var seq = DOTween.Sequence();
-
-            items.ForEach(item =>
-            {
-                item.gameObject.SetActive(false);
-
-                seq.AppendCallback(() => { item.gameObject.SetActive(true); });
-                seq.Append(CreateResultItemTweener(item, results[item.Label]));
-            });
-
-            seq.Append(CreateTotalResultTweener(results, currencyAmountAtStart));
-
-            return seq;
-        }
-
-        private Tweener CreateResultItemTweener(CurrencyItem item, int finalValue)
-        {
-            return DOTween.To(
-                x => item.Value = TextService.CurrencyAmount(x), 
-                0, 
-                finalValue, 
-                CurrencyCounterSeconds);
-        }
-
-        private Tweener CreateTotalResultTweener(IDictionary<string, int> results, int currencyAmountAtStart)
-        {
-            var totalSum = results.Values.Sum() + currencyAmountAtStart;
+            var totalSum = currencyGains.Values.Sum() + initialCurrencyAmount;
 
             return DOTween.To(
                 x => _currencyText.text = TextService.CurrencyAmount(x),
-                currencyAmountAtStart,
+                initialCurrencyAmount,
                 totalSum,
                 CurrencyCounterSeconds);
         }
