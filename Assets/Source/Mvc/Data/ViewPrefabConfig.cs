@@ -24,11 +24,24 @@ namespace Assets.Source.Mvc.Data
         [SerializeField] private HudView _hudViewPrefab;
         public HudView HudViewPrefab => _hudViewPrefab;
 
+        [SerializeField] private PauseView _pauseViewPrefab;
+        public PauseView PauseViewPrefab => _pauseViewPrefab;
+
+        [SerializeField] private RoundEndView _roundEndViewPrefab;
+        public RoundEndView RoundEndViewPrefab => _roundEndViewPrefab;
+
+        [SerializeField] private BestDistanceMarkerView _bestDistanceMarkerViewPrefab;
+        public BestDistanceMarkerView BestDistanceMarkerViewPrefab => _bestDistanceMarkerViewPrefab;
+
+
         [Header("Upgrades")]
         [SerializeField] private UpgradeScreenView _upgradeScreenViewPrefab;
         public UpgradeScreenView UpgradeScreenViewPrefab => _upgradeScreenViewPrefab;
 
         [SerializeField] private UpgradeItemView _upgradeItemViewPrefab;
         public UpgradeItemView UpgradeItemViewPrefab => _upgradeItemViewPrefab;
+
+        [SerializeField] private ResetProfileConfirmationView _resetProfileConfirmationViewPrefab;
+        public ResetProfileConfirmationView ResetProfileConfirmationViewPrefab => _resetProfileConfirmationViewPrefab;
     }
 }

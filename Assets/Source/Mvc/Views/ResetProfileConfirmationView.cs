@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class ShopConfirmResetView : ClosableView
+    public class ResetProfileConfirmationView : ClosableView
     {
         [SerializeField] private TextMeshProUGUI _resetProfileTitleText;
         [SerializeField] private TextMeshProUGUI _explanationText;

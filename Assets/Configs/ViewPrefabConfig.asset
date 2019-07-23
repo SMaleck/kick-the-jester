@@ -21,7 +21,15 @@ MonoBehaviour:
     type: 2}
   _hudViewPrefab: {fileID: 114658634512328238, guid: 820a8bfdc65976a4daa3d00b1eedec35,
     type: 2}
+  _pauseViewPrefab: {fileID: 114984847289590238, guid: fcb921668570cc746bfea17d035d56cb,
+    type: 2}
+  _roundEndViewPrefab: {fileID: 114134560641312208, guid: 2c91855151f31914184a9848ac6f61dd,
+    type: 2}
+  _bestDistanceMarkerViewPrefab: {fileID: 114736529221267810, guid: 68bee728133d2154ea70f30e8aa782ee,
+    type: 2}
   _upgradeScreenViewPrefab: {fileID: 114426995714352416, guid: 5f2b7ed8d4efa934cba6aa83b1ad846a,
     type: 2}
   _upgradeItemViewPrefab: {fileID: 114897276287768016, guid: ef1e580069e6b9c4f827f69faa0dd035,
+    type: 2}
+  _resetProfileConfirmationViewPrefab: {fileID: 114496327275336662, guid: c6ec1fdd96e56d2428e33f1c4d0e074b,
     type: 2}

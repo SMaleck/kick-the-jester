@@ -8,13 +8,13 @@ namespace Assets.Source.Mvc.Controllers
 {
     public class ResetProfileConfirmationController : ClosableController
     {
-        private readonly ShopConfirmResetView _view;
+        private readonly ResetProfileConfirmationView _view;
         private readonly SavegameService _savegameService;
         private readonly SceneTransitionService _sceneTransitionService;
         
 
         public ResetProfileConfirmationController(
-            ShopConfirmResetView view,
+            ResetProfileConfirmationView view,
             OpenPanelModel openPanelModel,
             SavegameService savegameService, 
             SceneTransitionService sceneTransitionService) 

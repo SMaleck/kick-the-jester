@@ -14,7 +14,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public SettingsView SettingsView;
         [SerializeField] public CreditsView CreditsView;
         [SerializeField] public TutorialView TutorialView;
-        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
+        [SerializeField] public ResetProfileConfirmationView ShopConfirmResetView;
 
         public override void InstallBindings()
         {

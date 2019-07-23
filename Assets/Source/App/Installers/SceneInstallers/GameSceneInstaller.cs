@@ -20,7 +20,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public RoundEndView RoundEndView;
         [SerializeField] public PauseView PauseView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
-        [SerializeField] public ShopConfirmResetView ShopConfirmResetView;
+        [SerializeField] public ResetProfileConfirmationView ShopConfirmResetView;
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
 
         public override void InstallBindings()
