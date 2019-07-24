@@ -19,7 +19,7 @@ namespace Assets.Source.Entities.Items
 
         protected abstract void Execute(JesterEntity jester);
 
-        // ToDo Instantiate so that injection can occur
+        // ToDo Use Zenject custom Factories for Item creation
         public virtual void Setup(AudioService audioService, ParticleService particleService, MainCamera mainCamera)
         {            
             AudioService = audioService;

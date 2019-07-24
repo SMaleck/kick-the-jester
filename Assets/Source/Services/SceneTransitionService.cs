@@ -63,7 +63,6 @@ namespace Assets.Source.Services
             Enum.TryParse<Scenes>(scene.name, out parsed);
             _currentScene.Value = parsed;
 
-            // ToDo Dispose
             Logger.Log($"Entering AFTER Grace Period");
             Observable.Timer(TimeSpan.FromSeconds(LOADING_GRACE_PERIOD_SECONDS))
                 .Subscribe(_ =>

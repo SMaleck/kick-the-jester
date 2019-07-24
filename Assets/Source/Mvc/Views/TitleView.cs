@@ -18,8 +18,6 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private TextMeshProUGUI _tutorialButtonText;
         [SerializeField] private Button _creditsButton;
         [SerializeField] private TextMeshProUGUI _creditsButtonText;
-
-        // ToDo Try to get rid of this
         [SerializeField] public AudioClip TransitionMusic;
 
         private readonly ReactiveCommand _onStartClicked = new ReactiveCommand();

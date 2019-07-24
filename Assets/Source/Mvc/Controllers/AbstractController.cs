@@ -2,7 +2,6 @@
 using Assets.Source.Util;
 using UniRx;
 
-// ToDo Make this inheritance more meaningful, e.g. controller<T>
 namespace Assets.Source.Mvc.Controllers
 {
     public class AbstractController : AbstractDisposable
