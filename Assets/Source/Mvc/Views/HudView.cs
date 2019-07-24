@@ -2,7 +2,6 @@
 using Assets.Source.Mvc.Views.PartialViews;
 using Assets.Source.Services;
 using Assets.Source.Util;
-using Assets.Source.Util.UI;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,6 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] TextMeshProUGUI _distanceText;
         [SerializeField] TextMeshProUGUI _bestDistanceLabelText;
         [SerializeField] TextMeshProUGUI _bestDistanceText;
-        [SerializeField] TextMeshProUGUI _heightText;
 
         [Header("Tomatoes")]
         [SerializeField] GameObject _shotCountPanel;
@@ -31,7 +29,7 @@ namespace Assets.Source.Mvc.Views
         private List<Image> shotCountIcons = new List<Image>();
 
         [Header("Money Gain Floating Numbers")]
-        [SerializeField] RectTransform _pickupFeedbackParent;        
+        [SerializeField] RectTransform _pickupFeedbackParent;
 
         [Header("Other")]
         [SerializeField] Button _pauseButton;
@@ -42,37 +40,6 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] RectTransform _outOfCameraIndicator;
         [SerializeField] float _indicatorAnimStrength = 2;
         [SerializeField] float _indicatorAnimSpeedSeconds = 0.8f;
-
-        // ToDo change to setter methods
-        public float Distance
-        {
-            set { _distanceText.text = value.ToMetersString(); }
-        }
-
-        public float Height
-        {
-            set { _heightText.text = value.ToMetersString(); }
-        }
-
-        public float BestDistance
-        {
-            set { _bestDistanceText.text = value.ToMetersString(); }
-        }
-
-        public float RelativeVelocity
-        {
-            set { _velocityBar.fillAmount = value; }
-        }
-
-        public float RelativeKickForce
-        {
-            set { _kickForceBar.fillAmount = value; }
-        }
-
-        public bool OutOfCameraIndicatorVisible
-        {
-            set { _outOfCameraIndicator.gameObject.SetActive(value); }
-        }
 
         private ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
         public IObservable<Unit> OnPauseButtonClicked => _onPauseButtonClicked;
@@ -106,6 +73,36 @@ namespace Assets.Source.Mvc.Views
             UpdateTexts();
         }
 
+        private void UpdateTexts()
+        {
+            _bestDistanceLabelText.text = TextService.BestLabel();
+        }
+
+        public void SetDistance(float value)
+        {
+            _distanceText.text = TextService.MetersAmount(value);
+        }
+
+        public void SetBestDistance(float value)
+        {
+            _bestDistanceText.text = TextService.MetersAmount(value);
+        }
+
+        public void SetRelativeVelocity(float value)
+        {
+            _velocityBar.fillAmount = value;
+        }
+
+        public void SetRelativeKickForce(float value)
+        {
+            _kickForceBar.fillAmount = value;
+        }
+
+        public void SetOutOfCameraIndicatorVisible(bool value)
+        {
+            _outOfCameraIndicator.gameObject.SetActive(value);
+        }
+
         public void SetCurrencyAmount(int amount)
         {
             _currencyAmountText.text = TextService.CurrencyAmount(amount);
@@ -116,15 +113,10 @@ namespace Assets.Source.Mvc.Views
             _collectedCurrencyAmountText.text = TextService.CurrencyAmount(amount);
         }
 
-        private void UpdateTexts()
-        {
-            _bestDistanceLabelText.text = TextService.BestLabel();
-        }
-
         // ToDo Improve this Tween
         private void SetupIndicatorTweener()
         {
-            OutOfCameraIndicatorVisible = false;
+            SetOutOfCameraIndicatorVisible(false);
 
             var start = _outOfCameraIndicator.anchoredPosition.y;
             var end = start - _indicatorAnimStrength;
@@ -146,7 +138,7 @@ namespace Assets.Source.Mvc.Views
             _kickForceBar.gameObject.SetActive(false);
             _shotCountPanel.gameObject.SetActive(true);
         }
-        
+
         public void ShowFloatingCoinAmount(int gainedAmount)
         {
             if (gainedAmount <= 0)
@@ -163,7 +155,7 @@ namespace Assets.Source.Mvc.Views
             var freeSlot = _pickupFeedbackViews
                 .FirstOrDefault(view => !view.IsPlaying);
 
-            if(freeSlot == null)
+            if (freeSlot == null)
             {
                 freeSlot = _pickupFeedbackViewFactory
                     .Create(_viewPrefabConfig.PickupFeedbackViewPrefab);

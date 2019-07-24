@@ -16,8 +16,8 @@ namespace Assets.Source.Mvc.Controllers
         private readonly CameraConfig _cameraConfig;
 
         public HudController(
-            HudView view, 
-            GameStateModel gameStateModel, 
+            HudView view,
+            GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             PlayerProfileModel playerProfileModel,
             UserInputModel userInputModel,
@@ -52,7 +52,7 @@ namespace Assets.Source.Mvc.Controllers
         private void SetupFlightStatsModel()
         {
             _flightStatsModel.Distance
-                .Subscribe(value => _view.Distance = value)
+                .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
             _flightStatsModel.Collected
@@ -64,16 +64,16 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _flightStatsModel.RelativeVelocity
-                .Subscribe(value => _view.RelativeVelocity = value)
+                .Subscribe(_view.SetRelativeVelocity)
                 .AddTo(Disposer);
 
             _flightStatsModel.Gains
                 .ObserveAdd()
-                .Subscribe((CollectionAddEvent<int> e) => { _view.ShowFloatingCoinAmount(e.Value); })
+                .Subscribe(addEvent => { _view.ShowFloatingCoinAmount(addEvent.Value); })
                 .AddTo(Disposer);
 
             _flightStatsModel.RelativeKickForce
-                .Subscribe(value => _view.RelativeKickForce = value)
+                .Subscribe(_view.SetRelativeKickForce)
                 .AddTo(Disposer);
 
             _flightStatsModel.ShotsRemaining
@@ -83,14 +83,13 @@ namespace Assets.Source.Mvc.Controllers
 
         private void OnHeightChanged(float height)
         {
-            _view.Height = height;
-            _view.OutOfCameraIndicatorVisible = height >= _cameraConfig.JesterOutOfCameraY;
+            _view.SetOutOfCameraIndicatorVisible(height >= _cameraConfig.JesterOutOfCameraY);
         }
 
         private void SetupProfileModel()
         {
             _playerProfileModel.BestDistance
-                .Subscribe(bestDist => _view.BestDistance = bestDist)
+                .Subscribe(_view.SetBestDistance)
                 .AddTo(Disposer);
 
             _playerProfileModel.CurrencyAmount
