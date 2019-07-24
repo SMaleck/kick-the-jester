@@ -20,7 +20,9 @@ namespace Assets.Source.Mvc.Views
 
         private PanelSlider _panelSlider;
 
-        public bool IsOpen => gameObject.activeSelf;
+        private RectTransform PanelParent => _panelParent == null ? (transform as RectTransform) : _panelParent;
+
+        public bool IsOpen => PanelParent.gameObject.activeSelf;
 
         private readonly ReactiveCommand _onOpenCompleted = new ReactiveCommand();
         public IObservable<Unit> OnOpenCompleted => _onOpenCompleted;
@@ -34,14 +36,10 @@ namespace Assets.Source.Mvc.Views
             _onOpenCompleted.AddTo(Disposer);
             _onCloseCompleted.AddTo(Disposer);
 
-            var ownerTransform = _panelParent == null
-                ? this.transform as RectTransform
-                : _panelParent as RectTransform;
-
             _panelSlider = new PanelSlider(
-                    ownerTransform,
+                    PanelParent,
                     _panelSliderConfig,
-                    ownerTransform.localPosition,
+                    PanelParent.localPosition,
                     _closedPosition)
                 .AddTo(Disposer);
 

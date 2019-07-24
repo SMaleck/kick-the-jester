@@ -1,19 +1,18 @@
-﻿using Assets.Source.Mvc.ServiceControllers;
+﻿using Assets.Source.Services.Audio;
 using DG.Tweening;
 using System;
-using Assets.Source.Services.Audio;
 using UniRx;
 using UnityEngine;
 
 namespace Assets.Source.Util.UI
-{   
+{
     public class PanelSlider : AbstractDisposable
     {
         private readonly PanelSliderConfig _config;
 
-        private readonly RectTransform _owner;        
+        private readonly RectTransform _owner;
         private readonly Vector3 _shownPosition;
-        private readonly Vector3 _hiddenPosition;        
+        private readonly Vector3 _hiddenPosition;
 
         private float SlideSeconds => _config.slideInFrom.Equals(SlideDirection.Instant) ? 0 : _config.slideTimeSeconds;
 
@@ -24,10 +23,10 @@ namespace Assets.Source.Util.UI
         public IObservable<Unit> OnCloseCompleted => _onCloseCompleted;
 
         // ToDo Auto-Setup doesn't work correctly. HiddenPosition is still within bounds
-        protected PanelSlider(RectTransform owner, RectTransform container, PanelSliderConfig config)            
+        protected PanelSlider(RectTransform owner, RectTransform container, PanelSliderConfig config)
         {
             _config = config;
-            _owner = owner;            
+            _owner = owner;
             _shownPosition = owner.localPosition;
             _hiddenPosition = GetHiddenPosition(container);
         }
@@ -35,7 +34,7 @@ namespace Assets.Source.Util.UI
         public PanelSlider(RectTransform owner, PanelSliderConfig config, Vector3 shownPosition, Vector3 hiddenPosition)
         {
             _config = config;
-            _owner = owner;            
+            _owner = owner;
             _shownPosition = shownPosition;
             _hiddenPosition = hiddenPosition;
 
