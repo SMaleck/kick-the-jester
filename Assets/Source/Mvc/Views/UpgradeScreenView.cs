@@ -39,7 +39,7 @@ namespace Assets.Source.Mvc.Views
             _onResetClicked.BindTo(_resetProfileButton).AddTo(Disposer);
 
             _playAgainButtonText.text = TextService.PlayAgainExclamation();
-            _resetProfileButtonText.text = TextService.RestoreDefaults();
+            _resetProfileButtonText.text = TextService.ResetProfile();
         }
 
         public void SetCurrencyAmount(int amount)
