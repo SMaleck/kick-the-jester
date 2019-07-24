@@ -11,6 +11,7 @@ namespace Assets.Source.Entities.Items
         [SerializeField] public ForceMode forceMode;
         public Vector2 Direction = new Vector2(1, 1);
 
+        protected override void Setup() { }
 
         protected override void Execute(JesterEntity jester)
         {            
@@ -36,7 +37,5 @@ namespace Assets.Source.Entities.Items
 
             return force;
         }
-
-        public override void Initialize() { }
     }
 }

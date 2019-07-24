@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructible: 1
-  soundEffect: {fileID: 8300000, guid: 7bbc250a2a3f08e4f8e13e8a32945126, type: 3}
+  _collisionProbe: {fileID: 61718986523045982}
   _audioClipType: 6
   _particleEffectType: 0
   CurrencyAmount: 100

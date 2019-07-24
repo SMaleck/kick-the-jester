@@ -8,7 +8,7 @@ namespace Assets.Source.Entities.Items
         [Range (0.0f, 1.0f)]
         public float StoppingPowerPercent = 1f;
 
-        public override void Initialize() { }
+        protected override void Setup() { }
 
         protected override void Execute(JesterEntity jester)
         {

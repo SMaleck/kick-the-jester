@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Entities.GameRound.Components;
+using Assets.Source.Entities.Items;
 using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Features.Cheats;
 using Assets.Source.Features.PlayerData;
@@ -79,6 +80,14 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<UpgradeScreenController>().AsSingle().NonLazy();
 
             Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();
+
+            Container.BindInterfacesAndSelfTo<FlightStatsController>().AsSingle().NonLazy();
+
+            #endregion
+
+            #region ITEM SPAWNING
+
+            Container.BindPrefabFactory<AbstractItemEntity, AbstractItemEntity.Factory>();
 
             #endregion
 

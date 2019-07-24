@@ -1,21 +1,28 @@
-﻿using Assets.Source.Entities.GameRound.Components;
-using Assets.Source.Entities.Jester;
-using UniRx;
+﻿using Assets.Source.Entities.Jester;
+using Assets.Source.Features.PlayerData;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Entities.Items
 {
     public class Pickup : AbstractItemEntity
     {
         [Range(1, 5000)]
-        public int CurrencyAmount = 5;
+        [SerializeField] public int CurrencyAmount;
 
-        public override void Initialize() { }
+        private FlightStatsController _flightStatsController;
+
+        [Inject]
+        private void Inject(FlightStatsController flightStatsController)
+        {
+            _flightStatsController = flightStatsController;
+        }
+
+        protected override void Setup() { }
 
         protected override void Execute(JesterEntity jester)
         {
-            // ToDo Find a better solution for Currency pickup
-            MessageBroker.Default.Publish(new CurrencyGainEvent() {Amount = CurrencyAmount});            
+            _flightStatsController.AddCurrencyPickup(CurrencyAmount);
         }
     }
 }

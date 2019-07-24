@@ -16,11 +16,9 @@ namespace Assets.Source.Entities.Items
     {
         [SerializeField] private SpawningLanesConfig spawningLanesConfig;
 
+        private AbstractItemEntity.Factory _itemEntityFactory;
         private JesterEntity _jesterEntity;
         private FlightStatsModel _flightStatsModel;
-        private AudioService _audioService;
-        private ParticleService _particleService;
-        private MainCamera _mainCamera;
 
         private bool _canSpawn = true;
 
@@ -52,19 +50,14 @@ namespace Assets.Source.Entities.Items
 
         [Inject]
         private void Inject(
+            AbstractItemEntity.Factory itemEntityFactory,
             JesterEntity jesterEntity, 
-            FlightStatsModel flightStatsModel, 
-            AudioService audioService, 
-            ParticleService particleService, 
-            MainCamera mainCamera)
+            FlightStatsModel flightStatsModel)
         {
+            _itemEntityFactory = itemEntityFactory;
             _jesterEntity = jesterEntity;
             _flightStatsModel = flightStatsModel;
-            _audioService = audioService;
-            _particleService = particleService;
-            _mainCamera = mainCamera;
         }
-
 
         private void OnLateUpdate()
         {
@@ -72,7 +65,6 @@ namespace Assets.Source.Entities.Items
 
             Position = new Vector3(targetPos.x + OffsetX, Position.y, Position.z);
         }
-
 
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distance)
@@ -135,9 +127,10 @@ namespace Assets.Source.Entities.Items
             var itemPool = spawningLane.ItemPool;
             int index = RandomPoolIndex.Next(0, itemPool.Count);
 
-            AbstractItemEntity item = Instantiate(itemPool[index]).GetComponent<AbstractItemEntity>();
+            var item = _itemEntityFactory.Create(itemPool[index]);
+
             item.Position = GetSpawnPosition(spawningLane);
-            item.Setup(_audioService, _particleService, _mainCamera);
+            item.Initialize();
         }
 
 

@@ -3,15 +3,24 @@ using Assets.Source.Entities.Jester;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Entities.Items
 {
+    // ToDo Move Item Values to config files
     public abstract class AbstractItemEntity : AbstractMonoEntity
     {
-        [SerializeField] protected bool isDestructible = true;
-        [SerializeField] protected AudioClipType _audioClipType;
-        [SerializeField] protected ParticleEffectType _particleEffectType;
+        public class Factory : PlaceholderFactory<UnityEngine.Object, AbstractItemEntity> { }
+
+        [Header("Collisions")]
+        [SerializeField] private bool isDestructible;
+        [SerializeField] private Collider2D _collisionProbe;
+
+        [Header("Effects")]
+        [SerializeField] private AudioClipType _audioClipType;
+        [SerializeField] private ParticleEffectType _particleEffectType;
 
         protected AudioService AudioService;
         protected ParticleService ParticleService;
@@ -19,18 +28,31 @@ namespace Assets.Source.Entities.Items
 
         protected abstract void Execute(JesterEntity jester);
 
-        // ToDo Use Zenject custom Factories for Item creation
-        public virtual void Setup(AudioService audioService, ParticleService particleService, MainCamera mainCamera)
-        {            
+        [Inject]
+        private void Inject(
+            AudioService audioService,
+            ParticleService particleService,
+            MainCamera mainCamera)
+        {
             AudioService = audioService;
             ParticleService = particleService;
             Camera = mainCamera;
-
-            Observable.EveryLateUpdate()
-                .Subscribe(_ => OnLateUpdate())
-                .AddTo(this);
         }
 
+        public override void Initialize()
+        {
+            Observable.EveryLateUpdate()
+                .Subscribe(_ => OnLateUpdate())
+                .AddTo(Disposer);
+
+            _collisionProbe.OnTriggerEnter2DAsObservable()
+                .Subscribe(OnCollisionProbeEntered)
+                .AddTo(Disposer);
+
+            Setup();
+        }
+
+        protected abstract void Setup();
 
         // Self-Destruct if we moved out of the camera view
         private void OnLateUpdate()
@@ -41,9 +63,7 @@ namespace Assets.Source.Entities.Items
             }
         }
 
-
-        // COLLISION TRIGGER
-        public void OnTriggerEnter2D(Collider2D collision)
+        public void OnCollisionProbeEntered(Collider2D collision)
         {
             // Safety Check: Only execute if we collided with the Jester
             JesterEntity jester = collision.gameObject.GetComponent<JesterEntity>();
@@ -52,10 +72,11 @@ namespace Assets.Source.Entities.Items
 
             TryPlaySound();
             TryPlayParticleEffect();
+
             Execute(jester);
 
             // Disable this trigger
-            gameObject.GetComponent<Collider2D>().enabled = false;
+            _collisionProbe.enabled = false;
 
             // Self Destroy if set
             if (isDestructible)
@@ -64,22 +85,16 @@ namespace Assets.Source.Entities.Items
             }
         }
 
-
-        // ToDo Extract OutOfCameraBounds check into separate component
-        // Checks whether this gameobject is still visible by the camera
         protected bool IsOutOfCameraBounds()
-        {                        
+        {
             return Position.x <= Camera.Position.x - (Camera.Width / 2f);
         }
 
-
-        // Self Destruct Mechanism
         protected void SelfDestruct()
         {
             gameObject.SetActive(false);
             GameObject.Destroy(gameObject);
         }
-
 
         // Attempts to play the attached AudioSource
         protected void TryPlaySound()
@@ -87,11 +102,10 @@ namespace Assets.Source.Entities.Items
             AudioService.PlayEffect(_audioClipType);
         }
 
-
         // Attempts to play the attached Particle Effect
         protected void TryPlayParticleEffect()
         {
             ParticleService.PlayEffectAt(_particleEffectType, transform.position);
-        }        
+        }
     }
 }

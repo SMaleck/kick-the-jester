@@ -139,8 +139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructible: 0
-  soundEffect: {fileID: 0}
-  particleEffect: {fileID: 0}
+  _collisionProbe: {fileID: 61372820124146676}
+  _audioClipType: 0
+  _particleEffectType: 0
   StoppingPowerPercent: 1
 --- !u!212 &212635024623540856
 SpriteRenderer:
