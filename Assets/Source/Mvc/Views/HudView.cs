@@ -129,7 +129,8 @@ namespace Assets.Source.Mvc.Views
                     },
                     start, end, _indicatorAnimSpeedSeconds)
                 .SetEase(Ease.OutBounce)
-                .SetLoops(-1, LoopType.Yoyo);
+                .SetLoops(-1, LoopType.Yoyo)
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
         public void StartRound()

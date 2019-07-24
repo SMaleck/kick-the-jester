@@ -5,7 +5,7 @@ namespace Assets.Source.Entities
 {
     public abstract class AbstractMonoEntity : AbstractMonoBehaviour, IInitializable
     {
-        // ToDo Figure out how to run this automatically through Zenject
+        // ToDo Some MonoBehaviours are not injected Zenject, so Initialize runs from Start()
         private void Start()
         {
             Initialize();

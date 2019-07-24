@@ -60,6 +60,11 @@ namespace Assets.Source.Services
             return "Are you sure?\n\nThis will reset all your upgrades, ingame-money and records.";
         }
 
+        internal static string TapAnywhereToContinue()
+        {
+            return "Tap anywhere to continue";
+        }
+
         internal static string ResetProfileWarning()
         {
             return "This cannot be undone!";

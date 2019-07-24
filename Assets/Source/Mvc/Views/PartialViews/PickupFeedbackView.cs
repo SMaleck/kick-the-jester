@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Services;
+using Assets.Source.Util;
 using DG.Tweening;
 using System.Linq;
 using TMPro;
@@ -38,7 +39,7 @@ namespace Assets.Source.Mvc.Views.PartialViews
             _pickupFeedbackTween = CreateSequence();
         }
 
-        private Sequence CreateSequence()
+        private Tween CreateSequence()
         {
             var punchScaleTween = _labelText.transform.DOPunchScale(
                 _punchScale,
@@ -58,7 +59,8 @@ namespace Assets.Source.Mvc.Views.PartialViews
                 .AppendInterval(_fadeDelaySeconds)
                 .Append(fadeAwayTween)
                 .SetAutoKill(false)
-                .Pause();
+                .Pause()
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
         public void SetCurrencyAmountWithAnimation(int amount)

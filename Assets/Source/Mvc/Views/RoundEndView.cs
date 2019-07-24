@@ -39,10 +39,6 @@ namespace Assets.Source.Mvc.Views
         private readonly ReactiveCommand _onUpgradesClicked = new ReactiveCommand();
         public IObservable<Unit> OnUpgradesClicked => _onUpgradesClicked;
 
-        public float Distance { set { _distanceText.text = value.ToMetersString(); } }
-        public float BestDistance { set { _bestDistanceText.text = value.ToMetersString(); } }
-        public bool IsNewBestDistance { set { _newBestText.gameObject.SetActive(value); } }
-
         private const float CurrencyCounterSeconds = 1f;
 
         private ViewPrefabConfig _viewPrefabConfig;
@@ -76,6 +72,21 @@ namespace Assets.Source.Mvc.Views
         {
             _distanceReachedText.text = TextService.DistanceReached();
             _newBestText.text = TextService.NewBest();
+        }
+
+        public void SetDistance(float value)
+        {
+            _distanceText.text = TextService.MetersAmount(value);
+        }
+
+        public void SetBestDistance(float value)
+        {
+            _bestDistanceText.text = TextService.MetersAmount(value);
+        }
+
+        public void SetIsNewBestDistance(bool value)
+        {
+            _newBestText.gameObject.SetActive(value);
         }
 
         public void ShowCurrencyResults(IDictionary<CurrencyGainType, int> currencyGains, int initialCurrencyAmount)
@@ -126,7 +137,8 @@ namespace Assets.Source.Mvc.Views
                 x => _currencyText.text = TextService.CurrencyAmount(x),
                 initialCurrencyAmount,
                 totalSum,
-                CurrencyCounterSeconds);
+                CurrencyCounterSeconds)
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
     }
 }

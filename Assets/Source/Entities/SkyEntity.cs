@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Entities.Jester;
+using Assets.Source.Util;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -36,7 +37,8 @@ namespace Assets.Source.Entities
             var targetVector = _moon.localPosition + (Vector3.up * _verticalMoonWobble);
             _moon.DOLocalMove(targetVector, _moonWobbleSpeedSeconds)
                 .SetEase(Ease.InOutCubic)
-                .SetLoops(-1, LoopType.Yoyo);
+                .SetLoops(-1, LoopType.Yoyo)
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
         private void OnLateUpdate()

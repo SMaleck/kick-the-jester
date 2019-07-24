@@ -79,14 +79,14 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _flightStatsModel.Distance
-                .Subscribe(dist => _view.Distance = dist)
+                .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
             _playerProfileModel.BestDistance
                 .Subscribe(bestDist =>
                 {
-                    _view.IsNewBestDistance = bestDistanceAtStart < bestDist;
-                    _view.BestDistance = bestDist;
+                    _view.SetIsNewBestDistance(bestDistanceAtStart < bestDist);
+                    _view.SetBestDistance(bestDist);
                 })
                 .AddTo(Disposer);
         }

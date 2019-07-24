@@ -84,19 +84,21 @@ namespace Assets.Source.Util.UI
             MessageBroker.Default.Publish(soundEffectType);
         }
 
-        private Tweener CreateSlideTweener(Vector3 to, float slideSeconds, Ease easeType)
+        private Tween CreateSlideTweener(Vector3 to, float slideSeconds, Ease easeType)
         {
-            Tweener tweener;
+            Tween tweener;
             switch (_config.slideInFrom)
             {
                 case SlideDirection.Top:
                 case SlideDirection.Bottom:
-                    tweener = _owner.DOLocalMoveY(to.y, slideSeconds);
+                    tweener = _owner.DOLocalMoveY(to.y, slideSeconds)
+                        .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
                     break;
 
                 case SlideDirection.Left:
                 case SlideDirection.Right:
-                    tweener = _owner.DOLocalMoveX(to.x, slideSeconds);
+                    tweener = _owner.DOLocalMoveX(to.x, slideSeconds)
+                        .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
                     break;
 
                 default:
@@ -138,7 +140,7 @@ namespace Assets.Source.Util.UI
 
             _owner.gameObject.SetActive(true);
 
-            Tweener tween = CreateSlideTweener(_shownPosition, time, Ease.OutBounce);
+            Tween tween = CreateSlideTweener(_shownPosition, time, Ease.OutBounce);
             tween.OnComplete(() => { _onOpenCompleted.Execute(); });
         }
 
@@ -165,7 +167,7 @@ namespace Assets.Source.Util.UI
                 return;
             }
 
-            Tweener tween = CreateSlideTweener(_hiddenPosition, time, Ease.InExpo);
+            Tween tween = CreateSlideTweener(_hiddenPosition, time, Ease.InExpo);
             tween.OnComplete(() =>
             {
                 _owner.gameObject.SetActive(false);

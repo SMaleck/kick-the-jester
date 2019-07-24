@@ -1,16 +1,14 @@
-﻿using UnityEngine;
+﻿using Assets.Source.Util;
 using Zenject;
 
 namespace Assets.Source.Mvc.Views
 {
-    public abstract class AbstractView : MonoBehaviour, IInitializable
+    public abstract class AbstractView : AbstractDisposableMonoBehaviour, IInitializable
     {
-        public Component Disposer => this;
-
         public bool IsActive => gameObject.activeSelf;
 
         public void Initialize()
-        {            
+        {
             Setup();
         }
 

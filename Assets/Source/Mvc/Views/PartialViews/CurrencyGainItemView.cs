@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Mvc.Models.Enum;
 using Assets.Source.Services;
+using Assets.Source.Util;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,8 @@ namespace Assets.Source.Mvc.Views.PartialViews
                 0,
                 amount,
                 durationSeconds)
-                .Pause();
+                .Pause()
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
     }
 }

@@ -1,23 +1,25 @@
-﻿using Assets.Source.Entities.Jester;
+﻿using Assets.Source.App.Configuration;
+using Assets.Source.Entities.Jester;
 using Assets.Source.Mvc.Models;
+using Assets.Source.Util;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using Zenject;
-using DG.Tweening;
-using Assets.Source.App.Configuration;
 
 namespace Assets.Source.Entities.Cameras
 {
+    // ToDo Camera: Make Tweeners reusable
     public class MainCamera : AbstractMonoEntity
     {
-        [SerializeField] private Camera _camera;        
+        [SerializeField] private Camera _camera;
         private float _minFollowY;
 
         public Camera Camera => _camera;
 
         private CameraConfig _config;
         private JesterEntity _jester;
-        private FlightStatsModel _flighStatsModel;       
+        private FlightStatsModel _flighStatsModel;
 
         private bool _shouldFollow = true;
         private float OffsetX => _config.OffsetX;
@@ -35,7 +37,7 @@ namespace Assets.Source.Entities.Cameras
             get
             {
                 if (_cameraWidth <= 0)
-                {                
+                {
                     _cameraWidth = Height * _camera.aspect;
                 }
 
@@ -72,16 +74,16 @@ namespace Assets.Source.Entities.Cameras
         {
             Observable.EveryUpdate()
                 .Subscribe(_ => OnUpdate())
-                .AddTo(this);
+                .AddTo(Disposer);
 
             _jester.OnLanded
                 .Subscribe(_ => OnLanded())
-                .AddTo(this);
+                .AddTo(Disposer);
 
             _jester.Collisions
                 .OnGround
                 .Subscribe(_ => Shake())
-                .AddTo(this);
+                .AddTo(Disposer);
         }
 
 
@@ -102,7 +104,9 @@ namespace Assets.Source.Entities.Cameras
         private void OnLanded()
         {
             _shouldFollow = false;
-            GoTransform.DOMoveX(_jester.Position.x + OvertakeOffsetX, OvertakeSeconds);
+            GoTransform
+                .DOMoveX(_jester.Position.x + OvertakeOffsetX, OvertakeSeconds)
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
 
@@ -114,11 +118,13 @@ namespace Assets.Source.Entities.Cameras
             }
 
             _isShaking = true;
-            GoTransform.DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value, 10)
-                .OnComplete(ResetShake);
+            GoTransform
+                .DOShakePosition(ShakeSeconds, _flighStatsModel.RelativeVelocity.Value, 10)
+                .OnComplete(ResetShake)
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
-        
+
         private void ResetShake()
         {
             _isShaking = false;

@@ -2,6 +2,7 @@
 using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
+using Assets.Source.Util;
 using DG.Tweening;
 using System;
 using UniRx;
@@ -19,7 +20,6 @@ namespace Assets.Source.Entities.Jester.Components
         private readonly IDisposable OnKickActionSubscription;
         private readonly IDisposable OnJesterKickedSubscription;
         private readonly Tweener _kickForceTweener;
-
 
         public MotionBoot(
             JesterEntity owner,

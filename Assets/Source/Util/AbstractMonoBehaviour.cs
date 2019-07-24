@@ -2,10 +2,9 @@
 
 namespace Assets.Source.Util
 {
-    public class AbstractMonoBehaviour : MonoBehaviour
+    public class AbstractMonoBehaviour : AbstractDisposableMonoBehaviour
     {
         public Transform GoTransform => gameObject.transform;
-        public MonoBehaviour Disposer => this;
 
         public Vector3 Position
         {

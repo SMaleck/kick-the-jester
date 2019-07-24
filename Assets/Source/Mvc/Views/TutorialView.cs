@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿using Assets.Source.Services;
+using Assets.Source.Util;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -14,20 +16,15 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private Button _nextButton;
         [SerializeField] private TMP_Text _instructionText;
 
+        private const float InstructionPulseScale = 1.1f;
         private const float InstructionPulseSeconds = 0.7f;
-        private const int FontSizeMin = 48;
-        private const int FontSizeMax = 52;
-        private const float FadeTimeSeconds = 0.5f;
-
-        private FloatReactiveProperty fontSize = new FloatReactiveProperty(FontSizeMin);
+        private const float FadeTimeSeconds = 0.5f;        
 
         private int _currentStep = 0;
         private bool IsLastStep => _currentStep >= _steps.Count - 1;
 
         private readonly ReactiveCommand _onNextClickedOnLastSlide = new ReactiveCommand();
         public IObservable<Unit> OnNextClickedOnLastSlide => _onNextClickedOnLastSlide;
-
-        // ToDo Use TextService 
 
         public override void Setup()
         {
@@ -45,18 +42,19 @@ namespace Assets.Source.Mvc.Views
                 .OnClickAsObservable()
                 .Subscribe(_ => Next())
                 .AddTo(this);
-
-            // ToDo Fix Pulsate TapAnywhere Text
-            // Animation for instruction text
-            DOTween.To(() => fontSize.Value, (val) => fontSize.Value = val, FontSizeMax, InstructionPulseSeconds)
+            
+            _instructionText.transform
+                .DOScale(InstructionPulseScale, InstructionPulseSeconds)
                 .SetEase(Ease.InOutCubic)
-                .SetLoops(-1, LoopType.Yoyo);
-
-            fontSize
-                .Subscribe(fontSize => { _instructionText.fontSize = fontSize; })
-                .AddTo(this);
+                .SetLoops(-1, LoopType.Yoyo)
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
+        // ToDo TutorialView Use TextService for all texts
+        private void UpdateTexts()
+        {
+            _instructionText.text = TextService.TapAnywhereToContinue();
+        }
 
         private void ResetSlides()
         {
