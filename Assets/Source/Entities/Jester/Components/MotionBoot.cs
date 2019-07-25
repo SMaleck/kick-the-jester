@@ -21,6 +21,8 @@ namespace Assets.Source.Entities.Jester.Components
         private readonly IDisposable OnJesterKickedSubscription;
         private readonly Tweener _kickForceTweener;
 
+        private bool _wasKicked = false;
+
         public MotionBoot(
             JesterEntity owner,
             PlayerAttributesModel playerAttributesModel,
@@ -43,32 +45,39 @@ namespace Assets.Source.Entities.Jester.Components
                 .AddTo(owner);
 
             _kickForceTweener = DOTween
-                .To((x) => _flightStatsModel.RelativeKickForce.Value = x, _bootConfig.MinForceFactor, _bootConfig.MaxForceFactor, _bootConfig.ForceFactorChangeSeconds)
-                .SetLoops(-1, LoopType.Yoyo);
+                .To(
+                (x) => _flightStatsModel.RelativeKickForce.Value = x,
+                _bootConfig.MinForceFactor,
+                _bootConfig.MaxForceFactor,
+                _bootConfig.ForceFactorChangeSeconds)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetAutoKill(false);
 
-            // ToDo Tweener is killed after start and this is then invalid
-            Owner.IsPaused.Subscribe(isPaused =>
-            {
-                if (isPaused && _kickForceTweener.IsPlaying())
+            Owner.IsPaused
+                .Where(_ => !_wasKicked)
+                .Subscribe(isPaused =>
                 {
-                    _kickForceTweener?.Pause();
-                }
-                else if (!_kickForceTweener.IsPlaying())
-                {
-                    _kickForceTweener?.Play();
-                }
-            })
-            .AddTo(owner);
+                    if (isPaused && _kickForceTweener.IsPlaying())
+                    {
+                        _kickForceTweener.Pause();
+                    }
+                    else if (!_kickForceTweener.IsPlaying())
+                    {
+                        _kickForceTweener.Play();
+                    }
+                })
+                .AddTo(owner);
         }
 
         private void OnKickUserAction()
         {
             OnKickActionSubscription?.Dispose();
-            _kickForceTweener?.Kill();
+            _kickForceTweener?.Pause();
         }
 
         private void OnJesterKicked()
         {
+            _wasKicked = true;
             OnJesterKickedSubscription?.Dispose();
 
             var kickForce = _playerAttributesModel.KickForce.Value;
