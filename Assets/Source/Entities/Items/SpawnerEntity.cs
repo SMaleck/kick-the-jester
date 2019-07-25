@@ -1,6 +1,7 @@
 ﻿using Assets.Source.Entities.Cameras;
 using Assets.Source.Entities.Items.Config;
 using Assets.Source.Entities.Jester;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;

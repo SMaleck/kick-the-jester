@@ -1,4 +1,5 @@
 ﻿using Assets.Source.App.Configuration;
+using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;

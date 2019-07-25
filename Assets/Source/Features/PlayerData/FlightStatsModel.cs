@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Assets.Source.Mvc.Models
+namespace Assets.Source.Features.PlayerData
 {
     public class FlightStatsModel : AbstractDisposable
     {

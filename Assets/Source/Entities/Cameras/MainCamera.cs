@@ -1,5 +1,6 @@
 ﻿using Assets.Source.App.Configuration;
 using Assets.Source.Entities.Jester;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using DG.Tweening;

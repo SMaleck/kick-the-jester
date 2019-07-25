@@ -2,7 +2,7 @@
 using Assets.Source.Util;
 using UniRx;
 
-namespace Assets.Source.Mvc.Models
+namespace Assets.Source.Features.GameState
 {    
     public class GameStateModel : AbstractDisposable
     {

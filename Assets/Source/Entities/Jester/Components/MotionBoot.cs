@@ -46,6 +46,7 @@ namespace Assets.Source.Entities.Jester.Components
                 .To((x) => _flightStatsModel.RelativeKickForce.Value = x, _bootConfig.MinForceFactor, _bootConfig.MaxForceFactor, _bootConfig.ForceFactorChangeSeconds)
                 .SetLoops(-1, LoopType.Yoyo);
 
+            // ToDo Tweener is killed after start and this is then invalid
             Owner.IsPaused.Subscribe(isPaused =>
             {
                 if (isPaused && _kickForceTweener.IsPlaying())

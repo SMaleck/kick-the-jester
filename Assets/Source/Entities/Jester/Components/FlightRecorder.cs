@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Entities.GenericComponents;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;

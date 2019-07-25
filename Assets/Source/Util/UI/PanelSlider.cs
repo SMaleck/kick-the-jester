@@ -22,6 +22,9 @@ namespace Assets.Source.Util.UI
         private readonly ReactiveCommand _onCloseCompleted;
         public IObservable<Unit> OnCloseCompleted => _onCloseCompleted;
 
+        private readonly Tween _openTween;
+        private readonly Tween _closeTween;
+
         // ToDo Auto-Setup doesn't work correctly. HiddenPosition is still within bounds
         protected PanelSlider(RectTransform owner, RectTransform container, PanelSliderConfig config)
         {
@@ -40,6 +43,18 @@ namespace Assets.Source.Util.UI
 
             _onOpenCompleted = new ReactiveCommand().AddTo(Disposer);
             _onCloseCompleted = new ReactiveCommand().AddTo(Disposer);
+
+            var time = Math.Max(0, SlideSeconds);
+
+            _openTween = CreateOpenSequence(
+                _owner,
+                _shownPosition,
+                time);
+
+            _closeTween = CreateCloseSequence(
+                _owner,
+                _hiddenPosition,
+                time);
         }
 
         private Vector3 GetHiddenPosition(RectTransform container)
@@ -84,20 +99,71 @@ namespace Assets.Source.Util.UI
             MessageBroker.Default.Publish(soundEffectType);
         }
 
-        private Tween CreateSlideTweener(Vector3 to, float slideSeconds, Ease easeType)
+        private Tween CreateOpenSequence(
+            RectTransform target,
+            Vector3 targetVector,
+            float durationSeconds)
         {
-            Tween tweener;
+            var slideTween = CreateSlideTween(
+                target,
+                targetVector,
+                durationSeconds,
+                Ease.OutBounce);
+
+            return DOTween.Sequence()
+                .AppendCallback(() => { target.gameObject.SetActive(true); })
+                .Append(slideTween)
+                .AppendCallback(() => { _onOpenCompleted.Execute(); })
+                .SetAutoKill(false)
+                .Pause()
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
+        }
+
+        private Tween CreateCloseSequence(
+            RectTransform target,
+            Vector3 targetVector,
+            float durationSeconds)
+        {
+            var slideTween = CreateSlideTween(
+                target,
+                targetVector,
+                durationSeconds,
+                Ease.InExpo);
+
+            return DOTween.Sequence()
+                .AppendCallback(() => { target.gameObject.SetActive(true); })
+                .Append(slideTween)
+                .AppendCallback(() =>
+                {
+                    _owner.gameObject.SetActive(false);
+                    _onCloseCompleted.Execute();
+                })
+                .SetAutoKill(false)
+                .Pause()
+                .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
+        }
+
+        private Tween CreateSlideTween(
+            RectTransform target,
+            Vector3 targetVector,
+            float durationSeconds,
+            Ease easeType)
+        {
+            Tween slideTween;
+
             switch (_config.slideInFrom)
             {
                 case SlideDirection.Top:
                 case SlideDirection.Bottom:
-                    tweener = _owner.DOLocalMoveY(to.y, slideSeconds)
+                    slideTween = target
+                        .DOLocalMoveY(targetVector.y, durationSeconds)
                         .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
                     break;
 
                 case SlideDirection.Left:
                 case SlideDirection.Right:
-                    tweener = _owner.DOLocalMoveX(to.x, slideSeconds)
+                    slideTween = _owner
+                        .DOLocalMoveX(targetVector.y, durationSeconds)
                         .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
                     break;
 
@@ -107,10 +173,10 @@ namespace Assets.Source.Util.UI
 
             if (_config.useBounce)
             {
-                tweener.SetEase(easeType);
+                slideTween.SetEase(easeType);
             }
 
-            return tweener;
+            return slideTween;
         }
 
 
@@ -138,10 +204,7 @@ namespace Assets.Source.Util.UI
                 return;
             }
 
-            _owner.gameObject.SetActive(true);
-
-            Tween tween = CreateSlideTweener(_shownPosition, time, Ease.OutBounce);
-            tween.OnComplete(() => { _onOpenCompleted.Execute(); });
+            _openTween.Restart();
         }
 
 
@@ -167,12 +230,7 @@ namespace Assets.Source.Util.UI
                 return;
             }
 
-            Tween tween = CreateSlideTweener(_hiddenPosition, time, Ease.InExpo);
-            tween.OnComplete(() =>
-            {
-                _owner.gameObject.SetActive(false);
-                _onCloseCompleted.Execute();
-            });
+            _closeTween.Restart();
         }
 
         #endregion

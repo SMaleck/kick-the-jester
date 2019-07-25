@@ -1,7 +1,7 @@
-﻿using Assets.Source.Entities.GameRound.Components;
-using Assets.Source.Entities.Items;
+﻿using Assets.Source.Entities.Items;
 using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Features.Cheats;
+using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Upgrades;
 using Assets.Source.Mvc.Controllers;
@@ -52,21 +52,16 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region MODELS
 
-            Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<UserInputModel>().AsSingle().NonLazy();
-
             Container.BindInterfacesAndSelfTo<GameStateModel>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
 
             #endregion
 
             #region GAME ROUND
 
-            Container.BindInterfacesAndSelfTo<GameState>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<CurrencyRecorder>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<RoundStatsRecorder>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameStateController>().AsSingle().NonLazy();
 
             #endregion
 
@@ -82,6 +77,10 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();
 
             Container.BindInterfacesAndSelfTo<FlightStatsController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
+
+            Container.BindInterfacesAndSelfTo<PlayerProfileController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
 
             #endregion
 

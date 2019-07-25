@@ -1,15 +1,33 @@
-﻿using Assets.Source.Mvc.Models;
+﻿using Assets.Source.App.Configuration;
+using Assets.Source.Features.GameState;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
+using UniRx;
+using UnityEngine;
 
 namespace Assets.Source.Features.PlayerData
 {
     public class FlightStatsController : AbstractDisposable
     {
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly GameStateModel _gameStateModel;
+        private readonly BalancingConfig _balancingConfig;
+        private readonly PlayerProfileController _playerProfileController;
 
-        public FlightStatsController(FlightStatsModel _flightStatsModel)
+        public FlightStatsController(
+            FlightStatsModel flightStatsModel,
+            GameStateModel gameStateModel,
+            BalancingConfig balancingConfig,
+            PlayerProfileController playerProfileController)
         {
-            this._flightStatsModel = _flightStatsModel;
+            _flightStatsModel = flightStatsModel;
+            _gameStateModel = gameStateModel;
+            _balancingConfig = balancingConfig;
+            _playerProfileController = playerProfileController;
+
+            _gameStateModel.OnRoundEnd
+                .Subscribe(_ => OnRoundEnd())
+                .AddTo(Disposer);
         }
 
         public void AddCurrencyPickup(int amount)
@@ -18,6 +36,16 @@ namespace Assets.Source.Features.PlayerData
 
             _flightStatsModel.Gains.Add(amount);
             _flightStatsModel.Collected.Value += amount;
+        }
+
+        private void OnRoundEnd()
+        {
+            var distance = _flightStatsModel.Distance.Value;
+            _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * _balancingConfig.MeterToGoldFactor);
+
+            var total = _flightStatsModel.Collected.Value + _flightStatsModel.Earned.Value;
+
+            _playerProfileController.AddCurrencyAmount(total);
         }
     }
 }

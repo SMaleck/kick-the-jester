@@ -1,13 +1,13 @@
-﻿using Assets.Source.Entities.GenericComponents;
-using Assets.Source.Entities.Jester;
+﻿using Assets.Source.Entities.Jester;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
+using Assets.Source.Util;
 using UniRx;
 
-namespace Assets.Source.Entities.GameRound.Components
+namespace Assets.Source.Features.GameState
 {
-    public class GameState : AbstractComponent<GameRoundEntity>
+    public class GameStateController : AbstractDisposable
     {
         private readonly GameStateModel _model;
         private readonly UserInputModel _userInputModel;
@@ -15,14 +15,12 @@ namespace Assets.Source.Entities.GameRound.Components
         private readonly AudioService _audioService;
         private readonly ParticleService _particleService;
 
-        public GameState(
-            GameRoundEntity owner,
+        public GameStateController(
             GameStateModel model,
             UserInputModel userInputModel,
             JesterEntity jesterEntity,
             AudioService audioService,
             ParticleService particleService)
-            : base(owner)
         {
             _model = model;
             _userInputModel = userInputModel;
