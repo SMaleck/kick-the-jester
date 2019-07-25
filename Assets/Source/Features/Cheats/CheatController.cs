@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models;
+using Assets.Source.Services;
+using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using System;
 using UniRx;
@@ -21,15 +22,20 @@ namespace Assets.Source.Features.Cheats
         private const string AddProjectilesKey = "b";
         private const int AddProjectilesAmount = 5;
 
+        private const string SwitchLanguageKey = "l";
+
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly SceneTransitionService _sceneTransitionService;
 
         public CheatController(
             PlayerProfileModel playerProfileModel,
-            FlightStatsModel flightStatsModel)
+            FlightStatsModel flightStatsModel,
+            SceneTransitionService sceneTransitionService)
         {
             _playerProfileModel = playerProfileModel;
             _flightStatsModel = flightStatsModel;
+            _sceneTransitionService = sceneTransitionService;
 
             Observable.EveryUpdate()
                 .Subscribe(_ => CheckAllCheatKeys())
@@ -42,6 +48,7 @@ namespace Assets.Source.Features.Cheats
             CheckOnInput(SlowTimeKey, SlowTime);
             CheckOnInput(AddPickupKey, AddPickup);
             CheckOnInput(AddProjectilesKey, AddProjectiles);
+            CheckOnInput(SwitchLanguageKey, SwitchLanguage);
         }
 
         private void CheckOnInput(string keyCode, Action action)
@@ -71,6 +78,20 @@ namespace Assets.Source.Features.Cheats
         {
             var currentProjectileCount = _flightStatsModel.ShotsRemaining.Value;
             _flightStatsModel.SetRemainingShotsIfHigher(currentProjectileCount + AddProjectilesAmount);
+        }
+
+        private void SwitchLanguage()
+        {
+            var currentLanguage = TextService.CurrentLanguage;
+            var nextLanguage = currentLanguage + 1;
+
+            if (!Enum.IsDefined(typeof(Language), nextLanguage))
+            {
+                nextLanguage = default(Language);
+            }
+
+            TextService.SetLanguage(nextLanguage);
+            _sceneTransitionService.ToTitle();
         }
     }
 }

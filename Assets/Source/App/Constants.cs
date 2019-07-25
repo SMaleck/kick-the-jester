@@ -4,6 +4,8 @@
     {
         public const string PROJECT_MENU_ROOT = "KTJ";
 
+        public const string PREFS_KEY_LANGUAGE = "LanguagePref";
+
         // FLOAT PRECISION FACTORS
         public const int FLOAT_PRECISION_FACTOR = 100;
 

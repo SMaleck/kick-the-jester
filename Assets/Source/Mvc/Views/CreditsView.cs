@@ -47,12 +47,14 @@ namespace Assets.Source.Mvc.Views
             #if !UNITY_WEBGL
 
             SetupDefaultView();
-            
+
             #else
 
             SetupWebView();
 
             #endif
+
+            UpdateTexts();
         }
 
         private void UpdateTexts()

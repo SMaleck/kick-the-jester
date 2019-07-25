@@ -2490,17 +2490,25 @@ MonoBehaviour:
     SoundEffectsEnabled: 1
     SoundEffectsEnabledOnInstant: 0
     slideTimeSeconds: 0.5
-  _panelTitleText: {fileID: 0}
-  _defaultItems: []
-  _webItems: []
-  _codeSectionHeader: {fileID: 0}
+  _panelTitleText: {fileID: 114057458031006538}
+  _defaultItems:
+  - {fileID: 1445811236291088}
+  - {fileID: 1712889812480212}
+  - {fileID: 1248010213841452}
+  - {fileID: 1269249758929046}
+  _webItems:
+  - {fileID: 1428299859189556}
+  - {fileID: 1007341840344482}
+  - {fileID: 1767935160719262}
+  - {fileID: 1197363321378562}
+  _codeSectionHeader: {fileID: 114963372047861352}
   smaleckButton: {fileID: 114645003397177630}
   jhartmannButton: {fileID: 114107453600652304}
-  _artSectionHeader: {fileID: 0}
+  _artSectionHeader: {fileID: 114063075862322806}
   jiubeckButton: {fileID: 114361380106533358}
-  _musicSectionHeader: {fileID: 0}
+  _musicSectionHeader: {fileID: 114971378149601264}
   tristanButton: {fileID: 114685710350382884}
-  _soundEffectsSectionHeader: {fileID: 0}
+  _soundEffectsSectionHeader: {fileID: 114930453607977206}
   noiseForFunButton: {fileID: 114386681028182634}
 --- !u!114 &114493679970502124
 MonoBehaviour:

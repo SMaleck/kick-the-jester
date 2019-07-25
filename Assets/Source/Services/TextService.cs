@@ -1,36 +1,42 @@
-﻿using System;
-using Assets.Source.App;
-using Assets.Source.Features.Upgrades.Data;
+﻿using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Mvc.Models.Enum;
+using Assets.Source.Services.Localization;
 using Assets.Source.Util;
+using System;
 using UnityEngine;
 
 namespace Assets.Source.Services
 {
     public static class TextService
     {
-        private const string MissingText = "#MISSING TEXT#";
         private const string InlineSpriteCoin = "<sprite=0>";
         private const string InlineSpriteExternalLink = "<sprite=1>";
+
+        public static Language CurrentLanguage => TextRepo.CurrentLanguage;        
+
+        public static void SetLanguage(Language language)
+        {
+            TextRepo.SetLanguage(language);
+        }
 
         public static string UpgradeItemTitle(UpgradePathType upgradePathType)
         {
             switch (upgradePathType)
             {
                 case UpgradePathType.KickForce:
-                    return "Knight's Boots";
+                    return TextRepo.GetText(TextKey.UpgradePathKickForceTitle);
 
                 case UpgradePathType.ShootForce:
-                    return "Tomato Firmness";
+                    return TextRepo.GetText(TextKey.UpgradePathShootForceTitle);
 
                 case UpgradePathType.ProjectileCount:
-                    return "Tomato Reserves";
+                    return TextRepo.GetText(TextKey.UpgradePathProjectileCountTitle);
 
                 case UpgradePathType.VelocityCap:
-                    return "Aerodynamic Costume";
+                    return TextRepo.GetText(TextKey.UpgradePathVelocityCapTitle);
 
                 default:
-                    return MissingText;
+                    throw new ArgumentOutOfRangeException(nameof(upgradePathType), upgradePathType, null);
             }
         }
 
@@ -39,75 +45,75 @@ namespace Assets.Source.Services
             switch (upgradePathType)
             {
                 case UpgradePathType.KickForce:
-                    return "Heavier boots mean stronger kicks. The Jester will launch stronger!";
+                    return TextRepo.GetText(TextKey.UpgradePathKickForceDescription);
 
                 case UpgradePathType.ShootForce:
-                    return "Firm tomatoes give the Jester that extra kick he needs.";
+                    return TextRepo.GetText(TextKey.UpgradePathShootForceDescription);
 
                 case UpgradePathType.ProjectileCount:
-                    return "Increases the amount of tomatoes you can throw in one run.";
+                    return TextRepo.GetText(TextKey.UpgradePathProjectileCountDescription);
 
                 case UpgradePathType.VelocityCap:
-                    return "Allows the Jester to reach higher speeds!";
+                    return TextRepo.GetText(TextKey.UpgradePathVelocityCapDescription);
 
                 default:
-                    return MissingText;
+                    throw new ArgumentOutOfRangeException(nameof(upgradePathType), upgradePathType, null);
             }
         }
 
         public static string ResetProfileDescription()
         {
-            return "Are you sure?\n\nThis will reset all your upgrades, ingame-money and records.";
-        }        
+            return TextRepo.GetText(TextKey.ResetProfileDescription);
+        }
 
         public static string ResetProfileWarning()
         {
-            return "This cannot be undone!";
+            return TextRepo.GetText(TextKey.ResetProfileWarning);
         }
 
         public static string Cancel()
         {
-            return "Cancel";
+            return TextRepo.GetText(TextKey.Cancel);
         }
 
         public static string Max()
         {
-            return "MAX";
+            return TextRepo.GetText(TextKey.Max);
         }
 
         public static string LevelX(int level)
         {
-            return $"Level {level}";
+            return $"{TextRepo.GetText(TextKey.Level)} {level}";
         }
 
         public static string HowToPlay()
         {
-            return "How to Play";
+            return TextRepo.GetText(TextKey.HowToPlay);
         }
 
         public static string Credits()
         {
-            return "Credits";
+            return TextRepo.GetText(TextKey.Credits);
         }
 
         public static string DistanceReached()
         {
-            return "Distance Reached";
+            return TextRepo.GetText(TextKey.DistanceReached);
         }
 
         public static string NewBest()
         {
-            return "New Best!";
+            return TextRepo.GetText(TextKey.NewBest);
+        }
+
+        public static string BestLabel()
+        {
+            return TextRepo.GetText(TextKey.BestLabel);
         }
 
         public static string CurrencyAmount(int amount)
         {
             return $"{amount}{InlineSpriteCoin}";
-        }
-
-        public static string BestLabel()
-        {
-            return "Best:";
         }
 
         public static string CurrencyAmount(float amount)
@@ -117,67 +123,67 @@ namespace Assets.Source.Services
 
         public static string PlayAgainExclamation()
         {
-            return "Play Again!";
+            return TextRepo.GetText(TextKey.PlayAgainExclamation);
         }
 
         public static string PlayExclamation()
         {
-            return "Play!";
+            return TextRepo.GetText(TextKey.PlayExclamation);
         }
 
         public static string RestoreDefaults()
         {
-            return "Restore Defaults";
+            return TextRepo.GetText(TextKey.RestoreDefaults);
         }
 
         public static string ResetProfile()
         {
-            return "Reset Profile";
+            return TextRepo.GetText(TextKey.ResetProfile);
         }
 
         public static string Settings()
         {
-            return "Settings";
+            return TextRepo.GetText(TextKey.Settings);
         }
 
         public static string SoundSettings()
         {
-            return "Sound Settings";
+            return TextRepo.GetText(TextKey.SoundSettings);
         }
 
         public static string SoundEffects()
         {
-            return "Sound Effects";
+            return TextRepo.GetText(TextKey.SoundEffects);
         }
 
         public static string Music()
         {
-            return "Music";
+            return TextRepo.GetText(TextKey.Music);
         }
 
         public static string CreditsCodeHeader()
         {
-            return "Code & Game Design";
+            return TextRepo.GetText(TextKey.CreditsCodeHeader);
         }
 
         public static string CreditsArtHeader()
         {
-            return "Art & Animation";
+            return TextRepo.GetText(TextKey.CreditsArtHeader);
         }
 
         public static string CreditsMusicHeader()
         {
-            return "Music";
+            return TextRepo.GetText(TextKey.CreditsMusicHeader);
         }
 
         public static string CreditsSoundEffectsHeader()
         {
-            return "Sound Effects";
+            return TextRepo.GetText(TextKey.CreditsSoundEffectsHeader);
         }
 
         public static string BestDistance()
         {
-            return "Best Distance";
+            return TextRepo.GetText(TextKey.BestDistance);
         }
 
         public static string MetersAmount(float amount)
@@ -187,13 +193,13 @@ namespace Assets.Source.Services
 
         public static string FromCurrencyGainType(CurrencyGainType currencyGainType)
         {
-            switch(currencyGainType)
+            switch (currencyGainType)
             {
                 case CurrencyGainType.Distance:
-                    return "from distance";
+                    return TextRepo.GetText(TextKey.CurrencyGainTypeDistance);
 
                 case CurrencyGainType.Pickup:
-                    return "from pickups";
+                    return TextRepo.GetText(TextKey.CurrencyGainTypePickup);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(currencyGainType), currencyGainType, null);
@@ -207,27 +213,27 @@ namespace Assets.Source.Services
 
         public static string TutorialStepOne()
         {
-            return "Click / Tap anywhere on the screen to kick!";
+            return TextRepo.GetText(TextKey.TutorialStepOne);
         }
 
         public static string TutorialStepTwo()
         {
-            return "This is your Kick Power.\nTry to kick when it is full!";
+            return TextRepo.GetText(TextKey.TutorialStepTwo);
         }
 
         public static string TutorialStepThree()
         {
-            return "Click / Tap anywhere on the screen to throw tomatoes at the Jester.";
+            return TextRepo.GetText(TextKey.TutorialStepThree);
         }
 
         public static string TutorialStepThreeTip()
         {
-            return "Tip: They are most effective, when the Jester is on his way up.";
+            return TextRepo.GetText(TextKey.TutorialStepThreeTip);
         }
 
         public static string TapAnywhereToContinue()
         {
-            return "Tap anywhere to continue";
+            return TextRepo.GetText(TextKey.TapAnywhereToContinue);
         }
     }
 }
