@@ -204,5 +204,10 @@ namespace Assets.Source.Services
                     throw new ArgumentOutOfRangeException(nameof(currencyGainType), currencyGainType, null);
             }
         }
+
+        public static string TimesAmount(int amount)
+        {
+            return $"x {amount.ToString()}";
+        }
     }
 }

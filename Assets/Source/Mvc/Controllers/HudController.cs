@@ -77,7 +77,7 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _flightStatsModel.ShotsRemaining
-                .Subscribe(_view.OnShotCountChanged)
+                .Subscribe(_view.SetProjectileAmount)
                 .AddTo(Disposer);
         }
 

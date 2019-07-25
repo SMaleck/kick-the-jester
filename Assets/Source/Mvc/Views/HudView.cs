@@ -24,9 +24,9 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] TextMeshProUGUI _bestDistanceText;
 
         [Header("Tomatoes")]
-        [SerializeField] GameObject _shotCountPanel;
-        [SerializeField] GameObject _pfShotCountIcon;
-        private List<Image> shotCountIcons = new List<Image>();
+        [SerializeField] GameObject _projectileCountParent;
+        [SerializeField] Image _projectileIcon;
+        [SerializeField] TextMeshProUGUI _projectileAmountText;
 
         [Header("Money Gain Floating Numbers")]
         [SerializeField] RectTransform _pickupFeedbackParent;
@@ -49,6 +49,8 @@ namespace Assets.Source.Mvc.Views
 
         private List<PickupFeedbackView> _pickupFeedbackViews;
 
+        private readonly Color _projectileIconInactiveColor = new Color(1, 1, 1, 0.5f);
+
         [Inject]
         private void Inject(
             ViewPrefabConfig viewPrefabConfig,
@@ -67,7 +69,7 @@ namespace Assets.Source.Mvc.Views
 
             _velocityBar.gameObject.SetActive(false);
             _kickForceBar.gameObject.SetActive(true);
-            _shotCountPanel.gameObject.SetActive(false);
+            _projectileCountParent.gameObject.SetActive(false);
 
             SetupIndicatorTweener();
             UpdateTexts();
@@ -113,6 +115,18 @@ namespace Assets.Source.Mvc.Views
             _collectedCurrencyAmountText.text = TextService.CurrencyAmount(amount);
         }
 
+        public void SetProjectileAmount(int amount)
+        {
+            _projectileAmountText.text = TextService.TimesAmount(amount);
+
+            var isOutOfProjectiles = amount <= 0;
+
+            _projectileAmountText.gameObject.SetActive(!isOutOfProjectiles);
+            _projectileIcon.color = isOutOfProjectiles
+                ? _projectileIconInactiveColor
+                : Color.white;
+        }
+
         // ToDo Improve this Tween
         private void SetupIndicatorTweener()
         {
@@ -137,7 +151,7 @@ namespace Assets.Source.Mvc.Views
         {
             _velocityBar.gameObject.SetActive(true);
             _kickForceBar.gameObject.SetActive(false);
-            _shotCountPanel.gameObject.SetActive(true);
+            _projectileCountParent.gameObject.SetActive(true);
         }
 
         public void ShowFloatingCoinAmount(int gainedAmount)
@@ -166,54 +180,6 @@ namespace Assets.Source.Mvc.Views
             }
 
             return freeSlot;
-        }
-
-        public void OnShotCountChanged(int count)
-        {
-            int diff = Mathf.Abs(count - shotCountIcons.Count);
-
-            // Add additional Icons, if the count is higher than the current amount
-            if (shotCountIcons.Count < count)
-            {
-                AddShotCountIcons(diff);
-                return;
-            }
-
-            // Reduce opacity if the count is lower
-            var toDeactivate = shotCountIcons.Skip(count).Take(diff);
-
-            foreach (Image img in toDeactivate)
-            {
-                img.color = new Color(1, 1, 1, 0.5f);
-            }
-        }
-
-        private void AddShotCountIcons(int countToAdd)
-        {
-            float width = 0;
-
-            for (int i = 0; i < countToAdd; i++)
-            {
-                var go = GameObject.Instantiate(_pfShotCountIcon);
-                go.transform.SetParent(_shotCountPanel.transform);
-
-                // Get the width if we did not do it yet, because we cannot get it reliably from the prefab
-                if (width <= 0)
-                {
-                    width = go.GetComponent<RectTransform>().rect.width;
-                }
-
-                go.transform.localPosition = new Vector3(i * width, 0, 0);
-                go.transform.localScale = Vector3.one;
-
-                shotCountIcons.Add(go.GetComponent<Image>());
-            }
-
-            // Set all to full Opacity
-            foreach (Image img in shotCountIcons)
-            {
-                img.color = new Color(1, 1, 1, 1);
-            }
         }
     }
 }
