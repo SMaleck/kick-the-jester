@@ -157,11 +157,6 @@ Prefab:
       propertyPath: _context
       value: 
       objectReference: {fileID: 1716613018}
-    - target: {fileID: 114460642365630680, guid: 448aadc4c2b34ac428f1b106e9f5cd0a,
-        type: 2}
-      propertyPath: _audioClipType
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 448aadc4c2b34ac428f1b106e9f5cd0a, type: 2}
   m_IsPrefabParent: 0
@@ -1311,7 +1306,7 @@ Prefab:
     - target: {fileID: 224651589902578392, guid: 5f2b7ed8d4efa934cba6aa83b1ad846a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224651589902578392, guid: 5f2b7ed8d4efa934cba6aa83b1ad846a,
         type: 2}
@@ -1682,6 +1677,31 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224893777819030978, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224903670551023848, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224903670551023848, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224903670551023848, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224903670551023848, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224903670551023848, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 0
