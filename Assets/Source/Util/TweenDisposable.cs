@@ -11,7 +11,6 @@ namespace Assets.Source.Util
         Rewind
     }
 
-    // ToDo Fix: Currently unusable, because it doesn't support MonoBehaviours as Disposers
     public class TweenDisposable : IDisposable
     {
         private Tween _tween;

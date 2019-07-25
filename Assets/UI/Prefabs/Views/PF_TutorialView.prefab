@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1024946021791802
 GameObject:
   m_ObjectHideFlags: 1
@@ -385,11 +385,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -543,6 +543,10 @@ MonoBehaviour:
   - {fileID: 225104000157505436}
   _nextButton: {fileID: 114470509902941926}
   _instructionText: {fileID: 114145233079998286}
+  _tutorialStepOneText: {fileID: 114440436289999300}
+  _tutorialStepTwoText: {fileID: 114172978603285796}
+  _tutorialStepThreeText: {fileID: 114339409169667542}
+  _tutorialStepThreeTipText: {fileID: 114758834831387058}
 --- !u!114 &114314773136141366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -772,11 +776,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

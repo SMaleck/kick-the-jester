@@ -55,22 +55,17 @@ namespace Assets.Source.Services
             }
         }
 
-        internal static string ResetProfileDescription()
+        public static string ResetProfileDescription()
         {
             return "Are you sure?\n\nThis will reset all your upgrades, ingame-money and records.";
-        }
+        }        
 
-        internal static string TapAnywhereToContinue()
-        {
-            return "Tap anywhere to continue";
-        }
-
-        internal static string ResetProfileWarning()
+        public static string ResetProfileWarning()
         {
             return "This cannot be undone!";
         }
 
-        internal static string Cancel()
+        public static string Cancel()
         {
             return "Cancel";
         }
@@ -85,22 +80,22 @@ namespace Assets.Source.Services
             return $"Level {level}";
         }
 
-        internal static string HowToPlay()
+        public static string HowToPlay()
         {
             return "How to Play";
         }
 
-        internal static string Credits()
+        public static string Credits()
         {
             return "Credits";
         }
 
-        internal static string DistanceReached()
+        public static string DistanceReached()
         {
             return "Distance Reached";
         }
 
-        internal static string NewBest()
+        public static string NewBest()
         {
             return "New Best!";
         }
@@ -110,7 +105,7 @@ namespace Assets.Source.Services
             return $"{amount}{InlineSpriteCoin}";
         }
 
-        internal static string BestLabel()
+        public static string BestLabel()
         {
             return "Best:";
         }
@@ -140,22 +135,22 @@ namespace Assets.Source.Services
             return "Reset Profile";
         }
 
-        internal static string Settings()
+        public static string Settings()
         {
             return "Settings";
         }
 
-        internal static string SoundSettings()
+        public static string SoundSettings()
         {
             return "Sound Settings";
         }
 
-        internal static string SoundEffects()
+        public static string SoundEffects()
         {
             return "Sound Effects";
         }
 
-        internal static string Music()
+        public static string Music()
         {
             return "Music";
         }
@@ -208,6 +203,31 @@ namespace Assets.Source.Services
         public static string TimesAmount(int amount)
         {
             return $"x {amount.ToString()}";
+        }
+
+        public static string TutorialStepOne()
+        {
+            return "Click / Tap anywhere on the screen to kick!";
+        }
+
+        public static string TutorialStepTwo()
+        {
+            return "This is your Kick Power.\nTry to kick when it is full!";
+        }
+
+        public static string TutorialStepThree()
+        {
+            return "Click / Tap anywhere on the screen to throw tomatoes at the Jester.";
+        }
+
+        public static string TutorialStepThreeTip()
+        {
+            return "Tip: They are most effective, when the Jester is on his way up.";
+        }
+
+        public static string TapAnywhereToContinue()
+        {
+            return "Tap anywhere to continue";
         }
     }
 }

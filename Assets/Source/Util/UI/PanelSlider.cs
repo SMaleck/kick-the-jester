@@ -25,7 +25,7 @@ namespace Assets.Source.Util.UI
         private readonly Tween _openTween;
         private readonly Tween _closeTween;
 
-        // ToDo Auto-Setup doesn't work correctly. HiddenPosition is still within bounds
+        // ToDo [PANELSLIDER] Auto-Setup doesn't work correctly. HiddenPosition is still within bounds
         protected PanelSlider(RectTransform owner, RectTransform container, PanelSliderConfig config)
         {
             _config = config;
@@ -59,7 +59,7 @@ namespace Assets.Source.Util.UI
 
         private Vector3 GetHiddenPosition(RectTransform container)
         {
-            // HACK This only works because panels are fullscreen and is NOT general purpose
+            // Hack [PANELSLIDER] This only works because panels are fullscreen and is NOT general purpose
             // For some reason the values do not reflect the actual fullscreen width/height but are smaller
             var yDistance = container.rect.height * 2.2f;
             var xDistance = container.rect.width * 2.2f;

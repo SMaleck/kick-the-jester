@@ -14,11 +14,15 @@ namespace Assets.Source.Mvc.Views
     {
         [SerializeField] private List<CanvasGroup> _steps;
         [SerializeField] private Button _nextButton;
-        [SerializeField] private TMP_Text _instructionText;
+        [SerializeField] private TextMeshProUGUI _instructionText;
+        [SerializeField] private TextMeshProUGUI _tutorialStepOneText;
+        [SerializeField] private TextMeshProUGUI _tutorialStepTwoText;
+        [SerializeField] private TextMeshProUGUI _tutorialStepThreeText;
+        [SerializeField] private TextMeshProUGUI _tutorialStepThreeTipText;
 
         private const float InstructionPulseScale = 1.1f;
         private const float InstructionPulseSeconds = 0.7f;
-        private const float FadeTimeSeconds = 0.5f;        
+        private const float FadeTimeSeconds = 0.5f;
 
         private int _currentStep = 0;
         private bool IsLastStep => _currentStep >= _steps.Count - 1;
@@ -42,18 +46,23 @@ namespace Assets.Source.Mvc.Views
                 .OnClickAsObservable()
                 .Subscribe(_ => Next())
                 .AddTo(this);
-            
+
             _instructionText.transform
                 .DOScale(InstructionPulseScale, InstructionPulseSeconds)
                 .SetEase(Ease.InOutCubic)
                 .SetLoops(-1, LoopType.Yoyo)
                 .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
+
+            UpdateTexts();
         }
 
-        // ToDo TutorialView Use TextService for all texts
         private void UpdateTexts()
         {
             _instructionText.text = TextService.TapAnywhereToContinue();
+            _tutorialStepOneText.text = TextService.TutorialStepOne();
+            _tutorialStepTwoText.text = TextService.TutorialStepTwo();
+            _tutorialStepThreeText.text = TextService.TutorialStepThree();
+            _tutorialStepThreeTipText.text = TextService.TutorialStepThreeTip();
         }
 
         private void ResetSlides()
