@@ -31,7 +31,6 @@ namespace Assets.Source.Mvc.Views.PartialViews
 
         private Tween _pickupFeedbackTween;
 
-        // ToDo This is not correct
         public bool IsPlaying => _pickupFeedbackTween.IsPlaying();
 
         public override void Setup()

@@ -41,15 +41,15 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] float _indicatorAnimStrength = 2;
         [SerializeField] float _indicatorAnimSpeedSeconds = 0.8f;
 
-        private ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
+        private readonly ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
         public IObservable<Unit> OnPauseButtonClicked => _onPauseButtonClicked;
 
         private ViewPrefabConfig _viewPrefabConfig;
         private PickupFeedbackView.Factory _pickupFeedbackViewFactory;
-
         private List<PickupFeedbackView> _pickupFeedbackViews;
 
         private readonly Color _projectileIconInactiveColor = new Color(1, 1, 1, 0.5f);
+        private Tween _outOfCameraIndicatorTween;
 
         [Inject]
         private void Inject(
@@ -71,7 +71,9 @@ namespace Assets.Source.Mvc.Views
             _kickForceBar.gameObject.SetActive(true);
             _projectileCountParent.gameObject.SetActive(false);
 
-            SetupIndicatorTweener();
+            _outOfCameraIndicatorTween = CreateOutOfCameraIndicatorTween();
+            SetOutOfCameraIndicatorVisible(false);
+
             UpdateTexts();
         }
 
@@ -103,6 +105,14 @@ namespace Assets.Source.Mvc.Views
         public void SetOutOfCameraIndicatorVisible(bool value)
         {
             _outOfCameraIndicator.gameObject.SetActive(value);
+
+            if (value)
+            {
+                _outOfCameraIndicatorTween.Play();
+                return;
+            }
+
+            _outOfCameraIndicatorTween.Pause();
         }
 
         public void SetCurrencyAmount(int amount)
@@ -127,15 +137,12 @@ namespace Assets.Source.Mvc.Views
                 : Color.white;
         }
 
-        // ToDo Improve this Tween
-        private void SetupIndicatorTweener()
+        private Tween CreateOutOfCameraIndicatorTween()
         {
-            SetOutOfCameraIndicatorVisible(false);
-
             var start = _outOfCameraIndicator.anchoredPosition.y;
             var end = start - _indicatorAnimStrength;
 
-            DOTween.To(
+            return DOTween.To(
                     (value) =>
                     {
                         _outOfCameraIndicator.anchoredPosition =
@@ -144,6 +151,8 @@ namespace Assets.Source.Mvc.Views
                     start, end, _indicatorAnimSpeedSeconds)
                 .SetEase(Ease.OutBounce)
                 .SetLoops(-1, LoopType.Yoyo)
+                .SetAutoKill(false)
+                .Pause()
                 .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
         }
 
