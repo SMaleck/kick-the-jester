@@ -177,6 +177,8 @@ namespace Assets.Source.Mvc.Views
 
                 freeSlot.transform.SetParent(_pickupFeedbackParent, false);
                 freeSlot.Initialize();
+
+                _pickupFeedbackViews.Add(freeSlot);
             }
 
             return freeSlot;
