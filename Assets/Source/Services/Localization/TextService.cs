@@ -1,18 +1,17 @@
 ﻿using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Mvc.Models.Enum;
-using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using System;
 using UnityEngine;
 
-namespace Assets.Source.Services
+namespace Assets.Source.Services.Localization
 {
     public static class TextService
     {
         private const string InlineSpriteCoin = "<sprite=0>";
         private const string InlineSpriteExternalLink = "<sprite=1>";
 
-        public static Language CurrentLanguage => TextRepo.CurrentLanguage;        
+        public static Language CurrentLanguage => TextRepo.CurrentLanguage;
 
         public static void SetLanguage(Language language)
         {
@@ -239,6 +238,26 @@ namespace Assets.Source.Services
         public static string Pause()
         {
             return TextRepo.GetText(TextKey.Pause);
+        }
+
+        public static string Language()
+        {
+            return TextRepo.GetText(TextKey.Language);
+        }
+
+        public static string LanguageName(Language language)
+        {
+            return TextRepo.GetLanguageText(language);
+        }
+
+        public static string Restart()
+        {
+            return TextRepo.GetText(TextKey.Restart);
+        }
+
+        public static string Continue()
+        {
+            return TextRepo.GetText(TextKey.Continue);
         }
     }
 }

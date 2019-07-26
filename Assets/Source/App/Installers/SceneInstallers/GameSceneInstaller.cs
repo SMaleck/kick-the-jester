@@ -21,6 +21,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public HudView HudView;
         [SerializeField] public RoundEndView RoundEndView;
         [SerializeField] public PauseView PauseView;
+        [SerializeField] public SettingsView SettingsView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
         [SerializeField] public ResetProfileConfirmationView ShopConfirmResetView;
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
@@ -39,6 +40,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInstance(PauseView).AsSingle();
             Container.BindInterfacesAndSelfTo<PauseController>().AsSingle().NonLazy();
+
+            Container.BindInstance(SettingsView).AsSingle();
+            Container.BindInterfacesAndSelfTo<SettingsController>().AsSingle().NonLazy();
 
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
             Container.BindInterfacesAndSelfTo<BestDistanceMarkerController>().AsSingle().NonLazy();

@@ -3,6 +3,7 @@ using Assets.Source.Util;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;

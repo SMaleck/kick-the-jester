@@ -1,4 +1,5 @@
-﻿using Assets.Source.Mvc.Models.ViewModels;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using Assets.Source.Services.Audio;
@@ -11,7 +12,7 @@ namespace Assets.Source.Mvc.Controllers
     {
         private readonly TitleView _view;
         private readonly OpenPanelModel _openPanelModel;
-        private readonly TitleModel _model;
+        private readonly PlayerProfileModel _playerProfileModel;
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly AudioService _audioService;
 
@@ -20,18 +21,18 @@ namespace Assets.Source.Mvc.Controllers
         public TitleController(
             TitleView view,
             OpenPanelModel openPanelModel,
-            TitleModel model,
+            PlayerProfileModel playerProfileModel,
             SceneTransitionService sceneTransitionService,
             AudioService audioService)
             : base(view)
         {
             _view = view;
-            _openPanelModel = openPanelModel;
             _view.Initialize();
 
-            _model = model;
-            _audioService = audioService;
+            _openPanelModel = openPanelModel;
+            _playerProfileModel = playerProfileModel;
             _sceneTransitionService = sceneTransitionService;
+            _audioService = audioService;
 
             _view.OnStartClicked
                 .Subscribe(_ => OnStartClicked())
@@ -55,7 +56,7 @@ namespace Assets.Source.Mvc.Controllers
         {
             _audioService.PlayMusic(AudioClipType.Music_Transition, false);
 
-            if (_model.IsFirstStart.Value)
+            if (!_playerProfileModel.HasCompletedTutorial.Value)
             {
                 _openPanelModel.OpenTutorial();
                 return;

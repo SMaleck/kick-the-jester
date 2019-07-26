@@ -1,6 +1,8 @@
 ﻿using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Services;
+using Assets.Source.Services.Localization;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -8,24 +10,38 @@ namespace Assets.Source.Mvc.Controllers
     public class SettingsController : ClosableController
     {
         private readonly SettingsView _view;
+        private readonly SceneTransitionService _sceneTransitionService;
 
         public SettingsController(
             SettingsView view,
             OpenPanelModel openPanelModel,
-            SettingsModel settingsModel)
+            SettingsModel settingsModel,
+            SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
+            _view.Initialize();
 
-            _view.SetIsMusicMuted(settingsModel.IsMusicMuted.Value);
-            _view.SetIsEffectsMuted(settingsModel.IsEffectsMuted.Value);
+            _sceneTransitionService = sceneTransitionService;
 
-            _view.IsMusicMutedProp
+            settingsModel.IsMusicMuted
+                .Subscribe(_view.SetIsMusicMuted)
+                .AddTo(Disposer);
+
+            settingsModel.IsEffectsMuted
+                .Subscribe(_view.SetIsSoundMuted)
+                .AddTo(Disposer);
+
+            _view.OnMuteMusicToggled
                 .Subscribe(settingsModel.SetIsMusicMuted)
                 .AddTo(Disposer);
 
-            _view.IsEffectsMutedProp
+            _view.OnMuteSoundToggled
                 .Subscribe(settingsModel.SetIsEffectsMuted)
+                .AddTo(Disposer);
+
+            _view.OnLanguageSelected
+                .Subscribe(SwitchLanguage)
                 .AddTo(Disposer);
 
             _view.OnRestoreDefaultsClicked
@@ -39,8 +55,12 @@ namespace Assets.Source.Mvc.Controllers
             openPanelModel.OnOpenSettings
                 .Subscribe(_ => Open())
                 .AddTo(Disposer);
+        }
 
-            _view.Initialize();
-        }        
+        private void SwitchLanguage(Language language)
+        {
+            TextService.SetLanguage(language);
+            _sceneTransitionService.ToTitle();
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Assets.Source.Mvc.Models.Enum;
-using Assets.Source.Services;
+using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
 using TMPro;

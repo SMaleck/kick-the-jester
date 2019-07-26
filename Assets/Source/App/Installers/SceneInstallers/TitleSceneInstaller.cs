@@ -37,7 +37,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region MODELS
 
-            Container.BindInterfacesAndSelfTo<TitleModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
 

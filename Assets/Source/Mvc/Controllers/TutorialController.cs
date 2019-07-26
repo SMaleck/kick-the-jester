@@ -1,4 +1,5 @@
-﻿using Assets.Source.Mvc.Models.ViewModels;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using UniRx;
@@ -8,18 +9,18 @@ namespace Assets.Source.Mvc.Controllers
     public class TutorialController : ClosableController
     {
         private readonly TutorialView _view;
-        private readonly TitleModel _titleModel;
+        private readonly PlayerProfileModel _playerProfileModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
         public TutorialController(
             TutorialView view,
-            TitleModel titleModel,
+            PlayerProfileModel playerProfileModel,
             OpenPanelModel openPanelModel,
             SceneTransitionService sceneTransitionService)
             : base(view)
         {
             _view = view;
-            _titleModel = titleModel;
+            _playerProfileModel = playerProfileModel;
             _view.Initialize();
 
             _sceneTransitionService = sceneTransitionService;
@@ -36,9 +37,9 @@ namespace Assets.Source.Mvc.Controllers
 
         public void OnNextClickedOnLastSlide()
         {
-            if (_titleModel.IsFirstStart.Value)
+            if (_playerProfileModel.HasCompletedTutorial.Value)
             {
-                _titleModel.IsFirstStart.Value = false;
+                _playerProfileModel.SetHasCompletedTutorial(true);
                 _sceneTransitionService.ToGame();
                 return;
             }

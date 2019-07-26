@@ -1,6 +1,7 @@
 ﻿using Assets.Source.Services;
 using Assets.Source.Util.UI;
 using System;
+using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;

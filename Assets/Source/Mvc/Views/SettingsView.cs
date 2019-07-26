@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Services;
+using Assets.Source.Services.Localization;
 using System;
 using TMPro;
 using UniRx;
@@ -9,30 +10,45 @@ namespace Assets.Source.Mvc.Views
 {
     public class SettingsView : ClosableView
     {
-        [Header("Labels")]
-        [SerializeField] private TextMeshProUGUI _titleText;
-        [SerializeField] private TextMeshProUGUI _soundSettingsTitleText;
+        [SerializeField] private TextMeshProUGUI _panelTitleText;
 
         [Header("Sound Settings")]
-        [SerializeField] private Toggle _isMusicMuted;
+        [SerializeField] private TextMeshProUGUI _soundSettingsTitleText;
+
+        [SerializeField] private Toggle _isMusicMutedToggle;
         [SerializeField] private TextMeshProUGUI _isMusicMutedText;
 
-        [SerializeField] private Toggle _isEffectsMuted;
+        [SerializeField] private Toggle _isEffectsMutedToggle;
         [SerializeField] private TextMeshProUGUI _isEffectsMutedText;
 
-        [Header("Restore Defaults Button")]
-        [SerializeField] private Button _restoreDefaultsButton;
-        [SerializeField] private TextMeshProUGUI _restoreDefaultsButtonText;
+        [Header("Language Settings")]
+        [SerializeField] private TextMeshProUGUI _languageSettingsTitleText;
 
-        [Header("Reset Profile Button")]
+        [SerializeField] private Button _englishButton;
+        [SerializeField] private TextMeshProUGUI _englishButtonText;
+
+        [SerializeField] private Button _germanButton;
+        [SerializeField] private TextMeshProUGUI _germanButtonText;
+
+        [Header("Reset Profile")]
         [SerializeField] private Button _resetProfileButton;
         [SerializeField] private TextMeshProUGUI _resetProfileButtonText;
 
-        private readonly ReactiveProperty<bool> _isMusicMutedProp = new ReactiveProperty<bool>();
-        public IReadOnlyReactiveProperty<bool> IsMusicMutedProp => _isMusicMutedProp;
+        [Header("Restore Defaults")]
+        [SerializeField] private Button _restoreDefaultsButton;
+        [SerializeField] private TextMeshProUGUI _restoreDefaultsButtonText;
 
-        private readonly ReactiveProperty<bool> _isEffectsMutedProp = new ReactiveProperty<bool>();
-        public IReadOnlyReactiveProperty<bool> IsEffectsMutedProp => _isEffectsMutedProp;
+
+        private readonly Subject<bool> _onMuteMusicToggled = new Subject<bool>();
+        public IObservable<bool> OnMuteMusicToggled => _onMuteMusicToggled;
+
+        private readonly Subject<bool> _onMuteSoundToggled = new Subject<bool>();
+        public IObservable<bool> OnMuteSoundToggled => _onMuteSoundToggled;
+
+
+        private readonly Subject<Language> _onLanguageSelected = new Subject<Language>();
+        public IObservable<Language> OnLanguageSelected => _onLanguageSelected;
+
 
         private readonly ReactiveCommand _onRestoreDefaultsClicked = new ReactiveCommand();
         public IObservable<Unit> OnRestoreDefaultsClicked => _onRestoreDefaultsClicked;
@@ -44,59 +60,79 @@ namespace Assets.Source.Mvc.Views
         {
             base.Setup();
 
-            _isMusicMutedProp.AddTo(Disposer);
-            _isEffectsMutedProp.AddTo(Disposer);
+            _onMuteMusicToggled.AddTo(Disposer);
+            _isMusicMutedToggle.OnValueChangedAsObservable()
+                .Subscribe(_onMuteMusicToggled.OnNext)
+                .AddTo(Disposer);
+
+            _onMuteSoundToggled.AddTo(Disposer);
+            _isEffectsMutedToggle.OnValueChangedAsObservable()
+                .Subscribe(_onMuteSoundToggled.OnNext)
+                .AddTo(Disposer);
+
+
+            _onLanguageSelected.AddTo(Disposer);
+
+            _englishButton.OnClickAsObservable()
+                .Subscribe(_ => _onLanguageSelected.OnNext(Language.English))
+                .AddTo(Disposer);
+
+            _germanButton.OnClickAsObservable()
+                .Subscribe(_ => _onLanguageSelected.OnNext(Language.German))
+                .AddTo(Disposer);
+
+
             _onRestoreDefaultsClicked.AddTo(Disposer);
+            _onRestoreDefaultsClicked.BindTo(_restoreDefaultsButton).AddTo(Disposer);
+
             _onResetProfileClicked.AddTo(Disposer);
-
-            SetSettingsViewState();
-
-            _isMusicMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => _isMusicMutedProp.Value = !_isMusicMuted.isOn)
-                .AddTo(Disposer);
-
-            _isEffectsMuted.OnValueChangedAsObservable()
-                .Subscribe(_ => _isEffectsMutedProp.Value = !_isEffectsMuted.isOn)
-                .AddTo(Disposer);
-
-
-            _restoreDefaultsButton.OnClickAsObservable()
-                .Subscribe(_ =>
-                {
-                    _onRestoreDefaultsClicked.Execute();
-                    SetSettingsViewState();
-                })
-                .AddTo(this);
-
             _onResetProfileClicked.BindTo(_resetProfileButton).AddTo(Disposer);
 
+            SetLanguageButtonsInteractable();
             UpdateTexts();
         }
 
         private void UpdateTexts()
         {
-            _titleText.text = TextService.Settings();
+            _panelTitleText.text = TextService.Settings();
+
             _soundSettingsTitleText.text = TextService.SoundSettings();
             _isMusicMutedText.text = TextService.Music();
             _isEffectsMutedText.text = TextService.SoundEffects();
+
+            _languageSettingsTitleText.text = TextService.Language();
+            _englishButtonText.text = TextService.LanguageName(Language.English);
+            _germanButtonText.text = TextService.LanguageName(Language.German);
+
             _restoreDefaultsButtonText.text = TextService.RestoreDefaults();
             _resetProfileButtonText.text = TextService.ResetProfile();
         }
 
-        public void SetIsMusicMuted(bool value)
+        private void SetLanguageButtonsInteractable()
         {
-            _isMusicMutedProp.Value = value;
+            switch (TextService.CurrentLanguage)
+            {
+                case Language.English:
+                    _englishButton.interactable = false;
+                    _germanButton.interactable = true;
+                    break;
+                case Language.German:
+                    _englishButton.interactable = true;
+                    _germanButton.interactable = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
-        public void SetIsEffectsMuted(bool value)
+        public void SetIsMusicMuted(bool isMusicMuted)
         {
-            _isEffectsMutedProp.Value = value;
+            _isMusicMutedToggle.isOn = !isMusicMuted;
         }
 
-        private void SetSettingsViewState()
+        public void SetIsSoundMuted(bool isSoundMuted)
         {
-            _isMusicMuted.isOn = !_isMusicMutedProp.Value;
-            _isEffectsMuted.isOn = !_isEffectsMutedProp.Value;
+            _isEffectsMutedToggle.isOn = !isSoundMuted;
         }
     }
 }

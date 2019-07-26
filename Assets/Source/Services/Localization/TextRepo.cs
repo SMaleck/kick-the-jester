@@ -45,6 +45,17 @@ namespace Assets.Source.Services.Localization
             }
         }
 
+        public static string GetLanguageText(Language languageKey)
+        {
+            return _textsLANGUAGE[languageKey];
+        }
+
+        private static Dictionary<Language, string> _textsLANGUAGE = new Dictionary<Language, string>
+        {
+            { Language.English, "English"},
+            { Language.German, "Deutsch"}
+        };
+
         private static Dictionary<TextKey, string> _textsEN = new Dictionary<TextKey, string>
         {
             { TextKey.PlayExclamation, "Play!"},
@@ -85,7 +96,10 @@ namespace Assets.Source.Services.Localization
             { TextKey.TutorialStepThree, "Click / Tap anywhere on the screen to throw tomatoes at the Jester."},
             { TextKey.TutorialStepThreeTip, "Tip: They are most effective, when the Jester is on his way up."},
             { TextKey.TapAnywhereToContinue, "Tap anywhere to continue"},
-            { TextKey.Pause, "Pause"}
+            { TextKey.Pause, "Pause"},
+            { TextKey.Language, "Language"},
+            { TextKey.Restart, "Restart"},
+            { TextKey.Continue, "Continue"}
         };
 
         private static Dictionary<TextKey, string> _textsDE = new Dictionary<TextKey, string>
@@ -128,7 +142,10 @@ namespace Assets.Source.Services.Localization
             { TextKey.TutorialStepThree, "Klicke / Tippe auf eine beliebige Stelle auf dem Bildschirm, um Tomaten auf den Hofnarr zu werfen."},
             { TextKey.TutorialStepThreeTip, "Tip: Sie sind am effektivsten, wenn der Hofnarr auf dem Weg nach oben ist."},
             { TextKey.TapAnywhereToContinue, "Klicke / Tippe auf den Bildschirm um fortzufahren!"},
-            { TextKey.Pause, "Pause"}
+            { TextKey.Pause, "Pause"},
+            { TextKey.Language, "Sprache"},
+            { TextKey.Restart, "Neustarten"},
+            { TextKey.Continue, "Weiter"}
         };
     }
 }

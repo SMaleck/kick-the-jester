@@ -2,6 +2,7 @@
 using Assets.Source.Util;
 using DG.Tweening;
 using System.Linq;
+using Assets.Source.Services.Localization;
 using TMPro;
 using UnityEngine;
 using Zenject;

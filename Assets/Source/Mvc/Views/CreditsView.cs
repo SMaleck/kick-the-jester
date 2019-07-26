@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Source.Services;
+using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;

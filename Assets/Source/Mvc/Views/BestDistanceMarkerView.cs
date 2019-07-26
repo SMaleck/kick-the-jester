@@ -1,4 +1,4 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
 using TMPro;
@@ -15,7 +15,7 @@ namespace Assets.Source.Mvc.Views
         private const float MoveSeconds = 0.7f;
         private Vector3 _selfOrigin;
 
-        public Vector3 JesterOrigin;        
+        public Vector3 JesterOrigin;
 
 
         public override void Setup()
@@ -48,7 +48,7 @@ namespace Assets.Source.Mvc.Views
             SetActive(isAboveThreshold);
 
             if (!isAboveThreshold)
-            {                
+            {
                 return;
             }
 

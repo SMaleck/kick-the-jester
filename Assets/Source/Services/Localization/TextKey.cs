@@ -40,6 +40,9 @@
         TutorialStepThree,
         TutorialStepThreeTip,
         TapAnywhereToContinue,
-        Pause
+        Pause,
+        Language,
+        Restart,
+        Continue
     }
 }

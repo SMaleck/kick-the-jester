@@ -14,6 +14,8 @@ namespace Assets.Source.Features.PlayerData
         public IReadOnlyReactiveProperty<float> BestDistance => _profileStorageModel.BestDistance;
         public IReadOnlyReactiveProperty<int> RoundsPlayed => _profileStorageModel.RoundsPlayed;
 
+        public IReadOnlyReactiveProperty<bool> HasCompletedTutorial => _profileStorageModel.IsFirstStart;
+
         public PlayerProfileModel(SavegameService savegameService)
         {
             _profileStorageModel = savegameService.Profile;
@@ -38,6 +40,11 @@ namespace Assets.Source.Features.PlayerData
         public void IncrementRoundsPlayed()
         {
             _profileStorageModel.RoundsPlayed.Value += 1;
+        }
+
+        public void SetHasCompletedTutorial(bool value)
+        {
+            _profileStorageModel.IsFirstStart.Value = value;
         }
     }
 }
