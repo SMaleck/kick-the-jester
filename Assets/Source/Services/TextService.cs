@@ -235,5 +235,10 @@ namespace Assets.Source.Services
         {
             return TextRepo.GetText(TextKey.TapAnywhereToContinue);
         }
+
+        public static string Pause()
+        {
+            return TextRepo.GetText(TextKey.Pause);
+        }
     }
 }

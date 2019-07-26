@@ -14,6 +14,7 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private TextMeshProUGUI _startButtonText;
 
         [SerializeField] private Button _settingsButton;
+        [SerializeField] private TextMeshProUGUI _settingsButtonText;
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private TextMeshProUGUI _tutorialButtonText;
         [SerializeField] private Button _creditsButton;
@@ -59,6 +60,7 @@ namespace Assets.Source.Mvc.Views
         private void UpdateTexts()
         {
             _startButtonText.text = TextService.PlayExclamation();
+            _settingsButtonText.text = TextService.Settings();
             _tutorialButtonText.text = TextService.HowToPlay();
             _creditsButtonText.text = TextService.Credits();
         }

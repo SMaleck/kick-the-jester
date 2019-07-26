@@ -58,7 +58,7 @@ namespace Assets.Source.Mvc.Views
 
         private void UpdateTexts()
         {
-            _titleText.text = TextService.Settings();
+            _titleText.text = TextService.Pause();
             _soundSettingsTitleText.text = TextService.SoundSettings();
             _isMusicMutedText.text = TextService.Music();
             _isEffectsMutedText.text = TextService.SoundEffects();

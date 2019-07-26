@@ -26,6 +26,8 @@ namespace Assets.Source.Mvc.Views
 
             _onResetConfirmClicked.AddTo(Disposer);
             _onResetConfirmClicked.BindTo(_confirmButton).AddTo(Disposer);
+
+            UpdateTexts();
         }
 
         private void UpdateTexts()

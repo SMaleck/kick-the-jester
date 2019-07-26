@@ -39,6 +39,7 @@
         TutorialStepTwo,
         TutorialStepThree,
         TutorialStepThreeTip,
-        TapAnywhereToContinue
+        TapAnywhereToContinue,
+        Pause
     }
 }

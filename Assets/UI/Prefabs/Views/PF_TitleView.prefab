@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 222929669017337092}
   - component: {fileID: 114306729553849986}
   m_Layer: 5
-  m_Name: txt_credits
+  m_Name: txt_settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1176,6 +1176,7 @@ MonoBehaviour:
   _startButton: {fileID: 114706028099032258}
   _startButtonText: {fileID: 114629629756317920}
   _settingsButton: {fileID: 114657287917726156}
+  _settingsButtonText: {fileID: 114306729553849986}
   _tutorialButton: {fileID: 114115195095397388}
   _tutorialButtonText: {fileID: 114462011465518700}
   _creditsButton: {fileID: 114427143767972068}
