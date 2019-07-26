@@ -1,5 +1,4 @@
 ﻿using Assets.Source.Features.GameState;
-using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;
 

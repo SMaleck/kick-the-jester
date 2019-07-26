@@ -37,7 +37,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public void OnNextClickedOnLastSlide()
         {
-            if (_playerProfileModel.HasCompletedTutorial.Value)
+            if (!_playerProfileModel.HasCompletedTutorial.Value)
             {
                 _playerProfileModel.SetHasCompletedTutorial(true);
                 _sceneTransitionService.ToGame();

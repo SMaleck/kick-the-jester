@@ -1,4 +1,5 @@
-﻿using Assets.Source.Mvc.Controllers;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
@@ -39,6 +40,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
 
             #endregion
 
