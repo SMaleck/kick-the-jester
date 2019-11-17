@@ -18,7 +18,7 @@ namespace Assets.Editor.Keyboard
         /// <summary>
         /// Runs the game from the Default scene.
         /// </summary>
-        [MenuItem("Tools/Run Game %L")]
+        [MenuItem("Tools/Run Game %l")]
         static void RunGameFromDefaultScene()
         {
             if (EditorApplication.isPlaying)
