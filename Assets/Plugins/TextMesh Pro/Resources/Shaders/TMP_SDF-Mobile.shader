@@ -207,8 +207,8 @@ SubShader {
 
 		// Alternative implementation to UnityGet2DClipping with support for softness.
 		#if UNITY_UI_CLIP_RECT
-		half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
-		c *= m.x * m.y;
+			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
+			c *= m.x * m.y;
 		#endif
 
 		#if (UNDERLAY_ON | UNDERLAY_INNER)
