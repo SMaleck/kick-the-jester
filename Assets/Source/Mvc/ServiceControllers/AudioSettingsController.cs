@@ -26,7 +26,7 @@ namespace Assets.Source.Mvc.ServiceControllers
                 })
                 .AddTo(Disposer);
 
-            _settingsModel.IsEffectsMuted
+            _settingsModel.IsSoundMuted
                 .Subscribe(isMuted =>
                 {
                     var volume = isMuted ? 0 : defaultSettingsConfig.EffectVolume;

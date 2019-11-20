@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using UniRx;
 
-namespace Assets.Source.Services.Savegame.StorageModels
+namespace Assets.Source.Services.Savegames.StorageModels
 {
     public abstract class AbstractPersistentModel
     {

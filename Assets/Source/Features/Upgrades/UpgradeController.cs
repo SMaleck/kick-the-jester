@@ -1,6 +1,6 @@
 ﻿using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Upgrades.Data;
-using Assets.Source.Services.Savegame;
+using Assets.Source.Services.Savegames;
 using Assets.Source.Util;
 using System;
 using System.Collections.Generic;
@@ -105,21 +105,21 @@ namespace Assets.Source.Features.Upgrades
 
         private ReactiveProperty<int> GetLevelSavegame(UpgradePathType upgradePath)
         {
-            var upgradeSavegame = _savegameService.Upgrades;
+            var upgradesSavegame = _savegameService.Savegame.UpgradesSavegame;
 
             switch (upgradePath)
             {
                 case UpgradePathType.KickForce:
-                    return upgradeSavegame.KickForceLevel;
+                    return upgradesSavegame.KickForceLevel;
 
                 case UpgradePathType.ShootForce:
-                    return upgradeSavegame.ShootForceLevel;
+                    return upgradesSavegame.ShootForceLevel;
 
                 case UpgradePathType.ProjectileCount:
-                    return upgradeSavegame.ShootCountLevel;
+                    return upgradesSavegame.ShootCountLevel;
 
                 case UpgradePathType.VelocityCap:
-                    return upgradeSavegame.MaxVelocityLevel;
+                    return upgradesSavegame.MaxVelocityLevel;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(upgradePath), upgradePath, null);

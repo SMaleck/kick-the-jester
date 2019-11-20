@@ -17,22 +17,25 @@ namespace Assets.Source.Util.Storage
         }
 
 
-        public T Load<T>() where T : new()
+        public T Load<T>() where T : class
         {
+            App.Logger.Log($"Loading savegame from {path}");
+
             if (!File.Exists(path))
             {
-                return new T();
+                return null;
             }
 
             string json = File.ReadAllText(path);
-            T result = JsonConvert.DeserializeObject<T>(json);
 
-            return (result != null) ? result : new T();
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
 
         public void Save<T>(T data)
         {
+            App.Logger.Log($"Saving savegame to {path}");
+
             string json = JsonConvert.SerializeObject(data);
             File.WriteAllText(path, json);
         }

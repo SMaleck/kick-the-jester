@@ -62,12 +62,12 @@ namespace Assets.Source.Mvc.Views
 
             _onMuteMusicToggled.AddTo(Disposer);
             _isMusicMutedToggle.OnValueChangedAsObservable()
-                .Subscribe(_onMuteMusicToggled.OnNext)
+                .Subscribe(value => _onMuteMusicToggled.OnNext(!value))
                 .AddTo(Disposer);
 
             _onMuteSoundToggled.AddTo(Disposer);
             _isEffectsMutedToggle.OnValueChangedAsObservable()
-                .Subscribe(_onMuteSoundToggled.OnNext)
+                .Subscribe(value => _onMuteSoundToggled.OnNext(!value))
                 .AddTo(Disposer);
 
 

@@ -28,15 +28,17 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_view.SetIsMusicMuted)
                 .AddTo(Disposer);
 
-            settingsModel.IsEffectsMuted
+            settingsModel.IsSoundMuted
                 .Subscribe(_view.SetIsSoundMuted)
                 .AddTo(Disposer);
 
             _view.OnMuteMusicToggled
+                .Where(value => value != settingsModel.IsMusicMuted.Value)
                 .Subscribe(settingsModel.SetIsMusicMuted)
                 .AddTo(Disposer);
 
             _view.OnMuteSoundToggled
+                .Where(value => value != settingsModel.IsSoundMuted.Value)
                 .Subscribe(settingsModel.SetIsEffectsMuted)
                 .AddTo(Disposer);
 
