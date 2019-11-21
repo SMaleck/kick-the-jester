@@ -16,7 +16,7 @@ namespace Assets.Source.Services.Savegames.Models
             Action<T> setter,
             CompositeDisposable disposer)
         {
-            var rxProperty = new ReactiveProperty<T>().AddTo(disposer);
+            var rxProperty = new ReactiveProperty<T>(initialValue).AddTo(disposer);
             rxProperty.Subscribe(setter).AddTo(disposer);
 
             return rxProperty;
