@@ -10,7 +10,8 @@ namespace Assets.Source.Services.Savegames
             {
                 ProfileSavegameData = CreateProfileSavegameData(),
                 UpgradesSavegameData = CreateUpgradesSavegameData(),
-                SettingsSavegameData = CreateSettingsSavegameData()
+                SettingsSavegameData = CreateSettingsSavegameData(),
+                StatisticsSavegameData = CreateStatisticsSavegameData()
             };
         }
 
@@ -19,9 +20,7 @@ namespace Assets.Source.Services.Savegames
             return new ProfileSavegameData()
             {
                 IsFirstStart = true,
-                Currency = 0,
-                BestDistance = 0,
-                RoundsPlayed = 0
+                Currency = 0
             };
         }
 
@@ -42,6 +41,20 @@ namespace Assets.Source.Services.Savegames
             {
                 IsMusicMuted = false,
                 IsSoundMuted = false
+            };
+        }
+
+        private static StatisticsSavegameData CreateStatisticsSavegameData()
+        {
+            return new StatisticsSavegameData()
+            {
+                BestDistance = 0,
+                TotalDistance = 0,
+                BestHeight = 0,
+                TotalHeight = 0,
+                TotalCurrencyCollected = 0,
+                TotalRoundsPlayed = 0,
+                HasReachedMoon = false
             };
         }
     }

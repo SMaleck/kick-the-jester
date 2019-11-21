@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Entities.Jester;
 using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Statistics;
 using Assets.Source.Mvc.Views;
 using UniRx;
 
@@ -12,7 +13,7 @@ namespace Assets.Source.Mvc.Controllers
 
         public BestDistanceMarkerController(
             BestDistanceMarkerView view,
-            PlayerProfileModel playerProfileModel,
+            IStatisticsModel statisticsModel,
             JesterEntity jesterEntity)
             : base(view)
         {
@@ -22,9 +23,9 @@ namespace Assets.Source.Mvc.Controllers
             _jesterEntity = jesterEntity;
 
             _view.JesterOrigin = _jesterEntity.Position;
-            _view.UpdateBestDistanceInstant(playerProfileModel.BestDistance.Value);
+            _view.UpdateBestDistanceInstant(statisticsModel.BestDistance.Value);
 
-            playerProfileModel.BestDistance
+            statisticsModel.BestDistance
                 .Subscribe(value => _view.UpdateBestDistance(value))
                 .AddTo(Disposer);
         }

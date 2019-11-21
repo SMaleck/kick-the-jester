@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Source.App;
+﻿using Assets.Source.App;
+using System;
 
 namespace Assets.Source.Util
 {
@@ -17,6 +13,16 @@ namespace Assets.Source.Util
         public static int ToMeters(this float value)
         {
             return (int)(value / Constants.UNIT_TO_METERS_FACTOR);
+        }
+
+        /// <summary>
+        /// Transforms a float value representing _meters_ into its equivalent _units_ in game using <see cref="Constants.UNIT_TO_METERS_FACTOR"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>The amount of meters after conversion</returns>
+        public static int ToUnits(this float value)
+        {
+            return (int)(value * Constants.UNIT_TO_METERS_FACTOR);
         }
 
         /// <summary>

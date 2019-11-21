@@ -1,6 +1,7 @@
 ﻿using Assets.Source.App.Configuration;
 using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Statistics;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using UniRx;
@@ -13,6 +14,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
         private readonly PlayerProfileModel _playerProfileModel;
+        private readonly IStatisticsModel _statisticsModel;
         private readonly UserInputModel _userInputModel;
         private readonly CameraConfig _cameraConfig;
 
@@ -21,6 +23,7 @@ namespace Assets.Source.Mvc.Controllers
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             PlayerProfileModel playerProfileModel,
+            IStatisticsModel statisticsModel,
             UserInputModel userInputModel,
             CameraConfig cameraConfig)
             : base(view)
@@ -31,6 +34,7 @@ namespace Assets.Source.Mvc.Controllers
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
             _playerProfileModel = playerProfileModel;
+            _statisticsModel = statisticsModel;
             _userInputModel = userInputModel;
             _cameraConfig = cameraConfig;
 
@@ -89,7 +93,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void SetupProfileModel()
         {
-            _playerProfileModel.BestDistance
+            _statisticsModel.BestDistance
                 .Subscribe(_view.SetBestDistance)
                 .AddTo(Disposer);
 

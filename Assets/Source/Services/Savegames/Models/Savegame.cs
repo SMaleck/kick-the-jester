@@ -5,19 +5,22 @@
         public ProfileSavegameData ProfileSavegameData;
         public UpgradesSavegameData UpgradesSavegameData;
         public SettingsSavegameData SettingsSavegameData;
+        public StatisticsSavegameData StatisticsSavegameData;
     }
 
     public class Savegame : AbstractSavegame
     {
-        public ProfileSavegame ProfileSavegame;
-        public UpgradesSavegame UpgradesSavegame;
-        public SettingsSavegame SettingsSavegame;
+        public readonly ProfileSavegame ProfileSavegame;
+        public readonly UpgradesSavegame UpgradesSavegame;
+        public readonly SettingsSavegame SettingsSavegame;
+        public readonly StatisticsSavegame StatisticsSavegame;
 
         public Savegame(SavegameData savegameData)
         {
             ProfileSavegame = new ProfileSavegame(savegameData.ProfileSavegameData);
             UpgradesSavegame = new UpgradesSavegame(savegameData.UpgradesSavegameData);
             SettingsSavegame = new SettingsSavegame(savegameData.SettingsSavegameData);
+            StatisticsSavegame = new StatisticsSavegame(savegameData.StatisticsSavegameData);
         }
     }
 }

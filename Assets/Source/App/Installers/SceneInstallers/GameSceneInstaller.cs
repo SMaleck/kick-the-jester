@@ -3,6 +3,7 @@ using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Features.Cheats;
 using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Statistics;
 using Assets.Source.Features.Upgrades;
 using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Models;
@@ -60,6 +61,10 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<UserInputModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameStateModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
+
+            Container.BindInterfacesAndSelfTo<StatisticsModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<StatisticsController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<StatisticsCollectionController>().AsSingle().NonLazy();
 
             #endregion
 

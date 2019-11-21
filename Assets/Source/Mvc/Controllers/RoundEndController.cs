@@ -5,6 +5,7 @@ using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using System.Collections.Generic;
 using Assets.Source.Features.GameState;
+using Assets.Source.Features.Statistics;
 using Assets.Source.Mvc.Models.Enum;
 using UniRx;
 
@@ -16,6 +17,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
         private readonly PlayerProfileModel _playerProfileModel;
+        private readonly IStatisticsModel _statisticsModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
         private readonly int currencyAmountAtStart;
@@ -27,6 +29,7 @@ namespace Assets.Source.Mvc.Controllers
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             PlayerProfileModel playerProfileModel,
+            IStatisticsModel statisticsModel,
             SceneTransitionService sceneTransitionService)
             : base(view)
         {
@@ -36,10 +39,11 @@ namespace Assets.Source.Mvc.Controllers
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
             _playerProfileModel = playerProfileModel;
+            _statisticsModel = statisticsModel;
             _sceneTransitionService = sceneTransitionService;
 
             currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
-            bestDistanceAtStart = _playerProfileModel.BestDistance.Value;
+            bestDistanceAtStart = _statisticsModel.BestDistance.Value;
 
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
@@ -83,7 +87,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
-            _playerProfileModel.BestDistance
+            _statisticsModel.BestDistance
                 .Subscribe(bestDist =>
                 {
                     _view.SetIsNewBestDistance(bestDistanceAtStart < bestDist);
