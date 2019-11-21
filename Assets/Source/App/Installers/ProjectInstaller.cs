@@ -18,6 +18,7 @@ namespace Assets.Source.App.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<SavegameService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SavegamePersistenceScheduler>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionService>().AsSingle();
             Container.BindInterfacesAndSelfTo<ViewAudioEventController>().AsSingle().NonLazy();
 

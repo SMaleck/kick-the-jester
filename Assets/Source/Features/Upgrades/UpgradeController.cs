@@ -11,14 +11,14 @@ namespace Assets.Source.Features.Upgrades
 {
     public class UpgradeController : AbstractDisposable
     {
-        private readonly SavegameService _savegameService;
+        private readonly ISavegameService _savegameService;
         private readonly UpgradeTreeConfig _upgradeTreeConfig;
         private readonly PlayerProfileModel _playerProfileModel;
 
         private readonly Dictionary<UpgradePathType, UpgradeModel> _upgradeModels;
 
         public UpgradeController(
-            SavegameService savegameService,
+            ISavegameService savegameService,
             UpgradeTreeConfig upgradeTreeConfig,
             PlayerProfileModel playerProfileModel)
         {

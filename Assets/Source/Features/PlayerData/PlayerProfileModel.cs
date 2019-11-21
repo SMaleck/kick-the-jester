@@ -16,7 +16,7 @@ namespace Assets.Source.Features.PlayerData
 
         public IReadOnlyReactiveProperty<bool> HasCompletedTutorial => _profileSavegame.IsFirstStart;
 
-        public PlayerProfileModel(SavegameService savegameService)
+        public PlayerProfileModel(ISavegameService savegameService)
         {
             _profileSavegame = savegameService.Savegame.ProfileSavegame;
         }

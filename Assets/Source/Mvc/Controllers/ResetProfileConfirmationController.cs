@@ -9,14 +9,14 @@ namespace Assets.Source.Mvc.Controllers
     public class ResetProfileConfirmationController : ClosableController
     {
         private readonly ResetProfileConfirmationView _view;
-        private readonly SavegameService _savegameService;
+        private readonly ISavegameService _savegameService;
         private readonly SceneTransitionService _sceneTransitionService;
         
 
         public ResetProfileConfirmationController(
             ResetProfileConfirmationView view,
             OpenPanelModel openPanelModel,
-            SavegameService savegameService, 
+            ISavegameService savegameService, 
             SceneTransitionService sceneTransitionService) 
             : base(view)
         {

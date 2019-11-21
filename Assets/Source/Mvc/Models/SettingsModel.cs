@@ -12,7 +12,7 @@ namespace Assets.Source.Mvc.Models
         public IReadOnlyReactiveProperty<bool> IsMusicMuted => _settingsSavegame.IsMusicMuted;
         public IReadOnlyReactiveProperty<bool> IsSoundMuted => _settingsSavegame.IsSoundMuted;
 
-        public SettingsModel(SavegameService savegameService)
+        public SettingsModel(ISavegameService savegameService)
         {
             _settingsSavegame = savegameService.Savegame.SettingsSavegame;
         }
