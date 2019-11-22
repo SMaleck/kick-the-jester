@@ -12,14 +12,28 @@ namespace Assets.Source.Features.Statistics
 
         public StatisticsCollectionController(
             StatisticsController statisticsController,
+            StatisticsModel statisticsModel,
+            GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
-            GameStateModel gameStateModel)
+            PlayerProfileModel playerProfileModel)
         {
             _statisticsController = statisticsController;
             _flightStatsModel = flightStatsModel;
 
             gameStateModel.OnRoundEnd
                 .Subscribe(_ => OnRoundEnd())
+                .AddTo(Disposer);
+
+            playerProfileModel.CurrencyAmount
+                .Pairwise()
+                .Where(pair => pair.Current > pair.Previous)
+                .Select(pair => pair.Current - pair.Previous)
+                .Subscribe(statisticsController.RegisterCurrencyCollected)
+                .AddTo(Disposer);
+
+            _flightStatsModel.Height
+                .Where(height => height > statisticsModel.BestHeight.Value)
+                .Subscribe(statisticsController.RegisterRoundHeight)
                 .AddTo(Disposer);
         }
 
