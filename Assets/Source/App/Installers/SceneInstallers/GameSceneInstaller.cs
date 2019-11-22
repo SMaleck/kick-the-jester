@@ -113,8 +113,11 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region CHEATS
 
-            Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
-
+            if (Application.isEditor)
+            {
+                Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
+            }
+            
             #endregion
 
             Container.BindExecutionOrder<SceneStartController>(999);

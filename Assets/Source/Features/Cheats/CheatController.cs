@@ -87,7 +87,7 @@ namespace Assets.Source.Features.Cheats
 
             if (!Enum.IsDefined(typeof(Language), nextLanguage))
             {
-                nextLanguage = default(Language);
+                nextLanguage = default;
             }
 
             TextService.SetLanguage(nextLanguage);
