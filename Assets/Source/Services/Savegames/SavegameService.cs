@@ -1,6 +1,6 @@
 ﻿using Assets.Source.Services.Savegames.Models;
 using Assets.Source.Util;
-using Assets.Source.Util.Storage;
+using Assets.Source.Util.DataStorageStrategies;
 using System;
 using UniRx;
 
@@ -8,27 +8,29 @@ namespace Assets.Source.Services.Savegames
 {
     public class SavegameService : AbstractDisposable, ISavegameService, ISavegamePersistenceService
     {
+
         private const double RequestSaveTimeoutSeconds = 1d;
         private const string FileName = "ktj_player.sav";
 
-        private SavegameData _savegameData;
-        private Savegame _savegame;
-        Savegame ISavegameService.Savegame => GetSavegame();
-
-        private readonly JsonStorage _storage;
+        private readonly IDataStorageStrategy _dataStorageStrategy;
         private readonly SerialDisposable _savegameDisposer;
         private readonly SerialDisposable _saveDisposer;
         private readonly TimeSpan _requestSaveTimeout;
 
+        private SavegameData _savegameData;
+        private Savegame _savegame;
+
+        Savegame ISavegameService.Savegame => GetSavegame();
+
         private ISavegamePersistenceService _savegamePersistenceService => this;
 
-        public SavegameService()
+        public SavegameService(IDataStorageStrategy dataStorageStrategy)
         {
+            _dataStorageStrategy = dataStorageStrategy;
+
             _savegameDisposer = new SerialDisposable().AddTo(Disposer);
             _saveDisposer = new SerialDisposable().AddTo(Disposer);
             _requestSaveTimeout = TimeSpan.FromSeconds(RequestSaveTimeoutSeconds);
-
-            _storage = new JsonStorage(FileName);
         }
 
         private Savegame GetSavegame()
@@ -43,7 +45,7 @@ namespace Assets.Source.Services.Savegames
 
         void ISavegamePersistenceService.Load()
         {
-            _savegameData = _storage.Load<SavegameData>();
+            _savegameData = _dataStorageStrategy.Load<SavegameData>(FileName);
             _savegameData = _savegameData ?? SavegameDataFactory.CreateSavegameData();
 
             SetupSavegame();
@@ -60,7 +62,7 @@ namespace Assets.Source.Services.Savegames
         void ISavegamePersistenceService.Save()
         {
             _saveDisposer.Disposable?.Dispose();
-            _storage.Save(_savegameData);
+            _dataStorageStrategy.Save(FileName, _savegameData);
         }
 
         void ISavegameService.Reset()

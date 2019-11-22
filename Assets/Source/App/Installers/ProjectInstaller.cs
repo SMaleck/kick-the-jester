@@ -6,6 +6,7 @@ using Assets.Source.Services.Audio;
 using Assets.Source.Services.Particles;
 using Assets.Source.Services.Savegames;
 using Assets.Source.Util;
+using Assets.Source.Util.DataStorageStrategies;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +18,7 @@ namespace Assets.Source.App.Installers
 
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<JsonDataStorageStrategy>().AsSingle();
             Container.BindInterfacesAndSelfTo<SavegameService>().AsSingle();
             Container.BindInterfacesAndSelfTo<SavegamePersistenceScheduler>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneTransitionService>().AsSingle();
