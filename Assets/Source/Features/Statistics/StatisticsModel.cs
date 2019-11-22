@@ -10,11 +10,9 @@ namespace Assets.Source.Features.Statistics
     {
         private readonly StatisticsSavegame _statisticsSavegame;
 
+        public IReadOnlyReactiveProperty<float> BestHeight => _statisticsSavegame.BestHeight;
         public IReadOnlyReactiveProperty<float> BestDistance => _statisticsSavegame.BestDistance;
         public IReadOnlyReactiveProperty<float> TotalDistance => _statisticsSavegame.TotalDistance;
-
-        public IReadOnlyReactiveProperty<float> BestHeight => _statisticsSavegame.BestHeight;
-        public IReadOnlyReactiveProperty<float> TotalHeight => _statisticsSavegame.TotalHeight;
 
         public IReadOnlyReactiveProperty<int> TotalCurrencyCollected => _statisticsSavegame.TotalCurrencyCollected;
         public IReadOnlyReactiveProperty<int> TotalRoundsPlayed => _statisticsSavegame.TotalRoundsPlayed;
@@ -40,11 +38,6 @@ namespace Assets.Source.Features.Statistics
         {
             var current = _statisticsSavegame.BestHeight.Value;
             _statisticsSavegame.BestHeight.Value = Math.Max(current, value);
-        }
-
-        public void AddToTotalHeight(float value)
-        {
-            _statisticsSavegame.TotalHeight.Value += value;
         }
 
         public void AddToTotalCurrencyCollected(int value)

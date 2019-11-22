@@ -51,7 +51,6 @@ namespace Assets.Source.Services.Savegames
                 BestDistance = 0,
                 TotalDistance = 0,
                 BestHeight = 0,
-                TotalHeight = 0,
                 TotalCurrencyCollected = 0,
                 TotalRoundsPlayed = 0,
                 HasReachedMoon = false

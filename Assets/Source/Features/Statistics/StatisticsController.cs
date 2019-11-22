@@ -4,7 +4,7 @@ namespace Assets.Source.Features.Statistics
 {
     public class StatisticsController : AbstractDisposable
     {
-        private const float HasReachedMoonHeightUnits = 100;
+        private const float HasReachedMoonHeightUnits = 230;
 
         private readonly StatisticsModel _statisticsModel;
 
@@ -22,7 +22,6 @@ namespace Assets.Source.Features.Statistics
         public void RegisterRoundHeight(float height)
         {
             _statisticsModel.SetBestHeight(height);
-            _statisticsModel.AddToTotalHeight(height);
 
             var hasReachedMoon = height.ToUnits() >= HasReachedMoonHeightUnits;
             _statisticsModel.SetHasReachedMoon(hasReachedMoon);
@@ -31,6 +30,11 @@ namespace Assets.Source.Features.Statistics
         public void RegisterRoundEnd()
         {
             _statisticsModel.IncrementTotalRoundsPlayed();
+        }
+
+        public void RegisterCurrencyCollected(int value)
+        {
+            _statisticsModel.AddToTotalCurrencyCollected(value);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Assets.Source.Services.Savegames.Models
         public float TotalDistance;
 
         public float BestHeight;
-        public float TotalHeight;
 
         public int TotalCurrencyCollected;
         public int TotalRoundsPlayed;
@@ -21,7 +20,6 @@ namespace Assets.Source.Services.Savegames.Models
         public readonly ReactiveProperty<float> TotalDistance;
 
         public readonly ReactiveProperty<float> BestHeight;
-        public readonly ReactiveProperty<float> TotalHeight;
 
         public readonly ReactiveProperty<int> TotalCurrencyCollected;
         public readonly ReactiveProperty<int> TotalRoundsPlayed;
@@ -42,11 +40,6 @@ namespace Assets.Source.Services.Savegames.Models
             BestHeight = CreateBoundProperty(
                 data.BestHeight,
                 value => { data.BestHeight = value; },
-                Disposer);
-
-            TotalHeight = CreateBoundProperty(
-                data.TotalHeight,
-                value => { data.TotalHeight = value; },
                 Disposer);
 
             TotalCurrencyCollected = CreateBoundProperty(
