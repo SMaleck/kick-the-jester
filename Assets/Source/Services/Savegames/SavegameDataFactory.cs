@@ -1,4 +1,7 @@
-﻿using Assets.Source.Services.Savegames.Models;
+﻿using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Services.Savegames.Models;
+using Assets.Source.Util;
+using System.Linq;
 
 namespace Assets.Source.Services.Savegames
 {
@@ -26,12 +29,23 @@ namespace Assets.Source.Services.Savegames
 
         private static UpgradesSavegameData CreateUpgradesSavegameData()
         {
+            var upgradeSavegames = EnumHelper<UpgradePathType>
+                .Iterator
+                .Select(CreateUpgradeSavegameData)
+                .ToList();
+
             return new UpgradesSavegameData()
             {
-                MaxVelocityLevel = 0,
-                KickForceLevel = 0,
-                ShootForceLevel = 0,
-                ShootCountLevel = 0
+                UpgradeSavegames = upgradeSavegames
+            };
+        }
+
+        private static UpgradeSavegameData CreateUpgradeSavegameData(UpgradePathType upgradePathType)
+        {
+            return new UpgradeSavegameData()
+            {
+                UpgradePathType = (int)upgradePathType,
+                Level = 0
             };
         }
 

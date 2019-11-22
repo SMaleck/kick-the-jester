@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Features.Upgrades.Data;
+using Assets.Source.Services.Savegames.Models;
 using Assets.Source.Util;
 using System;
 using UniRx;
@@ -7,11 +8,12 @@ namespace Assets.Source.Features.Upgrades
 {
     public class UpgradeModel : AbstractDisposable
     {
-        public readonly UpgradePathType UpgradePathType;
+        private readonly UpgradeSavegame _upgradeSavegame;
         private readonly UpgradeTreeConfig.UpgradePath _upgradePath;
 
-        private readonly ReactiveProperty<int> _level;
-        public IReadOnlyReactiveProperty<int> Level => _level;
+        public UpgradePathType UpgradePathType => _upgradeSavegame.UpgradePathType.Value;
+
+        public IReadOnlyReactiveProperty<int> Level => _upgradeSavegame.Level;
 
         private readonly ReactiveProperty<float> _value;
         public IReadOnlyReactiveProperty<float> Value => _value;
@@ -26,12 +28,10 @@ namespace Assets.Source.Features.Upgrades
         public IReadOnlyReactiveProperty<bool> CanAfford => _canAfford;
 
         public UpgradeModel(
-            UpgradePathType upgradeType,
-            UpgradeTreeConfig data,
-            ReactiveProperty<int> level)
+            UpgradeSavegame upgradeSavegame,
+            UpgradeTreeConfig data)
         {
-            UpgradePathType = upgradeType;
-            _level = level;
+            _upgradeSavegame = upgradeSavegame;
 
             _value = new ReactiveProperty<float>().AddTo(Disposer);
             _isMaxed = new ReactiveProperty<bool>().AddTo(Disposer);
@@ -40,12 +40,12 @@ namespace Assets.Source.Features.Upgrades
 
             _upgradePath = data.GetUpgradePath(UpgradePathType);
 
-            _level.Subscribe(_ => UpdateUpgradeValues());
+            Level.Subscribe(_ => UpdateUpgradeValues());
         }
 
         public void SetLevel(int level)
         {
-            _level.Value = Math.Min(_upgradePath.MaxLevel, level);
+            _upgradeSavegame.Level.Value = Math.Min(_upgradePath.MaxLevel, level);
         }
 
         public void SetCanAfford(bool canAfford)
@@ -55,11 +55,11 @@ namespace Assets.Source.Features.Upgrades
 
         private void UpdateUpgradeValues()
         {
-            _value.Value = _upgradePath.Steps[_level.Value].Value;
+            _value.Value = _upgradePath.Steps[Level.Value].Value;
 
-            var isMaxed = _level.Value >= _upgradePath.MaxLevel;
+            var isMaxed = Level.Value >= _upgradePath.MaxLevel;
             _isMaxed.Value = isMaxed;
-            _cost.Value = isMaxed ? 0 : _upgradePath.Steps[_level.Value + 1].Cost;
+            _cost.Value = isMaxed ? 0 : _upgradePath.Steps[Level.Value + 1].Cost;
         }
     }
 }

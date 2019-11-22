@@ -1,43 +1,29 @@
-﻿using UniRx;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UniRx;
 
 namespace Assets.Source.Services.Savegames.Models
 {
     public class UpgradesSavegameData : AbstractSavegameData
     {
-        public int MaxVelocityLevel;
-        public int KickForceLevel;
-        public int ShootForceLevel;
-        public int ShootCountLevel;
+        public List<UpgradeSavegameData> UpgradeSavegames;
     }
 
     public class UpgradesSavegame : AbstractSavegame
     {
-        public readonly ReactiveProperty<int> MaxVelocityLevel;
-        public readonly ReactiveProperty<int> KickForceLevel;
-        public readonly ReactiveProperty<int> ShootForceLevel;
-        public readonly ReactiveProperty<int> ShootCountLevel;
+        public readonly ReactiveCollection<UpgradeSavegame> UpgradeSavegames;
 
         public UpgradesSavegame(UpgradesSavegameData data)
         {
-            MaxVelocityLevel = CreateBoundProperty(
-                data.MaxVelocityLevel,
-                value => { data.MaxVelocityLevel = value; },
-                Disposer);
+            var upgradeSavegamesList = data.UpgradeSavegames
+                .Select(CreateUpgradeSavegame);
 
-            KickForceLevel = CreateBoundProperty(
-                data.KickForceLevel,
-                value => { data.KickForceLevel = value; },
-                Disposer);
+            UpgradeSavegames = new ReactiveCollection<UpgradeSavegame>(upgradeSavegamesList);
+        }
 
-            ShootForceLevel = CreateBoundProperty(
-                data.ShootForceLevel,
-                value => { data.ShootForceLevel = value; },
-                Disposer);
-
-            ShootCountLevel = CreateBoundProperty(
-                data.ShootCountLevel,
-                value => { data.ShootCountLevel = value; },
-                Disposer);
+        private UpgradeSavegame CreateUpgradeSavegame(UpgradeSavegameData data)
+        {
+            return new UpgradeSavegame(data);
         }
     }
 }

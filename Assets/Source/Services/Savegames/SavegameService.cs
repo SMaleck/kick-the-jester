@@ -8,7 +8,6 @@ namespace Assets.Source.Services.Savegames
 {
     public class SavegameService : AbstractDisposable, ISavegameService, ISavegamePersistenceService
     {
-
         private const double RequestSaveTimeoutSeconds = 1d;
         private const string FileName = "ktj_player.sav";
 

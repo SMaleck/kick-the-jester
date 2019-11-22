@@ -5,6 +5,7 @@ using Assets.Source.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Source.Services.Savegames.Models;
 using UniRx;
 
 namespace Assets.Source.Features.Upgrades
@@ -82,48 +83,19 @@ namespace Assets.Source.Features.Upgrades
 
         private Dictionary<UpgradePathType, UpgradeModel> CreateUpgradeModels()
         {
-            var upgradeModels = new Dictionary<UpgradePathType, UpgradeModel>();
-
-            EnumHelper<UpgradePathType>.Iterator.ToList()
-                .ForEach(upgradePath =>
-                {
-                    var upgradeModel = CreateUpgradeModel(upgradePath);
-                    upgradeModels.Add(upgradePath, upgradeModel);
-                });
-
-            return upgradeModels;
-        }
-
-        private UpgradeModel CreateUpgradeModel(UpgradePathType upgradePath)
-        {
-            return new UpgradeModel(
-                    upgradePath,
-                    _upgradeTreeConfig,
-                    GetLevelSavegame(upgradePath))
-                .AddTo(Disposer);
-        }
-
-        private ReactiveProperty<int> GetLevelSavegame(UpgradePathType upgradePath)
-        {
             var upgradesSavegame = _savegameService.Savegame.UpgradesSavegame;
 
-            switch (upgradePath)
-            {
-                case UpgradePathType.KickForce:
-                    return upgradesSavegame.KickForceLevel;
+            return upgradesSavegame.UpgradeSavegames
+                .Select(CreateUpgradeModel)
+                .ToDictionary(model => model.UpgradePathType, model => model);
+        }
 
-                case UpgradePathType.ShootForce:
-                    return upgradesSavegame.ShootForceLevel;
-
-                case UpgradePathType.ProjectileCount:
-                    return upgradesSavegame.ShootCountLevel;
-
-                case UpgradePathType.VelocityCap:
-                    return upgradesSavegame.MaxVelocityLevel;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(upgradePath), upgradePath, null);
-            }
+        private UpgradeModel CreateUpgradeModel(UpgradeSavegame upgradeSavegame)
+        {
+            return new UpgradeModel(
+                    upgradeSavegame,
+                    _upgradeTreeConfig)
+                .AddTo(Disposer);
         }
 
         private void UpdateAllCanAfford()
