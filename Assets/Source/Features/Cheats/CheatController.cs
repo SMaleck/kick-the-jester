@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Mvc.Controllers;
 using Assets.Source.Services;
 using Assets.Source.Services.Localization;
 using Assets.Source.Util;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Source.Features.Cheats
 {
-    public class CheatController : AbstractDisposable
+    public class CheatController : AbstractController
     {
         private const string GiveMuchCurrencyKey = "c";
         private const int MuchMoneyAmount = 100000000;
@@ -29,16 +30,49 @@ namespace Assets.Source.Features.Cheats
         private readonly SceneTransitionService _sceneTransitionService;
 
         public CheatController(
+            CheatView cheatView,
             PlayerProfileModel playerProfileModel,
             FlightStatsModel flightStatsModel,
             SceneTransitionService sceneTransitionService)
+            : base(cheatView)
         {
+            cheatView.Initialize();
+
             _playerProfileModel = playerProfileModel;
             _flightStatsModel = flightStatsModel;
             _sceneTransitionService = sceneTransitionService;
 
+            if (!Debug.isDebugBuild)
+            {
+                return;
+            }
+
             Observable.EveryUpdate()
                 .Subscribe(_ => CheckAllCheatKeys())
+                .AddTo(Disposer);
+
+            cheatView.OnGiveMuchCurrencyClicked
+                .Subscribe(_ => GiveMuchCurrency())
+                .AddTo(Disposer);
+
+            cheatView.OnGiveMuchCurrencyClicked
+                .Subscribe(_ => GiveMuchCurrency())
+                .AddTo(Disposer);
+
+            cheatView.OnSlowTimeClicked
+                .Subscribe(_ => SlowTime())
+                .AddTo(Disposer);
+
+            cheatView.OnAddPickupClicked
+                .Subscribe(_ => AddPickup())
+                .AddTo(Disposer);
+
+            cheatView.OnAddProjectileClicked
+                .Subscribe(_ => AddProjectiles())
+                .AddTo(Disposer);
+
+            cheatView.OnSwitchLanguageClicked
+                .Subscribe(_ => SwitchLanguage())
                 .AddTo(Disposer);
         }
 

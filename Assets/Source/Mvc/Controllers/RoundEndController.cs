@@ -1,12 +1,11 @@
-﻿using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models;
+﻿using Assets.Source.Features.GameState;
+using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Statistics;
+using Assets.Source.Mvc.Models.Enum;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using System.Collections.Generic;
-using Assets.Source.Features.GameState;
-using Assets.Source.Features.Statistics;
-using Assets.Source.Mvc.Models.Enum;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers

@@ -26,6 +26,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
         [SerializeField] public ResetProfileConfirmationView ShopConfirmResetView;
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
+        [SerializeField] public CheatView CheatView;
 
         public override void InstallBindings()
         {
@@ -113,11 +114,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region CHEATS
 
-            if (Application.isEditor)
-            {
-                Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
-            }
-            
+            Container.BindInstance(CheatView).AsSingle();
+            Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
+
             #endregion
 
             Container.BindExecutionOrder<SceneStartController>(999);
