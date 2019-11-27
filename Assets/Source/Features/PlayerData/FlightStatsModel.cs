@@ -16,7 +16,9 @@ namespace Assets.Source.Features.PlayerData
 
         public ReactiveCollection<int> Gains;
         public IntReactiveProperty Collected;
-        public IntReactiveProperty Earned;
+
+        private readonly ReactiveProperty<int> _earned;
+        public IReadOnlyReactiveProperty<int> Earned => _earned;
 
         public FlightStatsModel()
         {
@@ -28,7 +30,8 @@ namespace Assets.Source.Features.PlayerData
             ShotsRemaining = new IntReactiveProperty().AddTo(Disposer);
             Gains = new ReactiveCollection<int>().AddTo(Disposer);
             Collected = new IntReactiveProperty().AddTo(Disposer);
-            Earned = new IntReactiveProperty().AddTo(Disposer);
+
+            _earned = new ReactiveProperty<int>().AddTo(Disposer);
         }
 
         public void SetRemainingShotsIfHigher(int amount)
@@ -37,6 +40,11 @@ namespace Assets.Source.Features.PlayerData
             {
                 ShotsRemaining.Value = amount;
             }
+        }
+
+        public void SetEarned(int value)
+        {
+            _earned.Value = value;
         }
     }
 }

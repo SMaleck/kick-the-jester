@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;
 using UnityEngine;
@@ -8,9 +7,9 @@ using UnityEngine;
 namespace Assets.Source.Entities.Jester.Components
 {
     public class FlightRecorder : AbstractPausableComponent<JesterEntity>
-    {        
+    {
         private readonly Vector3 origin;
-        private readonly FlightStatsModel _flightStatsModel;        
+        private readonly FlightStatsModel _flightStatsModel;
 
         private bool _canCheckForIsLanded = false;
         private bool _isLanded = false;
@@ -20,7 +19,7 @@ namespace Assets.Source.Entities.Jester.Components
             : base(owner)
         {
             origin = owner.GoTransform.position;
-            _flightStatsModel = flightStatsModel;            
+            _flightStatsModel = flightStatsModel;
 
             owner.OnKicked
                 .Subscribe(_ => _canCheckForIsLanded = true)

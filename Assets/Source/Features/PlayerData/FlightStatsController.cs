@@ -40,7 +40,9 @@ namespace Assets.Source.Features.PlayerData
         private void OnRoundEnd()
         {
             var distance = _flightStatsModel.Distance.Value;
-            _flightStatsModel.Earned.Value += Mathf.RoundToInt(distance.ToMeters() * _balancingConfig.MeterToGoldFactor);
+            var earned = _flightStatsModel.Earned.Value;
+            var totalEarned = earned + Mathf.RoundToInt(distance.ToMeters() * _balancingConfig.MeterToGoldFactor);
+            _flightStatsModel.SetEarned(totalEarned);
 
             var total = _flightStatsModel.Collected.Value + _flightStatsModel.Earned.Value;
 

@@ -55,6 +55,7 @@ namespace Assets.Source.Mvc.Controllers
 
             _closableViewMediator.OnViewOpened
                 .Where(viewType => viewType == ClosableViewType.RoundEnd)
+                .DelayFrame(1)
                 .Subscribe(_ => OnOpenCompleted())
                 .AddTo(Disposer);
 

@@ -1,7 +1,6 @@
 ﻿using Assets.Source.Features.Upgrades.Data;
-using Assets.Source.Services;
-using System;
 using Assets.Source.Services.Localization;
+using System;
 using TMPro;
 using UniRx;
 using UnityEngine;
