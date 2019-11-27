@@ -8,6 +8,7 @@ using Zenject;
 
 namespace Assets.Source.Mvc.Views.Components
 {
+    // ToDo Implement Panel animation
     public class ClosableViewAnimation : AbstractDisposableMonoBehaviour, IInitializable
     {
         public void Initialize()
