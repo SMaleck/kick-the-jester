@@ -1,52 +1,52 @@
 ﻿using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models.ViewModels;
+using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using Assets.Source.Services.Audio;
+using Assets.Source.Util;
 using System;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class TitleController : AbstractController
+    public class TitleController : AbstractDisposable
     {
         private readonly TitleView _view;
-        private readonly OpenPanelModel _openPanelModel;
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly AudioService _audioService;
+        private readonly IClosableViewMediator _closableViewMediator;
 
         private const float StartDelayFactor = 0.3f;
 
         public TitleController(
             TitleView view,
-            OpenPanelModel openPanelModel,
             PlayerProfileModel playerProfileModel,
             SceneTransitionService sceneTransitionService,
-            AudioService audioService)
-            : base(view)
+            AudioService audioService,
+            IClosableViewMediator closableViewMediator)
         {
             _view = view;
 
-            _openPanelModel = openPanelModel;
             _playerProfileModel = playerProfileModel;
             _sceneTransitionService = sceneTransitionService;
             _audioService = audioService;
+            _closableViewMediator = closableViewMediator;
 
             _view.OnStartClicked
                 .Subscribe(_ => OnStartClicked())
                 .AddTo(Disposer);
 
             _view.OnSettingsClicked
-                .Subscribe(_ => openPanelModel.OpenSettings())
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Settings))
                 .AddTo(Disposer);
 
             _view.OnCreditsClicked
-                .Subscribe(_ => openPanelModel.OpenCredits())
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Credits))
                 .AddTo(Disposer);
 
             _view.OnTutorialClicked
-                .Subscribe(_ => openPanelModel.OpenTutorial())
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Tutorial))
                 .AddTo(Disposer);
         }
 
@@ -57,7 +57,7 @@ namespace Assets.Source.Mvc.Controllers
 
             if (!_playerProfileModel.HasCompletedTutorial.Value)
             {
-                _openPanelModel.OpenTutorial();
+                _closableViewMediator.Open(ClosableViewType.Tutorial);
                 return;
             }
 

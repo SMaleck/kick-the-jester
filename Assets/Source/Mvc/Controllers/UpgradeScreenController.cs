@@ -1,17 +1,17 @@
-﻿using Assets.Source.Features.Upgrades;
+﻿using Assets.Source.Features.PlayerData;
+using Assets.Source.Features.Upgrades;
 using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Mvc.Data;
-using Assets.Source.Mvc.Models.ViewModels;
+using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Services;
 using Assets.Source.Util;
 using System.Linq;
-using Assets.Source.Features.PlayerData;
-using Assets.Source.Services;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class UpgradeScreenController : ClosableController
+    public class UpgradeScreenController : AbstractDisposable
     {
         private readonly UpgradeScreenView _upgradeScreenView;
         private readonly ViewPrefabConfig _viewPrefabConfig;
@@ -20,13 +20,12 @@ namespace Assets.Source.Mvc.Controllers
 
         public UpgradeScreenController(
             UpgradeScreenView view,
-            OpenPanelModel openPanelModel,
             ViewPrefabConfig viewPrefabConfig,
             UpgradeItemView.Factory upgradeItemViewFactory,
             UpgradeController upgradeController,
             PlayerProfileModel playerProfileModel,
-            SceneTransitionService sceneTransitionService)
-            : base(view)
+            SceneTransitionService sceneTransitionService,
+            IClosableViewMediator closableViewMediator)
         {
             _upgradeScreenView = view;
             _viewPrefabConfig = viewPrefabConfig;
@@ -37,16 +36,12 @@ namespace Assets.Source.Mvc.Controllers
                 .ToList()
                 .ForEach(CreateUpgradeItemView);
 
-            openPanelModel.OnOpenUpgrades
-                .Subscribe(_ => Open())
-                .AddTo(Disposer);
-
             view.OnPlayAgainClicked
                 .Subscribe(_ => sceneTransitionService.ToGame())
                 .AddTo(Disposer);
 
             view.OnResetClicked
-                .Subscribe(_ => openPanelModel.OpenResetConfirmation())
+                .Subscribe(_ => closableViewMediator.Open(ClosableViewType.ResetProfileConfirmation))
                 .AddTo(Disposer);
 
             playerProfileModel.CurrencyAmount

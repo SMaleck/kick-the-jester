@@ -1,33 +1,27 @@
-﻿using Assets.Source.Mvc.Models.ViewModels;
-using Assets.Source.Mvc.Views;
+﻿using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using Assets.Source.Services.Savegames;
+using Assets.Source.Util;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class ResetProfileConfirmationController : ClosableController
+    public class ResetProfileConfirmationController : AbstractDisposable
     {
         private readonly ResetProfileConfirmationView _view;
         private readonly ISavegameService _savegameService;
         private readonly SceneTransitionService _sceneTransitionService;
-        
+
 
         public ResetProfileConfirmationController(
             ResetProfileConfirmationView view,
-            OpenPanelModel openPanelModel,
-            ISavegameService savegameService, 
-            SceneTransitionService sceneTransitionService) 
-            : base(view)
+            ISavegameService savegameService,
+            SceneTransitionService sceneTransitionService)
         {
             _view = view;
 
             _savegameService = savegameService;
             _sceneTransitionService = sceneTransitionService;
-
-            openPanelModel.OnOpenResetConfirmation
-                .Subscribe(_ => Open())
-                .AddTo(Disposer);
 
             _view.OnResetConfirmClicked
                 .Subscribe(_ => OnResetConfirmed())
@@ -35,7 +29,7 @@ namespace Assets.Source.Mvc.Controllers
         }
 
         private void OnResetConfirmed()
-        {            
+        {
             _savegameService.Reset();
             _sceneTransitionService.ToTitle();
         }

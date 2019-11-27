@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using Assets.Source.Services;
-using Assets.Source.Services.Localization;
+﻿using Assets.Source.Services.Localization;
+using System.Collections.Generic;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
-{   
-    public class CreditsView : ClosableView
+{
+    public class CreditsView : AbstractView
     {
         [Header("Panal Content")]
         [SerializeField] private TextMeshProUGUI _panelTitleText;
@@ -40,20 +39,18 @@ namespace Assets.Source.Mvc.Views
         private readonly string tristanUrl = "https://www.tristanlohengrin.fr/";
         private readonly string noiseForFunUrl = "http://www.noiseforfun.com/";
 
-        
+
         public override void Setup()
         {
-            base.Setup();
-
-            #if !UNITY_WEBGL
+#if !UNITY_WEBGL
 
             SetupDefaultView();
 
-            #else
+#else
 
             SetupWebView();
 
-            #endif
+#endif
 
             UpdateTexts();
         }

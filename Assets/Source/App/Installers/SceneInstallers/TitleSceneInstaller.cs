@@ -3,15 +3,13 @@ using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Models;
-using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Source.App.Installers.SceneInstallers
 {
-    public class TitleSceneInstaller : MonoInstaller
+    public class TitleSceneInstaller : AbstractSceneInstaller
     {
         [SerializeField] public TitleView TitleView;
         [SerializeField] public SettingsView SettingsView;
@@ -19,7 +17,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public TutorialView TutorialView;
         [SerializeField] public ResetProfileConfirmationView ShopConfirmResetView;
 
-        public override void InstallBindings()
+        protected override void InstallSceneBindings()
         {
             Container.BindInterfacesAndSelfTo<ClosableViewMediator>().AsSingle().NonLazy();
             Container.BindFactory<IClosableView, ClosableViewController, ClosableViewController.Factory>();
@@ -31,7 +29,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<SettingsController>().AsSingle().NonLazy();
 
             Container.BindInstance(CreditsView).AsSingle();
-            Container.BindInterfacesAndSelfTo<CreditsController>().AsSingle().NonLazy();
 
             Container.BindInstance(TutorialView).AsSingle();
             Container.BindInterfacesAndSelfTo<TutorialController>().AsSingle().NonLazy();
@@ -44,16 +41,12 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region MODELS
 
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
 
             #endregion
 
             Container.BindExecutionOrder<TitleSceneInitializer>(998);
             Container.BindInterfacesAndSelfTo<TitleSceneInitializer>().AsSingle().NonLazy();
-
-            Container.BindExecutionOrder<SceneStartController>(999);
-            Container.BindInterfacesAndSelfTo<SceneStartController>().AsSingle().NonLazy();
         }
     }
 }

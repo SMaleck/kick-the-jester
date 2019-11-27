@@ -1,13 +1,12 @@
 ﻿using Assets.Source.Mvc.Data;
 using Assets.Source.Mvc.Models.Enum;
 using Assets.Source.Mvc.Views.PartialViews;
-using Assets.Source.Services;
+using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -16,7 +15,7 @@ using Zenject;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class RoundEndView : ClosableView
+    public class RoundEndView : AbstractView
     {
         [Header("Labels")]
         [SerializeField] TextMeshProUGUI _distanceReachedText;
@@ -56,8 +55,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            base.Setup();
-
             _onRetryClicked.AddTo(Disposer);
             _onRetryClicked.BindTo(_retryButton).AddTo(Disposer);
 

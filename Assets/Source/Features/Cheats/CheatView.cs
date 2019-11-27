@@ -1,19 +1,18 @@
 ﻿using Assets.Source.Mvc.Views;
+using Assets.Source.Mvc.Views.Components;
 using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Assets.Source.Features.Cheats
 {
-    public class CheatView : ClosableView
+    public class CheatView : AbstractView
     {
-        public class Factory : PlaceholderFactory<UnityEngine.Object, CheatView> { }
-
         [Header("Opening")]
         [SerializeField] private GameObject _openButtonParent;
         [SerializeField] private Button _openButton;
+        [SerializeField] private ClosableView _closableView;
 
         [Header("Cheat Buttons")]
         [SerializeField] private Button _giveMuchCurrencyButton;
@@ -40,8 +39,6 @@ namespace Assets.Source.Features.Cheats
 
         public override void Setup()
         {
-            base.Setup();
-
             if (!Debug.isDebugBuild)
             {
                 SetActive(false);
@@ -50,7 +47,7 @@ namespace Assets.Source.Features.Cheats
             }
 
             _openButton.OnClickAsObservable()
-                .Subscribe(_ => Open())
+                .Subscribe(_ => _closableView.Open())
                 .AddTo(Disposer);
 
             _onGiveMuchCurrencyClicked.AddTo(Disposer);

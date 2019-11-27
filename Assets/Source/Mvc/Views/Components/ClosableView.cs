@@ -16,39 +16,43 @@ namespace Assets.Source.Mvc.Views.Components
         [SerializeField] private Button _closeButton;
         [SerializeField] private bool _startClosed = true;
 
-        private Subject<Unit> _onOpen;
-        public IObservable<Unit> OnOpen => _onOpen;
+        public bool IsOpen => _closableParent.gameObject.activeSelf;
 
-        private Subject<Unit> _onClose;
-        public IObservable<Unit> OnClose => _onClose;
+        private Subject<Unit> _onViewOpened;
+        public IObservable<Unit> OnViewOpened => _onViewOpened;
+
+        private Subject<Unit> _onViewClosed;
+        public IObservable<Unit> OnViewClosed => _onViewClosed;
+
+        private readonly ReactiveCommand _onCloseClicked = new ReactiveCommand();
+        public IObservable<Unit> OnCloseClicked => _onCloseClicked;
 
         public void Initialize()
         {
             _closableParent = _closableParent ?? gameObject;
 
-            _onOpen = new Subject<Unit>().AddTo(Disposer);
-            _onClose = new Subject<Unit>().AddTo(Disposer);
+            _onViewOpened = new Subject<Unit>().AddTo(Disposer);
+            _onViewClosed = new Subject<Unit>().AddTo(Disposer);
 
-            _closeButton?.OnClickAsObservable()
-                .Subscribe(_ => Close())
-                .AddTo(Disposer);
-
-            if (_startClosed)
+            if (_closeButton != null)
             {
-                _closableParent.SetActive(false);
+                _onCloseClicked.AddTo(Disposer);
+                _onCloseClicked.BindTo(_closeButton).AddTo(Disposer);
             }
+
+            _closableParent.SetActive(!_startClosed);
         }
 
         public void Open()
         {
             _closableParent.SetActive(true);
-            _onOpen.OnNext(Unit.Default);
+            _onViewOpened.OnNext(Unit.Default);
         }
 
         public void Close()
         {
             _closableParent.SetActive(false);
-            _onOpen.OnNext(Unit.Default);
+            _onViewOpened.OnNext(Unit.Default);
         }
     }
 }

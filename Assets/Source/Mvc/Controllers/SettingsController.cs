@@ -1,23 +1,23 @@
-﻿using Assets.Source.Mvc.Models;
-using Assets.Source.Mvc.Models.ViewModels;
+﻿using Assets.Source.Mvc.Mediation;
+using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using Assets.Source.Services.Localization;
+using Assets.Source.Util;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class SettingsController : ClosableController
+    public class SettingsController : AbstractDisposable
     {
         private readonly SettingsView _view;
         private readonly SceneTransitionService _sceneTransitionService;
 
         public SettingsController(
             SettingsView view,
-            OpenPanelModel openPanelModel,
             SettingsModel settingsModel,
-            SceneTransitionService sceneTransitionService)
-            : base(view)
+            SceneTransitionService sceneTransitionService,
+            IClosableViewMediator closableViewMediator)
         {
             _view = view;
 
@@ -50,11 +50,7 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnResetProfileClicked
-                .Subscribe(_ => openPanelModel.OpenResetConfirmation())
-                .AddTo(Disposer);
-
-            openPanelModel.OnOpenSettings
-                .Subscribe(_ => Open())
+                .Subscribe(_ => closableViewMediator.Open(ClosableViewType.ResetProfileConfirmation))
                 .AddTo(Disposer);
         }
 

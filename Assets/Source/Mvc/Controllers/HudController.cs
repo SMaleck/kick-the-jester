@@ -4,11 +4,12 @@ using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Statistics;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Views;
+using Assets.Source.Util;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class HudController : AbstractController
+    public class HudController : AbstractDisposable
     {
         private readonly HudView _view;
         private readonly GameStateModel _gameStateModel;
@@ -26,7 +27,6 @@ namespace Assets.Source.Mvc.Controllers
             IStatisticsModel statisticsModel,
             UserInputModel userInputModel,
             CameraConfig cameraConfig)
-            : base(view)
         {
             _view = view;
 

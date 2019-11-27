@@ -1,11 +1,12 @@
 ﻿using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
+using Assets.Source.Util;
 using DG.Tweening;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class ScreenFadeController : AbstractController
+    public class ScreenFadeController : AbstractDisposable
     {
         private readonly ScreenFadeView _view;
         private readonly SceneTransitionService _sceneTransitionService;
@@ -13,8 +14,9 @@ namespace Assets.Source.Mvc.Controllers
         private readonly float _fadeSeconds;
         private Tweener _fadeTweener;
 
-        public ScreenFadeController(ScreenFadeView view, SceneTransitionService sceneTransitionService)
-            : base(view)
+        public ScreenFadeController(
+            ScreenFadeView view, 
+            SceneTransitionService sceneTransitionService)
         {
             _view = view;
 

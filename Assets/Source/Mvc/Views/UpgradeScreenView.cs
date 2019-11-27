@@ -1,6 +1,5 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Services.Localization;
 using System;
-using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class UpgradeScreenView : ClosableView
+    public class UpgradeScreenView : AbstractView
     {
         [SerializeField] private Transform _upgradeItemsLayoutParent;
         [SerializeField] private TextMeshProUGUI _currencyAmountText;
@@ -31,8 +30,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            base.Setup();
-
             _onPlayAgainClicked.AddTo(Disposer);
             _onPlayAgainClicked.BindTo(_playAgainButton).AddTo(Disposer);
 

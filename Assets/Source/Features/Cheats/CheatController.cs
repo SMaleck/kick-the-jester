@@ -1,5 +1,4 @@
 ﻿using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Controllers;
 using Assets.Source.Services;
 using Assets.Source.Services.Localization;
 using Assets.Source.Util;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Source.Features.Cheats
 {
-    public class CheatController : AbstractController
+    public class CheatController : AbstractDisposable
     {
         private const string GiveMuchCurrencyKey = "c";
         private const int MuchMoneyAmount = 100000000;
@@ -34,7 +33,6 @@ namespace Assets.Source.Features.Cheats
             PlayerProfileModel playerProfileModel,
             FlightStatsModel flightStatsModel,
             SceneTransitionService sceneTransitionService)
-            : base(cheatView)
         {
             cheatView.Initialize();
 

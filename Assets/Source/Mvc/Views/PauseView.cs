@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class PauseView : ClosableView
+    public class PauseView : AbstractView
     {
         [Header("Labels")]
         [SerializeField] private TextMeshProUGUI _titleText;
@@ -28,8 +28,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            base.Setup();
-
             _onSettingsClicked.AddTo(Disposer);
             _onSettingsClicked.BindTo(_openSettingsButton).AddTo(Disposer);
 

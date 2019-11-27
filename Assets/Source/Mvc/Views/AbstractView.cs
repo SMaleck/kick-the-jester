@@ -16,7 +16,7 @@ namespace Assets.Source.Mvc.Views
 
         public void SetActive(bool isActive)
         {
-            this.gameObject.SetActive(true);
+            this.gameObject.SetActive(isActive);
         }
     }
 }

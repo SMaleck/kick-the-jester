@@ -1,6 +1,5 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Services.Localization;
 using System;
-using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class ResetProfileConfirmationView : ClosableView
+    public class ResetProfileConfirmationView : AbstractView
     {
         [SerializeField] private TextMeshProUGUI _resetProfileTitleText;
         [SerializeField] private TextMeshProUGUI _explanationText;
@@ -23,8 +22,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            base.Setup();
-
             _onResetConfirmClicked.AddTo(Disposer);
             _onResetConfirmClicked.BindTo(_confirmButton).AddTo(Disposer);
 

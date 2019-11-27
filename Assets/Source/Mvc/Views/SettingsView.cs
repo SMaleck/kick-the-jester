@@ -1,5 +1,4 @@
-﻿using Assets.Source.Services;
-using Assets.Source.Services.Localization;
+﻿using Assets.Source.Services.Localization;
 using System;
 using TMPro;
 using UniRx;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class SettingsView : ClosableView
+    public class SettingsView : AbstractView
     {
         [SerializeField] private TextMeshProUGUI _panelTitleText;
 
@@ -58,8 +57,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            base.Setup();
-
             _onMuteMusicToggled.AddTo(Disposer);
             _isMusicMutedToggle.OnValueChangedAsObservable()
                 .Subscribe(value => _onMuteMusicToggled.OnNext(!value))

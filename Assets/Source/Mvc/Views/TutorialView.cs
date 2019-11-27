@@ -1,9 +1,9 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Mvc.Views.Components;
+using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -11,8 +11,11 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class TutorialView : ClosableView
+    // ToDo Somehow skips a slide
+    public class TutorialView : AbstractView
     {
+        [SerializeField] private ClosableView _closableView;
+
         [SerializeField] private List<CanvasGroup> _steps;
         [SerializeField] private Button _nextButton;
         [SerializeField] private TextMeshProUGUI _instructionText;
@@ -33,8 +36,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            base.Setup();
-
             _onNextClickedOnLastSlide.AddTo(Disposer);
 
             ResetSlides();
@@ -46,7 +47,7 @@ namespace Assets.Source.Mvc.Views
             _nextButton
                 .OnClickAsObservable()
                 .Subscribe(_ => Next())
-                .AddTo(this);
+                .AddTo(Disposer);
 
             _instructionText.transform
                 .DOScale(InstructionPulseScale, InstructionPulseSeconds)
@@ -55,6 +56,10 @@ namespace Assets.Source.Mvc.Views
                 .AddTo(Disposer, TweenDisposalBehaviour.Rewind);
 
             UpdateTexts();
+
+            _closableView.OnViewOpened
+                .Subscribe(_ => ResetSlides())
+                .AddTo(Disposer);
         }
 
         private void UpdateTexts()
@@ -79,14 +84,6 @@ namespace Assets.Source.Mvc.Views
             FadeInStep(0, 0);
         }
 
-
-        public override void Open()
-        {
-            ResetSlides();
-            base.Open();
-        }
-
-
         private void Next()
         {
             // Close if this is the last step
@@ -103,13 +100,11 @@ namespace Assets.Source.Mvc.Views
             _currentStep++;
         }
 
-
         private void FadeInStep(int index, float time = -1)
         {
             time = time <= -1 ? FadeTimeSeconds : time;
             _steps[index].DOFade(1, time);
         }
-
 
         private void FadeOutStep(int index, float time = -1)
         {

@@ -1,16 +1,17 @@
 ﻿using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Statistics;
+using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Models.Enum;
-using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
+using Assets.Source.Util;
 using System.Collections.Generic;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class RoundEndController : ClosableController
+    public class RoundEndController : AbstractDisposable
     {
         private readonly RoundEndView _view;
         private readonly GameStateModel _gameStateModel;
@@ -18,19 +19,19 @@ namespace Assets.Source.Mvc.Controllers
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly IStatisticsModel _statisticsModel;
         private readonly SceneTransitionService _sceneTransitionService;
+        private readonly IClosableViewMediator _closableViewMediator;
 
-        private readonly int currencyAmountAtStart;
-        private readonly float bestDistanceAtStart;
+        private readonly int _currencyAmountAtStart;
+        private readonly float _bestDistanceAtStart;
 
         public RoundEndController(
             RoundEndView view,
-            OpenPanelModel openPanelModel,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
             PlayerProfileModel playerProfileModel,
             IStatisticsModel statisticsModel,
-            SceneTransitionService sceneTransitionService)
-            : base(view)
+            SceneTransitionService sceneTransitionService,
+            IClosableViewMediator closableViewMediator)
         {
             _view = view;
 
@@ -39,19 +40,21 @@ namespace Assets.Source.Mvc.Controllers
             _playerProfileModel = playerProfileModel;
             _statisticsModel = statisticsModel;
             _sceneTransitionService = sceneTransitionService;
+            _closableViewMediator = closableViewMediator;
 
-            currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
-            bestDistanceAtStart = _statisticsModel.BestDistance.Value;
+            _currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
+            _bestDistanceAtStart = _statisticsModel.BestDistance.Value;
 
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
                 .AddTo(Disposer);
 
             _view.OnUpgradesClicked
-                .Subscribe(_ => openPanelModel.OpenUpgrades())
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Upgrades))
                 .AddTo(Disposer);
 
-            _view.OnOpenCompleted
+            _closableViewMediator.OnViewOpened
+                .Where(viewType => viewType == ClosableViewType.RoundEnd)
                 .Subscribe(_ => OnOpenCompleted())
                 .AddTo(Disposer);
 
@@ -62,7 +65,7 @@ namespace Assets.Source.Mvc.Controllers
         {
             var results = GetResultsAsDictionary();
 
-            _view.ShowCurrencyResults(results, currencyAmountAtStart);
+            _view.ShowCurrencyResults(results, _currencyAmountAtStart);
         }
 
         private IDictionary<CurrencyGainType, int> GetResultsAsDictionary()
@@ -78,7 +81,7 @@ namespace Assets.Source.Mvc.Controllers
         private void SetupModelSubscriptions()
         {
             _gameStateModel.OnRoundEnd
-                .Subscribe(_ => Open())
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.RoundEnd))
                 .AddTo(Disposer);
 
             _flightStatsModel.Distance
@@ -88,7 +91,7 @@ namespace Assets.Source.Mvc.Controllers
             _statisticsModel.BestDistance
                 .Subscribe(bestDist =>
                 {
-                    _view.SetIsNewBestDistance(bestDistanceAtStart < bestDist);
+                    _view.SetIsNewBestDistance(_bestDistanceAtStart < bestDist);
                     _view.SetBestDistance(bestDist);
                 })
                 .AddTo(Disposer);

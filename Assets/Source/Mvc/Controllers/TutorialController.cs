@@ -1,35 +1,33 @@
 ﻿using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models.ViewModels;
+using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
+using Assets.Source.Util;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
 {
-    public class TutorialController : ClosableController
+    public class TutorialController : AbstractDisposable
     {
         private readonly TutorialView _view;
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly SceneTransitionService _sceneTransitionService;
+        private readonly IClosableViewMediator _closableViewMediator;
 
         public TutorialController(
             TutorialView view,
             PlayerProfileModel playerProfileModel,
-            OpenPanelModel openPanelModel,
-            SceneTransitionService sceneTransitionService)
-            : base(view)
+            SceneTransitionService sceneTransitionService,
+            IClosableViewMediator closableViewMediator)
         {
             _view = view;
             _playerProfileModel = playerProfileModel;
 
             _sceneTransitionService = sceneTransitionService;
+            _closableViewMediator = closableViewMediator;
 
             _view.OnNextClickedOnLastSlide
                 .Subscribe(_ => OnNextClickedOnLastSlide())
-                .AddTo(Disposer);
-
-            openPanelModel.OnOpenTutorial
-                .Subscribe(_ => Open())
                 .AddTo(Disposer);
         }
 
@@ -43,7 +41,7 @@ namespace Assets.Source.Mvc.Controllers
                 return;
             }
 
-            Close();
+            _closableViewMediator.Close(ClosableViewType.Tutorial);
         }
     }
 }

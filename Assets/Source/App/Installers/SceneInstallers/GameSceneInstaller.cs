@@ -9,17 +9,15 @@ using Assets.Source.Features.Upgrades;
 using Assets.Source.Mvc.Controllers;
 using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Models;
-using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Mvc.Views.PartialViews;
 using Assets.Source.Util;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Source.App.Installers.SceneInstallers
 {
-    public class GameSceneInstaller : MonoInstaller
+    public class GameSceneInstaller : AbstractSceneInstaller
     {
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
         [SerializeField] public HudView HudView;
@@ -30,7 +28,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
         [SerializeField] public CheatView CheatView;
 
-        public override void InstallBindings()
+        protected override void InstallSceneBindings()
         {
             #region MVC
 
@@ -66,7 +64,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<UserInputModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameStateModel>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<OpenPanelModel>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<StatisticsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<StatisticsController>().AsSingle().NonLazy();
@@ -126,9 +123,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindExecutionOrder<GameSceneInitializer>(998);
             Container.BindInterfacesAndSelfTo<GameSceneInitializer>().AsSingle().NonLazy();
-
-            Container.BindExecutionOrder<SceneStartController>(999);
-            Container.BindInterfacesAndSelfTo<SceneStartController>().AsSingle().NonLazy();
         }
     }
 }
