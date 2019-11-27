@@ -29,7 +29,6 @@ namespace Assets.Source.Mvc.Controllers
             : base(view)
         {
             _view = view;
-            _view.Initialize();
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;

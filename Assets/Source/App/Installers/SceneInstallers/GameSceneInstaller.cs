@@ -1,4 +1,5 @@
-﻿using Assets.Source.Entities.Items;
+﻿using Assets.Source.App.Initialization;
+using Assets.Source.Entities.Items;
 using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Features.Cheats;
 using Assets.Source.Features.GameState;
@@ -6,6 +7,7 @@ using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Statistics;
 using Assets.Source.Features.Upgrades;
 using Assets.Source.Mvc.Controllers;
+using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
@@ -19,18 +21,21 @@ namespace Assets.Source.App.Installers.SceneInstallers
 {
     public class GameSceneInstaller : MonoInstaller
     {
-        [SerializeField] public HudView HudView;
-        [SerializeField] public RoundEndView RoundEndView;
-        [SerializeField] public PauseView PauseView;
-        [SerializeField] public SettingsView SettingsView;
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
-        [SerializeField] public ResetProfileConfirmationView ShopConfirmResetView;
+        [SerializeField] public HudView HudView;
+        [SerializeField] public PauseView PauseView;
+        [SerializeField] public ResetProfileConfirmationView ResetProfileConfirmationView;
+        [SerializeField] public RoundEndView RoundEndView;
+        [SerializeField] public SettingsView SettingsView;
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
         [SerializeField] public CheatView CheatView;
 
         public override void InstallBindings()
         {
             #region MVC
+
+            Container.BindInterfacesAndSelfTo<ClosableViewMediator>().AsSingle().NonLazy();
+            Container.BindFactory<IClosableView, ClosableViewController, ClosableViewController.Factory>();
 
             Container.BindInstance(HudView).AsSingle();
             Container.BindPrefabFactory<PickupFeedbackView, PickupFeedbackView.Factory>();
@@ -49,7 +54,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
             Container.BindInterfacesAndSelfTo<BestDistanceMarkerController>().AsSingle().NonLazy();
 
-            Container.BindInstance(ShopConfirmResetView).AsSingle();
+            Container.BindInstance(ResetProfileConfirmationView).AsSingle();
             Container.BindInterfacesAndSelfTo<ResetProfileConfirmationController>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<AudioSettingsController>().AsSingle().NonLazy();
@@ -118,6 +123,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<CheatController>().AsSingle().NonLazy();
 
             #endregion
+
+            Container.BindExecutionOrder<GameSceneInitializer>(998);
+            Container.BindInterfacesAndSelfTo<GameSceneInitializer>().AsSingle().NonLazy();
 
             Container.BindExecutionOrder<SceneStartController>(999);
             Container.BindInterfacesAndSelfTo<SceneStartController>().AsSingle().NonLazy();

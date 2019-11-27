@@ -21,7 +21,6 @@ namespace Assets.Source.Mvc.Controllers
         {
             _view = view;
             _playerProfileModel = playerProfileModel;
-            _view.Initialize();
 
             _sceneTransitionService = sceneTransitionService;
 

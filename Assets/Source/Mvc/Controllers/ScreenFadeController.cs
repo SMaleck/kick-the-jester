@@ -17,7 +17,6 @@ namespace Assets.Source.Mvc.Controllers
             : base(view)
         {
             _view = view;
-            _view.Initialize();
 
             _sceneTransitionService = sceneTransitionService;
             _fadeSeconds = SceneTransitionService.LOADING_GRACE_PERIOD_SECONDS;

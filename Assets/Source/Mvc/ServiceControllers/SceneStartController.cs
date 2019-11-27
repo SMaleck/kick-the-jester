@@ -1,13 +1,20 @@
 ﻿using Assets.Source.Services;
-using Assets.Source.Util;
+using Zenject;
 
 namespace Assets.Source.Mvc.ServiceControllers
 {
-    public class SceneStartController : AbstractDisposable
+    public class SceneStartController : IInitializable
     {
+        private readonly SceneTransitionService _sceneTransitionService;
+
         public SceneStartController(SceneTransitionService sceneTransitionService)
         {
-            sceneTransitionService.PublishOnSceneInitComplete();
+            _sceneTransitionService = sceneTransitionService;
+        }
+
+        public void Initialize()
+        {
+            _sceneTransitionService.PublishOnSceneInitComplete();
         }
     }
 }

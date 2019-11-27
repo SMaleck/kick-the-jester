@@ -33,8 +33,6 @@ namespace Assets.Source.Mvc.Controllers
             _upgradeItemViewFactory = upgradeItemViewFactory;
             _upgradeController = upgradeController;
 
-            view.Initialize();
-
             EnumHelper<UpgradePathType>.Iterator
                 .ToList()
                 .ForEach(CreateUpgradeItemView);

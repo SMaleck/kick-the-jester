@@ -1,5 +1,7 @@
-﻿using Assets.Source.Features.PlayerData;
+﻿using Assets.Source.App.Initialization;
+using Assets.Source.Features.PlayerData;
 using Assets.Source.Mvc.Controllers;
+using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.Models.ViewModels;
 using Assets.Source.Mvc.ServiceControllers;
@@ -19,6 +21,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<ClosableViewMediator>().AsSingle().NonLazy();
+            Container.BindFactory<IClosableView, ClosableViewController, ClosableViewController.Factory>();
+
             Container.BindInstance(TitleView).AsSingle();
             Container.BindInterfacesAndSelfTo<TitleController>().AsSingle().NonLazy();
 
@@ -43,6 +48,9 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();
 
             #endregion
+
+            Container.BindExecutionOrder<TitleSceneInitializer>(998);
+            Container.BindInterfacesAndSelfTo<TitleSceneInitializer>().AsSingle().NonLazy();
 
             Container.BindExecutionOrder<SceneStartController>(999);
             Container.BindInterfacesAndSelfTo<SceneStartController>().AsSingle().NonLazy();

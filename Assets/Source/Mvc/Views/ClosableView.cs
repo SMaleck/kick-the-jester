@@ -1,12 +1,13 @@
 ﻿using Assets.Source.Util.UI;
 using System;
+using Assets.Source.Mvc.Mediation;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    public class ClosableView : AbstractView
+    public class ClosableView : AbstractView, IClosableView
     {
         [Header("Closable Settings")]
         [SerializeField] private bool _startClosed = true;
