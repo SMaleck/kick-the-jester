@@ -1,5 +1,6 @@
 ﻿using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Util
 {
@@ -9,6 +10,10 @@ namespace Assets.Source.Util
         public CompositeDisposable Disposer => _disposer ?? 
             (_disposer = new CompositeDisposable().AddTo(this));
 
-        // ToDo DISP Copy concept from Approach
+        [Inject]
+        private void Inject([InjectOptional] CompositeDisposable disposer)
+        {
+            _disposer = disposer;
+        }
     }
 }
