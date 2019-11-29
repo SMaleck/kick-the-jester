@@ -16,6 +16,8 @@ namespace Assets.Source.Mvc.Views.Components
         [SerializeField] private Button _closeButton;
         [SerializeField] private bool _startClosed = true;
 
+        private ClosableViewAnimationStrategy _animationStrategy;
+
         public bool IsOpen => _closableParent.gameObject.activeSelf;
 
         private Subject<Unit> _onViewOpened;
@@ -30,6 +32,7 @@ namespace Assets.Source.Mvc.Views.Components
         public void Initialize()
         {
             _closableParent = _closableParent ?? gameObject;
+            _animationStrategy = ClosableViewAnimationStrategy.Factory.Create(_closableParent.transform);
 
             _onViewOpened = new Subject<Unit>().AddTo(Disposer);
             _onViewClosed = new Subject<Unit>().AddTo(Disposer);
@@ -45,14 +48,14 @@ namespace Assets.Source.Mvc.Views.Components
 
         public void Open()
         {
-            _closableParent.SetActive(true);
-            _onViewOpened.OnNext(Unit.Default);
+            _animationStrategy.Open(
+                () => _onViewOpened.OnNext(Unit.Default));
         }
 
         public void Close()
         {
-            _closableParent.SetActive(false);
-            _onViewOpened.OnNext(Unit.Default);
+            _animationStrategy.Close(
+                () => _onViewClosed.OnNext(Unit.Default));
         }
     }
 }
