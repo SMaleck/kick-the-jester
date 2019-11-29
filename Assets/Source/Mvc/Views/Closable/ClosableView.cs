@@ -24,11 +24,18 @@ namespace Assets.Source.Mvc.Views.Closable
 
         public bool IsOpen => _closableParent.gameObject.activeSelf;
 
-        private Subject<Unit> _onViewOpened;
-        public IObservable<Unit> OnViewOpened => _onViewOpened;
+        private Subject<Unit> _onViewOpen;
+        public IObservable<Unit> OnViewOpen => _onViewOpen;
+        
+        private Subject<Unit> _onViewOpenCompleted;
+        public IObservable<Unit> OnViewOpenCompleted => _onViewOpenCompleted;
 
-        private Subject<Unit> _onViewClosed;
-        public IObservable<Unit> OnViewClosed => _onViewClosed;
+        private Subject<Unit> _onViewClose;
+        public IObservable<Unit> OnViewClose => _onViewClose;
+
+        private Subject<Unit> _onViewCloseCompleted;
+        public IObservable<Unit> OnViewCloseCompleted => _onViewCloseCompleted;
+
 
         private readonly ReactiveCommand _onCloseClicked = new ReactiveCommand();
         public IObservable<Unit> OnCloseClicked => _onCloseClicked;
@@ -38,8 +45,10 @@ namespace Assets.Source.Mvc.Views.Closable
             _closableParent = _closableParent ?? gameObject;
             _animationStrategy = CreateAnimationStrategy();
 
-            _onViewOpened = new Subject<Unit>().AddTo(Disposer);
-            _onViewClosed = new Subject<Unit>().AddTo(Disposer);
+            _onViewOpen = new Subject<Unit>().AddTo(Disposer);
+            _onViewOpenCompleted = new Subject<Unit>().AddTo(Disposer);
+            _onViewClose = new Subject<Unit>().AddTo(Disposer);
+            _onViewCloseCompleted = new Subject<Unit>().AddTo(Disposer);
 
             if (_closeButton != null)
             {
@@ -74,14 +83,18 @@ namespace Assets.Source.Mvc.Views.Closable
 
         public void Open()
         {
+            _onViewOpen.OnNext(Unit.Default);
+
             _animationStrategy.Open(
-                () => _onViewOpened.OnNext(Unit.Default));
+                () => _onViewOpenCompleted.OnNext(Unit.Default));
         }
 
         public void Close()
         {
+            _onViewClose.OnNext(Unit.Default);
+
             _animationStrategy.Close(
-                () => _onViewClosed.OnNext(Unit.Default));
+                () => _onViewCloseCompleted.OnNext(Unit.Default));
         }
     }
 }

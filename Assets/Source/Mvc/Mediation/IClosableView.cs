@@ -10,8 +10,12 @@ namespace Assets.Source.Mvc.Mediation
 
         bool IsOpen { get; }
 
-        IObservable<Unit> OnViewOpened { get; }
-        IObservable<Unit> OnViewClosed { get; }
+        IObservable<Unit> OnViewOpen { get; }
+        IObservable<Unit> OnViewOpenCompleted { get; }
+
+        IObservable<Unit> OnViewClose { get; }
+        IObservable<Unit> OnViewCloseCompleted { get; }
+
         IObservable<Unit> OnCloseClicked { get; }
     }
 }

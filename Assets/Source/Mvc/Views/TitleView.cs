@@ -1,7 +1,6 @@
-﻿using Assets.Source.Services;
+﻿using Assets.Source.Services.Localization;
 using Assets.Source.Util.UI;
 using System;
-using Assets.Source.Services.Localization;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -36,9 +35,6 @@ namespace Assets.Source.Mvc.Views
 
         public override void Setup()
         {
-            _onTutorialClicked.AddTo(Disposer);
-            _onCreditsClicked.AddTo(Disposer);
-
             gameObject.SetActive(true);
 
             _onStartClicked.AddTo(Disposer);

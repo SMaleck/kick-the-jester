@@ -1,5 +1,5 @@
-﻿using System;
-using Assets.Source.Util;
+﻿using Assets.Source.Util;
+using System;
 using UniRx;
 using Zenject;
 
@@ -13,18 +13,15 @@ namespace Assets.Source.Mvc.Mediation
 
         public bool IsOpen => _closableView.IsOpen;
 
-        private readonly Subject<Unit> _onViewOpened;
-        public IObservable<Unit> OnViewOpened => _onViewOpened;
+        public IObservable<Unit> OnViewOpen => _closableView.OnViewOpen;
+        public IObservable<Unit> OnViewOpenCompleted => _closableView.OnViewOpenCompleted;
 
-        private readonly Subject<Unit> _onViewClosed;
-        public IObservable<Unit> OnViewClosed => _onViewClosed;
+        public IObservable<Unit> OnViewClose => _closableView.OnViewClose;
+        public IObservable<Unit> OnViewCloseCompleted => _closableView.OnViewCloseCompleted;
 
         public ClosableViewController(IClosableView closableView)
         {
             _closableView = closableView;
-
-            _onViewOpened = new Subject<Unit>().AddTo(Disposer);
-            _onViewClosed = new Subject<Unit>().AddTo(Disposer);
 
             _closableView.OnCloseClicked
                 .Subscribe(_ => Close())
@@ -34,13 +31,11 @@ namespace Assets.Source.Mvc.Mediation
         public void Open()
         {
             _closableView.Open();
-            _onViewOpened.OnNext(Unit.Default);
         }
 
         public void Close()
         {
             _closableView.Close();
-            _onViewClosed.OnNext(Unit.Default);
         }
     }
 }

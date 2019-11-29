@@ -11,7 +11,6 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Mvc.Views
 {
-    // ToDo Somehow skips a slide
     public class TutorialView : AbstractView
     {
         [SerializeField] private ClosableView _closableView;
@@ -57,7 +56,7 @@ namespace Assets.Source.Mvc.Views
 
             UpdateTexts();
 
-            _closableView.OnViewOpened
+            _closableView.OnViewOpen
                 .Subscribe(_ => ResetSlides())
                 .AddTo(Disposer);
         }

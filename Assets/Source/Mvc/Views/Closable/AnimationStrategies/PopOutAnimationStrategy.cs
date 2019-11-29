@@ -23,14 +23,18 @@ namespace Assets.Source.Mvc.Views.Closable.AnimationStrategies
             _target.localScale = Vector3.zero;
 
             DOTween.Sequence()
-                .Append(_target.DOScale(_originalScale, TransitionTimeSeconds))
+                .Append(_target
+                    .DOScale(_originalScale, TransitionTimeSeconds)
+                    .SetEase(Ease.InOutCubic))
                 .AppendCallback(() => onComplete?.Invoke());
         }
 
         public void Close(Action onComplete)
         {
             DOTween.Sequence()
-                .Append(_target.DOScale(Vector3.zero, TransitionTimeSeconds))
+                .Append(_target
+                    .DOScale(Vector3.zero, TransitionTimeSeconds)
+                    .SetEase(Ease.InOutCubic))
                 .AppendCallback(() => _target.gameObject.SetActive(false))
                 .AppendCallback(() => onComplete?.Invoke());
         }

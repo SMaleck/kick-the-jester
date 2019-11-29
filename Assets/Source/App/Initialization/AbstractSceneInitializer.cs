@@ -10,13 +10,14 @@ namespace Assets.Source.App.Initialization
         [Inject] private readonly IClosableViewRegistrar _closableViewRegistrar;
         [Inject] private readonly ClosableViewController.Factory _closableViewControllerFactory;
 
-        protected void SetupView(AbstractView abstractView)
+        protected void SetupView<T>(T view) where T : AbstractView
         {
-            abstractView.GetComponents<IInitializable>()
+            view.GetComponents<IInitializable>()
+                .Where(viewItem => viewItem.GetType() != typeof(T))
                 .ToList()
                 .ForEach(component => component.Initialize());
 
-            abstractView.GetComponentsInChildren<IInitializable>()
+            view.GetComponentsInChildren<IInitializable>()
                 .ToList()
                 .ForEach(component => component.Initialize());
         }

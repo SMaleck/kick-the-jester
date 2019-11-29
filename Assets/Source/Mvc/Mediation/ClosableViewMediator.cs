@@ -29,11 +29,11 @@ namespace Assets.Source.Mvc.Mediation
         {
             _closableViewControllers.Add(closableViewType, closableViewController);
 
-            closableViewController.OnViewOpened
+            closableViewController.OnViewOpen
                 .Subscribe(_ => _onViewOpened.OnNext(closableViewType))
                 .AddTo(Disposer);
 
-            closableViewController.OnViewClosed
+            closableViewController.OnViewClose
                 .Subscribe(_ => _onViewClosed.OnNext(closableViewType))
                 .AddTo(Disposer);
         }
