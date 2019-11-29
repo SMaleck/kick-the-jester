@@ -4814,8 +4814,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closableParent: {fileID: 1441446416927840}
+  _canvasGroup: {fileID: 0}
   _closeButton: {fileID: 114040786593125240}
   _startClosed: 1
+  _animationType: 1
 --- !u!114 &114463140058776230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4828,16 +4830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab245fefc15e6bc47ab97e84d273f725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startClosed: 1
-  _closeButton: {fileID: 114040786593125240}
-  _closedPosition: {x: 0, y: 1080, z: 0}
-  _panelParent: {fileID: 224826435305715654}
-  _panelSliderConfig:
-    slideInFrom: 1
-    useBounce: 1
-    SoundEffectsEnabled: 1
-    SoundEffectsEnabledOnInstant: 0
-    slideTimeSeconds: 0.5
   _panelTitleText: {fileID: 114057458031006538}
   _defaultItems:
   - {fileID: 1445811236291088}

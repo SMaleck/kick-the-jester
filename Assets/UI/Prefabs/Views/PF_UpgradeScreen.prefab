@@ -816,8 +816,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closableParent: {fileID: 1625471989279062}
+  _canvasGroup: {fileID: 0}
   _closeButton: {fileID: 0}
   _startClosed: 1
+  _animationType: 1
 --- !u!1 &1480830281769114
 GameObject:
   m_ObjectHideFlags: 0

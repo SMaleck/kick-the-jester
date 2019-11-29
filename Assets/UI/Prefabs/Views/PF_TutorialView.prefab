@@ -60,8 +60,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closableParent: {fileID: 1038380524415954}
+  _canvasGroup: {fileID: 1945314801002372343}
   _closeButton: {fileID: 0}
   _startClosed: 1
+  _animationType: 2
 --- !u!114 &114208396244462766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,6 +834,7 @@ GameObject:
   - component: {fileID: 223563504894703856}
   - component: {fileID: 114314773136141366}
   - component: {fileID: 114582126150323772}
+  - component: {fileID: 1945314801002372343}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -919,6 +922,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1945314801002372343
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477936689376842}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1702502612738278
 GameObject:
   m_ObjectHideFlags: 0

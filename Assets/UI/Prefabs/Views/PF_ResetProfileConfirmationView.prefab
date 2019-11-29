@@ -127,8 +127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closableParent: {fileID: 1178226165586838}
+  _canvasGroup: {fileID: 0}
   _closeButton: {fileID: 114250689210562742}
   _startClosed: 1
+  _animationType: 1
 --- !u!114 &114496327275336662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,16 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2d9f84ee1660c4b9a7b8071f08541c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startClosed: 1
-  _closeButton: {fileID: 114250689210562742}
-  _closedPosition: {x: 0, y: 0, z: 0}
-  _panelParent: {fileID: 0}
-  _panelSliderConfig:
-    slideInFrom: 0
-    useBounce: 0
-    SoundEffectsEnabled: 1
-    SoundEffectsEnabledOnInstant: 0
-    slideTimeSeconds: 0.5
   _resetProfileTitleText: {fileID: 114923498678002296}
   _explanationText: {fileID: 114571585987602486}
   _warningText: {fileID: 114959942906199802}

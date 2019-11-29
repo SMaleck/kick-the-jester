@@ -14,23 +14,20 @@ namespace Assets.Source.App.Initialization
         [Inject] private readonly RoundEndView _roundEndView;
         [Inject] private readonly SettingsView _settingsView;
         [Inject] private readonly UpgradeScreenView _upgradeScreenView;
-        [InjectOptional] private readonly CheatView _cheatView;
+        [Inject] private readonly CheatView _cheatView;
 
         public void Initialize()
         {
             SetupView(_bestDistanceMarkerView);
             SetupView(_hudView);
 
-            if (_cheatView != null)
-            {
-                SetupView(_cheatView);
-            }
-
             SetupClosableView(_roundEndView, ClosableViewType.RoundEnd);
             SetupClosableView(_pauseView, ClosableViewType.Pause);
             SetupClosableView(_settingsView, ClosableViewType.Settings);
             SetupClosableView(_resetProfileConfirmationView, ClosableViewType.ResetProfileConfirmation);
             SetupClosableView(_upgradeScreenView, ClosableViewType.Upgrades);
+
+            SetupClosableView(_cheatView);
         }
     }
 }

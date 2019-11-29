@@ -21,6 +21,14 @@ namespace Assets.Source.App.Initialization
                 .ForEach(component => component.Initialize());
         }
 
+        protected void SetupClosableView(AbstractView abstractView)
+        {
+            SetupView(abstractView);
+
+            var closableView = abstractView.GetComponent<IClosableView>();
+            var closableViewController = _closableViewControllerFactory.Create(closableView);
+        }
+
         protected void SetupClosableView(AbstractView abstractView, ClosableViewType closableViewType)
         {
             SetupView(abstractView);
