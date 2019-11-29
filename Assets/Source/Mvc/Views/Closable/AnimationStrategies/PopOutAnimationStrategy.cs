@@ -1,26 +1,17 @@
-﻿using Assets.Source.Util;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using UnityEngine;
 
-namespace Assets.Source.Mvc.Views.Components
+namespace Assets.Source.Mvc.Views.Closable.AnimationStrategies
 {
-    public class ClosableViewAnimationStrategy : AbstractDisposable
+    public class PopOutAnimationStrategy : IIClosableViewAnimationStrategy
     {
-        public static class Factory
-        {
-            public static ClosableViewAnimationStrategy Create(Transform target)
-            {
-                return new ClosableViewAnimationStrategy(target);
-            }
-        }
-
         private const float TransitionTimeSeconds = 0.2f;
 
         private readonly Transform _target;
         private readonly Vector3 _originalScale;
 
-        public ClosableViewAnimationStrategy(Transform target)
+        public PopOutAnimationStrategy(Transform target)
         {
             _target = target;
             _originalScale = _target.localScale;

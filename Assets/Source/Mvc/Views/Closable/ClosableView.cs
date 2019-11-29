@@ -1,4 +1,5 @@
 ﻿using Assets.Source.Mvc.Mediation;
+using Assets.Source.Mvc.Views.Closable.AnimationStrategies;
 using Assets.Source.Util;
 using System;
 using UniRx;
@@ -6,17 +7,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Assets.Source.Mvc.Views.Components
+namespace Assets.Source.Mvc.Views.Closable
 {
     public class ClosableView : AbstractDisposableMonoBehaviour, IClosableView, IInitializable
     {
         [Tooltip("Leave empty to use this gameObject's transform")]
         [SerializeField] private GameObject _closableParent;
+        [SerializeField] private CanvasGroup _canvasGroup;
 
         [SerializeField] private Button _closeButton;
         [SerializeField] private bool _startClosed = true;
 
-        private ClosableViewAnimationStrategy _animationStrategy;
+        [SerializeField] private ClosableVIewAnimationType _animationType;
+
+        private IIClosableViewAnimationStrategy _animationStrategy;
 
         public bool IsOpen => _closableParent.gameObject.activeSelf;
 
@@ -32,7 +36,7 @@ namespace Assets.Source.Mvc.Views.Components
         public void Initialize()
         {
             _closableParent = _closableParent ?? gameObject;
-            _animationStrategy = ClosableViewAnimationStrategy.Factory.Create(_closableParent.transform);
+            _animationStrategy = CreateAnimationStrategy();
 
             _onViewOpened = new Subject<Unit>().AddTo(Disposer);
             _onViewClosed = new Subject<Unit>().AddTo(Disposer);
@@ -44,6 +48,28 @@ namespace Assets.Source.Mvc.Views.Components
             }
 
             _closableParent.SetActive(!_startClosed);
+        }
+
+        private IIClosableViewAnimationStrategy CreateAnimationStrategy()
+        {
+            switch (_animationType)
+            {
+                case ClosableVIewAnimationType.None:
+                    return AnimationStrategyFactory.CreateDefaultAnimationStrategy(
+                        _closableParent);
+
+                case ClosableVIewAnimationType.PopOut:
+                    return AnimationStrategyFactory.CreatePopOutAnimationStrategy(
+                        _closableParent.transform);
+
+                case ClosableVIewAnimationType.Fade:
+                    return AnimationStrategyFactory.CreateFadeAnimationStrategy(
+                        _closableParent.transform,
+                        _canvasGroup);
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void Open()

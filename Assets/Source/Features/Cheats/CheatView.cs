@@ -1,6 +1,6 @@
 ﻿using Assets.Source.Mvc.Views;
-using Assets.Source.Mvc.Views.Components;
 using System;
+using Assets.Source.Mvc.Views.Closable;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

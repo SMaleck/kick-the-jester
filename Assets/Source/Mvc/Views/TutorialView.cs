@@ -1,4 +1,4 @@
-﻿using Assets.Source.Mvc.Views.Components;
+﻿using Assets.Source.Mvc.Views.Closable;
 using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
