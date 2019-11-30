@@ -13,7 +13,7 @@ namespace Assets.Source.Mvc.Views.Closable
     {
         [Tooltip("Leave empty to use this gameObject's transform")]
         [SerializeField] private GameObject _closableParent;
-        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private CanvasGroup _canvasGroup; // NOTE: Somehow becomes corrupt reference, when setting this in prefab-edit mode
 
         [SerializeField] private Button _closeButton;
         [SerializeField] private bool _startClosed = true;

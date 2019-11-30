@@ -126,22 +126,22 @@ PrefabInstance:
     - target: {fileID: 114145233079998286, guid: 5f68ec589ce10154ca35de784f69de15,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114145233079998286, guid: 5f68ec589ce10154ca35de784f69de15,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114440436289999300, guid: 5f68ec589ce10154ca35de784f69de15,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114440436289999300, guid: 5f68ec589ce10154ca35de784f69de15,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224895425407812886, guid: 5f68ec589ce10154ca35de784f69de15,
         type: 3}
@@ -233,6 +233,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7127638558863724930, guid: 5f68ec589ce10154ca35de784f69de15,
+        type: 3}
+      propertyPath: _canvasGroup
+      value: 
+      objectReference: {fileID: 33589730}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f68ec589ce10154ca35de784f69de15, type: 3}
 --- !u!1 &33589729 stripped

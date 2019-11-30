@@ -20,22 +20,35 @@ namespace Assets.Source.Mvc.Views.Closable.AnimationStrategies
         public void Open(Action onComplete)
         {
             _target.gameObject.SetActive(true);
-            _canvasGroup.alpha = 0;
+            SetAlpha(0);
 
-            _canvasGroup
-                .DOFade(1f, TransitionTimeSeconds)
+            DOTween.To(
+                    SetAlpha,
+                    0,
+                    1,
+                    TransitionTimeSeconds)
                 .SetEase(Ease.InOutCubic)
                 .OnComplete(() => onComplete?.Invoke());
         }
 
         public void Close(Action onComplete)
         {
-            DOTween.Sequence()
-                .Append(_canvasGroup
-                    .DOFade(0f, TransitionTimeSeconds)
-                    .SetEase(Ease.InOutCubic))
-                .AppendCallback(() => _target.gameObject.SetActive(false))
-                .AppendCallback(() => onComplete?.Invoke());
+            DOTween.To(
+                    SetAlpha,
+                    1,
+                    0,
+                    TransitionTimeSeconds)
+                .SetEase(Ease.InOutCubic)
+                .OnComplete(() =>
+                {
+                    _target.gameObject.SetActive(false);
+                    onComplete?.Invoke();
+                });
+        }
+
+        private void SetAlpha(float alpha)
+        {
+            _canvasGroup.alpha = alpha;
         }
     }
 }
