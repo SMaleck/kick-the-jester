@@ -12,10 +12,11 @@ namespace Assets.Source.App.Initialization
 
         protected void SetupView<T>(T view) where T : AbstractView
         {
-            view.GetComponents<IInitializable>()
+            var listOfInits = view.GetComponents<IInitializable>()
                 .Where(viewItem => viewItem.GetType() != typeof(T))
-                .ToList()
-                .ForEach(component => component.Initialize());
+                .ToList();
+
+            listOfInits.ForEach(component => component.Initialize());
 
             view.GetComponentsInChildren<IInitializable>()
                 .ToList()
@@ -30,7 +31,7 @@ namespace Assets.Source.App.Initialization
             var closableViewController = _closableViewControllerFactory.Create(closableView);
         }
 
-        protected void SetupClosableView(AbstractView abstractView, ClosableViewType closableViewType)
+        protected void SetupClosableView<T>(T abstractView, ClosableViewType closableViewType) where T : AbstractView
         {
             SetupView(abstractView);
 

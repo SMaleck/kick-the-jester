@@ -74,13 +74,8 @@ namespace Assets.Source.Mvc.Views
         {
             _currentStep = 0;
 
-            // Hide all panels, except the first
-            for (int i = 1; i < _steps.Count; i++)
-            {
-                FadeOutStep(i, 0);
-            }
-
-            FadeInStep(0, 0);
+            _steps.ForEach(step => step.alpha = 0);
+            _steps[0].alpha = 1;
         }
 
         private void Next()
@@ -92,23 +87,28 @@ namespace Assets.Source.Mvc.Views
                 return;
             }
 
-            // Fade between current and next step
-            FadeInStep(_currentStep + 1);
-            FadeOutStep(_currentStep);
-
-            _currentStep++;
+            FadeBetweenSteps(_currentStep, _currentStep + 1);
+            _currentStep += 1;
         }
 
-        private void FadeInStep(int index, float time = -1)
+        private void FadeBetweenSteps(int fromStep, int toStep)
         {
-            time = time <= -1 ? FadeTimeSeconds : time;
-            _steps[index].DOFade(1, time);
+            var fromCanvasGroup = _steps[fromStep];
+            var toCanvasGroup = _steps[toStep];
+
+            FadeBetween(
+                fromCanvasGroup,
+                toCanvasGroup,
+                FadeTimeSeconds);
         }
 
-        private void FadeOutStep(int index, float time = -1)
+        private void FadeBetween(
+            CanvasGroup from,
+            CanvasGroup to,
+            float durationSeconds)
         {
-            time = time <= -1 ? FadeTimeSeconds : time;
-            _steps[index].DOFade(0, time);
+            from.DOFade(0, durationSeconds);
+            to.DOFade(1, durationSeconds);
         }
     }
 }
