@@ -7,6 +7,7 @@ using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using Assets.Source.Util;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 
 namespace Assets.Source.Mvc.Controllers
@@ -19,6 +20,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly IStatisticsModel _statisticsModel;
         private readonly SceneTransitionService _sceneTransitionService;
+        private readonly PlayerProfileController _playerProfileController;
         private readonly IClosableViewMediator _closableViewMediator;
 
         private readonly int _currencyAmountAtStart;
@@ -31,6 +33,7 @@ namespace Assets.Source.Mvc.Controllers
             PlayerProfileModel playerProfileModel,
             IStatisticsModel statisticsModel,
             SceneTransitionService sceneTransitionService,
+            PlayerProfileController playerProfileController,
             IClosableViewMediator closableViewMediator)
         {
             _view = view;
@@ -40,6 +43,7 @@ namespace Assets.Source.Mvc.Controllers
             _playerProfileModel = playerProfileModel;
             _statisticsModel = statisticsModel;
             _sceneTransitionService = sceneTransitionService;
+            _playerProfileController = playerProfileController;
             _closableViewMediator = closableViewMediator;
 
             _currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
@@ -60,23 +64,6 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             SetupModelSubscriptions();
-        }
-
-        private void OnOpenCompleted()
-        {
-            var results = GetResultsAsDictionary();
-
-            _view.ShowCurrencyResults(results, _currencyAmountAtStart);
-        }
-
-        private IDictionary<CurrencyGainType, int> GetResultsAsDictionary()
-        {
-            Dictionary<CurrencyGainType, int> result = new Dictionary<CurrencyGainType, int>();
-
-            result.Add(CurrencyGainType.Distance, _flightStatsModel.Earned.Value);
-            result.Add(CurrencyGainType.Pickup, _flightStatsModel.Collected.Value);
-
-            return result;
         }
 
         private void SetupModelSubscriptions()
@@ -101,6 +88,30 @@ namespace Assets.Source.Mvc.Controllers
         private void OnRetryClicked()
         {
             _sceneTransitionService.ToGame();
+        }
+
+        private void OnOpenCompleted()
+        {
+            var currencyGainResults = CalculateCurrencyGainResult();
+            ProcessRoundResults(currencyGainResults);
+
+            _view.ShowCurrencyResults(currencyGainResults, _currencyAmountAtStart);
+        }
+
+        private void ProcessRoundResults(IDictionary<CurrencyGainType, int> currencyGainResults)
+        {
+            var totalGained = currencyGainResults.Values.Sum();
+            _playerProfileController.AddCurrencyAmount(totalGained);
+        }
+
+        private IDictionary<CurrencyGainType, int> CalculateCurrencyGainResult()
+        {
+            Dictionary<CurrencyGainType, int> result = new Dictionary<CurrencyGainType, int>();
+
+            result.Add(CurrencyGainType.Distance, _flightStatsModel.Earned.Value);
+            result.Add(CurrencyGainType.Pickup, _flightStatsModel.Collected.Value);
+
+            return result;
         }
     }
 }

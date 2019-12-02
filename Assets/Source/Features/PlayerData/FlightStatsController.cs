@@ -11,18 +11,15 @@ namespace Assets.Source.Features.PlayerData
         private readonly FlightStatsModel _flightStatsModel;
         private readonly GameStateModel _gameStateModel;
         private readonly BalancingConfig _balancingConfig;
-        private readonly PlayerProfileController _playerProfileController;
 
         public FlightStatsController(
             FlightStatsModel flightStatsModel,
             GameStateModel gameStateModel,
-            BalancingConfig balancingConfig,
-            PlayerProfileController playerProfileController)
+            BalancingConfig balancingConfig)
         {
             _flightStatsModel = flightStatsModel;
             _gameStateModel = gameStateModel;
             _balancingConfig = balancingConfig;
-            _playerProfileController = playerProfileController;
 
             _gameStateModel.OnRoundEnd
                 .Subscribe(_ => OnRoundEnd())
@@ -43,10 +40,6 @@ namespace Assets.Source.Features.PlayerData
             var earned = _flightStatsModel.Earned.Value;
             var totalEarned = earned + Mathf.RoundToInt(distance.ToMeters() * _balancingConfig.MeterToGoldFactor);
             _flightStatsModel.SetEarned(totalEarned);
-
-            var total = _flightStatsModel.Collected.Value + _flightStatsModel.Earned.Value;
-
-            _playerProfileController.AddCurrencyAmount(total);
         }
     }
 }
