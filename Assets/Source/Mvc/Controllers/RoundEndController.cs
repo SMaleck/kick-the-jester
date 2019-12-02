@@ -8,7 +8,9 @@ using Assets.Source.Services;
 using Assets.Source.Util;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Source.App.Configuration;
 using UniRx;
+using UnityEngine;
 
 namespace Assets.Source.Mvc.Controllers
 {
@@ -22,6 +24,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly SceneTransitionService _sceneTransitionService;
         private readonly PlayerProfileController _playerProfileController;
         private readonly IClosableViewMediator _closableViewMediator;
+        private readonly BalancingConfig _balancingConfig;
 
         private readonly int _currencyAmountAtStart;
         private readonly float _bestDistanceAtStart;
@@ -34,7 +37,8 @@ namespace Assets.Source.Mvc.Controllers
             IStatisticsModel statisticsModel,
             SceneTransitionService sceneTransitionService,
             PlayerProfileController playerProfileController,
-            IClosableViewMediator closableViewMediator)
+            IClosableViewMediator closableViewMediator,
+            BalancingConfig balancingConfig)
         {
             _view = view;
 
@@ -45,6 +49,7 @@ namespace Assets.Source.Mvc.Controllers
             _sceneTransitionService = sceneTransitionService;
             _playerProfileController = playerProfileController;
             _closableViewMediator = closableViewMediator;
+            _balancingConfig = balancingConfig;
 
             _currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
             _bestDistanceAtStart = _statisticsModel.BestDistance.Value;
@@ -108,10 +113,17 @@ namespace Assets.Source.Mvc.Controllers
         {
             Dictionary<CurrencyGainType, int> result = new Dictionary<CurrencyGainType, int>();
 
-            result.Add(CurrencyGainType.Distance, _flightStatsModel.Earned.Value);
+            var distanceUnits = _flightStatsModel.Distance.Value;
+
+            result.Add(CurrencyGainType.Distance, GetGainFromDistance(distanceUnits));
             result.Add(CurrencyGainType.Pickup, _flightStatsModel.Collected.Value);
 
             return result;
+        }
+
+        private int GetGainFromDistance(float distanceUnits)
+        {
+            return Mathf.RoundToInt(distanceUnits.ToMeters() * _balancingConfig.MeterToGoldFactor);
         }
     }
 }

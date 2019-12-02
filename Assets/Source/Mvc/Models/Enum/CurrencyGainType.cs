@@ -4,5 +4,7 @@
     {
         Distance,
         Pickup,
+        ShortDistanceBonus,
+        MaxHeightBonus
     }
 }

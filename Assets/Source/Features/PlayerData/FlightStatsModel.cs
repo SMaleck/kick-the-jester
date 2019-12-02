@@ -7,7 +7,6 @@ namespace Assets.Source.Features.PlayerData
     public class FlightStatsModel : AbstractDisposable
     {
         public FloatReactiveProperty Distance;
-        public FloatReactiveProperty Height;
         public ReactiveProperty<Vector2> Velocity;
       
         public FloatReactiveProperty RelativeKickForce;
@@ -17,13 +16,15 @@ namespace Assets.Source.Features.PlayerData
         public ReactiveCollection<int> Gains;
         public IntReactiveProperty Collected;
 
-        private readonly ReactiveProperty<int> _earned;
-        public IReadOnlyReactiveProperty<int> Earned => _earned;
+        private readonly ReactiveProperty<float> _height;
+        public IReadOnlyReactiveProperty<float> Height => _height;
+
+        private readonly ReactiveProperty<float> _maxHeightReached;
+        public IReadOnlyReactiveProperty<float> MaxHeightReached => _maxHeightReached;
 
         public FlightStatsModel()
         {
             Distance = new FloatReactiveProperty().AddTo(Disposer);
-            Height = new FloatReactiveProperty().AddTo(Disposer);
             Velocity = new ReactiveProperty<Vector2>().AddTo(Disposer);
             RelativeKickForce = new FloatReactiveProperty().AddTo(Disposer);
             RelativeVelocity = new FloatReactiveProperty().AddTo(Disposer);
@@ -31,7 +32,11 @@ namespace Assets.Source.Features.PlayerData
             Gains = new ReactiveCollection<int>().AddTo(Disposer);
             Collected = new IntReactiveProperty().AddTo(Disposer);
 
-            _earned = new ReactiveProperty<int>().AddTo(Disposer);
+            _height = new FloatReactiveProperty().AddTo(Disposer);
+            _maxHeightReached = new ReactiveProperty<float>(0).AddTo(Disposer);
+
+            Height.Subscribe(SafeSetMaxHeightReached)
+                .AddTo(Disposer);
         }
 
         public void SetRemainingShotsIfHigher(int amount)
@@ -42,9 +47,14 @@ namespace Assets.Source.Features.PlayerData
             }
         }
 
-        public void SetEarned(int value)
+        public void SetHeight(float value)
         {
-            _earned.Value = value;
+            _height.Value = value;
+        }
+
+        private void SafeSetMaxHeightReached(float value)
+        {
+            _maxHeightReached.Value = Mathf.Max(value, _maxHeightReached.Value);
         }
     }
 }
