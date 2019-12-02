@@ -1,4 +1,5 @@
-﻿using Assets.Source.Features.GameState;
+﻿using System;
+using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Statistics;
 using Assets.Source.Mvc.Mediation;
@@ -113,17 +114,50 @@ namespace Assets.Source.Mvc.Controllers
         {
             Dictionary<CurrencyGainType, int> result = new Dictionary<CurrencyGainType, int>();
 
-            var distanceUnits = _flightStatsModel.Distance.Value;
-
-            result.Add(CurrencyGainType.Distance, GetGainFromDistance(distanceUnits));
-            result.Add(CurrencyGainType.Pickup, _flightStatsModel.Collected.Value);
+            EnumHelper<CurrencyGainType>.Iterator
+                .ToList()
+                .ForEach(currencyGainType =>
+                {
+                    var gainAmount = GetGainFrom(currencyGainType);
+                    if (gainAmount > 0)
+                    {
+                        result.Add(currencyGainType, gainAmount);
+                    }
+                });
 
             return result;
         }
 
-        private int GetGainFromDistance(float distanceUnits)
+        private int GetGainFrom(CurrencyGainType currencyGainType)
         {
+            switch (currencyGainType)
+            {
+                case CurrencyGainType.Distance:
+                    return GetGainFromDistance();
+
+                case CurrencyGainType.Pickup:
+                    return GetGainFromPickup();
+
+                case CurrencyGainType.ShortDistanceBonus:
+                    return 0;
+
+                case CurrencyGainType.MaxHeightBonus:
+                    return 0;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(currencyGainType), currencyGainType, null);
+            }
+        }
+
+        private int GetGainFromDistance()
+        {
+            var distanceUnits = _flightStatsModel.Distance.Value;
             return Mathf.RoundToInt(distanceUnits.ToMeters() * _balancingConfig.MeterToGoldFactor);
+        }
+
+        private int GetGainFromPickup()
+        {
+            return _flightStatsModel.Gains.Sum();
         }
     }
 }

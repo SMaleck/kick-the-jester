@@ -34,7 +34,7 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void LateUpdate()
         {
-            _flightStatsModel.Distance.Value = Owner.GoTransform.position.x.Difference(origin.x);
+            _flightStatsModel.SetDistance(Owner.GoTransform.position.x.Difference(origin.x));
             _flightStatsModel.SetHeight(Owner.GoTransform.position.y.Difference(origin.y));
 
             _flightStatsModel.Velocity.Value = Owner.GoBody.velocity;

@@ -17,7 +17,6 @@ namespace Assets.Source.Features.PlayerData
             if (amount <= 0) { return; }
 
             _flightStatsModel.Gains.Add(amount);
-            _flightStatsModel.Collected.Value += amount;
         }
     }
 }
