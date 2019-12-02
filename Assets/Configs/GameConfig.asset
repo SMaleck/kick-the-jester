@@ -25,6 +25,10 @@ MonoBehaviour:
     JesterOutOfCameraY: 237.5
   BalancingConfig:
     MeterToGoldFactor: 1
+    ShortDistanceGoldBonus: 100
+    MaxHeightGoldBonus: 300
+    MoonHeightUnits: 230
+    ShortDistanceUnits: 100
   BootConfig:
     ForceDirection: {x: 1, y: 1, z: 1}
     ForceFactorChangeSeconds: 0.5

@@ -133,31 +133,45 @@ namespace Assets.Source.Mvc.Controllers
             switch (currencyGainType)
             {
                 case CurrencyGainType.Distance:
-                    return GetGainFromDistance();
+                    return GetGainFromDistance(_flightStatsModel);
 
                 case CurrencyGainType.Pickup:
-                    return GetGainFromPickup();
+                    return GetGainFromPickup(_flightStatsModel);
 
                 case CurrencyGainType.ShortDistanceBonus:
-                    return 0;
+                    return GetGainFromShortDistanceBonus(_flightStatsModel);
 
                 case CurrencyGainType.MaxHeightBonus:
-                    return 0;
+                    return GetGainFromMaxHeightBonus(_flightStatsModel);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(currencyGainType), currencyGainType, null);
             }
         }
 
-        private int GetGainFromDistance()
+        private int GetGainFromDistance(FlightStatsModel flightStatsModel)
         {
-            var distanceUnits = _flightStatsModel.Distance.Value;
+            var distanceUnits = flightStatsModel.Distance.Value;
             return Mathf.RoundToInt(distanceUnits.ToMeters() * _balancingConfig.MeterToGoldFactor);
         }
 
-        private int GetGainFromPickup()
+        private int GetGainFromPickup(FlightStatsModel flightStatsModel)
         {
-            return _flightStatsModel.Gains.Sum();
+            return flightStatsModel.Gains.Sum();
+        }
+
+        private int GetGainFromShortDistanceBonus(FlightStatsModel flightStatsModel)
+        {
+            return _flightStatsModel.Distance.Value <= _balancingConfig.ShortDistanceUnits
+                ? _balancingConfig.ShortDistanceGoldBonus
+                : 0;
+        }
+
+        private int GetGainFromMaxHeightBonus(FlightStatsModel flightStatsModel)
+        {
+            return _flightStatsModel.MaxHeightReached.Value >= _balancingConfig.MoonHeightUnits
+                ? _balancingConfig.MaxHeightGoldBonus
+                : 0;
         }
     }
 }

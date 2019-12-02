@@ -1,16 +1,19 @@
-﻿using Assets.Source.Util;
+﻿using Assets.Source.App.Configuration;
+using Assets.Source.Util;
 
 namespace Assets.Source.Features.Statistics
 {
     public class StatisticsController : AbstractDisposable
     {
-        private const float HasReachedMoonHeightUnits = 230;
-
         private readonly StatisticsModel _statisticsModel;
+        private readonly BalancingConfig _balancingConfig;
 
-        public StatisticsController(StatisticsModel statisticsModel)
+        public StatisticsController(
+            StatisticsModel statisticsModel,
+            BalancingConfig balancingConfig)
         {
             _statisticsModel = statisticsModel;
+            _balancingConfig = balancingConfig;
         }
 
         public void RegisterRoundDistance(float distance)
@@ -23,7 +26,7 @@ namespace Assets.Source.Features.Statistics
         {
             _statisticsModel.SetBestHeight(height);
 
-            var hasReachedMoon = height.ToUnits() >= HasReachedMoonHeightUnits;
+            var hasReachedMoon = height.ToUnits() >= _balancingConfig.MoonHeightUnits;
             _statisticsModel.SetHasReachedMoon(hasReachedMoon);
         }
 

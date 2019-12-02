@@ -59,6 +59,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
+            _view.SetCollectedCurrencyAmount(0);
             _flightStatsModel.TotalCollectedCurrency
                 .Subscribe(_view.SetCollectedCurrencyAmount)
                 .AddTo(Disposer);

@@ -200,6 +200,12 @@ namespace Assets.Source.Services.Localization
                 case CurrencyGainType.Pickup:
                     return TextRepo.GetText(TextKey.CurrencyGainTypePickup);
 
+                case CurrencyGainType.ShortDistanceBonus:
+                    return TextRepo.GetText(TextKey.CurrencyGainTypeShortDistanceBonus);
+
+                case CurrencyGainType.MaxHeightBonus:
+                    return TextRepo.GetText(TextKey.CurrencyGainTypeMaxHeightBonus);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(currencyGainType), currencyGainType, null);
             }

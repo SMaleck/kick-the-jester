@@ -23,6 +23,8 @@
         BestDistance,
         CurrencyGainTypeDistance,
         CurrencyGainTypePickup,
+        CurrencyGainTypeShortDistanceBonus,
+        CurrencyGainTypeMaxHeightBonus,
         RestoreDefaults,
         ResetProfile,
         Settings,

@@ -39,7 +39,11 @@ namespace Assets.Source.App.Configuration
     [Serializable]
     public class BalancingConfig
     {
-        [Range(0.01f, 5f)] public float MeterToGoldFactor = 0.5f;
+        [Range(0.01f, 5f)] public float MeterToGoldFactor;
+        [Range(0, 100000)] public int ShortDistanceGoldBonus;
+        [Range(0, 100000)] public int MaxHeightGoldBonus;
+        public float MoonHeightUnits;
+        public float ShortDistanceUnits;
     }
 
     [Serializable]
