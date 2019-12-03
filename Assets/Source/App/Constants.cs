@@ -2,7 +2,8 @@
 {
     public static class Constants
     {
-        public const string PROJECT_MENU_ROOT = "KTJ";
+        public const string UMenuRoot = "KTJ/";
+        public const string UMenuInstallers = UMenuRoot + "Installer/";
 
         public const string PREFS_KEY_LANGUAGE = "LanguagePref";
 

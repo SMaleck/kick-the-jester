@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Source.Mvc.Data
 {
-    [CreateAssetMenu(fileName = "ViewPrefabConfig", menuName = Constants.PROJECT_MENU_ROOT + "/ViewPrefabConfig")]
+    [CreateAssetMenu(fileName = nameof(ViewPrefabConfig), menuName = Constants.UMenuRoot + nameof(ViewPrefabConfig))]
     public class ViewPrefabConfig : ScriptableObject
     {
         [Header("Title")]

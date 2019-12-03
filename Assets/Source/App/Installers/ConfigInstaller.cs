@@ -1,5 +1,6 @@
 using Assets.Source.App.Configuration;
 using Assets.Source.Entities.Jester.Config;
+using Assets.Source.Features.Achievements.Data;
 using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Mvc.Data;
 using Assets.Source.Services.Audio;
@@ -9,10 +10,11 @@ using Zenject;
 
 namespace Assets.Source.App.Installers
 {
-    [CreateAssetMenu(fileName = "ConfigInstaller", menuName = Constants.PROJECT_MENU_ROOT + "/Installers/ConfigInstaller")]
+    [CreateAssetMenu(fileName = nameof(ConfigInstaller), menuName = Constants.UMenuInstallers + nameof(ConfigInstaller))]
     public class ConfigInstaller : ScriptableObjectInstaller<ConfigInstaller>
     {
         [SerializeField] private GameConfig GameConfig;
+        [SerializeField] private AchievementConfig _achievementConfig;
 
         [Header("Jester Configs")]
         [SerializeField] private JesterSpriteEffectsConfig _jesterSpriteEffectsConfig;
@@ -34,12 +36,15 @@ namespace Assets.Source.App.Installers
             Container.BindInstance(GameConfig.ShootConfig);
 
             Container.BindInstance(_jesterSpriteEffectsConfig);
-            Container.BindInstances(_upgradeTreeConfig);
+            Container.BindInstance(_upgradeTreeConfig);
 
-            Container.BindInstances(_viewPrefabConfig);
+            Container.BindInstance(_viewPrefabConfig);
 
-            Container.BindInstances(_particleEffectConfig);
-            Container.BindInstances(_audioConfig);
+            Container.BindInstance(_particleEffectConfig);
+            Container.BindInstance(_audioConfig);
+
+            Container.Bind<IAchievementData>()
+                .FromInstance(_achievementConfig);
         }
     }
 }

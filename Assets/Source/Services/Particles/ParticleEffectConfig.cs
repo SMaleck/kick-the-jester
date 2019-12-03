@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Source.Services.Particles
 {
-    [CreateAssetMenu(fileName = "ParticleEffectConfig", menuName = Constants.PROJECT_MENU_ROOT + "/ParticleEffectConfig")]
+    [CreateAssetMenu(fileName = nameof(ParticleEffectConfig), menuName = Constants.UMenuRoot + nameof(ParticleEffectConfig))]
     public class ParticleEffectConfig : ScriptableObject
     {
         [Serializable]

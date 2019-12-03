@@ -6,6 +6,7 @@
         public UpgradesSavegameData UpgradesSavegameData;
         public SettingsSavegameData SettingsSavegameData;
         public StatisticsSavegameData StatisticsSavegameData;
+        public AchievementsSavegameData AchievementsSavegameData;
     }
 
     public class Savegame : AbstractSavegame
@@ -14,6 +15,7 @@
         public readonly UpgradesSavegame UpgradesSavegame;
         public readonly SettingsSavegame SettingsSavegame;
         public readonly StatisticsSavegame StatisticsSavegame;
+        public readonly AchievementsSavegame AchievementsSavegame;
 
         public Savegame(SavegameData savegameData)
         {
@@ -21,6 +23,7 @@
             UpgradesSavegame = new UpgradesSavegame(savegameData.UpgradesSavegameData);
             SettingsSavegame = new SettingsSavegame(savegameData.SettingsSavegameData);
             StatisticsSavegame = new StatisticsSavegame(savegameData.StatisticsSavegameData);
+            AchievementsSavegame = new AchievementsSavegame(savegameData.AchievementsSavegameData);
         }
     }
 }

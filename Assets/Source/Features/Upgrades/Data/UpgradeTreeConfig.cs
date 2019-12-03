@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Source.Features.Upgrades.Data
 {
-    [CreateAssetMenu(fileName = "UpgradeTreeConfig", menuName = Constants.PROJECT_MENU_ROOT + "/UpgradeTreeConfig")]
+    [CreateAssetMenu(fileName = nameof(UpgradeTreeConfig), menuName = Constants.UMenuRoot + nameof(UpgradeTreeConfig))]
     public class UpgradeTreeConfig : ScriptableObject
     {
         [Serializable]

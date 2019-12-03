@@ -1,7 +1,9 @@
-﻿using Assets.Source.Features.Upgrades.Data;
+﻿using System.Collections.Generic;
+using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Services.Savegames.Models;
 using Assets.Source.Util;
 using System.Linq;
+using Assets.Source.Features.Achievements;
 
 namespace Assets.Source.Services.Savegames
 {
@@ -14,7 +16,8 @@ namespace Assets.Source.Services.Savegames
                 ProfileSavegameData = CreateProfileSavegameData(),
                 UpgradesSavegameData = CreateUpgradesSavegameData(),
                 SettingsSavegameData = CreateSettingsSavegameData(),
-                StatisticsSavegameData = CreateStatisticsSavegameData()
+                StatisticsSavegameData = CreateStatisticsSavegameData(),
+                AchievementsSavegameData = CreateAchievementsSavegameData()
             };
         }
 
@@ -69,6 +72,25 @@ namespace Assets.Source.Services.Savegames
                 TotalRoundsPlayed = 0,
                 HasReachedMoon = false
             };
+        }
+
+        private static AchievementsSavegameData CreateAchievementsSavegameData()
+        {
+            return new AchievementsSavegameData()
+            {
+                AchievementSavegames = CreateAchievementSavegames()
+            };
+        }
+
+        private static List<AchievementSavegameData> CreateAchievementSavegames()
+        {
+            return EnumHelper<AchievementId>.Iterator
+                .Select(id => new AchievementSavegameData
+                {
+                    Id = (int)id,
+                    IsOwned = false
+                })
+                .ToList();
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Source.Services.Audio
 {
-    [CreateAssetMenu(fileName = "AudioConfig", menuName = Constants.PROJECT_MENU_ROOT + "/AudioConfig")]
+    [CreateAssetMenu(fileName = nameof(AudioConfig), menuName = Constants.UMenuRoot + nameof(AudioConfig))]
     public class AudioConfig : ScriptableObject
     {
         [Serializable]

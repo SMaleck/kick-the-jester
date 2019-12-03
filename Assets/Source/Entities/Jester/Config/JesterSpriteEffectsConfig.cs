@@ -15,7 +15,7 @@ namespace Assets.Source.Entities.Jester.Config
         public Sprite LandingSprite;
     }
 
-    [CreateAssetMenu(fileName = "JesterSpriteEffectsConfig", menuName = Constants.PROJECT_MENU_ROOT + "/JesterSpriteEffectsConfig")]
+    [CreateAssetMenu(fileName = nameof(JesterSpriteEffectsConfig), menuName = Constants.UMenuRoot + nameof(JesterSpriteEffectsConfig))]
     public class JesterSpriteEffectsConfig : ScriptableObject
     {
         public float MinRotationSpeed = 1f;

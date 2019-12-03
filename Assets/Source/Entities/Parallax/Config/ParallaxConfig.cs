@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.Source.Entities.Parallax.Config
 {
     [Serializable]
-    [CreateAssetMenu(fileName = "ParallaxConfig", menuName = Constants.PROJECT_MENU_ROOT + "/ParallaxConfig")]
+    [CreateAssetMenu(fileName = nameof(ParallaxConfig), menuName = Constants.UMenuRoot + nameof(ParallaxConfig))]
     public class ParallaxConfig : ScriptableObject
     {
         public List<ParallaxLayerConfig> LayerConfigs;
