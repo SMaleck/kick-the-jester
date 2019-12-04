@@ -14,7 +14,7 @@ namespace Assets.Source.App.Installers
     public class ConfigInstaller : ScriptableObjectInstaller<ConfigInstaller>
     {
         [SerializeField] private GameConfig GameConfig;
-        [SerializeField] private AchievementConfig _achievementConfig;
+        [SerializeField] private AchievementsConfig _achievementsConfig;
 
         [Header("Jester Configs")]
         [SerializeField] private JesterSpriteEffectsConfig _jesterSpriteEffectsConfig;
@@ -44,7 +44,7 @@ namespace Assets.Source.App.Installers
             Container.BindInstance(_audioConfig);
 
             Container.Bind<IAchievementData>()
-                .FromInstance(_achievementConfig);
+                .FromInstance(_achievementsConfig);
         }
     }
 }

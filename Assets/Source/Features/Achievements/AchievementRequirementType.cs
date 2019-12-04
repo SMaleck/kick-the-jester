@@ -2,6 +2,8 @@
 {
     public enum AchievementRequirementType
     {
-        ReachMoon
+        ReachMoon = 0,
+        BestDistance = 1,
+        TotalDistance = 2
     }
 }

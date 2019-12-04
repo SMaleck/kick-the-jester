@@ -7,8 +7,8 @@ using UnityEngine;
 namespace Assets.Source.Features.Achievements.Data
 {
     [Serializable]
-    [CreateAssetMenu(fileName = nameof(AchievementConfig), menuName = Constants.UMenuRoot + nameof(AchievementConfig))]
-    public class AchievementConfig : ScriptableObject, IAchievementData
+    [CreateAssetMenu(fileName = nameof(AchievementsConfig), menuName = Constants.UMenuRoot + nameof(AchievementsConfig))]
+    public class AchievementsConfig : ScriptableObject, IAchievementData
     {
         [Serializable]
         private class AchievementItem

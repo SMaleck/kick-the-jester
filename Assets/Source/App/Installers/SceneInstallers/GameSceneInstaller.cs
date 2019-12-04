@@ -1,6 +1,9 @@
-﻿using Assets.Source.App.Initialization;
+﻿using System.Collections.Generic;
+using Assets.Source.App.Initialization;
 using Assets.Source.Entities.Items;
 using Assets.Source.Entities.Jester.Components;
+using Assets.Source.Features.Achievements;
+using Assets.Source.Features.Achievements.RequirementStrategies;
 using Assets.Source.Features.Cheats;
 using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
@@ -12,6 +15,7 @@ using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Mvc.Views.PartialViews;
+using Assets.Source.Services.Savegames.Models;
 using Assets.Source.Util;
 using UnityEngine;
 
@@ -111,6 +115,18 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<VelocityLimiter>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SpriteEffect>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SoundEffect>().AsSingle().NonLazy();
+
+            #endregion
+
+            #region ACHIEVEMENTS
+
+            Container.BindFactory<AchievementSavegame, AchievementModel, AchievementModel.Factory>().AsSingle();
+            Container.BindFactory<List<IRequirementStrategy>, AchievementUnlockController, AchievementUnlockController.Factory>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<RequirementStrategyFactory>().AsSingle();
+            Container.BindFactory<AchievementModel, ReachedMoonRequirementStrategy, ReachedMoonRequirementStrategy.Factory>().AsSingle();
+            Container.BindFactory<AchievementModel, TotalDistanceRequirementStrategy, TotalDistanceRequirementStrategy.Factory>().AsSingle();
+            Container.BindFactory<AchievementModel, BestDistanceRequirementStrategy, BestDistanceRequirementStrategy.Factory>().AsSingle();
 
             #endregion
 

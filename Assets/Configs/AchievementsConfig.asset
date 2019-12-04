@@ -10,8 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55c6868d9664ce0498e8ff71b677bf48, type: 3}
-  m_Name: AchievementConfig
+  m_Name: AchievementsConfig
   m_EditorClassIdentifier: 
   _achievementItems:
   - _id: 0
+    _requirementType: 0
     _requirement: 0
+  - _id: 1
+    _requirementType: 1
+    _requirement: 50
+  - _id: 2
+    _requirementType: 1
+    _requirement: 100
+  - _id: 3
+    _requirementType: 1
+    _requirement: 1000
+  - _id: 4
+    _requirementType: 2
+    _requirement: 1000
+  - _id: 5
+    _requirementType: 2
+    _requirement: 10000
+  - _id: 6
+    _requirementType: 2
+    _requirement: 40074

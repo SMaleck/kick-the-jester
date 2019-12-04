@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Source.App;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
 namespace Assets.Editor.Keyboard
 {
@@ -18,7 +18,7 @@ namespace Assets.Editor.Keyboard
         /// <summary>
         /// Runs the game from the Default scene.
         /// </summary>
-        [MenuItem("Tools/Run Game %l")]
+        [MenuItem(Constants.UMenuRoot + "Run Game %l")]
         static void RunGameFromDefaultScene()
         {
             if (EditorApplication.isPlaying)
@@ -33,7 +33,7 @@ namespace Assets.Editor.Keyboard
 
                 EditorSceneManager.OpenScene(EditorBuildSettings.scenes[0].path);
                 EditorApplication.isPlaying = true;
-            }            
+            }
         }
 
         static void StateChanged(PlayModeStateChange state)

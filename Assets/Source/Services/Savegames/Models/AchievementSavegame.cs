@@ -6,21 +6,21 @@ namespace Assets.Source.Services.Savegames.Models
     public class AchievementSavegameData : AbstractSavegameData
     {
         public int Id;
-        public bool IsOwned;
+        public bool IsUnlocked;
     }
 
     public class AchievementSavegame : AbstractSavegame
     {
         public readonly AchievementId Id;
-        public readonly ReactiveProperty<bool> IsOwned;
+        public readonly ReactiveProperty<bool> IsUnlocked;
 
         public AchievementSavegame(AchievementSavegameData data)
         {
             Id = (AchievementId)data.Id;
 
-            IsOwned = CreateBoundProperty(
-                data.IsOwned,
-                value => { data.IsOwned = value; },
+            IsUnlocked = CreateBoundProperty(
+                data.IsUnlocked,
+                value => { data.IsUnlocked = value; },
                 Disposer);
         }
     }

@@ -14,7 +14,12 @@ namespace Assets.Source.Util
 
         public static IEnumerable<T> IteratorExcept(params T[] valuesToExclude)
         {
-            return Iterator.Where(x => !valuesToExclude.Contains(x)).ToList();
+            return Iterator.Where(x => !valuesToExclude.Contains(x));
+        }
+
+        public static void ForEach(Action<T> action)
+        {
+            Iterator.ToList().ForEach(action);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Assets.Source.Services.Savegames
                 .Select(id => new AchievementSavegameData
                 {
                     Id = (int)id,
-                    IsOwned = false
+                    IsUnlocked = false
                 })
                 .ToList();
         }
