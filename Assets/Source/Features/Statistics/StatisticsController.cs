@@ -18,13 +18,13 @@ namespace Assets.Source.Features.Statistics
 
         public void RegisterRoundDistance(float distance)
         {
-            _statisticsModel.SetBestDistance(distance);
-            _statisticsModel.AddToTotalDistance(distance);
+            _statisticsModel.SetBestDistanceUnits(distance);
+            _statisticsModel.AddToTotalDistanceUnits(distance);
         }
 
         public void RegisterRoundHeight(float height)
         {
-            _statisticsModel.SetBestHeight(height);
+            _statisticsModel.SetBestHeightUnits(height);
 
             var hasReachedMoon = height.ToUnits() >= _balancingConfig.MoonHeightUnits;
             _statisticsModel.SetHasReachedMoon(hasReachedMoon);

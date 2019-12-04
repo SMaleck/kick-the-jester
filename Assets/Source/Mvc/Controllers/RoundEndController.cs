@@ -53,7 +53,7 @@ namespace Assets.Source.Mvc.Controllers
             _balancingConfig = balancingConfig;
 
             _currencyAmountAtStart = _playerProfileModel.CurrencyAmount.Value;
-            _bestDistanceAtStart = _statisticsModel.BestDistance.Value;
+            _bestDistanceAtStart = _statisticsModel.BestDistanceUnits.Value;
 
             _view.OnRetryClicked
                 .Subscribe(_ => OnRetryClicked())
@@ -82,7 +82,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
-            _statisticsModel.BestDistance
+            _statisticsModel.BestDistanceUnits
                 .Subscribe(bestDist =>
                 {
                     _view.SetIsNewBestDistance(_bestDistanceAtStart < bestDist);

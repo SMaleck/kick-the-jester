@@ -93,7 +93,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void SetupProfileModel()
         {
-            _statisticsModel.BestDistance
+            _statisticsModel.BestDistanceUnits
                 .Subscribe(_view.SetBestDistance)
                 .AddTo(Disposer);
 

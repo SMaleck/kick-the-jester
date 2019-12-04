@@ -1,5 +1,6 @@
 ﻿using Assets.Source.Features.Statistics;
 using System.Linq;
+using Assets.Source.Util;
 using UniRx;
 using Zenject;
 
@@ -20,14 +21,14 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
             _achievementModel = achievementModel;
             _statisticsModel = statisticsModel;
 
-            _statisticsModel.BestDistance
+            _statisticsModel.BestDistanceUnits
                 .Where(_ => !achievementModel.IsUnlocked.Value)
                 .Subscribe(OnTotalDistanceChanged);
         }
 
-        private void OnTotalDistanceChanged(float bestDistance)
+        private void OnTotalDistanceChanged(float bestDistanceUnits)
         {
-            var isUnlocked = bestDistance >= _achievementModel.Requirement;
+            var isUnlocked = bestDistanceUnits.ToMeters() >= _achievementModel.Requirement;
 
             if (isUnlocked)
             {

@@ -21,9 +21,9 @@ namespace Assets.Source.Mvc.Controllers
             _jesterEntity = jesterEntity;
 
             _view.JesterOrigin = _jesterEntity.Position;
-            _view.UpdateBestDistanceInstant(statisticsModel.BestDistance.Value);
+            _view.UpdateBestDistanceInstant(statisticsModel.BestDistanceUnits.Value);
 
-            statisticsModel.BestDistance
+            statisticsModel.BestDistanceUnits
                 .Subscribe(value => _view.UpdateBestDistance(value))
                 .AddTo(Disposer);
         }

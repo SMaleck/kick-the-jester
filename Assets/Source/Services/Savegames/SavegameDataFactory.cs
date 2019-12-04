@@ -65,9 +65,9 @@ namespace Assets.Source.Services.Savegames
         {
             return new StatisticsSavegameData()
             {
-                BestDistance = 0,
-                TotalDistance = 0,
-                BestHeight = 0,
+                BestDistanceUnits = 0,
+                TotalDistanceUnits = 0,
+                BestHeightUnits = 0,
                 TotalCurrencyCollected = 0,
                 TotalRoundsPlayed = 0,
                 HasReachedMoon = false

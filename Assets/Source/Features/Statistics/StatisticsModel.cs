@@ -10,9 +10,9 @@ namespace Assets.Source.Features.Statistics
     {
         private readonly StatisticsSavegame _statisticsSavegame;
 
-        public IReadOnlyReactiveProperty<float> BestHeight => _statisticsSavegame.BestHeight;
-        public IReadOnlyReactiveProperty<float> BestDistance => _statisticsSavegame.BestDistance;
-        public IReadOnlyReactiveProperty<float> TotalDistance => _statisticsSavegame.TotalDistance;
+        public IReadOnlyReactiveProperty<float> BestHeightUnits => _statisticsSavegame.BestHeightUnits;
+        public IReadOnlyReactiveProperty<float> BestDistanceUnits => _statisticsSavegame.BestDistanceUnits;
+        public IReadOnlyReactiveProperty<float> TotalDistanceUnits => _statisticsSavegame.TotalDistanceUnits;
 
         public IReadOnlyReactiveProperty<int> TotalCurrencyCollected => _statisticsSavegame.TotalCurrencyCollected;
         public IReadOnlyReactiveProperty<int> TotalRoundsPlayed => _statisticsSavegame.TotalRoundsPlayed;
@@ -23,21 +23,21 @@ namespace Assets.Source.Features.Statistics
             _statisticsSavegame = savegameService.Savegame.StatisticsSavegame;
         }
 
-        public void SetBestDistance(float value)
+        public void SetBestDistanceUnits(float value)
         {
-            var currentBestDistance = _statisticsSavegame.BestDistance.Value;
-            _statisticsSavegame.BestDistance.Value = Math.Max(currentBestDistance, value);
+            var currentBestDistance = _statisticsSavegame.BestDistanceUnits.Value;
+            _statisticsSavegame.BestDistanceUnits.Value = Math.Max(currentBestDistance, value);
         }
 
-        public void AddToTotalDistance(float value)
+        public void AddToTotalDistanceUnits(float value)
         {
-            _statisticsSavegame.TotalDistance.Value += value;
+            _statisticsSavegame.TotalDistanceUnits.Value += value;
         }
 
-        public void SetBestHeight(float value)
+        public void SetBestHeightUnits(float value)
         {
-            var current = _statisticsSavegame.BestHeight.Value;
-            _statisticsSavegame.BestHeight.Value = Math.Max(current, value);
+            var current = _statisticsSavegame.BestHeightUnits.Value;
+            _statisticsSavegame.BestHeightUnits.Value = Math.Max(current, value);
         }
 
         public void AddToTotalCurrencyCollected(int value)

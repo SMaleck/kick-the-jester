@@ -4,10 +4,10 @@ namespace Assets.Source.Services.Savegames.Models
 {
     public class StatisticsSavegameData : AbstractSavegameData
     {
-        public float BestDistance;
-        public float TotalDistance;
+        public float BestDistanceUnits;
+        public float TotalDistanceUnits;
 
-        public float BestHeight;
+        public float BestHeightUnits;
 
         public int TotalCurrencyCollected;
         public int TotalRoundsPlayed;
@@ -16,10 +16,10 @@ namespace Assets.Source.Services.Savegames.Models
 
     public class StatisticsSavegame : AbstractSavegame
     {
-        public readonly ReactiveProperty<float> BestDistance;
-        public readonly ReactiveProperty<float> TotalDistance;
+        public readonly ReactiveProperty<float> BestDistanceUnits;
+        public readonly ReactiveProperty<float> TotalDistanceUnits;
 
-        public readonly ReactiveProperty<float> BestHeight;
+        public readonly ReactiveProperty<float> BestHeightUnits;
 
         public readonly ReactiveProperty<int> TotalCurrencyCollected;
         public readonly ReactiveProperty<int> TotalRoundsPlayed;
@@ -27,19 +27,19 @@ namespace Assets.Source.Services.Savegames.Models
 
         public StatisticsSavegame(StatisticsSavegameData data)
         {
-            BestDistance = CreateBoundProperty(
-                data.BestDistance,
-                value => { data.BestDistance = value; },
+            BestDistanceUnits = CreateBoundProperty(
+                data.BestDistanceUnits,
+                value => { data.BestDistanceUnits = value; },
                 Disposer);
 
-            TotalDistance = CreateBoundProperty(
-                data.TotalDistance,
-                value => { data.TotalDistance = value; },
+            TotalDistanceUnits = CreateBoundProperty(
+                data.TotalDistanceUnits,
+                value => { data.TotalDistanceUnits = value; },
                 Disposer);
 
-            BestHeight = CreateBoundProperty(
-                data.BestHeight,
-                value => { data.BestHeight = value; },
+            BestHeightUnits = CreateBoundProperty(
+                data.BestHeightUnits,
+                value => { data.BestHeightUnits = value; },
                 Disposer);
 
             TotalCurrencyCollected = CreateBoundProperty(

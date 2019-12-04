@@ -32,7 +32,7 @@ namespace Assets.Source.Features.Statistics
                 .AddTo(Disposer);
 
             _flightStatsModel.Height
-                .Where(height => height > statisticsModel.BestHeight.Value)
+                .Where(height => height > statisticsModel.BestHeightUnits.Value)
                 .Subscribe(statisticsController.RegisterRoundHeight)
                 .AddTo(Disposer);
         }
