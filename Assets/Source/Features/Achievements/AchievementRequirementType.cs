@@ -4,6 +4,8 @@
     {
         ReachMoon = 0,
         BestDistance = 1,
-        TotalDistance = 2
+        TotalDistance = 2,
+        BestHeight = 3,
+        RoundsPlayed = 5,
     }
 }

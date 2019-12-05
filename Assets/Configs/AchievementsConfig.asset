@@ -34,3 +34,21 @@ MonoBehaviour:
   - _id: 6
     _requirementType: 2
     _requirement: 40074
+  - _id: 7
+    _requirementType: 3
+    _requirement: 30
+  - _id: 8
+    _requirementType: 3
+    _requirement: 60
+  - _id: 9
+    _requirementType: 3
+    _requirement: 115
+  - _id: 10
+    _requirementType: 5
+    _requirement: 1
+  - _id: 11
+    _requirementType: 5
+    _requirement: 10
+  - _id: 12
+    _requirementType: 5
+    _requirement: 30

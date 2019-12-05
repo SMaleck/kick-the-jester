@@ -127,6 +127,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindFactory<AchievementModel, ReachedMoonRequirementStrategy, ReachedMoonRequirementStrategy.Factory>().AsSingle();
             Container.BindFactory<AchievementModel, TotalDistanceRequirementStrategy, TotalDistanceRequirementStrategy.Factory>().AsSingle();
             Container.BindFactory<AchievementModel, BestDistanceRequirementStrategy, BestDistanceRequirementStrategy.Factory>().AsSingle();
+            Container.BindFactory<AchievementModel, BestHeightRequirementStrategy, BestHeightRequirementStrategy.Factory>().AsSingle();
+            Container.BindFactory<AchievementModel, RoundsPlayedRequirementStrategy, RoundsPlayedRequirementStrategy.Factory>().AsSingle();
 
             #endregion
 
