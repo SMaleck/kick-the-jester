@@ -4,7 +4,7 @@
     {
         PlayExclamation,
         PlayAgainExclamation,
-        Cancel,                
+        Cancel,
         UpgradePathKickForceTitle,
         UpgradePathKickForceDescription,
         UpgradePathShootForceTitle,
@@ -14,9 +14,9 @@
         UpgradePathVelocityCapTitle,
         UpgradePathVelocityCapDescription,
         ResetProfileDescription,
-        ResetProfileWarning,        
+        ResetProfileWarning,
         Max,
-        Level,        
+        Level,
         DistanceReached,
         NewBest,
         BestLabel,
@@ -35,7 +35,7 @@
         CreditsCodeHeader,
         CreditsArtHeader,
         CreditsMusicHeader,
-        CreditsSoundEffectsHeader,        
+        CreditsSoundEffectsHeader,
         HowToPlay,
         TutorialStepOne,
         TutorialStepTwo,
@@ -45,6 +45,7 @@
         Pause,
         Language,
         Restart,
-        Continue
+        Continue,
+        Upgrades
     }
 }

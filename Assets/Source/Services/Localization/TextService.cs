@@ -265,5 +265,10 @@ namespace Assets.Source.Services.Localization
         {
             return TextRepo.GetText(TextKey.Continue);
         }
+
+        public static string Upgrades()
+        {
+            return TextRepo.GetText(TextKey.Upgrades);
+        }
     }
 }

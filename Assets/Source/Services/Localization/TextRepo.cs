@@ -101,7 +101,8 @@ namespace Assets.Source.Services.Localization
             { TextKey.Pause, "Pause"},
             { TextKey.Language, "Language"},
             { TextKey.Restart, "Restart"},
-            { TextKey.Continue, "Continue"}
+            { TextKey.Continue, "Continue"},
+            { TextKey.Upgrades, "Upgrades"}
         };
 
         private static Dictionary<TextKey, string> _textsDE = new Dictionary<TextKey, string>
@@ -149,7 +150,8 @@ namespace Assets.Source.Services.Localization
             { TextKey.Pause, "Pause"},
             { TextKey.Language, "Sprache"},
             { TextKey.Restart, "Neustarten"},
-            { TextKey.Continue, "Weiter"}
+            { TextKey.Continue, "Weiter"},
+            { TextKey.Upgrades, "Verbesserungen"}
         };
     }
 }

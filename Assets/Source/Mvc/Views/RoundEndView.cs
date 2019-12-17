@@ -18,20 +18,22 @@ namespace Assets.Source.Mvc.Views
     public class RoundEndView : AbstractView
     {
         [Header("Labels")]
-        [SerializeField] TextMeshProUGUI _distanceReachedText;
-        [SerializeField] TextMeshProUGUI _newBestText;
+        [SerializeField] private TextMeshProUGUI _distanceReachedText;
+        [SerializeField] private TextMeshProUGUI _newBestText;
 
         [Header("Distance Results")]
-        [SerializeField] TextMeshProUGUI _distanceText;
-        [SerializeField] TextMeshProUGUI _bestDistanceText;
+        [SerializeField] private TextMeshProUGUI _distanceText;
+        [SerializeField] private TextMeshProUGUI _bestDistanceText;
 
         [Header("Currency Results")]
-        [SerializeField] RectTransform _currencyGainsLayoutParent;
-        [SerializeField] TextMeshProUGUI _currencyText;
+        [SerializeField] private RectTransform _currencyGainsLayoutParent;
+        [SerializeField] private TextMeshProUGUI _currencyText;
 
         [Header("Buttons")]
-        [SerializeField] Button _retryButton;
-        [SerializeField] Button _shopButton;
+        [SerializeField] private Button _retryButton;
+        [SerializeField] private TextMeshProUGUI _retryButtonText;
+        [SerializeField] private Button _shopButton;
+        [SerializeField] private TextMeshProUGUI _shopButtonText;
 
         private readonly ReactiveCommand _onRetryClicked = new ReactiveCommand();
         public IObservable<Unit> OnRetryClicked => _onRetryClicked;
@@ -70,6 +72,8 @@ namespace Assets.Source.Mvc.Views
         {
             _distanceReachedText.text = TextService.DistanceReached();
             _newBestText.text = TextService.NewBest();
+            _retryButtonText.text = TextService.PlayAgainExclamation();
+            _shopButtonText.text = TextService.Upgrades();
         }
 
         public void SetDistance(float value)
