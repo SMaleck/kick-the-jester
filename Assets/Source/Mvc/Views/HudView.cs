@@ -34,8 +34,8 @@ namespace Assets.Source.Mvc.Views
 
         [Header("Other")]
         [SerializeField] Button _pauseButton;
-        [SerializeField] UIProgressBar _velocityBar;
-        [SerializeField] UIProgressBar _kickForceBar;
+        [SerializeField] Slider _velocityBar;
+        [SerializeField] Slider _kickForceBar;
 
         [Header("Out of Camera Indicator")]
         [SerializeField] RectTransform _outOfCameraIndicator;
@@ -95,12 +95,12 @@ namespace Assets.Source.Mvc.Views
 
         public void SetRelativeVelocity(float value)
         {
-            _velocityBar.fillAmount = value;
+            _velocityBar.value = value;
         }
 
         public void SetRelativeKickForce(float value)
         {
-            _kickForceBar.fillAmount = value;
+            _kickForceBar.value = value;
         }
 
         public void SetOutOfCameraIndicatorVisible(bool value)

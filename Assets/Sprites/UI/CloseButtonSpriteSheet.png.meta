@@ -1,14 +1,24 @@
 fileFormatVersion: 2
 guid: aee9ceda299998c4da31da0d7a4a9ccb
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: CloseButtonSpriteSheet_0
-    21300002: CloseButtonSpriteSheet_6
-    21300004: CloseButtonSpriteSheet_1
-    21300006: CloseButtonSpriteSheet_2
-    21300008: CloseButtonSpriteSheet_3
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: CloseButtonSpriteSheet_0
+  - first:
+      213: 21300002
+    second: CloseButtonSpriteSheet_6
+  - first:
+      213: 21300004
+    second: CloseButtonSpriteSheet_1
+  - first:
+      213: 21300006
+    second: CloseButtonSpriteSheet_2
+  - first:
+      213: 21300008
+    second: CloseButtonSpriteSheet_3
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +73,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -74,7 +84,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -85,7 +96,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -96,7 +108,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -107,7 +120,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -118,6 +132,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -137,6 +152,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b84d910a8d95f9c4a93fe62e5b7a068a
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -157,6 +173,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7085c844e72a27a489b8ed86517520f3
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -177,6 +194,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 36b8e66994fc85f48981a7fd12cee578
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -197,6 +215,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cb0ad62262bc7d24592b04ca6aa334a8
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -205,10 +224,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 55ec6ff8cdf99214a94569820e3eebee
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
