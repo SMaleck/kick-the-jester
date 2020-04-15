@@ -14,7 +14,7 @@ namespace Assets.Source.Features.PickupItems
 {
     public class PickupItemSpawner : AbstractDisposable
     {
-        private readonly IPickUpItemSpawnData _pickUpItemSpawnData;
+        private readonly IWorldObjectSpawnData _worldObjectSpawnData;
         private readonly AbstractItemEntity.Factory _abstractItemEntityFactory;
         private readonly FlightStatsModel _flightStatsModel;
         private readonly SpawnAnchorEntity _spawnAnchor;
@@ -23,17 +23,17 @@ namespace Assets.Source.Features.PickupItems
         protected float OffsetX => _spawnAnchor.Position.x - _flightStatsModel.Position.Value.x;
 
         public PickupItemSpawner(
-            IPickUpItemSpawnData pickUpItemSpawnData,
+            IWorldObjectSpawnData worldObjectSpawnData,
             AbstractItemEntity.Factory abstractItemEntityFactory,
             FlightStatsModel flightStatsModel,
             SpawnAnchorEntity spawnAnchor)
         {
-            _pickUpItemSpawnData = pickUpItemSpawnData;
+            _worldObjectSpawnData = worldObjectSpawnData;
             _abstractItemEntityFactory = abstractItemEntityFactory;
             _flightStatsModel = flightStatsModel;
             _spawnAnchor = spawnAnchor;
 
-            _lastSpawnPoints = _pickUpItemSpawnData.SpawnLanes
+            _lastSpawnPoints = _worldObjectSpawnData.SpawnLanes
                 .ToDictionary(item => item, item => 0);
 
             _flightStatsModel.DistanceUnits
@@ -45,7 +45,7 @@ namespace Assets.Source.Features.PickupItems
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distanceUnits)
         {
-            foreach (var spawnLane in _pickUpItemSpawnData.SpawnLanes)
+            foreach (var spawnLane in _worldObjectSpawnData.SpawnLanes)
             {
                 if (ShouldSpawn((int)distanceUnits, spawnLane))
                 {
@@ -96,7 +96,7 @@ namespace Assets.Source.Features.PickupItems
             var itemPool = spawnLane.ItemPool;
             int index = Random.Range(0, itemPool.Count);
 
-            var prefab = _pickUpItemSpawnData.GetPrefab(itemPool[index]);
+            var prefab = _worldObjectSpawnData.GetPrefab(itemPool[index]);
             var item = _abstractItemEntityFactory.Create(prefab);
 
             item.Position = GetSpawnPosition(spawnLane);

@@ -16,7 +16,7 @@ namespace Assets.Source.App.Installers
     {
         [SerializeField] private GameConfig GameConfig;
         [SerializeField] private AchievementsConfig _achievementsConfig;
-        [SerializeField] private PickUpItemSpawnConfig _pickUpItemSpawnConfig;
+        [SerializeField] private WorldObjectSpawnConfig _worldObjectSpawnConfig;
 
         [Header("Jester Configs")]
         [SerializeField] private JesterSpriteEffectsConfig _jesterSpriteEffectsConfig;
@@ -48,8 +48,8 @@ namespace Assets.Source.App.Installers
             Container.Bind<IAchievementData>()
                 .FromInstance(_achievementsConfig);
 
-            Container.Bind<IPickUpItemSpawnData>()
-                .FromInstance(_pickUpItemSpawnConfig);
+            Container.Bind<IWorldObjectSpawnData>()
+                .FromInstance(_worldObjectSpawnConfig);
         }
     }
 }

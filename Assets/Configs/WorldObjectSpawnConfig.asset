@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14273b5884561cc4c9eed5bba740f783, type: 3}
-  m_Name: PickUpItemSpawnConfig
+  m_Name: WorldObjectSpawnConfig
   m_EditorClassIdentifier: 
   _pickUpItemPrefabs:
   - _worldObjectType: 10
