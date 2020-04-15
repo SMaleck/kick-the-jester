@@ -1,15 +1,11 @@
-﻿using Assets.Source.Entities.Cameras;
-using Assets.Source.Entities.Items.Config;
+﻿using Assets.Source.Entities.Items.Config;
 using Assets.Source.Entities.Jester;
 using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models;
-using Assets.Source.Services.Audio;
-using Assets.Source.Services.Particles;
 using UniRx;
 using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 using Logger = Assets.Source.App.Logger;
+using Random = UnityEngine.Random;
 
 namespace Assets.Source.Entities.Items
 {
@@ -20,8 +16,6 @@ namespace Assets.Source.Entities.Items
         private AbstractItemEntity.Factory _itemEntityFactory;
         private JesterEntity _jesterEntity;
         private FlightStatsModel _flightStatsModel;
-
-        private bool _canSpawn = true;
 
         protected int LastSpawnPoint = 0;
         protected int DistanceSinceLastSpawn = 0;
@@ -36,11 +30,8 @@ namespace Assets.Source.Entities.Items
             OffsetX = Position.x - _jesterEntity.Position.x;
             GroundPosition = Position;
 
-            _jesterEntity.OnLanded
-                .Subscribe(_ => _canSpawn = false)
-                .AddTo(this);
-
-            _flightStatsModel.Distance
+            _flightStatsModel.DistanceUnits
+                .Where(_ => !_flightStatsModel.IsLanded.Value)
                 .Subscribe(AttemptSpawn)
                 .AddTo(this);
 
@@ -52,7 +43,7 @@ namespace Assets.Source.Entities.Items
         [Inject]
         private void Inject(
             AbstractItemEntity.Factory itemEntityFactory,
-            JesterEntity jesterEntity, 
+            JesterEntity jesterEntity,
             FlightStatsModel flightStatsModel)
         {
             _itemEntityFactory = itemEntityFactory;
@@ -70,8 +61,6 @@ namespace Assets.Source.Entities.Items
         // Checks if Spawn should occur and Spawns object
         protected virtual void AttemptSpawn(float distance)
         {
-            if (!_canSpawn) { return; }
-
             // Try a spawn in each of the lanes
             for (var i = 0; i < spawningLanesConfig.SpawningLanes.Count; i++)
             {

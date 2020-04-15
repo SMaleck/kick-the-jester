@@ -81,7 +81,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.RoundEnd))
                 .AddTo(Disposer);
 
-            _flightStatsModel.Distance
+            _flightStatsModel.DistanceUnits
                 .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
@@ -154,7 +154,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private int GetGainFromDistance(FlightStatsModel flightStatsModel)
         {
-            var distanceUnits = flightStatsModel.Distance.Value;
+            var distanceUnits = flightStatsModel.DistanceUnits.Value;
             return Mathf.RoundToInt(distanceUnits.ToMeters() * _balancingConfig.MeterToGoldFactor);
         }
 
@@ -165,7 +165,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private int GetGainFromShortDistanceBonus(FlightStatsModel flightStatsModel)
         {
-            return _flightStatsModel.Distance.Value <= _balancingConfig.ShortDistanceUnits
+            return _flightStatsModel.DistanceUnits.Value <= _balancingConfig.ShortDistanceUnits
                 ? _balancingConfig.ShortDistanceGoldBonus
                 : 0;
         }

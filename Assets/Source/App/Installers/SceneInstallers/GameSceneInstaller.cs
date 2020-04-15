@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using Assets.Source.App.Initialization;
+﻿using Assets.Source.App.Initialization;
 using Assets.Source.Entities.Items;
 using Assets.Source.Entities.Jester.Components;
 using Assets.Source.Features.Achievements;
 using Assets.Source.Features.Achievements.RequirementStrategies;
 using Assets.Source.Features.Cheats;
 using Assets.Source.Features.GameState;
+using Assets.Source.Features.PickupItems;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Statistics;
 using Assets.Source.Features.Upgrades;
@@ -17,6 +17,8 @@ using Assets.Source.Mvc.Views;
 using Assets.Source.Mvc.Views.PartialViews;
 using Assets.Source.Services.Savegames.Models;
 using Assets.Source.Util;
+using System.Collections.Generic;
+using Assets.Source.Entities;
 using UnityEngine;
 
 namespace Assets.Source.App.Installers.SceneInstallers
@@ -31,6 +33,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public SettingsView SettingsView;
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
         [SerializeField] public CheatView CheatView;
+        [SerializeField] public SpawnAnchorEntity SpawnAnchor;
 
         protected override void InstallSceneBindings()
         {
@@ -104,6 +107,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region ITEM SPAWNING
 
             Container.BindPrefabFactory<AbstractItemEntity, AbstractItemEntity.Factory>();
+            Container.BindInstance(SpawnAnchor);
+            Container.BindInterfacesAndSelfTo<PickupItemSpawner>().AsSingleNonLazy();
 
             #endregion
 
@@ -123,7 +128,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindFactory<AchievementSavegame, AchievementModel, AchievementModel.Factory>().AsSingle();
             Container.BindFactory<List<IRequirementStrategy>, AchievementUnlockController, AchievementUnlockController.Factory>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<RequirementStrategyFactory>().AsSingle();
             Container.BindFactory<AchievementModel, ReachedMoonRequirementStrategy, ReachedMoonRequirementStrategy.Factory>().AsSingle();
             Container.BindFactory<AchievementModel, TotalDistanceRequirementStrategy, TotalDistanceRequirementStrategy.Factory>().AsSingle();

@@ -31,7 +31,7 @@ namespace Assets.Source.Features.Statistics
                 .Subscribe(statisticsController.RegisterCurrencyCollected)
                 .AddTo(Disposer);
 
-            _flightStatsModel.Height
+            _flightStatsModel.HeightUnits
                 .Where(height => height > statisticsModel.BestHeightUnits.Value)
                 .Subscribe(statisticsController.RegisterRoundHeight)
                 .AddTo(Disposer);
@@ -39,7 +39,7 @@ namespace Assets.Source.Features.Statistics
 
         private void OnRoundEnd()
         {
-            var distance = _flightStatsModel.Distance.Value;
+            var distance = _flightStatsModel.DistanceUnits.Value;
             _statisticsController.RegisterRoundDistance(distance);
 
             _statisticsController.RegisterRoundEnd();

@@ -25,9 +25,9 @@ namespace Assets.Source.Entities
         }
 
         private void OnLateUpdate()
-        {            
+        {
             float nextX = _target.position.x;
-            float nextY = transform.position.y;            
+            float nextY = transform.position.y;
 
             Position = new Vector3(nextX, nextY, Position.z);
         }

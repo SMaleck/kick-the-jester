@@ -58,7 +58,7 @@ namespace Assets.Source.Mvc.Controllers
 
         private void SetupFlightStatsModel()
         {
-            _flightStatsModel.Distance
+            _flightStatsModel.DistanceUnits
                 .Subscribe(_view.SetDistance)
                 .AddTo(Disposer);
 
@@ -67,7 +67,7 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_view.SetCollectedCurrencyAmount)
                 .AddTo(Disposer);
 
-            _flightStatsModel.Height
+            _flightStatsModel.HeightUnits
                 .Subscribe(OnHeightChanged)
                 .AddTo(Disposer);
 

@@ -1,6 +1,7 @@
 using Assets.Source.App.Configuration;
 using Assets.Source.Entities.Jester.Config;
 using Assets.Source.Features.Achievements.Data;
+using Assets.Source.Features.PickupItems.Data;
 using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Mvc.Data;
 using Assets.Source.Services.Audio;
@@ -15,6 +16,7 @@ namespace Assets.Source.App.Installers
     {
         [SerializeField] private GameConfig GameConfig;
         [SerializeField] private AchievementsConfig _achievementsConfig;
+        [SerializeField] private PickUpItemSpawnConfig _pickUpItemSpawnConfig;
 
         [Header("Jester Configs")]
         [SerializeField] private JesterSpriteEffectsConfig _jesterSpriteEffectsConfig;
@@ -45,6 +47,9 @@ namespace Assets.Source.App.Installers
 
             Container.Bind<IAchievementData>()
                 .FromInstance(_achievementsConfig);
+
+            Container.Bind<IPickUpItemSpawnData>()
+                .FromInstance(_pickUpItemSpawnConfig);
         }
     }
 }

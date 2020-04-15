@@ -19,8 +19,8 @@ namespace Assets.Source.Features.PlayerData
         private readonly ReactiveProperty<float> _relativeVelocity;
         public IReadOnlyReactiveProperty<float> RelativeVelocity => _relativeVelocity;
 
-        public readonly IReadOnlyReactiveProperty<float> Distance;
-        public readonly IReadOnlyReactiveProperty<float> Height;
+        public readonly IReadOnlyReactiveProperty<float> DistanceUnits;
+        public readonly IReadOnlyReactiveProperty<float> HeightUnits;
         public readonly IReadOnlyReactiveProperty<float> MaxHeightReached;
         public readonly IReadOnlyReactiveProperty<bool> IsLanded;
 
@@ -31,27 +31,27 @@ namespace Assets.Source.Features.PlayerData
             _velocity = new ReactiveProperty<Vector2>().AddTo(Disposer);
             _relativeVelocity = new ReactiveProperty<float>().AddTo(Disposer);
 
-            Distance = _position
+            DistanceUnits = _position
                 .Select(position => position.x.Difference(Origin.Value.x))
                 .ToReadOnlyReactiveProperty()
                 .AddTo(Disposer);
 
-            Height = _position
+            HeightUnits = _position
                 .Select(position => position.y.Difference(Origin.Value.y))
                 .ToReadOnlyReactiveProperty()
                 .AddTo(Disposer);
 
-            MaxHeightReached = Height
+            MaxHeightReached = HeightUnits
                 .Select(height => Mathf.Max(height, MaxHeightReached.Value))
                 .ToReadOnlyReactiveProperty()
                 .AddTo(Disposer);
 
             IsLanded = Observable.Merge(
-                    Height.AsUnitObservable(),
+                    HeightUnits.AsUnitObservable(),
                     Velocity.AsUnitObservable())
                 .Select(_ =>
                 {
-                    var isOnGround = Height.Value.ToMeters() <= 0;
+                    var isOnGround = HeightUnits.Value.ToMeters() <= 0;
                     var isStopped = Velocity.Value.magnitude.IsNearlyEqual(0);
                     return isOnGround && isStopped;
                 })

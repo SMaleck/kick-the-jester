@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14273b5884561cc4c9eed5bba740f783, type: 3}
+  m_Name: PickUpItemSpawnConfig
+  m_EditorClassIdentifier: 
+  _pickUpItemPrefabs:
+  - _worldObjectType: 10
+    _prefab: {fileID: 1176274882300718, guid: 888c172e68900304f9e83e2b93d44119, type: 3}
+  - _worldObjectType: 11
+    _prefab: {fileID: 1176274882300718, guid: 49d6610b7f1fe1c4db78d1611e759653, type: 3}
+  - _worldObjectType: 20
+    _prefab: {fileID: 1176274882300718, guid: 31d94a55c75e2f14f85e4fadc4c28675, type: 3}
+  - _worldObjectType: 21
+    _prefab: {fileID: 1176274882300718, guid: d1e0974300706e0419b38774e447cf19, type: 3}
+  - _worldObjectType: 100
+    _prefab: {fileID: 1176274882300718, guid: ce5a6b5ac264f2d4f807bb2bae04d48e, type: 3}
+  - _worldObjectType: 101
+    _prefab: {fileID: 1176274882300718, guid: 8088ecc1434d7824abd176bbc88e44f1, type: 3}
+  - _worldObjectType: 102
+    _prefab: {fileID: 1176274882300718, guid: 12044bc0e533d7942948a614f072ccce, type: 3}
+  _spawnLanes:
+  - _laneSpawnChance: 0.434
+    _spawnOnTrajectory: 1
+    _maxDeviation: 7
+    _minDistanceBetweenSpawnsUnits: 130
+    _minHeightUnits: 0
+    _maxHeightUnits: 0
+    _itemPool: 0a0000000b000000
+  - _laneSpawnChance: 0.85
+    _spawnOnTrajectory: 0
+    _maxDeviation: 5
+    _minDistanceBetweenSpawnsUnits: 20
+    _minHeightUnits: 5
+    _maxHeightUnits: 40
+    _itemPool: 14000000
+  - _laneSpawnChance: 0.85
+    _spawnOnTrajectory: 0
+    _maxDeviation: 5
+    _minDistanceBetweenSpawnsUnits: 20
+    _minHeightUnits: 50
+    _maxHeightUnits: 2000
+    _itemPool: 1400000015000000
+  - _laneSpawnChance: 1
+    _spawnOnTrajectory: 0
+    _maxDeviation: 0
+    _minDistanceBetweenSpawnsUnits: 100
+    _minHeightUnits: 0
+    _maxHeightUnits: 0
+    _itemPool: 640000006500000066000000
