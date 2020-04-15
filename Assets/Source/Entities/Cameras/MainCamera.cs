@@ -1,7 +1,6 @@
 ﻿using Assets.Source.App.Configuration;
 using Assets.Source.Entities.Jester;
 using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using DG.Tweening;
 using UniRx;
@@ -10,7 +9,6 @@ using Zenject;
 
 namespace Assets.Source.Entities.Cameras
 {
-    // ToDo Camera: Make Tweeners reusable
     public class MainCamera : AbstractMonoEntity
     {
         [SerializeField] private Camera _camera;
