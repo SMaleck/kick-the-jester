@@ -94,6 +94,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             Container.BindInterfacesAndSelfTo<FlightStatsController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameRoundStatsModel>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<PlayerProfileController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<PlayerProfileModel>().AsSingle().NonLazy();

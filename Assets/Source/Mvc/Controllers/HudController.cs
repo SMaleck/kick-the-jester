@@ -14,6 +14,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly HudView _view;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly GameRoundStatsModel _gameRoundStatsModel;
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly IStatisticsModel _statisticsModel;
         private readonly UserInputModel _userInputModel;
@@ -23,6 +24,7 @@ namespace Assets.Source.Mvc.Controllers
             HudView view,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
+            GameRoundStatsModel gameRoundStatsModel,
             PlayerProfileModel playerProfileModel,
             IStatisticsModel statisticsModel,
             UserInputModel userInputModel,
@@ -32,6 +34,7 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
+            _gameRoundStatsModel = gameRoundStatsModel;
             _playerProfileModel = playerProfileModel;
             _statisticsModel = statisticsModel;
             _userInputModel = userInputModel;
@@ -60,7 +63,7 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.SetCollectedCurrencyAmount(0);
-            _flightStatsModel.TotalCollectedCurrency
+            _gameRoundStatsModel.TotalCollectedCurrency
                 .Subscribe(_view.SetCollectedCurrencyAmount)
                 .AddTo(Disposer);
 
@@ -72,16 +75,16 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_view.SetRelativeVelocity)
                 .AddTo(Disposer);
 
-            _flightStatsModel.Gains
+            _gameRoundStatsModel.Gains
                 .ObserveAdd()
                 .Subscribe(addEvent => { _view.ShowFloatingCoinAmount(addEvent.Value); })
                 .AddTo(Disposer);
 
-            _flightStatsModel.RelativeKickForce
+            _gameRoundStatsModel.RelativeKickForce
                 .Subscribe(_view.SetRelativeKickForce)
                 .AddTo(Disposer);
 
-            _flightStatsModel.ShotsRemaining
+            _gameRoundStatsModel.ShotsRemaining
                 .Subscribe(_view.SetProjectileAmount)
                 .AddTo(Disposer);
         }

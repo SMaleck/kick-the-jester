@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Assets.Source.App.Configuration;
 using Assets.Source.Features.GameState;
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Features.Statistics;
@@ -7,9 +7,9 @@ using Assets.Source.Mvc.Models.Enum;
 using Assets.Source.Mvc.Views;
 using Assets.Source.Services;
 using Assets.Source.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Source.App.Configuration;
 using UniRx;
 using UnityEngine;
 
@@ -20,6 +20,7 @@ namespace Assets.Source.Mvc.Controllers
         private readonly RoundEndView _view;
         private readonly GameStateModel _gameStateModel;
         private readonly FlightStatsModel _flightStatsModel;
+        private readonly GameRoundStatsModel _gameRoundStatsModel;
         private readonly PlayerProfileModel _playerProfileModel;
         private readonly IStatisticsModel _statisticsModel;
         private readonly SceneTransitionService _sceneTransitionService;
@@ -34,6 +35,7 @@ namespace Assets.Source.Mvc.Controllers
             RoundEndView view,
             GameStateModel gameStateModel,
             FlightStatsModel flightStatsModel,
+            GameRoundStatsModel gameRoundStatsModel,
             PlayerProfileModel playerProfileModel,
             IStatisticsModel statisticsModel,
             SceneTransitionService sceneTransitionService,
@@ -45,6 +47,7 @@ namespace Assets.Source.Mvc.Controllers
 
             _gameStateModel = gameStateModel;
             _flightStatsModel = flightStatsModel;
+            _gameRoundStatsModel = gameRoundStatsModel;
             _playerProfileModel = playerProfileModel;
             _statisticsModel = statisticsModel;
             _sceneTransitionService = sceneTransitionService;
@@ -136,7 +139,7 @@ namespace Assets.Source.Mvc.Controllers
                     return GetGainFromDistance(_flightStatsModel);
 
                 case CurrencyGainType.Pickup:
-                    return GetGainFromPickup(_flightStatsModel);
+                    return GetGainFromPickup(_gameRoundStatsModel);
 
                 case CurrencyGainType.ShortDistanceBonus:
                     return GetGainFromShortDistanceBonus(_flightStatsModel);
@@ -155,9 +158,9 @@ namespace Assets.Source.Mvc.Controllers
             return Mathf.RoundToInt(distanceUnits.ToMeters() * _balancingConfig.MeterToGoldFactor);
         }
 
-        private int GetGainFromPickup(FlightStatsModel flightStatsModel)
+        private int GetGainFromPickup(GameRoundStatsModel gameRoundStatsModel)
         {
-            return flightStatsModel.Gains.Sum();
+            return gameRoundStatsModel.Gains.Sum();
         }
 
         private int GetGainFromShortDistanceBonus(FlightStatsModel flightStatsModel)

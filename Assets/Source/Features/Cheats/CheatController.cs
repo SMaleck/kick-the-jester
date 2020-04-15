@@ -25,19 +25,19 @@ namespace Assets.Source.Features.Cheats
         private const string SwitchLanguageKey = "l";
 
         private readonly PlayerProfileModel _playerProfileModel;
-        private readonly FlightStatsModel _flightStatsModel;
+        private readonly GameRoundStatsModel _gameRoundStatsModel;
         private readonly SceneTransitionService _sceneTransitionService;
 
         public CheatController(
             CheatView cheatView,
             PlayerProfileModel playerProfileModel,
-            FlightStatsModel flightStatsModel,
+            GameRoundStatsModel gameRoundStatsModel,
             SceneTransitionService sceneTransitionService)
         {
             cheatView.Initialize();
 
             _playerProfileModel = playerProfileModel;
-            _flightStatsModel = flightStatsModel;
+            _gameRoundStatsModel = gameRoundStatsModel;
             _sceneTransitionService = sceneTransitionService;
 
             if (!Debug.isDebugBuild)
@@ -103,13 +103,13 @@ namespace Assets.Source.Features.Cheats
 
         private void AddPickup()
         {
-            _flightStatsModel.Gains.Add(AddPickupAmount);
+            _gameRoundStatsModel.AddGains(AddPickupAmount);
         }
 
         private void AddProjectiles()
         {
-            var currentProjectileCount = _flightStatsModel.ShotsRemaining.Value;
-            _flightStatsModel.SetRemainingShotsIfHigher(currentProjectileCount + AddProjectilesAmount);
+            var currentProjectileCount = _gameRoundStatsModel.ShotsRemaining.Value;
+            _gameRoundStatsModel.SetRemainingShotsIfHigher(currentProjectileCount + AddProjectilesAmount);
         }
 
         private void SwitchLanguage()

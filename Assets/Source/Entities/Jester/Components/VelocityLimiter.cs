@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Entities.GenericComponents;
 using Assets.Source.Features.PlayerData;
-using Assets.Source.Mvc.Models;
 using Assets.Source.Util;
 using UniRx;
 using UnityEngine;
@@ -10,24 +9,22 @@ namespace Assets.Source.Entities.Jester.Components
     public class VelocityLimiter : AbstractPausableComponent<JesterEntity>
     {
         private readonly PlayerAttributesModel _playerAttributesModel;
-        private readonly FlightStatsModel _flightStatsModel;
 
-        private float velocityX
+        private float VelocityX
         {
             get { return Owner.GoBody.velocity.x; }
         }
 
-        private float velocityY
+        private float VelocityY
         {
             get { return Owner.GoBody.velocity.y; }
         }
 
 
-        public VelocityLimiter(JesterEntity owner, PlayerAttributesModel playerAttributesModel, FlightStatsModel flightStatsModel) : 
-            base(owner)
+        public VelocityLimiter(JesterEntity owner, PlayerAttributesModel playerAttributesModel)
+            : base(owner)
         {
             _playerAttributesModel = playerAttributesModel;
-            _flightStatsModel = flightStatsModel;
 
             Observable.EveryLateUpdate()
                 .Subscribe(_ => OnLateUpdate())
@@ -37,13 +34,10 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void OnLateUpdate()
         {
-            float clampedX = Mathf.Clamp(velocityX, 0, _playerAttributesModel.MaxVelocityX.Value);
-            float clampedY = Mathf.Clamp(velocityY, - float.MaxValue, _playerAttributesModel.MaxVelocityY.Value);
+            float clampedX = Mathf.Clamp(VelocityX, 0, _playerAttributesModel.MaxVelocityX.Value);
+            float clampedY = Mathf.Clamp(VelocityY, -float.MaxValue, _playerAttributesModel.MaxVelocityY.Value);
 
             Owner.GoBody.velocity = new Vector2(clampedX, clampedY);
-
-            float relativeVelocity = velocityX.AsRelativeTo(_playerAttributesModel.MaxVelocityX.Value);
-            _flightStatsModel.RelativeVelocity.Value = relativeVelocity;
         }
     }
 }

@@ -11,26 +11,26 @@ namespace Assets.Source.Entities.Jester.Components
     {
         private readonly ShootConfig _shootConfig;
         private readonly PlayerAttributesModel _playerAttributesModel;
-        private readonly FlightStatsModel _flightStatsModel;
+        private readonly GameRoundStatsModel _gameRoundStatsModel;
 
         private bool _isInFlight;
-        private bool _hasProjectiles => _flightStatsModel.ShotsRemaining.Value > 0;
+        private bool _hasProjectiles => _gameRoundStatsModel.ShotsRemaining.Value > 0;
 
         public MotionShoot(
             JesterEntity owner,
             ShootConfig shootConfig,
             PlayerAttributesModel playerAttributesModel,
-            FlightStatsModel flightStatsModel,
+            GameRoundStatsModel gameRoundStatsModel,
             UserInputModel userInputModel)
             : base(owner)
         {
             _shootConfig = shootConfig;
             _playerAttributesModel = playerAttributesModel;
-            _flightStatsModel = flightStatsModel;
+            _gameRoundStatsModel = gameRoundStatsModel;
 
             _playerAttributesModel.ProjectileCount
-                .Subscribe(flightStatsModel.SetRemainingShotsIfHigher)
-                .AddTo(Disposer);            
+                .Subscribe(_gameRoundStatsModel.SetRemainingShotsIfHigher)
+                .AddTo(Disposer);
 
             userInputModel.OnClickedAnywhere
                 .Subscribe(_ => OnKick())
@@ -54,8 +54,8 @@ namespace Assets.Source.Entities.Jester.Components
             AdjustVerticalVelocity();
             Vector3 appliedForce = _shootConfig.ForceDirection * _playerAttributesModel.ShootForce.Value;
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
-            
-            _flightStatsModel.ShotsRemaining.Value--;
+
+            _gameRoundStatsModel.DecrementShotsRemaining();
         }
 
         private void AdjustVerticalVelocity()

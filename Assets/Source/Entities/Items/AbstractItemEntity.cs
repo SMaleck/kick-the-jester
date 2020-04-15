@@ -43,11 +43,11 @@ namespace Assets.Source.Entities.Items
         {
             Observable.EveryLateUpdate()
                 .Subscribe(_ => OnLateUpdate())
-                .AddTo(Disposer);
+                .AddTo(this);
 
             _collisionProbe.OnTriggerEnter2DAsObservable()
                 .Subscribe(OnCollisionProbeEntered)
-                .AddTo(Disposer);
+                .AddTo(this);
 
             Setup();
         }
@@ -57,7 +57,7 @@ namespace Assets.Source.Entities.Items
         // Self-Destruct if we moved out of the camera view
         private void OnLateUpdate()
         {
-            if (IsOutOfCameraBounds())
+            if (gameObject != null && IsOutOfCameraBounds())
             {
                 SelfDestruct();
             }

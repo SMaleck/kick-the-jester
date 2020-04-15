@@ -13,7 +13,7 @@ namespace Assets.Source.Entities.Jester.Components
     public class MotionBoot : AbstractPausableComponent<JesterEntity>
     {
         private readonly PlayerAttributesModel _playerAttributesModel;
-        private readonly FlightStatsModel _flightStatsModel;
+        private readonly GameRoundStatsModel _gameRoundStatsModel;
         private readonly UserInputModel _userInputModel;
         private readonly BootConfig _bootConfig;
 
@@ -26,13 +26,13 @@ namespace Assets.Source.Entities.Jester.Components
         public MotionBoot(
             JesterEntity owner,
             PlayerAttributesModel playerAttributesModel,
-            FlightStatsModel flightStatsModel,
+            GameRoundStatsModel gameRoundStatsModel,
             UserInputModel userInputModel,
             BootConfig bootConfig)
             : base(owner)
         {
             _playerAttributesModel = playerAttributesModel;
-            _flightStatsModel = flightStatsModel;
+            _gameRoundStatsModel = gameRoundStatsModel;
             _userInputModel = userInputModel;
             _bootConfig = bootConfig;
 
@@ -46,7 +46,7 @@ namespace Assets.Source.Entities.Jester.Components
 
             _kickForceTweener = DOTween
                 .To(
-                (x) => _flightStatsModel.RelativeKickForce.Value = x,
+                _gameRoundStatsModel.SetRelativeKickForce,
                 _bootConfig.MinForceFactor,
                 _bootConfig.MaxForceFactor,
                 _bootConfig.ForceFactorChangeSeconds)
@@ -81,7 +81,7 @@ namespace Assets.Source.Entities.Jester.Components
             OnJesterKickedSubscription?.Dispose();
 
             var kickForce = _playerAttributesModel.KickForce.Value;
-            Vector3 appliedForce = _bootConfig.ForceDirection * (kickForce * _flightStatsModel.RelativeKickForce.Value);
+            Vector3 appliedForce = _bootConfig.ForceDirection * (kickForce * _gameRoundStatsModel.RelativeKickForce.Value);
             Owner.GoBody.AddForce(appliedForce, ForceMode2D.Impulse);
         }
     }
