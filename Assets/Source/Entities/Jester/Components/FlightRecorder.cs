@@ -2,24 +2,21 @@
 using Assets.Source.Features.PlayerData;
 using Assets.Source.Util;
 using UniRx;
-using UnityEngine;
 
 namespace Assets.Source.Entities.Jester.Components
 {
     public class FlightRecorder : AbstractPausableComponent<JesterEntity>
     {
-        private readonly Vector3 origin;
         private readonly FlightStatsModel _flightStatsModel;
 
         private bool _canCheckForIsLanded = false;
-        private bool _isLanded = false;
-
 
         public FlightRecorder(JesterEntity owner, FlightStatsModel flightStatsModel)
             : base(owner)
         {
-            origin = owner.GoTransform.position;
             _flightStatsModel = flightStatsModel;
+
+            _flightStatsModel.SetOrigin(owner.GoTransform.position);
 
             owner.OnKicked
                 .Subscribe(_ => _canCheckForIsLanded = true)
@@ -29,32 +26,19 @@ namespace Assets.Source.Entities.Jester.Components
                 .Where(_ => !IsPaused.Value)
                 .Subscribe(_ => LateUpdate())
                 .AddTo(owner);
+
+            _flightStatsModel.IsLanded
+                .Where(isLanded => _canCheckForIsLanded && isLanded)
+                .Take(1)
+                .Subscribe(_ => Owner.OnLanded.Execute())
+                .AddTo(owner);
         }
 
 
         private void LateUpdate()
         {
-            _flightStatsModel.SetDistance(Owner.GoTransform.position.x.Difference(origin.x));
-            _flightStatsModel.SetHeight(Owner.GoTransform.position.y.Difference(origin.y));
-
-            _flightStatsModel.Velocity.Value = Owner.GoBody.velocity;
-
-            CheckIsLanded();
-        }
-
-        private void CheckIsLanded()
-        {
-            if (!_canCheckForIsLanded || _isLanded) { return; }
-
-            bool isOnGround = _flightStatsModel.Height.Value.ToMeters() <= 0;
-            bool isStopped = _flightStatsModel.Velocity.Value.magnitude.IsNearlyEqual(0);
-
-            _isLanded = isOnGround && isStopped;
-
-            if (_isLanded)
-            {
-                Owner.OnLanded.Execute();
-            }
+            _flightStatsModel.SetPosition(Owner.GoTransform.position);
+            _flightStatsModel.SetVelocity(Owner.GoBody.velocity);
         }
     }
 }

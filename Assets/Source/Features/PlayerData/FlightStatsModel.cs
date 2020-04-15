@@ -7,44 +7,85 @@ namespace Assets.Source.Features.PlayerData
 {
     public class FlightStatsModel : AbstractDisposable
     {
-        public ReactiveProperty<Vector2> Velocity;
-      
+        private readonly ReactiveProperty<Vector3> _origin;
+        public IReadOnlyReactiveProperty<Vector3> Origin => _origin;
+
+        private readonly ReactiveProperty<Vector3> _position;
+        public IReadOnlyReactiveProperty<Vector3> Position => _position;
+
+        private readonly ReactiveProperty<Vector2> _velocity;
+        public IReadOnlyReactiveProperty<Vector2> Velocity => _velocity;
+
+        public readonly IReadOnlyReactiveProperty<float> Distance;
+        public readonly IReadOnlyReactiveProperty<float> Height;
+        public readonly IReadOnlyReactiveProperty<float> MaxHeightReached;
+        public readonly IReadOnlyReactiveProperty<bool> IsLanded;
+
+        // ToDo Extract to separate Model
         public FloatReactiveProperty RelativeKickForce;
         public FloatReactiveProperty RelativeVelocity;
         public IntReactiveProperty ShotsRemaining;
 
         public ReactiveCollection<int> Gains;
-
-        private readonly ReactiveProperty<float> _distance;
-        public IReadOnlyReactiveProperty<float> Distance => _distance;
-
-        private readonly ReactiveProperty<float> _height;
-        public IReadOnlyReactiveProperty<float> Height => _height;
-
-        private readonly ReactiveProperty<float> _maxHeightReached;
-        public IReadOnlyReactiveProperty<float> MaxHeightReached => _maxHeightReached;
-
         public IReadOnlyReactiveProperty<int> TotalCollectedCurrency;
 
         public FlightStatsModel()
         {
-            Velocity = new ReactiveProperty<Vector2>().AddTo(Disposer);
             RelativeKickForce = new FloatReactiveProperty().AddTo(Disposer);
             RelativeVelocity = new FloatReactiveProperty().AddTo(Disposer);
             ShotsRemaining = new IntReactiveProperty().AddTo(Disposer);
             Gains = new ReactiveCollection<int>().AddTo(Disposer);
 
-            _distance = new FloatReactiveProperty().AddTo(Disposer);
-            _height = new FloatReactiveProperty().AddTo(Disposer);
-            _maxHeightReached = new ReactiveProperty<float>(0).AddTo(Disposer);
-
-            Height.Subscribe(SafeSetMaxHeightReached)
-                .AddTo(Disposer);
+            _origin = new ReactiveProperty<Vector3>().AddTo(Disposer);
+            _position = new ReactiveProperty<Vector3>().AddTo(Disposer);
+            _velocity = new ReactiveProperty<Vector2>().AddTo(Disposer);
 
             TotalCollectedCurrency = Gains.ObserveAdd()
                 .Select(_ => Gains.Sum())
                 .ToReadOnlyReactiveProperty()
                 .AddTo(Disposer);
+
+            Distance = _position
+                .Select(position => position.x.Difference(Origin.Value.x))
+                .ToReadOnlyReactiveProperty()
+                .AddTo(Disposer);
+
+            Height = _position
+                .Select(position => position.y.Difference(Origin.Value.y))
+                .ToReadOnlyReactiveProperty()
+                .AddTo(Disposer);
+
+            MaxHeightReached = Height
+                .Select(height => Mathf.Max(height, MaxHeightReached.Value))
+                .ToReadOnlyReactiveProperty()
+                .AddTo(Disposer);
+            
+            IsLanded = Observable.Merge(
+                    Height.AsUnitObservable(),
+                    Velocity.AsUnitObservable())
+                .Select(_ =>
+                {
+                    var isOnGround = Height.Value.ToMeters() <= 0;
+                    var isStopped = Velocity.Value.magnitude.IsNearlyEqual(0);
+                    return isOnGround && isStopped;
+                })
+                .ToReadOnlyReactiveProperty()
+                .AddTo(Disposer);
+        }
+
+        public void SetOrigin(Vector3 value)
+        {
+            _origin.Value = value;
+        }
+
+        public void SetPosition(Vector3 value)
+        {
+            _position.Value = value;
+        }
+
+        public void SetVelocity(Vector2 value)
+        {
+            _velocity.Value = value;
         }
 
         public void SetRemainingShotsIfHigher(int amount)
@@ -53,21 +94,6 @@ namespace Assets.Source.Features.PlayerData
             {
                 ShotsRemaining.Value = amount;
             }
-        }
-
-        public void SetDistance(float value)
-        {
-            _distance.Value = value;
-        }
-
-        public void SetHeight(float value)
-        {
-            _height.Value = value;
-        }
-
-        private void SafeSetMaxHeightReached(float value)
-        {
-            _maxHeightReached.Value = Mathf.Max(value, _maxHeightReached.Value);
         }
     }
 }
