@@ -1,8 +1,12 @@
-﻿using Assets.Source.Services.Localization;
+﻿using Assets.Source.Entities.Jester;
+using Assets.Source.Features.Statistics;
+using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
 using TMPro;
+using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Mvc.Views
 {
@@ -13,34 +17,46 @@ namespace Assets.Source.Mvc.Views
 
         private const float MoveThresholdDistanceMeters = 5;
         private const float MoveSeconds = 0.7f;
+
+        private IStatisticsModel _statisticsModel;
         private Vector3 _selfOrigin;
+        private Vector3 _jesterOrigin;
 
-        public Vector3 JesterOrigin;
-
+        [Inject]
+        public void Inject(
+            IStatisticsModel statisticsModel,
+            JesterEntity jesterEntity)
+        {
+            _statisticsModel = statisticsModel;
+            _selfOrigin = gameObject.transform.position;
+            _jesterOrigin = jesterEntity.Position;
+        }
 
         public override void Setup()
         {
-            _selfOrigin = gameObject.transform.position;
+            _statisticsModel.BestDistanceUnits
+                .Subscribe(UpdateBestDistance)
+                .AddTo(Disposer);
+        }
+
+        private void UpdateBestDistance(float distance)
+        {
             UpdateTexts();
+            SlideToBestDistance(distance);
+        }
+
+        private void UpdateBestDistanceInstant(float distance)
+        {
+            UpdateTexts();
+            SlideToBestDistance(distance, true);
         }
 
         private void UpdateTexts()
         {
+            var distance = _statisticsModel.BestDistanceUnits.Value;
+            _bestDistanceText.text = TextService.MetersAmount(distance);
             _bestDistanceLabelText.text = TextService.BestDistance();
         }
-
-        public void UpdateBestDistance(float distance)
-        {
-            _bestDistanceText.text = TextService.MetersAmount(distance);
-            SlideToBestDistance(distance);
-        }
-
-        public void UpdateBestDistanceInstant(float distance)
-        {
-            _bestDistanceText.text = TextService.MetersAmount(distance);
-            SlideToBestDistance(distance, true);
-        }
-
 
         private void SlideToBestDistance(float distance, bool instant = false)
         {
@@ -52,17 +68,21 @@ namespace Assets.Source.Mvc.Views
                 return;
             }
 
-            var newPosX = JesterOrigin.x + distance;
+            var newPos = new Vector3(
+                _jesterOrigin.x + distance,
+                _selfOrigin.y,
+                _selfOrigin.z);
+
             if (instant)
             {
-                gameObject.transform.position = new Vector3(newPosX, _selfOrigin.y, _selfOrigin.z);
+                gameObject.transform.position = newPos;
                 return;
             }
 
-            gameObject.transform.DOMoveX(newPosX, MoveSeconds)
+            gameObject.transform
+                .DOMove(newPos, MoveSeconds)
                 .SetEase(Ease.OutCubic);
         }
-
 
         private bool IsAboveThreshold(float distance)
         {

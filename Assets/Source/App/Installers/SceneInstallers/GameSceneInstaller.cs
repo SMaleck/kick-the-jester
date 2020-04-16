@@ -57,7 +57,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<SettingsController>().AsSingle().NonLazy();
 
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
-            Container.BindInterfacesAndSelfTo<BestDistanceMarkerController>().AsSingle().NonLazy();
 
             Container.BindInstance(ResetProfileConfirmationView).AsSingle();
             Container.BindInterfacesAndSelfTo<ResetProfileConfirmationController>().AsSingle().NonLazy();
