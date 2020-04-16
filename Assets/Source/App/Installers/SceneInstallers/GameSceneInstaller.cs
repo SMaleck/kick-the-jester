@@ -23,6 +23,7 @@ using UnityEngine;
 
 namespace Assets.Source.App.Installers.SceneInstallers
 {
+    // ToDo [ARCH] Installers are not utilized correctly. Could be split up
     public class GameSceneInstaller : AbstractSceneInstaller
     {
         [SerializeField] public BestDistanceMarkerView BestDistanceMarkerView;
@@ -113,7 +114,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region JESTER COMPONENTS
 
-            // ToDo Find better way of composing the Jester
+            // ToDo [ARCH] This composition could be done in a cleaner way
             Container.BindInterfacesAndSelfTo<FlightRecorder>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<MotionBoot>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<MotionShoot>().AsSingle().NonLazy();

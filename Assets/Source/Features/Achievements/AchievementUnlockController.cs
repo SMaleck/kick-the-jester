@@ -24,7 +24,7 @@ namespace Assets.Source.Features.Achievements
 
         private void OnAchievementUnlocked(AchievementId achievementId)
         {
-            // ToDo Report unlock to external API
+            // ToDo [ACHIEVEMENTS] Report unlock to external API
             App.Logger.Warn($"ACHIEVEMENT UNLOCKED: {achievementId}");
         }
     }

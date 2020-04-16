@@ -5,6 +5,7 @@ using Zenject;
 
 namespace Assets.Source.Util.MonoObjectPooling
 {
+    // ToDo [ARCH] Consider bringing in pooling from facilities repo
     public class MonoObjectPool<T> where T : class, IPoolItem
     {
         private readonly PlaceholderFactory<UnityEngine.Object, T> _poolItemFactory;
