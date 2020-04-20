@@ -15,6 +15,8 @@ MonoBehaviour:
   GameConfig: {fileID: 11400000, guid: c09fd6b6d7f681a42a46620edd6bd4dd, type: 2}
   _achievementsConfig: {fileID: 11400000, guid: abfe43ceee654f34bb28d9f29ed9aa65,
     type: 2}
+  _achievementsIconConfig: {fileID: 11400000, guid: 6b3c708538a1b1647b5e98c2a3c4bdc9,
+    type: 2}
   _worldObjectSpawnConfig: {fileID: 11400000, guid: 8beda3a1b2ba18b48a60b192a3cb2f5e,
     type: 2}
   _jesterSpriteEffectsConfig: {fileID: 11400000, guid: 5312f3049a91c2b41975a32022c3d52a,

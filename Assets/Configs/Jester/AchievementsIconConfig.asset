@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f617612b43e554c8d1b8c60b566723, type: 3}
+  m_Name: AchievementsIconConfig
+  m_EditorClassIdentifier: 
+  _achievementIcons:
+  - _id: 0
+    _iconSprite: {fileID: 21300000, guid: 154bac8d06fd32b44b70cf1eace50563, type: 3}
+  - _id: 1
+    _iconSprite: {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
+  - _id: 2
+    _iconSprite: {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
+  - _id: 3
+    _iconSprite: {fileID: 21300000, guid: f84c6167b19a75f41bd20c07aef36a2f, type: 3}
+  - _id: 4
+    _iconSprite: {fileID: 21300000, guid: 0b11b5ac6dee43e4eb5dab133f9b0277, type: 3}
+  - _id: 5
+    _iconSprite: {fileID: 21300000, guid: 0b11b5ac6dee43e4eb5dab133f9b0277, type: 3}
+  - _id: 6
+    _iconSprite: {fileID: 21300000, guid: 0b11b5ac6dee43e4eb5dab133f9b0277, type: 3}
+  - _id: 7
+    _iconSprite: {fileID: 21300000, guid: 1dc7fde2c6701ae4692b765c6aa5b9ac, type: 3}
+  - _id: 8
+    _iconSprite: {fileID: 21300000, guid: 1dc7fde2c6701ae4692b765c6aa5b9ac, type: 3}
+  - _id: 9
+    _iconSprite: {fileID: 21300000, guid: 1dc7fde2c6701ae4692b765c6aa5b9ac, type: 3}
+  - _id: 10
+    _iconSprite: {fileID: 21300014, guid: 73fd8fd04d9e984418a98e63a7d6d44c, type: 3}
+  - _id: 11
+    _iconSprite: {fileID: 21300014, guid: 73fd8fd04d9e984418a98e63a7d6d44c, type: 3}
+  - _id: 12
+    _iconSprite: {fileID: 21300014, guid: 73fd8fd04d9e984418a98e63a7d6d44c, type: 3}

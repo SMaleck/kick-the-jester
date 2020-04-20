@@ -16,6 +16,7 @@ namespace Assets.Source.App.Installers
     {
         [SerializeField] private GameConfig GameConfig;
         [SerializeField] private AchievementsConfig _achievementsConfig;
+        [SerializeField] private AchievementsIconConfig _achievementsIconConfig;
         [SerializeField] private WorldObjectSpawnConfig _worldObjectSpawnConfig;
 
         [Header("Jester Configs")]
@@ -24,6 +25,7 @@ namespace Assets.Source.App.Installers
 
         [Header("View Prefabs")]
         [SerializeField] private ViewPrefabConfig _viewPrefabConfig;
+        [SerializeField] private ViewUtilConfig _viewUtilConfig;
 
         [Header("Pooling Configs")]
         [SerializeField] private ParticleEffectConfig _particleEffectConfig;
@@ -41,9 +43,12 @@ namespace Assets.Source.App.Installers
             Container.BindInstance(_upgradeTreeConfig);
 
             Container.BindInstance(_viewPrefabConfig);
+            Container.BindInstance(_viewUtilConfig);
 
             Container.BindInstance(_particleEffectConfig);
             Container.BindInstance(_audioConfig);
+
+            Container.BindInstance(_achievementsIconConfig);
 
             Container.Bind<IAchievementData>()
                 .FromInstance(_achievementsConfig);
