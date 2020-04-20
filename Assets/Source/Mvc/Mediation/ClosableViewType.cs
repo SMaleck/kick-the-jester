@@ -8,6 +8,7 @@
         Upgrades = 3,
         ResetProfileConfirmation = 4,
         Credits = 5,
-        Tutorial = 6
+        Tutorial = 6,
+        Achievements = 7
     }
 }

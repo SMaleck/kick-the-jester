@@ -13,11 +13,13 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private TextMeshProUGUI _titleText;
 
         [Header("Buttons")]
-        [SerializeField] private Button _openSettingsButton;
-        [SerializeField] private TextMeshProUGUI _openSettingsButtonText;
+        [SerializeField] private TextMeshProUGUI _continueButtonText;
         [SerializeField] private Button _retryButton;
         [SerializeField] private TextMeshProUGUI _retryButtonText;
-        [SerializeField] private TextMeshProUGUI _continueButtonText;
+        [SerializeField] private Button _openSettingsButton;
+        [SerializeField] private TextMeshProUGUI _openSettingsButtonText;
+        [SerializeField] private Button _achievementsButton;
+        [SerializeField] private TextMeshProUGUI _achievementsButtonText;
 
 
         private readonly ReactiveCommand _onSettingsClicked = new ReactiveCommand();
@@ -25,6 +27,9 @@ namespace Assets.Source.Mvc.Views
 
         private readonly ReactiveCommand _onRetryClicked = new ReactiveCommand();
         public IObservable<Unit> OnRetryClicked => _onRetryClicked;
+
+        private readonly ReactiveCommand _onAchievementsClicked = new ReactiveCommand();
+        public IObservable<Unit> OnAchievementsClicked => _onAchievementsClicked;
 
         public override void Setup()
         {
@@ -34,15 +39,19 @@ namespace Assets.Source.Mvc.Views
             _onRetryClicked.AddTo(Disposer);
             _onRetryClicked.BindTo(_retryButton).AddTo(Disposer);
 
+            _onAchievementsClicked.AddTo(Disposer);
+            _onAchievementsClicked.BindTo(_achievementsButton).AddTo(Disposer);
+
             UpdateTexts();
         }
 
         private void UpdateTexts()
         {
             _titleText.text = TextService.Pause();
-            _openSettingsButtonText.text = TextService.Settings();
-            _retryButtonText.text = TextService.Restart();
             _continueButtonText.text = TextService.Continue();
+            _retryButtonText.text = TextService.Restart();
+            _openSettingsButtonText.text = TextService.Settings();
+            _achievementsButtonText.text = TextService.Achievements();
         }
     }
 }

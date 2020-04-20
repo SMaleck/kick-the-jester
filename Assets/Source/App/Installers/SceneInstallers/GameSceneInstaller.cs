@@ -1,8 +1,7 @@
 ﻿using Assets.Source.App.Initialization;
-using Assets.Source.Entities.Items;
+using Assets.Source.App.Installers.FeatureInstallers;
+using Assets.Source.Entities;
 using Assets.Source.Entities.Jester.Components;
-using Assets.Source.Features.Achievements;
-using Assets.Source.Features.Achievements.RequirementStrategies;
 using Assets.Source.Features.Cheats;
 using Assets.Source.Features.GameState;
 using Assets.Source.Features.PickupItems;
@@ -14,11 +13,7 @@ using Assets.Source.Mvc.Mediation;
 using Assets.Source.Mvc.Models;
 using Assets.Source.Mvc.ServiceControllers;
 using Assets.Source.Mvc.Views;
-using Assets.Source.Mvc.Views.PartialViews;
-using Assets.Source.Services.Savegames.Models;
 using Assets.Source.Util;
-using System.Collections.Generic;
-using Assets.Source.Entities;
 using UnityEngine;
 
 namespace Assets.Source.App.Installers.SceneInstallers
@@ -35,19 +30,17 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public UpgradeScreenView UpgradeScreenView;
         [SerializeField] public CheatView CheatView;
         [SerializeField] public SpawnAnchorEntity SpawnAnchor;
+        [SerializeField] public AchievementsScreenView AchievementsScreenView;
 
         protected override void InstallSceneBindings()
         {
             #region MVC
 
             Container.BindInterfacesAndSelfTo<ClosableViewMediator>().AsSingle().NonLazy();
-            Container.BindFactory<IClosableView, ClosableViewController, ClosableViewController.Factory>();
 
             Container.BindInstance(HudView).AsSingle();
-            Container.BindPrefabFactory<PickupFeedbackView, PickupFeedbackView.Factory>();
             Container.BindInterfacesAndSelfTo<HudController>().AsSingle().NonLazy();
 
-            Container.BindPrefabFactory<CurrencyGainItemView, CurrencyGainItemView.Factory>();
             Container.BindInstance(RoundEndView).AsSingle();
             Container.BindInterfacesAndSelfTo<RoundEndController>().AsSingle().NonLazy();
 
@@ -58,6 +51,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInterfacesAndSelfTo<SettingsController>().AsSingle().NonLazy();
 
             Container.BindInstance(BestDistanceMarkerView).AsSingle();
+            Container.BindInterfacesAndSelfTo<BestDistanceMarkerController>().AsSingle().NonLazy();
 
             Container.BindInstance(ResetProfileConfirmationView).AsSingle();
             Container.BindInterfacesAndSelfTo<ResetProfileConfirmationController>().AsSingle().NonLazy();
@@ -93,8 +87,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
             Container.BindInstance(UpgradeScreenView).AsSingle();
             Container.BindInterfacesAndSelfTo<UpgradeScreenController>().AsSingle().NonLazy();
 
-            Container.BindPrefabFactory<UpgradeItemView, UpgradeItemView.Factory>();
-
             Container.BindInterfacesAndSelfTo<FlightStatsController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<FlightStatsModel>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameRoundStatsModel>().AsSingle().NonLazy();
@@ -106,7 +98,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region ITEM SPAWNING
 
-            Container.BindPrefabFactory<AbstractItemEntity, AbstractItemEntity.Factory>();
             Container.BindInstance(SpawnAnchor);
             Container.BindInterfacesAndSelfTo<PickupItemSpawner>().AsSingleNonLazy();
 
@@ -126,15 +117,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
 
             #region ACHIEVEMENTS
 
-            Container.BindFactory<AchievementSavegame, AchievementModel, AchievementModel.Factory>().AsSingle();
-            Container.BindFactory<List<IRequirementStrategy>, AchievementUnlockController, AchievementUnlockController.Factory>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<RequirementStrategyFactory>().AsSingle();
-            Container.BindFactory<AchievementModel, ReachedMoonRequirementStrategy, ReachedMoonRequirementStrategy.Factory>().AsSingle();
-            Container.BindFactory<AchievementModel, TotalDistanceRequirementStrategy, TotalDistanceRequirementStrategy.Factory>().AsSingle();
-            Container.BindFactory<AchievementModel, BestDistanceRequirementStrategy, BestDistanceRequirementStrategy.Factory>().AsSingle();
-            Container.BindFactory<AchievementModel, BestHeightRequirementStrategy, BestHeightRequirementStrategy.Factory>().AsSingle();
-            Container.BindFactory<AchievementModel, RoundsPlayedRequirementStrategy, RoundsPlayedRequirementStrategy.Factory>().AsSingle();
+            Container.BindInstance(AchievementsScreenView);
+            AchievementsInstaller.Install(Container);
 
             #endregion
 

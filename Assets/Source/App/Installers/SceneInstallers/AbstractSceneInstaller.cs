@@ -9,6 +9,8 @@ namespace Assets.Source.App.Installers.SceneInstallers
     {
         public override void InstallBindings()
         {
+            FactoryInstaller.Install(Container);
+
             Container.BindInterfacesAndSelfTo<CompositeDisposable>()
                 .AsSingleNonLazy();
 

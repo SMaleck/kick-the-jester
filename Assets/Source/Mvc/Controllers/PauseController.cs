@@ -46,6 +46,10 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => _sceneTransitionService.ToGame())
                 .AddTo(Disposer);
 
+            _view.OnAchievementsClicked
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Achievements))
+                .AddTo(Disposer);
+
             _closableViewMediator.OnViewClosed
                 .Where(viewType => viewType == ClosableViewType.Pause)
                 .Subscribe(_ => _gameStateModel.SetIsPaused(false))

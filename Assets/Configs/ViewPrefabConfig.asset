@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,28 +13,32 @@ MonoBehaviour:
   m_Name: ViewPrefabConfig
   m_EditorClassIdentifier: 
   _titleViewPrefab: {fileID: 114752515614464622, guid: c5969077fce8f924ab0a38a14fc780a2,
-    type: 2}
+    type: 3}
   _settingsViewPrefab: {fileID: 114458457345219540, guid: 9cc8cea9242b58647be48f75594ed1ef,
-    type: 2}
+    type: 3}
   _creditsViewPrefab: {fileID: 114463140058776230, guid: 7a1cc1977b6ef37498b500911eccdb3c,
-    type: 2}
+    type: 3}
   _tutorialViewPrefab: {fileID: 114208396244462766, guid: 5f68ec589ce10154ca35de784f69de15,
-    type: 2}
+    type: 3}
   _hudViewPrefab: {fileID: 114658634512328238, guid: 820a8bfdc65976a4daa3d00b1eedec35,
-    type: 2}
+    type: 3}
   _pauseViewPrefab: {fileID: 114984847289590238, guid: fcb921668570cc746bfea17d035d56cb,
-    type: 2}
+    type: 3}
   _roundEndViewPrefab: {fileID: 114134560641312208, guid: 2c91855151f31914184a9848ac6f61dd,
-    type: 2}
+    type: 3}
   _bestDistanceMarkerViewPrefab: {fileID: 114736529221267810, guid: 68bee728133d2154ea70f30e8aa782ee,
-    type: 2}
+    type: 3}
   _currencyGainItemViewPrefab: {fileID: 114111480828402316, guid: d8a91db763cf2fe4a9a9ee5f7db27daf,
-    type: 2}
+    type: 3}
   _pickupFeedbackViewPrefab: {fileID: 114389136163518700, guid: d9332d149667a364c8e957670235d453,
-    type: 2}
+    type: 3}
   _upgradeScreenViewPrefab: {fileID: 114426995714352416, guid: 5f2b7ed8d4efa934cba6aa83b1ad846a,
-    type: 2}
+    type: 3}
   _upgradeItemViewPrefab: {fileID: 114897276287768016, guid: ef1e580069e6b9c4f827f69faa0dd035,
-    type: 2}
+    type: 3}
   _resetProfileConfirmationViewPrefab: {fileID: 114496327275336662, guid: c6ec1fdd96e56d2428e33f1c4d0e074b,
-    type: 2}
+    type: 3}
+  _achievementsScreenViewPrefab: {fileID: 6190903551047226481, guid: 4808a2aae955b18428dad033cc93751f,
+    type: 3}
+  _achievementItemViewPrefab: {fileID: 7098950694490703756, guid: 46245248a7a5a76428dbe508ab7fe549,
+    type: 3}

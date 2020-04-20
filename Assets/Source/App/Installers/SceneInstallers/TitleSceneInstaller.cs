@@ -20,7 +20,6 @@ namespace Assets.Source.App.Installers.SceneInstallers
         protected override void InstallSceneBindings()
         {
             Container.BindInterfacesAndSelfTo<ClosableViewMediator>().AsSingle().NonLazy();
-            Container.BindFactory<IClosableView, ClosableViewController, ClosableViewController.Factory>();
 
             Container.BindInstance(TitleView).AsSingle();
             Container.BindInterfacesAndSelfTo<TitleController>().AsSingle().NonLazy();

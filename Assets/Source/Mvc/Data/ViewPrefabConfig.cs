@@ -49,5 +49,12 @@ namespace Assets.Source.Mvc.Data
 
         [SerializeField] private ResetProfileConfirmationView _resetProfileConfirmationViewPrefab;
         public ResetProfileConfirmationView ResetProfileConfirmationViewPrefab => _resetProfileConfirmationViewPrefab;
+
+        [Header("Achievements")]
+        [SerializeField] private AchievementsScreenView _achievementsScreenViewPrefab;
+        public AchievementsScreenView AchievementsScreenViewPrefab => _achievementsScreenViewPrefab;
+
+        [SerializeField] private AchievementItemView _achievementItemViewPrefab;
+        public AchievementItemView  AchievementItemViewPrefab => _achievementItemViewPrefab;
     }
 }

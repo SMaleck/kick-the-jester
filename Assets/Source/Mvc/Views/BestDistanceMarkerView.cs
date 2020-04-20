@@ -1,10 +1,8 @@
 ﻿using Assets.Source.Entities.Jester;
-using Assets.Source.Features.Statistics;
 using Assets.Source.Services.Localization;
 using Assets.Source.Util;
 using DG.Tweening;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -18,42 +16,34 @@ namespace Assets.Source.Mvc.Views
         private const float MoveThresholdDistanceMeters = 5;
         private const float MoveSeconds = 0.7f;
 
-        private IStatisticsModel _statisticsModel;
         private Vector3 _selfOrigin;
         private Vector3 _jesterOrigin;
 
         [Inject]
-        public void Inject(
-            IStatisticsModel statisticsModel,
-            JesterEntity jesterEntity)
+        public void Inject(JesterEntity jesterEntity)
         {
-            _statisticsModel = statisticsModel;
             _selfOrigin = gameObject.transform.position;
             _jesterOrigin = jesterEntity.Position;
         }
 
         public override void Setup()
         {
-            _statisticsModel.BestDistanceUnits
-                .Subscribe(UpdateBestDistance)
-                .AddTo(Disposer);
         }
 
-        private void UpdateBestDistance(float distance)
+        public void SetBestDistance(float distance)
         {
-            UpdateTexts();
+            UpdateTexts(distance);
             SlideToBestDistance(distance);
         }
 
-        private void UpdateBestDistanceInstant(float distance)
+        public void SetBestDistanceInstant(float distance)
         {
-            UpdateTexts();
+            UpdateTexts(distance);
             SlideToBestDistance(distance, true);
         }
 
-        private void UpdateTexts()
+        private void UpdateTexts(float distance)
         {
-            var distance = _statisticsModel.BestDistanceUnits.Value;
             _bestDistanceText.text = TextService.MetersAmount(distance);
             _bestDistanceLabelText.text = TextService.BestDistance();
         }

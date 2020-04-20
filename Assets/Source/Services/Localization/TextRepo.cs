@@ -102,7 +102,26 @@ namespace Assets.Source.Services.Localization
             { TextKey.Language, "Language"},
             { TextKey.Restart, "Restart"},
             { TextKey.Continue, "Continue"},
-            { TextKey.Upgrades, "Upgrades"}
+            { TextKey.Upgrades, "Upgrades"},
+            { TextKey.Achievements, "Achievements"},
+            { TextKey.AchievementNameReachedMoon, "AchievementNameReachedMoon" },
+            { TextKey.AchievementNameBestDistance1, "AchievementNameBestDistance1" },
+            { TextKey.AchievementNameBestDistance2, "AchievementNameBestDistance2" },
+            { TextKey.AchievementNameBestDistance3, "AchievementNameBestDistance3" },
+            { TextKey.AchievementNameTotalDistance1, "AchievementNameTotalDistance1" },
+            { TextKey.AchievementNameTotalDistance2, "AchievementNameTotalDistance2" },
+            { TextKey.AchievementNameTotalDistance3, "AchievementNameTotalDistance3" },
+            { TextKey.AchievementNameBestHeight1, "AchievementNameBestHeight1" },
+            { TextKey.AchievementNameBestHeight2, "AchievementNameBestHeight2" },
+            { TextKey.AchievementNameBestHeight3, "AchievementNameBestHeight3" },
+            { TextKey.AchievementNameRoundsPlayed1, "AchievementNameRoundsPlayed1" },
+            { TextKey.AchievementNameRoundsPlayed2, "AchievementNameRoundsPlayed2" },
+            { TextKey.AchievementNameRoundsPlayed3, "AchievementNameRoundsPlayed" },
+            { TextKey.AchievementRequirementReachMoon, "AchievementRequirementReachMoon" },
+            { TextKey.AchievementRequirementBestDistance, "AchievementRequirementBestDistance" },
+            { TextKey.AchievementRequirementTotalDistance, "AchievementRequirementTotalDistance" },
+            { TextKey.AchievementRequirementBestHeight, "AchievementRequirementBestHeight" },
+            { TextKey.AchievementRequirementRoundsPlayed, "AchievementRequirementRoundsPlayed" }
         };
 
         private static Dictionary<TextKey, string> _textsDE = new Dictionary<TextKey, string>
@@ -151,7 +170,26 @@ namespace Assets.Source.Services.Localization
             { TextKey.Language, "Sprache"},
             { TextKey.Restart, "Neustarten"},
             { TextKey.Continue, "Weiter"},
-            { TextKey.Upgrades, "Verbesserungen"}
+            { TextKey.Upgrades, "Verbesserungen"},
+            { TextKey.Achievements, "Erfolge"},
+            { TextKey.AchievementNameReachedMoon, "AchievementNameReachedMoon" },
+            { TextKey.AchievementNameBestDistance1, "AchievementNameBestDistance1" },
+            { TextKey.AchievementNameBestDistance2, "AchievementNameBestDistance2" },
+            { TextKey.AchievementNameBestDistance3, "AchievementNameBestDistance3" },
+            { TextKey.AchievementNameTotalDistance1, "AchievementNameTotalDistance1" },
+            { TextKey.AchievementNameTotalDistance2, "AchievementNameTotalDistance2" },
+            { TextKey.AchievementNameTotalDistance3, "AchievementNameTotalDistance3" },
+            { TextKey.AchievementNameBestHeight1, "AchievementNameBestHeight1" },
+            { TextKey.AchievementNameBestHeight2, "AchievementNameBestHeight2" },
+            { TextKey.AchievementNameBestHeight3, "AchievementNameBestHeight3" },
+            { TextKey.AchievementNameRoundsPlayed1, "AchievementNameRoundsPlayed1" },
+            { TextKey.AchievementNameRoundsPlayed2, "AchievementNameRoundsPlayed2" },
+            { TextKey.AchievementNameRoundsPlayed3, "AchievementNameRoundsPlayed" },
+            { TextKey.AchievementRequirementReachMoon, "AchievementRequirementReachMoon" },
+            { TextKey.AchievementRequirementBestDistance, "AchievementRequirementBestDistance" },
+            { TextKey.AchievementRequirementTotalDistance, "AchievementRequirementTotalDistance" },
+            { TextKey.AchievementRequirementBestHeight, "AchievementRequirementBestHeight" },
+            { TextKey.AchievementRequirementRoundsPlayed, "AchievementRequirementRoundsPlayed" }
         };
     }
 }

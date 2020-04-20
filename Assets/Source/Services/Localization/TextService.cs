@@ -1,4 +1,5 @@
-﻿using Assets.Source.Features.Upgrades.Data;
+﻿using Assets.Source.Features.Achievements;
+using Assets.Source.Features.Upgrades.Data;
 using Assets.Source.Mvc.Models.Enum;
 using Assets.Source.Util;
 using System;
@@ -269,6 +270,67 @@ namespace Assets.Source.Services.Localization
         public static string Upgrades()
         {
             return TextRepo.GetText(TextKey.Upgrades);
+        }
+
+        public static string Achievements()
+        {
+            return TextRepo.GetText(TextKey.Achievements);
+        }
+
+        public static string AchievementName(AchievementId achievementId)
+        {
+            switch (achievementId)
+            {
+                case AchievementId.ReachedMoon:
+                    return TextRepo.GetText(TextKey.AchievementNameReachedMoon);
+                case AchievementId.BestDistance1:
+                    return TextRepo.GetText(TextKey.AchievementNameBestDistance1);
+                case AchievementId.BestDistance2:
+                    return TextRepo.GetText(TextKey.AchievementNameBestDistance2);
+                case AchievementId.BestDistance3:
+                    return TextRepo.GetText(TextKey.AchievementNameBestDistance3);
+                case AchievementId.TotalDistance1:
+                    return TextRepo.GetText(TextKey.AchievementNameTotalDistance1);
+                case AchievementId.TotalDistance2:
+                    return TextRepo.GetText(TextKey.AchievementNameTotalDistance2);
+                case AchievementId.TotalDistance3:
+                    return TextRepo.GetText(TextKey.AchievementNameTotalDistance3);
+                case AchievementId.BestHeight1:
+                    return TextRepo.GetText(TextKey.AchievementNameBestHeight1);
+                case AchievementId.BestHeight2:
+                    return TextRepo.GetText(TextKey.AchievementNameBestHeight2);
+                case AchievementId.BestHeight3:
+                    return TextRepo.GetText(TextKey.AchievementNameBestHeight3);
+                case AchievementId.RoundsPlayed1:
+                    return TextRepo.GetText(TextKey.AchievementNameRoundsPlayed1);
+                case AchievementId.RoundsPlayed2:
+                    return TextRepo.GetText(TextKey.AchievementNameRoundsPlayed2);
+                case AchievementId.RoundsPlayed3:
+                    return TextRepo.GetText(TextKey.AchievementNameRoundsPlayed3);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(achievementId), achievementId, null);
+            }
+        }
+
+        public static string AchievementDescription(
+            AchievementRequirementType achievementRequirementType,
+            double requirement)
+        {
+            switch (achievementRequirementType)
+            {
+                case AchievementRequirementType.ReachMoon:
+                    return TextRepo.GetText(TextKey.AchievementNameReachedMoon);
+                case AchievementRequirementType.BestDistance:
+                    return TextRepo.GetText(TextKey.AchievementRequirementBestDistance);
+                case AchievementRequirementType.TotalDistance:
+                    return TextRepo.GetText(TextKey.AchievementRequirementTotalDistance);
+                case AchievementRequirementType.BestHeight:
+                    return TextRepo.GetText(TextKey.AchievementRequirementBestHeight);
+                case AchievementRequirementType.RoundsPlayed:
+                    return TextRepo.GetText(TextKey.AchievementRequirementRoundsPlayed);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(achievementRequirementType), achievementRequirementType, null);
+            }
         }
     }
 }
