@@ -150,7 +150,7 @@ namespace Assets.Source.Mvc.Views
                             new Vector2(_outOfCameraIndicator.anchoredPosition.x, value);
                     },
                     start, end, _indicatorAnimSpeedSeconds)
-                .SetEase(Ease.OutBounce)
+                .SetEase(Ease.InOutCubic)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetAutoKill(false)
                 .Pause()
