@@ -1723,8 +1723,8 @@ MonoBehaviour:
   _velocityBar: {fileID: 8075751197664341735}
   _kickForceBar: {fileID: 4524760462185348726}
   _outOfCameraIndicator: {fileID: 224101709615138514}
-  _indicatorAnimStrength: 35
-  _indicatorAnimSpeedSeconds: 1
+  _indicatorAnimStrength: 40
+  _indicatorAnimSpeedSeconds: 0.8
 --- !u!1 &1684913839944030
 GameObject:
   m_ObjectHideFlags: 0
