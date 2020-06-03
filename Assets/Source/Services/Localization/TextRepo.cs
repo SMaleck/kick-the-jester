@@ -45,6 +45,11 @@ namespace Assets.Source.Services.Localization
             }
         }
 
+        public static string GetText(TextKey textKey, params object[] args)
+        {
+            return string.Format(GetText(textKey), args);
+        }
+
         public static string GetLanguageText(Language languageKey)
         {
             return _textsLANGUAGE[languageKey];
@@ -104,24 +109,24 @@ namespace Assets.Source.Services.Localization
             { TextKey.Continue, "Continue"},
             { TextKey.Upgrades, "Upgrades"},
             { TextKey.Achievements, "Achievements"},
-            { TextKey.AchievementNameReachedMoon, "AchievementNameReachedMoon" },
-            { TextKey.AchievementNameBestDistance1, "AchievementNameBestDistance1" },
-            { TextKey.AchievementNameBestDistance2, "AchievementNameBestDistance2" },
-            { TextKey.AchievementNameBestDistance3, "AchievementNameBestDistance3" },
-            { TextKey.AchievementNameTotalDistance1, "AchievementNameTotalDistance1" },
-            { TextKey.AchievementNameTotalDistance2, "AchievementNameTotalDistance2" },
-            { TextKey.AchievementNameTotalDistance3, "AchievementNameTotalDistance3" },
-            { TextKey.AchievementNameBestHeight1, "AchievementNameBestHeight1" },
-            { TextKey.AchievementNameBestHeight2, "AchievementNameBestHeight2" },
-            { TextKey.AchievementNameBestHeight3, "AchievementNameBestHeight3" },
-            { TextKey.AchievementNameRoundsPlayed1, "AchievementNameRoundsPlayed1" },
-            { TextKey.AchievementNameRoundsPlayed2, "AchievementNameRoundsPlayed2" },
-            { TextKey.AchievementNameRoundsPlayed3, "AchievementNameRoundsPlayed" },
-            { TextKey.AchievementRequirementReachMoon, "AchievementRequirementReachMoon" },
-            { TextKey.AchievementRequirementBestDistance, "AchievementRequirementBestDistance" },
-            { TextKey.AchievementRequirementTotalDistance, "AchievementRequirementTotalDistance" },
-            { TextKey.AchievementRequirementBestHeight, "AchievementRequirementBestHeight" },
-            { TextKey.AchievementRequirementRoundsPlayed, "AchievementRequirementRoundsPlayed" }
+            { TextKey.AchievementNameReachedMoon, "Let me play among the stars" },
+            { TextKey.AchievementNameBestDistance1, "Sprint" },
+            { TextKey.AchievementNameBestDistance2, "Endurance Run" },
+            { TextKey.AchievementNameBestDistance3, "Going the Distance!" },
+            { TextKey.AchievementNameTotalDistance1, "Distance I" },
+            { TextKey.AchievementNameTotalDistance2, "Distance II" },
+            { TextKey.AchievementNameTotalDistance3, "Distance III" },
+            { TextKey.AchievementNameBestHeight1, "Is it a bird?" },
+            { TextKey.AchievementNameBestHeight2, "Is it a dragon?" },
+            { TextKey.AchievementNameBestHeight3, "It's the Jester!" },
+            { TextKey.AchievementNameRoundsPlayed1, "Kick-off!" },
+            { TextKey.AchievementNameRoundsPlayed2, "Casual" },
+            { TextKey.AchievementNameRoundsPlayed3, "Pro" },
+            { TextKey.AchievementRequirementReachMoon, "Fly high enough to reach the moon." },
+            { TextKey.AchievementRequirementBestDistance, "Fly {0}m in one round." },
+            { TextKey.AchievementRequirementTotalDistance, "Reach {0}m distance in total." },
+            { TextKey.AchievementRequirementBestHeight, "Flew {0}m high in one round." },
+            { TextKey.AchievementRequirementRoundsPlayed, "Play {0} rounds." }
         };
 
         private static Dictionary<TextKey, string> _textsDE = new Dictionary<TextKey, string>
@@ -172,24 +177,24 @@ namespace Assets.Source.Services.Localization
             { TextKey.Continue, "Weiter"},
             { TextKey.Upgrades, "Verbesserungen"},
             { TextKey.Achievements, "Erfolge"},
-            { TextKey.AchievementNameReachedMoon, "AchievementNameReachedMoon" },
-            { TextKey.AchievementNameBestDistance1, "AchievementNameBestDistance1" },
-            { TextKey.AchievementNameBestDistance2, "AchievementNameBestDistance2" },
-            { TextKey.AchievementNameBestDistance3, "AchievementNameBestDistance3" },
-            { TextKey.AchievementNameTotalDistance1, "AchievementNameTotalDistance1" },
-            { TextKey.AchievementNameTotalDistance2, "AchievementNameTotalDistance2" },
-            { TextKey.AchievementNameTotalDistance3, "AchievementNameTotalDistance3" },
-            { TextKey.AchievementNameBestHeight1, "AchievementNameBestHeight1" },
-            { TextKey.AchievementNameBestHeight2, "AchievementNameBestHeight2" },
-            { TextKey.AchievementNameBestHeight3, "AchievementNameBestHeight3" },
-            { TextKey.AchievementNameRoundsPlayed1, "AchievementNameRoundsPlayed1" },
-            { TextKey.AchievementNameRoundsPlayed2, "AchievementNameRoundsPlayed2" },
-            { TextKey.AchievementNameRoundsPlayed3, "AchievementNameRoundsPlayed" },
-            { TextKey.AchievementRequirementReachMoon, "AchievementRequirementReachMoon" },
-            { TextKey.AchievementRequirementBestDistance, "AchievementRequirementBestDistance" },
-            { TextKey.AchievementRequirementTotalDistance, "AchievementRequirementTotalDistance" },
-            { TextKey.AchievementRequirementBestHeight, "AchievementRequirementBestHeight" },
-            { TextKey.AchievementRequirementRoundsPlayed, "AchievementRequirementRoundsPlayed" }
+            { TextKey.AchievementNameReachedMoon, "Mondtaler" },
+            { TextKey.AchievementNameBestDistance1, "Sprint" },
+            { TextKey.AchievementNameBestDistance2, "Ausdauerrennen" },
+            { TextKey.AchievementNameBestDistance3, "Nicht zu stoppen!" },
+            { TextKey.AchievementNameTotalDistance1, "Entfernung I" },
+            { TextKey.AchievementNameTotalDistance2, "Entfernung II" },
+            { TextKey.AchievementNameTotalDistance3, "Entfernung III" },
+            { TextKey.AchievementNameBestHeight1, "Ist es ein Vogel?" },
+            { TextKey.AchievementNameBestHeight2, "Is es ein Drache?" },
+            { TextKey.AchievementNameBestHeight3, "Es ist der Hofnarr!" },
+            { TextKey.AchievementNameRoundsPlayed1, "Und los!" },
+            { TextKey.AchievementNameRoundsPlayed2, "Gelegenheitsspieler" },
+            { TextKey.AchievementNameRoundsPlayed3, "Profi" },
+            { TextKey.AchievementRequirementReachMoon, "Flieg hoch genug um den Mond zu erreichen." },
+            { TextKey.AchievementRequirementBestDistance, "Flieg in einer Runde {0}m weit." },
+            { TextKey.AchievementRequirementTotalDistance, "Flieg insgesamt {0}m weit." },
+            { TextKey.AchievementRequirementBestHeight, "Fliege in einer Runde {0}m hoch." },
+            { TextKey.AchievementRequirementRoundsPlayed, "Spiele {0} Runden." }
         };
     }
 }

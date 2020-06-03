@@ -319,15 +319,15 @@ namespace Assets.Source.Services.Localization
             switch (achievementRequirementType)
             {
                 case AchievementRequirementType.ReachMoon:
-                    return TextRepo.GetText(TextKey.AchievementNameReachedMoon);
+                    return TextRepo.GetText(TextKey.AchievementRequirementReachMoon);
                 case AchievementRequirementType.BestDistance:
-                    return TextRepo.GetText(TextKey.AchievementRequirementBestDistance);
+                    return TextRepo.GetText(TextKey.AchievementRequirementBestDistance, requirement);
                 case AchievementRequirementType.TotalDistance:
-                    return TextRepo.GetText(TextKey.AchievementRequirementTotalDistance);
+                    return TextRepo.GetText(TextKey.AchievementRequirementTotalDistance, requirement);
                 case AchievementRequirementType.BestHeight:
-                    return TextRepo.GetText(TextKey.AchievementRequirementBestHeight);
+                    return TextRepo.GetText(TextKey.AchievementRequirementBestHeight, requirement);
                 case AchievementRequirementType.RoundsPlayed:
-                    return TextRepo.GetText(TextKey.AchievementRequirementRoundsPlayed);
+                    return TextRepo.GetText(TextKey.AchievementRequirementRoundsPlayed, requirement);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(achievementRequirementType), achievementRequirementType, null);
             }
