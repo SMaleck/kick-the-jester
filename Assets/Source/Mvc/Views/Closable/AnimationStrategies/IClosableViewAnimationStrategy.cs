@@ -2,8 +2,9 @@
 
 namespace Assets.Source.Mvc.Views.Closable.AnimationStrategies
 {
-    public interface IIClosableViewAnimationStrategy
+    public interface IClosableViewAnimationStrategy
     {
+        void Initialize(bool startClosed);
         void Open(Action onComplete);
         void Close(Action onComplete);
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Mvc.Views.Closable.AnimationStrategies
 {
-    public class PopOutAnimationStrategy : IIClosableViewAnimationStrategy
+    public class PopOutAnimationStrategy : IClosableViewAnimationStrategy
     {
         private const float TransitionTimeSeconds = 0.2f;
 
@@ -15,6 +15,11 @@ namespace Assets.Source.Mvc.Views.Closable.AnimationStrategies
         {
             _target = target;
             _originalScale = _target.localScale;
+        }
+
+        public void Initialize(bool startClosed)
+        {
+            _target.gameObject.SetActive(!startClosed);
         }
 
         public void Open(Action onComplete)

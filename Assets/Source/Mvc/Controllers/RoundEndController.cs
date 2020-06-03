@@ -66,6 +66,10 @@ namespace Assets.Source.Mvc.Controllers
                 .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Upgrades))
                 .AddTo(Disposer);
 
+            _view.OnAchievementsClicked
+                .Subscribe(_ => _closableViewMediator.Open(ClosableViewType.Achievements))
+                .AddTo(Disposer);
+
             _closableViewMediator.OnViewOpened
                 .Where(viewType => viewType == ClosableViewType.RoundEnd)
                 .DelayFrame(1)

@@ -34,12 +34,17 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private TextMeshProUGUI _retryButtonText;
         [SerializeField] private Button _shopButton;
         [SerializeField] private TextMeshProUGUI _shopButtonText;
+        [SerializeField] private Button _achievementsButton;
+        [SerializeField] private TextMeshProUGUI _achievementsButtonText;
 
         private readonly ReactiveCommand _onRetryClicked = new ReactiveCommand();
         public IObservable<Unit> OnRetryClicked => _onRetryClicked;
 
         private readonly ReactiveCommand _onUpgradesClicked = new ReactiveCommand();
         public IObservable<Unit> OnUpgradesClicked => _onUpgradesClicked;
+
+        private readonly ReactiveCommand _onAchievementsClicked = new ReactiveCommand();
+        public IObservable<Unit> OnAchievementsClicked => _onAchievementsClicked;
 
         private const float CurrencyCounterSeconds = 1f;
 
@@ -63,6 +68,9 @@ namespace Assets.Source.Mvc.Views
             _onUpgradesClicked.AddTo(Disposer);
             _onUpgradesClicked.BindTo(_shopButton).AddTo(Disposer);
 
+            _onAchievementsClicked.AddTo(Disposer);
+            _onAchievementsClicked.BindTo(_achievementsButton).AddTo(Disposer);
+
             _currencyText.text = string.Empty;
 
             UpdateTexts();
@@ -74,6 +82,7 @@ namespace Assets.Source.Mvc.Views
             _newBestText.text = TextService.NewBest();
             _retryButtonText.text = TextService.PlayAgainExclamation();
             _shopButtonText.text = TextService.Upgrades();
+            _achievementsButtonText.text = TextService.Achievements();
         }
 
         public void SetDistance(float value)

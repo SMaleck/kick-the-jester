@@ -20,7 +20,7 @@ namespace Assets.Source.Mvc.Views.Closable
 
         [SerializeField] private ClosableVIewAnimationType _animationType;
 
-        private IIClosableViewAnimationStrategy _animationStrategy;
+        private IClosableViewAnimationStrategy _animationStrategy;
 
         public bool IsOpen => _closableParent.gameObject.activeSelf;
 
@@ -43,7 +43,7 @@ namespace Assets.Source.Mvc.Views.Closable
         public void Initialize()
         {
             _closableParent = _closableParent ?? gameObject;
-            _animationStrategy = CreateAnimationStrategy();
+            _animationStrategy = GetComponent<IClosableViewAnimationStrategy>() ?? CreateAnimationStrategy();
 
             _onViewOpen = new Subject<Unit>().AddTo(Disposer);
             _onViewOpenCompleted = new Subject<Unit>().AddTo(Disposer);
@@ -56,10 +56,10 @@ namespace Assets.Source.Mvc.Views.Closable
                 _onCloseClicked.BindTo(_closeButton).AddTo(Disposer);
             }
 
-            _closableParent.SetActive(!_startClosed);
+            _animationStrategy.Initialize(_startClosed);
         }
 
-        private IIClosableViewAnimationStrategy CreateAnimationStrategy()
+        private IClosableViewAnimationStrategy CreateAnimationStrategy()
         {
             switch (_animationType)
             {
