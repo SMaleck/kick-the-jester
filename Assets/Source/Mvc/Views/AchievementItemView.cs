@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Features.Achievements;
 using Assets.Source.Features.Achievements.Data;
-using Assets.Source.Mvc.Data;
 using Assets.Source.Services.Localization;
 using TMPro;
 using UnityEngine;
@@ -18,12 +17,16 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
+        [Header("Progress")]
+        [SerializeField] private GameObject _progressParent;
+        [SerializeField] private Slider _progressSlider;
+        [SerializeField] private TextMeshProUGUI _progressText;
+
         private AchievementsIconConfig _achievementsIconConfig;
+        private float _requirement;
 
         [Inject]
-        private void Inject(
-            ViewUtilConfig viewUtilConfig,
-            AchievementsIconConfig achievementsIconConfig)
+        private void Inject(AchievementsIconConfig achievementsIconConfig)
         {
             _achievementsIconConfig = achievementsIconConfig;
         }
@@ -36,20 +39,38 @@ namespace Assets.Source.Mvc.Views
         {
             _iconImage.sprite = _achievementsIconConfig.GetIcon(achievementId);
             _nameText.text = TextService.AchievementName(achievementId);
+            SetIsProgressVisible(achievementId != AchievementId.ReachedMoon);
         }
 
         public void SetRequirements(
             AchievementRequirementType achievementRequirementType,
             double requirement)
         {
+            _requirement = (float)requirement;
+            _progressSlider.maxValue = _requirement;
+
             _descriptionText.text = TextService.AchievementDescription(
                 achievementRequirementType,
                 requirement);
         }
 
+        public void SetProgress(double current)
+        {
+            _progressText.text = TextService.XOfY(
+                current,
+                _requirement);
+
+            _progressSlider.value = (float)current;
+        }
+
         public void SetIsUnlocked(bool isUnlocked)
         {
             _iconImage.gameObject.SetActive(isUnlocked);
+        }
+
+        private void SetIsProgressVisible(bool isVisible)
+        {
+            _progressParent.SetActive(isVisible);
         }
     }
 }

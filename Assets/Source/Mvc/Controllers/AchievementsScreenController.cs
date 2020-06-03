@@ -52,6 +52,10 @@ namespace Assets.Source.Mvc.Controllers
             achievementModel.IsUnlocked
                 .Subscribe(view.SetIsUnlocked)
                 .AddTo(Disposer);
+            
+            achievementModel.RequirementProgress
+                .Subscribe(view.SetProgress)
+                .AddTo(Disposer);
         }
     }
 }

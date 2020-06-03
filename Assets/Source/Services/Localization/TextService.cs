@@ -332,5 +332,10 @@ namespace Assets.Source.Services.Localization
                     throw new ArgumentOutOfRangeException(nameof(achievementRequirementType), achievementRequirementType, null);
             }
         }
+
+        public static string XOfY(double x, double y)
+        {
+            return $"{x} / {y}";
+        }
     }
 }

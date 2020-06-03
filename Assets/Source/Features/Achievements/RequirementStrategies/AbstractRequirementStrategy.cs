@@ -23,5 +23,15 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
             _achievementModel.SetIsUnlocked(true);
             _onAchievementUnlocked.OnNext(_achievementModel.Id);
         }
+
+        protected void UpdateProgress(double currentProgress)
+        {
+            _achievementModel.SetRequirementProgress(currentProgress);
+            if (currentProgress >= _achievementModel.Requirement &&
+                !_achievementModel.IsUnlocked.Value)
+            {
+                UnlockAchievement();
+            }
+        }
     }
 }

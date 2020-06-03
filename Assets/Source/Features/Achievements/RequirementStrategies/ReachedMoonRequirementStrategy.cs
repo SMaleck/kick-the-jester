@@ -1,5 +1,4 @@
 ﻿using Assets.Source.Features.Statistics;
-using System.Linq;
 using UniRx;
 using Zenject;
 
@@ -21,14 +20,14 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
             _statisticsModel = statisticsModel;
 
             _statisticsModel.HasReachedMoon
-                .Where(_ => !_achievementModel.IsUnlocked.Value)
-                .Subscribe(_ => OnHasReachedMoonChanged());
+                .Subscribe(_ => OnHasReachedMoonChanged())
+                .AddTo(Disposer);
         }
 
         private void OnHasReachedMoonChanged()
         {
-            var isUnlocked = _statisticsModel.HasReachedMoon.Value;
-            if (isUnlocked)
+            if (_statisticsModel.HasReachedMoon.Value &&
+                !_achievementModel.IsUnlocked.Value)
             {
                 UnlockAchievement();
             }

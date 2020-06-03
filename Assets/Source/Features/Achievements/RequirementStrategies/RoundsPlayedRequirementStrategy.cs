@@ -9,7 +9,6 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
     {
         public class Factory : PlaceholderFactory<AchievementModel, RoundsPlayedRequirementStrategy> { }
 
-        private readonly AchievementModel _achievementModel;
         private readonly IStatisticsModel _statisticsModel;
 
         public RoundsPlayedRequirementStrategy(
@@ -17,23 +16,17 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
             IStatisticsModel statisticsModel)
             : base(achievementModel)
         {
-            _achievementModel = achievementModel;
             _statisticsModel = statisticsModel;
 
             _statisticsModel.TotalRoundsPlayed
                 .Where(_ => !achievementModel.IsUnlocked.Value)
-                .Subscribe(OnTotalRoundsPlayedChanges);
+                .Subscribe(OnTotalRoundsPlayedChanges)
+                .AddTo(Disposer);
         }
 
         private void OnTotalRoundsPlayedChanges(int roundsPlayed)
         {
-            _achievementModel.SetRequirementProgress(roundsPlayed);
-            var isUnlocked = roundsPlayed >= _achievementModel.Requirement;
-
-            if (isUnlocked)
-            {
-                UnlockAchievement();
-            }
+            UpdateProgress(roundsPlayed);
         }
     }
 }
