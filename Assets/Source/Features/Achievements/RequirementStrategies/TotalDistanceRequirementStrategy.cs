@@ -28,6 +28,7 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
 
         private void OnTotalDistanceChanged(float totalDistanceUnits)
         {
+            _achievementModel.SetRequirementProgress(totalDistanceUnits);
             var isUnlocked = totalDistanceUnits.ToMeters() >= _achievementModel.Requirement;
 
             if (isUnlocked)

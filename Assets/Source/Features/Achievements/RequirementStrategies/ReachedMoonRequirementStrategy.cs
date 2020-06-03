@@ -21,7 +21,7 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
             _statisticsModel = statisticsModel;
 
             _statisticsModel.HasReachedMoon
-                .Where(_ => !achievementModel.IsUnlocked.Value)
+                .Where(_ => !_achievementModel.IsUnlocked.Value)
                 .Subscribe(_ => OnHasReachedMoonChanged());
         }
 

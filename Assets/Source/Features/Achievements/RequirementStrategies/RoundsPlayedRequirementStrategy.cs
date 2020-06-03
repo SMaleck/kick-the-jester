@@ -27,6 +27,7 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
 
         private void OnTotalRoundsPlayedChanges(int roundsPlayed)
         {
+            _achievementModel.SetRequirementProgress(roundsPlayed);
             var isUnlocked = roundsPlayed >= _achievementModel.Requirement;
 
             if (isUnlocked)

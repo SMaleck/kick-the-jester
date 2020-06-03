@@ -28,6 +28,7 @@ namespace Assets.Source.Features.Achievements.RequirementStrategies
 
         private void BestHeightUnitsChanged(float bestHeight)
         {
+            _achievementModel.SetRequirementProgress(bestHeight);
             var isUnlocked = bestHeight.ToMeters() >= _achievementModel.Requirement;
 
             if (isUnlocked)
