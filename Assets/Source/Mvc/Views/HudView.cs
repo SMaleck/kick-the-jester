@@ -25,7 +25,6 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] TextMeshProUGUI _bestDistanceText;
 
         [Header("Tomatoes")]
-        [SerializeField] GameObject _projectileCountParent;
         [SerializeField] Image _projectileIcon;
         [SerializeField] TextMeshProUGUI _projectileAmountText;
 
@@ -34,13 +33,21 @@ namespace Assets.Source.Mvc.Views
 
         [Header("Other")]
         [SerializeField] Button _pauseButton;
-        [SerializeField] Slider _velocityBar;
         [SerializeField] Slider _kickForceBar;
+
+        [Header("Velocity Display")]
+        [SerializeField] private RectTransform _velocityArrow;
+        [SerializeField] private float _velocityMinZRotation;
+        [SerializeField] private float _velocityMaxZRotation;
 
         [Header("Out of Camera Indicator")]
         [SerializeField] RectTransform _outOfCameraIndicator;
         [SerializeField] float _indicatorAnimStrength = 2;
         [SerializeField] float _indicatorAnimSpeedSeconds = 0.8f;
+
+        [Header("HUD Parts")]
+        [SerializeField] RectTransform _bottomHUDPreFlightParent;
+        [SerializeField] RectTransform _bottomHUDFlightParent;
 
         private readonly ReactiveCommand _onPauseButtonClicked = new ReactiveCommand();
         public IObservable<Unit> OnPauseButtonClicked => _onPauseButtonClicked;
@@ -68,12 +75,12 @@ namespace Assets.Source.Mvc.Views
             _onPauseButtonClicked.AddTo(Disposer);
             _onPauseButtonClicked.BindTo(_pauseButton).AddTo(Disposer);
 
-            _velocityBar.gameObject.SetActive(false);
-            _kickForceBar.gameObject.SetActive(true);
-            _projectileCountParent.gameObject.SetActive(false);
-
             _outOfCameraIndicatorTween = CreateOutOfCameraIndicatorTween();
             SetOutOfCameraIndicatorVisible(false);
+
+            _bottomHUDFlightParent.anchoredPosition = new Vector2(
+                _bottomHUDFlightParent.anchoredPosition.x,
+                -_bottomHUDFlightParent.rect.height);
 
             UpdateTexts();
         }
@@ -93,14 +100,15 @@ namespace Assets.Source.Mvc.Views
             _bestDistanceText.text = TextService.MetersAmount(value);
         }
 
-        public void SetRelativeVelocity(float value)
-        {
-            _velocityBar.value = value;
-        }
-
         public void SetRelativeKickForce(float value)
         {
             _kickForceBar.value = value;
+        }
+
+        public void SetRelativeVelocity(float value)
+        {
+            var rotationZ = Mathf.Lerp(_velocityMinZRotation, _velocityMaxZRotation, value);
+            _velocityArrow.rotation = Quaternion.Euler(0f, 0f, rotationZ);
         }
 
         public void SetOutOfCameraIndicatorVisible(bool value)
@@ -159,9 +167,10 @@ namespace Assets.Source.Mvc.Views
 
         public void StartRound()
         {
-            _velocityBar.gameObject.SetActive(true);
-            _kickForceBar.gameObject.SetActive(false);
-            _projectileCountParent.gameObject.SetActive(true);
+            DOTween.Sequence()
+                .Append(_bottomHUDPreFlightParent.DOAnchorPosY(-_bottomHUDPreFlightParent.rect.height, 0.5f))
+                .Append(_bottomHUDFlightParent.DOAnchorPosY(0, 1)
+                    .SetEase(Ease.OutCubic));
         }
 
         public void ShowFloatingCoinAmount(int gainedAmount)
