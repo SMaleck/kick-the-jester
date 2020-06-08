@@ -14,6 +14,8 @@ namespace Assets.Source.Mvc.Views
 
         [SerializeField] private Image _frameImage;
         [SerializeField] private Image _iconImage;
+        [SerializeField] private Image _iconImageOverlay;
+
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _descriptionText;
 
@@ -65,7 +67,7 @@ namespace Assets.Source.Mvc.Views
 
         public void SetIsUnlocked(bool isUnlocked)
         {
-            _iconImage.gameObject.SetActive(isUnlocked);
+            _iconImageOverlay.gameObject.SetActive(!isUnlocked);
         }
 
         private void SetIsProgressVisible(bool isVisible)
