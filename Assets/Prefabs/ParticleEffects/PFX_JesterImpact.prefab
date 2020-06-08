@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 4057428423826720}
   - component: {fileID: 198289004890833238}
   - component: {fileID: 199113712011502892}
+  - component: {fileID: 114332070250017574}
   m_Layer: 0
-  m_Name: PFX_JesterImpact
+  m_Name: PFX_JesterImpact 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,6 +42,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114332070250017574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166912425667426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f671fc4826fbfd743a26c9b3b38433fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 198289004890833238}
+  _particleEffectType: 4
 --- !u!198 &198289004890833238
 ParticleSystem:
   m_ObjectHideFlags: 1

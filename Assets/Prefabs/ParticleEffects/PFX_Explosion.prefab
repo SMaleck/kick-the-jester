@@ -106,8 +106,9 @@ GameObject:
   - component: {fileID: 4848554923272922}
   - component: {fileID: 198265956612895856}
   - component: {fileID: 199388667673075770}
+  - component: {fileID: 114069724136344226}
   m_Layer: 0
-  m_Name: PFX_Explosion
+  m_Name: PFX_Explosion 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,6 +259,19 @@ Transform:
   m_Father: {fileID: 4848554923272922}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114069724136344226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690711144469934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f671fc4826fbfd743a26c9b3b38433fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _particleSystem: {fileID: 198265956612895856}
+  _particleEffectType: 1
 --- !u!198 &198265956612895856
 ParticleSystem:
   m_ObjectHideFlags: 1
