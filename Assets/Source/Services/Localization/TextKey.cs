@@ -66,5 +66,6 @@
         AchievementRequirementTotalDistance,
         AchievementRequirementBestHeight,
         AchievementRequirementRoundsPlayed,
+        AchievementUnlocked
     }
 }

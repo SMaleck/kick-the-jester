@@ -337,5 +337,10 @@ namespace Assets.Source.Services.Localization
         {
             return $"{x} / {y}";
         }
+
+        public static string AchievementUnlocked()
+        {
+            return TextRepo.GetText(TextKey.AchievementUnlocked);
+        }
     }
 }

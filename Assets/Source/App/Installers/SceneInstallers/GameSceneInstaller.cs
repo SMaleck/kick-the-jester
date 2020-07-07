@@ -31,6 +31,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
         [SerializeField] public CheatView CheatView;
         [SerializeField] public SpawnAnchorEntity SpawnAnchor;
         [SerializeField] public AchievementsScreenView AchievementsScreenView;
+        [SerializeField] public AchievementNotificationView _achievementNotificationView;
 
         protected override void InstallSceneBindings()
         {
@@ -118,6 +119,7 @@ namespace Assets.Source.App.Installers.SceneInstallers
             #region ACHIEVEMENTS
 
             Container.BindInstance(AchievementsScreenView);
+            Container.BindInstance(_achievementNotificationView);
             AchievementsInstaller.Install(Container);
 
             #endregion

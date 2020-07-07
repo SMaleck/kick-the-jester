@@ -126,7 +126,8 @@ namespace Assets.Source.Services.Localization
             { TextKey.AchievementRequirementBestDistance, "Fly {0}m in one round." },
             { TextKey.AchievementRequirementTotalDistance, "Reach {0}m distance in total." },
             { TextKey.AchievementRequirementBestHeight, "Flew {0}m high in one round." },
-            { TextKey.AchievementRequirementRoundsPlayed, "Play {0} rounds." }
+            { TextKey.AchievementRequirementRoundsPlayed, "Play {0} rounds." },
+            { TextKey.AchievementUnlocked, "Achievement\nunlocked!" }
         };
 
         private static Dictionary<TextKey, string> _textsDE = new Dictionary<TextKey, string>
@@ -194,7 +195,8 @@ namespace Assets.Source.Services.Localization
             { TextKey.AchievementRequirementBestDistance, "Flieg in einer Runde {0}m weit." },
             { TextKey.AchievementRequirementTotalDistance, "Flieg insgesamt {0}m weit." },
             { TextKey.AchievementRequirementBestHeight, "Fliege in einer Runde {0}m hoch." },
-            { TextKey.AchievementRequirementRoundsPlayed, "Spiele {0} Runden." }
+            { TextKey.AchievementRequirementRoundsPlayed, "Spiele {0} Runden." },
+            { TextKey.AchievementUnlocked, "Erfolg\nfreigeschaltet!" }
         };
     }
 }

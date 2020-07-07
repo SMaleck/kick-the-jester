@@ -51,6 +51,7 @@ namespace Assets.Source.App.Installers.FeatureInstallers
 
             Container.BindInstances(achievementModels);
             Container.BindInterfacesAndSelfTo<AchievementsScreenController>().AsSingleNonLazy();
+            Container.BindInterfacesAndSelfTo<AchievementNotificationController>().AsSingleNonLazy();
         }
     }
 }
