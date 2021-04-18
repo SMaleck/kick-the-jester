@@ -2933,22 +2933,27 @@ PrefabInstance:
     - target: {fileID: 114006686442308552, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.05882353
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114006686442308552, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.5176471
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114006686442308552, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114006686442308552, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+        type: 3}
+      propertyPath: m_Maskable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114006686442308552, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
       propertyPath: m_FillAmount
-      value: 0.193
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114116728309151010, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
@@ -3381,7 +3386,7 @@ PrefabInstance:
     - target: {fileID: 224993058323937508, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -120.782
+      value: -134.032
       objectReference: {fileID: 0}
     - target: {fileID: 224993058323937508, guid: 820a8bfdc65976a4daa3d00b1eedec35,
         type: 3}
@@ -3405,6 +3410,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 820a8bfdc65976a4daa3d00b1eedec35, type: 3}
+--- !u!1 &1284408434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1202447611735298, guid: 820a8bfdc65976a4daa3d00b1eedec35,
+    type: 3}
+  m_PrefabInstance: {fileID: 1284408433}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1284408435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284408434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03280f54177b3d542a6bb0c4e64d0835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftColor: {r: 0.5372549, g: 0, b: 0.023529412, a: 1}
+  rightColor: {r: 0, g: 0.6117647, b: 0.007843138, a: 1}
 --- !u!1001 &1415800375
 PrefabInstance:
   m_ObjectHideFlags: 0
