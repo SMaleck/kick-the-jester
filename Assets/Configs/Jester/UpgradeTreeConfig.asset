@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradePaths:
   - PathType: 0
-    UpgradeIcon: {fileID: 21300000, guid: e83b458f7a3bfb94dbf5379073f24542, type: 3}
+    UpgradeIcon: {fileID: 21300000, guid: d37c782335f315043b1c473aac311c0c, type: 3}
     Steps:
     - Cost: 0
       Value: 13
@@ -30,7 +31,7 @@ MonoBehaviour:
     - Cost: 15000
       Value: 80
   - PathType: 1
-    UpgradeIcon: {fileID: 21300000, guid: 775f5767ea3e17c4c9972e0b65e96bad, type: 3}
+    UpgradeIcon: {fileID: 21300000, guid: 3a6a8fb29a779e94c88acbd3264e5307, type: 3}
     Steps:
     - Cost: 0
       Value: 8
@@ -43,7 +44,7 @@ MonoBehaviour:
     - Cost: 3000
       Value: 28
   - PathType: 2
-    UpgradeIcon: {fileID: 21300000, guid: eb85686bee04a8c4a9c4b4733c0cd7b3, type: 3}
+    UpgradeIcon: {fileID: 21300000, guid: 5c7e928c788949346a09ed4d6e6aaa0c, type: 3}
     Steps:
     - Cost: 0
       Value: 3
@@ -60,7 +61,7 @@ MonoBehaviour:
     - Cost: 10000
       Value: 9
   - PathType: 3
-    UpgradeIcon: {fileID: 21300000, guid: 7844e1de8f753244ab898601b6f32d42, type: 3}
+    UpgradeIcon: {fileID: 21300000, guid: ffed4c984fa9f2644b5033a2f724ad5e, type: 3}
     Steps:
     - Cost: 0
       Value: 30
