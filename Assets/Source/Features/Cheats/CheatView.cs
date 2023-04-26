@@ -1,6 +1,8 @@
 ﻿using Assets.Source.Mvc.Views;
-using System;
 using Assets.Source.Mvc.Views.Closable;
+using System;
+using System.Collections;
+using System.Globalization;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,6 +66,27 @@ namespace Assets.Source.Features.Cheats
 
             _onSwitchLanguageClicked.AddTo(Disposer);
             _onSwitchLanguageClicked.BindTo(_switchLanguageButton).AddTo(Disposer);
+        }
+
+        private void Update()
+        {
+            if (Debug.isDebugBuild && Input.GetKeyDown(KeyCode.F12))
+            {
+                StartCoroutine(nameof(TakeScreenshot));
+            }
+        }
+
+        private IEnumerator TakeScreenshot()
+        {
+            _openButtonParent.SetActive(false);
+            yield return new WaitForEndOfFrame();
+
+            var now = DateTime.Now;
+            var filename = $"screenshot_{now.ToString("yyyy-MM-dd-HHmmss")}.jpg";
+            var filePath = System.IO.Path.Combine(Application.persistentDataPath, filename);
+            ScreenCapture.CaptureScreenshot(filePath);
+
+            _openButtonParent.SetActive(true);
         }
     }
 }
