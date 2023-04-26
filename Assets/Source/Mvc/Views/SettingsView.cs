@@ -9,15 +9,20 @@ namespace Assets.Source.Mvc.Views
 {
     public class SettingsView : AbstractView
     {
+        private const string MutedIcon = "\uf6a9";
+        private const string UnmutedIcon = "\uf028";
+
         [SerializeField] private TextMeshProUGUI _panelTitleText;
 
         [Header("Sound Settings")]
         [SerializeField] private TextMeshProUGUI _soundSettingsTitleText;
 
-        [SerializeField] private Toggle _isMusicMutedToggle;
+        [SerializeField] private Button _isMusicMutedButton;
+        [SerializeField] private TextMeshProUGUI _isMusicMutedButtonText;
         [SerializeField] private TextMeshProUGUI _isMusicMutedText;
 
-        [SerializeField] private Toggle _isEffectsMutedToggle;
+        [SerializeField] private Button _isEffectsMutedButton;
+        [SerializeField] private TextMeshProUGUI _isEffectsMutedButtonText;
         [SerializeField] private TextMeshProUGUI _isEffectsMutedText;
 
         [Header("Language Settings")]
@@ -38,11 +43,11 @@ namespace Assets.Source.Mvc.Views
         [SerializeField] private TextMeshProUGUI _restoreDefaultsButtonText;
 
 
-        private readonly Subject<bool> _onMuteMusicToggled = new Subject<bool>();
-        public IObservable<bool> OnMuteMusicToggled => _onMuteMusicToggled;
+        private readonly Subject<Unit> _onMuteMusicToggled = new Subject<Unit>();
+        public IObservable<Unit> OnMuteMusicToggled => _onMuteMusicToggled;
 
-        private readonly Subject<bool> _onMuteSoundToggled = new Subject<bool>();
-        public IObservable<bool> OnMuteSoundToggled => _onMuteSoundToggled;
+        private readonly Subject<Unit> _onMuteSoundToggled = new Subject<Unit>();
+        public IObservable<Unit> OnMuteSoundToggled => _onMuteSoundToggled;
 
 
         private readonly Subject<Language> _onLanguageSelected = new Subject<Language>();
@@ -58,13 +63,14 @@ namespace Assets.Source.Mvc.Views
         public override void Setup()
         {
             _onMuteMusicToggled.AddTo(Disposer);
-            _isMusicMutedToggle.OnValueChangedAsObservable()
-                .Subscribe(value => _onMuteMusicToggled.OnNext(!value))
+
+            _isMusicMutedButton.OnClickAsObservable()
+                .Subscribe(_ => _onMuteMusicToggled.OnNext(Unit.Default))
                 .AddTo(Disposer);
 
             _onMuteSoundToggled.AddTo(Disposer);
-            _isEffectsMutedToggle.OnValueChangedAsObservable()
-                .Subscribe(value => _onMuteSoundToggled.OnNext(!value))
+            _isEffectsMutedButton.OnClickAsObservable()
+                .Subscribe(_ => _onMuteSoundToggled.OnNext(Unit.Default))
                 .AddTo(Disposer);
 
 
@@ -124,12 +130,12 @@ namespace Assets.Source.Mvc.Views
 
         public void SetIsMusicMuted(bool isMusicMuted)
         {
-            _isMusicMutedToggle.isOn = !isMusicMuted;
+            _isMusicMutedButtonText.text = isMusicMuted ? MutedIcon : UnmutedIcon;
         }
 
         public void SetIsSoundMuted(bool isSoundMuted)
         {
-            _isEffectsMutedToggle.isOn = !isSoundMuted;
+            _isEffectsMutedButtonText.text = isSoundMuted ? MutedIcon : UnmutedIcon;
         }
     }
 }
