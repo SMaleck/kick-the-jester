@@ -164,6 +164,13 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.uiextensions": {
+      "version": "2.3.2-pre.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.unity.xr.legacyinputhelpers": {
       "version": "2.1.9",
       "depth": 0,
