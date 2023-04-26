@@ -12,6 +12,10 @@ Check it out in Github: https://github.com/SMaleck/kick-the-jester
 
 Made out of passion for creating games for a living.
 
+**You can Play it in the browser on**
+- [Newgrounds](https://www.newgrounds.com/portal/view/723066)
+- [Itch.io](https://smaleck.itch.io/kick-the-jester)
+
 - - - -
 ## *Getting Started*
 1. Clone the repository and open the project with Unity
