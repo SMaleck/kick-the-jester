@@ -32,13 +32,11 @@ namespace Assets.Source.Mvc.Controllers
                 .AddTo(Disposer);
 
             _view.OnMuteMusicToggled
-                .Where(value => value != settingsModel.IsMusicMuted.Value)
-                .Subscribe(settingsModel.SetIsMusicMuted)
+                .Subscribe(_ => settingsModel.SetIsMusicMuted(!settingsModel.IsMusicMuted.Value))
                 .AddTo(Disposer);
 
             _view.OnMuteSoundToggled
-                .Where(value => value != settingsModel.IsSoundMuted.Value)
-                .Subscribe(settingsModel.SetIsEffectsMuted)
+                .Subscribe(_ => settingsModel.SetIsEffectsMuted(!settingsModel.IsSoundMuted.Value))
                 .AddTo(Disposer);
 
             _view.OnLanguageSelected
