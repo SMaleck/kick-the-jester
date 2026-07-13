@@ -60,7 +60,7 @@ namespace Assets.Source.Entities.Jester.Components
 
         private void AdjustVerticalVelocity()
         {
-            var currentVelocity = Owner.GoBody.velocity;
+            var currentVelocity = Owner.GoBody.linearVelocity;
 
             if (currentVelocity.y > 0)
             {
@@ -68,7 +68,7 @@ namespace Assets.Source.Entities.Jester.Components
             }
 
             var adjustedVerticalVelocity = currentVelocity.y * _shootConfig.VerticalVelocityReductionFactor;
-            Owner.GoBody.velocity = new Vector2(currentVelocity.x, adjustedVerticalVelocity);
+            Owner.GoBody.linearVelocity = new Vector2(currentVelocity.x, adjustedVerticalVelocity);
         }
     }
 }

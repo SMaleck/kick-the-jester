@@ -12,12 +12,12 @@ namespace Assets.Source.Entities.Jester.Components
 
         private float VelocityX
         {
-            get { return Owner.GoBody.velocity.x; }
+            get { return Owner.GoBody.linearVelocity.x; }
         }
 
         private float VelocityY
         {
-            get { return Owner.GoBody.velocity.y; }
+            get { return Owner.GoBody.linearVelocity.y; }
         }
 
 
@@ -37,7 +37,7 @@ namespace Assets.Source.Entities.Jester.Components
             float clampedX = Mathf.Clamp(VelocityX, 0, _playerAttributesModel.MaxVelocityX.Value);
             float clampedY = Mathf.Clamp(VelocityY, -float.MaxValue, _playerAttributesModel.MaxVelocityY.Value);
 
-            Owner.GoBody.velocity = new Vector2(clampedX, clampedY);
+            Owner.GoBody.linearVelocity = new Vector2(clampedX, clampedY);
         }
     }
 }

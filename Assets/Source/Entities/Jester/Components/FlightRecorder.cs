@@ -38,7 +38,7 @@ namespace Assets.Source.Entities.Jester.Components
         private void LateUpdate()
         {
             _flightStatsModel.SetPosition(Owner.GoTransform.position);
-            _flightStatsModel.SetVelocity(Owner.GoBody.velocity);
+            _flightStatsModel.SetVelocity(Owner.GoBody.linearVelocity);
         }
     }
 }

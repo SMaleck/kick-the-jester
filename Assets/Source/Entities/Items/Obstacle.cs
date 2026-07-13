@@ -14,8 +14,8 @@ namespace Assets.Source.Entities.Items
         {
             Rigidbody2D body = jester.GoBody;
 
-            float velocityReductionAmount = body.velocity.magnitude - (body.velocity.magnitude * StoppingPowerPercent);
-            body.velocity = body.velocity.normalized * velocityReductionAmount;
+            float velocityReductionAmount = body.linearVelocity.magnitude - (body.linearVelocity.magnitude * StoppingPowerPercent);
+            body.linearVelocity = body.linearVelocity.normalized * velocityReductionAmount;
 
             // Remove bouncy material, so Jester will not bounce on land
             if (StoppingPowerPercent >= 1)
